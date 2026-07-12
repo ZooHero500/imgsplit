@@ -9,7 +9,8 @@ interface UseRulerDragOptions {
   viewportScale: number
   viewportPosition: { x: number; y: number }
   addLineAtPosition: (orientation: "horizontal" | "vertical", position: number) => void
-  removeLine: (id: string) => void
+  /** @deprecated Unused by this hook; kept optional so existing call sites keep compiling. */
+  removeLine?: (id: string) => void
   calculateSnap: (position: number, orientation: "horizontal" | "vertical") => number
   canAddHorizontal: boolean
   canAddVertical: boolean
@@ -34,7 +35,6 @@ export function useRulerDrag({
   viewportScale,
   viewportPosition,
   addLineAtPosition,
-  removeLine,
   calculateSnap,
   canAddHorizontal,
   canAddVertical,
@@ -92,11 +92,15 @@ export function useRulerDrag({
   )
 
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!dragStateRef.current.isDragging) return
+    // The ref object is created once and never reassigned, so capturing it here
+    // is safe and keeps the cleanup below honest about which object it reads.
+    const dragState = dragStateRef.current
 
-      cancelAnimationFrame(dragStateRef.current.rafId)
-      dragStateRef.current.rafId = requestAnimationFrame(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!dragState.isDragging) return
+
+      cancelAnimationFrame(dragState.rafId)
+      dragState.rafId = requestAnimationFrame(() => {
         const editor = editorRef.current
         const stageContainer = stageContainerRef.current
         if (!editor || !stageContainer) return
@@ -104,7 +108,7 @@ export function useRulerDrag({
         const { scale, position } = viewportRef.current
         const stageRect = stageContainer.getBoundingClientRect()
         const editorRect = editor.getBoundingClientRect()
-        const orientation = dragStateRef.current.orientation
+        const orientation = dragState.orientation
 
         if (orientation === "horizontal") {
           const stageScreenY = e.clientY - stageRect.top
@@ -123,13 +127,13 @@ export function useRulerDrag({
     }
 
     const handleMouseUp = (e: MouseEvent) => {
-      if (!dragStateRef.current.isDragging) return
+      if (!dragState.isDragging) return
 
-      const orientation = dragStateRef.current.orientation
+      const orientation = dragState.orientation
       const stageContainer = stageContainerRef.current
 
-      dragStateRef.current.isDragging = false
-      dragStateRef.current.orientation = null
+      dragState.isDragging = false
+      dragState.orientation = null
       setIsDragging(false)
       setDragOrientation(null)
 
@@ -161,7 +165,7 @@ export function useRulerDrag({
     return () => {
       document.removeEventListener("mousemove", handleMouseMove)
       document.removeEventListener("mouseup", handleMouseUp)
-      cancelAnimationFrame(dragStateRef.current.rafId)
+      cancelAnimationFrame(dragState.rafId)
     }
   }, [editorRef, stageContainerRef, addLineAtPosition, calculateSnap])
 

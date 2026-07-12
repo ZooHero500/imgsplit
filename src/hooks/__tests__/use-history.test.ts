@@ -71,6 +71,12 @@ describe("useHistory", () => {
   it("should return undefined when loading non-existent record", async () => {
     const { result } = renderHook(() => useHistory())
 
+    // Wait for the initial live query to settle so its state updates
+    // happen inside act (waitFor wraps polling in act).
+    await waitFor(() => {
+      expect(result.current.isLoading).toBe(false)
+    })
+
     const loaded = await result.current.loadRecord("non-existent-id")
     expect(loaded).toBeUndefined()
   })

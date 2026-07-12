@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest"
-import { calculateSnap, type SnapResult } from "../resize-snap"
+import { calculateSnap } from "../resize-snap"
 
 describe("calculateSnap", () => {
   const artboard = { width: 500, height: 500 }

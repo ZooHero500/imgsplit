@@ -31,7 +31,7 @@ function createMockCanvas() {
 
 describe("splitImage", () => {
   beforeEach(() => {
-    const { canvas, ctx } = createMockCanvas()
+    const { canvas } = createMockCanvas()
     vi.spyOn(document, "createElement").mockImplementation((tag: string) => {
       if (tag === "canvas") return canvas as unknown as HTMLCanvasElement
       return document.createElement(tag)

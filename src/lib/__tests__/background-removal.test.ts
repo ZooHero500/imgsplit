@@ -65,8 +65,8 @@ describe("background removal helpers", () => {
   })
 
   it("reports missing local model files", async () => {
-    const fetcher = vi.fn(async (path: string) => {
-      return { ok: !path.endsWith("config.json") } as Response
+    const fetcher = vi.fn(async (input: RequestInfo | URL) => {
+      return { ok: !input.toString().endsWith("config.json") } as Response
     })
 
     await expect(assertBackgroundRemovalModelAvailable(fetcher)).rejects.toThrow(

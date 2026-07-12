@@ -231,7 +231,7 @@ describe("BackgroundRemovalWorkerClient", () => {
     const firstWorker = new FakeWorker()
     const secondWorker = new FakeWorker()
     const createWorker = vi
-      .fn<[], Worker>()
+      .fn<() => Worker>()
       .mockReturnValueOnce(firstWorker as unknown as Worker)
       .mockReturnValueOnce(secondWorker as unknown as Worker)
     const client = new BackgroundRemovalWorkerClient(createWorker)

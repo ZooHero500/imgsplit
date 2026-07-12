@@ -24,12 +24,18 @@ vi.mock("@/lib/image-splitter", () => ({
   splitImage: vi.fn(() => Promise.resolve(mockResults)),
 }))
 
-const mockExportAsZip = vi.fn(() =>
+interface ZipExportOptions {
+  originalFileName: string
+  results: SplitResult[]
+  fileExtension: string
+}
+
+const mockExportAsZip = vi.fn<(options: ZipExportOptions) => Promise<Blob>>(() =>
   Promise.resolve(new Blob(["zip"], { type: "application/zip" }))
 )
 
 vi.mock("@/lib/zip-exporter", () => ({
-  exportAsZip: (...args: unknown[]) => mockExportAsZip(...args),
+  exportAsZip: (options: ZipExportOptions) => mockExportAsZip(options),
   downloadSingle: vi.fn(),
   getZipFileName: (name: string) => `${name}_split.zip`,
   getSelectedZipFileName: (name: string) => `${name}_selected.zip`,
@@ -87,12 +93,8 @@ describe("useImageExport - core", () => {
     const { result } = renderHook(() => useImageExport())
     const mockImage = {} as HTMLImageElement
 
-    let splittingDuringCall = false
     const promise = act(async () => {
-      const genPromise = result.current.generateSplit(mockImage, [], "image/png")
-      // isSplitting is set synchronously before the async work
-      splittingDuringCall = result.current.isSplitting
-      await genPromise
+      await result.current.generateSplit(mockImage, [], "image/png")
     })
 
     await promise
@@ -268,11 +270,7 @@ describe("useImageExport - downloadSelected", () => {
     })
 
     expect(mockExportAsZip).toHaveBeenCalledTimes(1)
-    const callArgs = mockExportAsZip.mock.calls[0][0] as {
-      originalFileName: string
-      results: SplitResult[]
-      fileExtension: string
-    }
+    const callArgs = mockExportAsZip.mock.calls[0][0]
     expect(callArgs.originalFileName).toBe("photo")
     expect(callArgs.fileExtension).toBe("png")
     expect(callArgs.results).toHaveLength(2)

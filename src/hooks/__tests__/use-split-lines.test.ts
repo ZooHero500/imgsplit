@@ -199,7 +199,6 @@ describe("useSplitLines", () => {
     const { result } = renderHook(() => useSplitLines(defaultOptions))
 
     act(() => result.current.addLine("horizontal"))
-    const beforeLines = result.current.lines
 
     act(() => result.current.setLines([]))
     expect(result.current.lines).toHaveLength(0)
