@@ -1,23 +1,8 @@
-import type { RelatedTool, ToolPageData } from "./types"
+import type { PseoLocale, RelatedTool, ToolPageData, ToolPageSeed } from "./types"
 
-type LocaleMosaicPages = Record<string, Record<string, ToolPageData>>
+type LocaleMosaicPages = Record<PseoLocale, Record<string, ToolPageData>>
 
-interface MosaicPageSeed {
-  slug: string
-  title: string
-  description: string
-  ogTitle: string
-  ogDescription: string
-  overline: string
-  headlinePart1: string
-  headlineAccent: string
-  headlinePart2: string
-  heroDescription: string
-  scenarios: ToolPageData["scenarios"]
-  faqEntries: ToolPageData["faqEntries"]
-}
-
-const relatedTools: Record<string, RelatedTool[]> = {
+const relatedTools: Record<PseoLocale, RelatedTool[]> = {
   en: [
     { slug: "/mosaic", title: "Privacy Mask", description: "Hide sensitive image regions with mosaic, blur, or solid cover." },
     { slug: "/watermark", title: "Watermark Tool", description: "Add ownership marks after preparing private previews." },
@@ -43,9 +28,14 @@ const relatedTools: Record<string, RelatedTool[]> = {
     { slug: "/watermark", title: "Marca de agua", description: "Añade marcas de propiedad después de preparar vistas privadas." },
     { slug: "/compress-image", title: "Comprimir imagen", description: "Reduce el tamaño del resultado enmascarado." },
   ],
+  "pt-BR": [
+    { slug: "/mosaic", title: "Máscara de Privacidade", description: "Oculte áreas sensíveis da imagem com mosaico, desfoque ou tarja sólida." },
+    { slug: "/watermark", title: "Marca d'Água", description: "Adicione marcas de propriedade depois de preparar prévias privadas." },
+    { slug: "/compress-image", title: "Comprimir Imagem", description: "Reduza o tamanho do arquivo da imagem já mascarada." },
+  ],
 }
 
-const howToSteps: Record<string, ToolPageData["howToSteps"]> = {
+const howToSteps: Record<PseoLocale, ToolPageData["howToSteps"]> = {
   en: [
     { stepNumber: 1, title: "Upload an Image", description: "Choose a PNG, JPEG, or WebP image. The file stays in your browser." },
     { stepNumber: 2, title: "Mark Private Areas", description: "Draw rectangles over faces, addresses, plates, text, or screenshot details." },
@@ -71,9 +61,14 @@ const howToSteps: Record<string, ToolPageData["howToSteps"]> = {
     { stepNumber: 2, title: "Marca zonas privadas", description: "Dibuja rectángulos sobre rostros, direcciones, matrículas, texto o capturas." },
     { stepNumber: 3, title: "Descarga", description: "Elige mosaico, desenfoque o cobertura sólida y exporta la imagen editada." },
   ],
+  "pt-BR": [
+    { stepNumber: 1, title: "Envie sua imagem", description: "Escolha um arquivo PNG, JPEG ou WebP. A imagem permanece no seu navegador." },
+    { stepNumber: 2, title: "Marque as áreas privadas", description: "Desenhe retângulos sobre rostos, endereços, placas, textos ou detalhes de prints." },
+    { stepNumber: 3, title: "Baixe o resultado", description: "Escolha mosaico, desfoque ou tarja sólida e exporte a imagem editada." },
+  ],
 }
 
-const seeds: Record<string, MosaicPageSeed[]> = {
+const seeds: Partial<Record<PseoLocale, ToolPageSeed[]>> = {
   en: [
     {
       slug: "blur-face",
@@ -282,10 +277,21 @@ seeds.es = localizeSeeds("es", [
   ["redact-image-online", "Redactar Imagen Online - Herramienta Privada Gratis | ImgSplit", "Redacta áreas de imagen con cobertura sólida, mosaico o desenfoque. Oculta nombres, direcciones, rostros y capturas.", "Redactar imagen online", "Oculta áreas sensibles antes de compartir.", "Redacción de imagen", "Redacta ", "detalles de imagen", "online", "Cubre información sensible antes de compartir capturas, recibos, formularios, chats o fotos."],
 ])
 
+seeds["pt-BR"] = localizeSeeds("pt-BR", [
+  ["blur-face", "Desfocar Rosto Online Grátis - Borre Rostos em Fotos | ImgSplit", "Desfoque rostos em fotos e capturas de tela sem enviar a imagem para nenhum servidor. Use pincel, mosaico, desfoque ou tarja sólida no navegador.", "Desfocar Rosto Online", "Desfoque ou cubra rostos com privacidade, direto no navegador.", "Desfocar Rosto Online", "Desfoque ", "Rostos", "com Privacidade", "Oculte rostos em fotos, capturas de tela e prévias públicas com edição local no navegador, desfoque ajustável, blocos de mosaico e máscara de pincel."],
+  ["blur-face-in-photo", "Borrar Rosto em Foto Online - Ferramenta Grátis | ImgSplit", "Borre rostos em fotos online sem enviar a imagem. Use desfoque, mosaico ou tarja sólida no navegador antes de compartilhar ou publicar.", "Borrar Rosto em Foto Online", "Oculte rostos em fotos com privacidade, no seu navegador.", "Desfoque de Rostos", "Borre Rostos ", "em Fotos", "Online", "Oculte rostos antes de compartilhar fotos de equipe, eventos, prints de avaliações ou publicações. Tudo acontece localmente no seu navegador."],
+  ["pixelate-image", "Pixelar Imagem - Ferramenta de Mosaico Online Grátis | ImgSplit", "Pixele uma imagem online com blocos de mosaico ajustáveis, máscara de pincel e sobreposições. Oculte áreas sensíveis no navegador, sem upload.", "Pixelar Imagem Online", "Pixele áreas da imagem com blocos de mosaico ajustáveis.", "Pixelar Imagem", "Pixele ", "Imagens", "Online", "Adicione blocos de pixel ajustáveis a rostos, placas de carro, textos, capturas de tela e detalhes privados, mantendo o restante da imagem nítido."],
+  ["pixelate-image-online", "Pixelar Imagem Online Grátis - Mosaico Ajustável | ImgSplit", "Pixele partes de uma imagem online com mosaico ajustável. Oculte detalhes privados em fotos e capturas de tela no navegador, sem enviar nada.", "Pixelar Imagem Online", "Adicione mosaico ajustável às áreas sensíveis da imagem.", "Pixelar Imagem", "Pixele ", "Áreas da Imagem", "Rapidamente", "Use blocos de mosaico ajustáveis para ocultar textos, rostos, placas, endereços e detalhes de prints sem comprometer o resto da imagem."],
+  ["censor-image-online", "Censurar Imagem Online - Tarja e Mosaico Grátis | ImgSplit", "Censure áreas de uma imagem online com mosaico, desfoque, tarja sólida, pincel ou máscara personalizada. Edição privada no navegador, sem upload.", "Censurar Imagem Online", "Censure áreas sensíveis da imagem com privacidade, no navegador.", "Censurar Imagem Online", "Censure ", "Áreas da Imagem", "Rapidamente", "Cubra rostos, nomes de usuário, documentos, placas de carro e capturas de tela com máscaras flexíveis antes de postar ou enviar uma imagem."],
+  ["mosaic-tool", "Ferramenta de Mosaico Online - Oculte Detalhes Privados | ImgSplit", "Ferramenta de mosaico online gratuita para cobrir detalhes sensíveis com mosaico, desfoque ou tarja sólida. Tudo no navegador, sem upload.", "Ferramenta de Mosaico Online", "Cubra detalhes sensíveis com mosaico direto no navegador.", "Mosaico Online", "Aplique ", "Mosaico", "com Privacidade", "Crie máscaras de mosaico limpas para rostos, documentos, placas e capturas de tela sem enviar o arquivo original para nenhum servidor."],
+  ["redact-image", "Tarjar Imagem - Oculte Dados em Fotos e Prints Grátis | ImgSplit", "Tarje detalhes de imagens com tarja sólida, mosaico, desfoque, pincel ou máscara personalizada. Oculte conteúdo privado no navegador antes de compartilhar.", "Tarjar Imagem", "Tarje detalhes sensíveis de fotos e prints localmente.", "Tarjar Imagem", "Tarje ", "Imagens", "com Privacidade", "Oculte textos privados, rostos, endereços, documentos, painéis e capturas de tela com edição feita só no navegador e exportação em formatos limpos."],
+  ["redact-image-online", "Tarjar Imagem Online - Privacidade em Prints Grátis | ImgSplit", "Tarje áreas de imagem online com tarja sólida, mosaico ou desfoque. Oculte nomes, endereços, rostos, placas e prints no seu navegador, sem upload.", "Tarjar Imagem Online", "Oculte áreas sensíveis antes de compartilhar prints ou fotos.", "Tarjar Imagem", "Tarje ", "Detalhes da Imagem", "Online", "Cubra informações sensíveis antes de compartilhar prints, recibos, formulários, conversas, documentos ou fotos com clientes e colegas."],
+])
+
 function localizeSeeds(
-  locale: string,
+  locale: PseoLocale,
   rows: Array<[string, string, string, string, string, string, string, string, string, string]>
-): MosaicPageSeed[] {
+): ToolPageSeed[] {
   return rows.map(
     ([
       slug,
@@ -318,7 +324,7 @@ function localizeSeeds(
   )
 }
 
-function localizedScenario(locale: string, type: "privacy" | "screenshots") {
+function localizedScenario(locale: PseoLocale, type: "privacy" | "screenshots") {
   const text = {
     en: {
       privacy: { icon: "Shield", title: "Private Sharing", description: "Hide identifying details before posting, sending, or publishing images." },
@@ -340,11 +346,15 @@ function localizedScenario(locale: string, type: "privacy" | "screenshots") {
       privacy: { icon: "Shield", title: "Compartir en privado", description: "Oculta detalles identificables antes de publicar o enviar imágenes." },
       screenshots: { icon: "FileSearch", title: "Limpiar capturas", description: "Cubre nombres, mensajes, cuentas, direcciones y datos internos." },
     },
+    "pt-BR": {
+      privacy: { icon: "Shield", title: "Compartilhamento privado", description: "Oculte detalhes que identificam pessoas antes de postar, enviar ou publicar imagens." },
+      screenshots: { icon: "FileSearch", title: "Limpeza de prints", description: "Cubra nomes, mensagens, contas, endereços e dados internos." },
+    },
   }
-  return text[locale as keyof typeof text][type]
+  return text[locale][type]
 }
 
-function localizedFaq(locale: string): ToolPageData["faqEntries"] {
+function localizedFaq(locale: PseoLocale): ToolPageData["faqEntries"] {
   const text = {
     en: [
       { question: "Does the image get uploaded?", answer: "No. The editor renders and exports the image locally in your browser." },
@@ -366,11 +376,15 @@ function localizedFaq(locale: string): ToolPageData["faqEntries"] {
       { question: "¿Se sube la imagen?", answer: "No. El editor renderiza y exporta la imagen localmente en tu navegador." },
       { question: "¿Qué modo es más fuerte?", answer: "La cobertura sólida es la más fuerte porque reemplaza los píxeles seleccionados por un color plano." },
     ],
+    "pt-BR": [
+      { question: "A imagem é enviada para algum servidor?", answer: "Não. O editor renderiza e exporta a imagem localmente, direto no seu navegador." },
+      { question: "Qual modo de máscara é o mais seguro?", answer: "A tarja sólida é a mais segura, porque substitui os pixels selecionados por uma cor uniforme." },
+    ],
   }
-  return text[locale as keyof typeof text]
+  return text[locale]
 }
 
-function buildPage(locale: string, seed: MosaicPageSeed): ToolPageData {
+function buildPage(locale: PseoLocale, seed: ToolPageSeed): ToolPageData {
   return {
     slug: seed.slug,
     category: "use-case",
@@ -394,11 +408,17 @@ function buildPage(locale: string, seed: MosaicPageSeed): ToolPageData {
   }
 }
 
-export const mosaicPagesByLocale: LocaleMosaicPages = Object.fromEntries(
-  Object.entries(seeds).map(([locale, localeSeeds]) => [
-    locale,
-    Object.fromEntries(
-      localeSeeds.map((seed) => [seed.slug, buildPage(locale, seed)])
-    ),
-  ])
-)
+function createPages(locale: PseoLocale): Record<string, ToolPageData> {
+  return Object.fromEntries(
+    (seeds[locale] ?? []).map((seed) => [seed.slug, buildPage(locale, seed)])
+  )
+}
+
+export const mosaicPagesByLocale: LocaleMosaicPages = {
+  en: createPages("en"),
+  "zh-CN": createPages("zh-CN"),
+  ja: createPages("ja"),
+  ko: createPages("ko"),
+  es: createPages("es"),
+  "pt-BR": createPages("pt-BR"),
+}

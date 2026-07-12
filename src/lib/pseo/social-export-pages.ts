@@ -1,24 +1,8 @@
-import type { RelatedTool, ToolPageData } from "./types"
+import type { PseoLocale, RelatedTool, ToolPageData, ToolPageSeed } from "./types"
 
-type LocaleKey = "en" | "zh-CN" | "ja" | "ko" | "es"
-type LocaleSocialExportPages = Record<LocaleKey, Record<string, ToolPageData>>
+type LocaleSocialExportPages = Record<PseoLocale, Record<string, ToolPageData>>
 
-interface SocialExportPageSeed {
-  slug: string
-  title: string
-  description: string
-  ogTitle: string
-  ogDescription: string
-  overline: string
-  headlinePart1: string
-  headlineAccent: string
-  headlinePart2: string
-  heroDescription: string
-  scenarios: ToolPageData["scenarios"]
-  faqEntries: ToolPageData["faqEntries"]
-}
-
-const relatedTools: Record<LocaleKey, RelatedTool[]> = {
+const relatedTools: Record<PseoLocale, RelatedTool[]> = {
   en: [
     { slug: "/social-export", title: "Social Export", description: "Generate multiple social sizes from one source image." },
     { slug: "/resize", title: "Image Resizer", description: "Create a custom crop or one-off platform size." },
@@ -44,9 +28,14 @@ const relatedTools: Record<LocaleKey, RelatedTool[]> = {
     { slug: "/resize", title: "Redimensionar imagen", description: "Crea un recorte personalizado o un tamaño puntual." },
     { slug: "/compress", title: "Compresor de imágenes", description: "Comprime los archivos finales para subirlos más rápido." },
   ],
+  "pt-BR": [
+    { slug: "/social-export", title: "Exportação Social", description: "Gere múltiplos tamanhos para redes sociais a partir de uma imagem." },
+    { slug: "/resize", title: "Redimensionar Imagem", description: "Crie um recorte personalizado ou um tamanho avulso de plataforma." },
+    { slug: "/compress", title: "Compressor de Imagens", description: "Comprima as exportações finais para uploads mais rápidos." },
+  ],
 }
 
-const howToSteps: Record<LocaleKey, ToolPageData["howToSteps"]> = {
+const howToSteps: Record<PseoLocale, ToolPageData["howToSteps"]> = {
   en: [
     { stepNumber: 1, title: "Upload One Image", description: "Add a PNG, JPEG, or WebP image. It stays in your browser." },
     { stepNumber: 2, title: "Pick Platform Sizes", description: "Select Instagram, YouTube, Facebook, X/Twitter, LinkedIn, or TikTok outputs." },
@@ -72,9 +61,14 @@ const howToSteps: Record<LocaleKey, ToolPageData["howToSteps"]> = {
     { stepNumber: 2, title: "Elige tamaños", description: "Selecciona salidas para Instagram, YouTube, X, TikTok, Xiaohongshu, WeChat o Facebook." },
     { stepNumber: 3, title: "Exporta ZIP", description: "Ajusta recortes, elige formato y descarga un ZIP por plataforma." },
   ],
+  "pt-BR": [
+    { stepNumber: 1, title: "Envie uma imagem", description: "Adicione um arquivo PNG, JPEG ou WebP. Tudo fica no seu navegador, sem upload." },
+    { stepNumber: 2, title: "Escolha os tamanhos", description: "Selecione saídas para Instagram, YouTube, Facebook, X/Twitter, LinkedIn ou TikTok." },
+    { stepNumber: 3, title: "Exporte o ZIP", description: "Ajuste os recortes, escolha o formato e baixe um ZIP nomeado por plataforma." },
+  ],
 }
 
-const seeds: Record<LocaleKey, SocialExportPageSeed[]> = {
+const seeds: Record<PseoLocale, ToolPageSeed[]> = {
   en: [
     {
       slug: "social-media-image-resizer",
@@ -610,6 +604,239 @@ const seeds: Record<LocaleKey, SocialExportPageSeed[]> = {
       ],
     },
   ],
+  "pt-BR": [
+    {
+      slug: "social-media-image-resizer",
+      title: "Redimensionador de Imagens para Redes Sociais | ImgSplit",
+      description: "Redimensione uma imagem para várias redes sociais e baixe todos os tamanhos em um único ZIP. Gratuito, privado e direto no navegador, sem upload.",
+      ogTitle: "Redimensionador de Imagens para Redes Sociais",
+      ogDescription: "Transforme uma imagem em vários tamanhos prontos para redes sociais.",
+      overline: "Redimensionador Social",
+      headlinePart1: "Redimensione para ",
+      headlineAccent: "Todas as Plataformas",
+      headlinePart2: "",
+      heroDescription: "Crie posts e stories do Instagram, miniaturas do YouTube, capas do Facebook, cabeçalhos do X, posts do LinkedIn e imagens verticais do TikTok a partir de uma única imagem.",
+      scenarios: [
+        { icon: "Share2", title: "Posts multiplataforma", description: "Prepare uma imagem de campanha para vários canais sem repetir recortes manuais." },
+        { icon: "Package", title: "ZIP com nomes organizados", description: "Baixe os arquivos agrupados por plataforma, com o tamanho indicado no nome de cada arquivo." },
+      ],
+      faqEntries: [
+        { question: "Posso exportar vários tamanhos de uma vez?", answer: "Sim. Selecione os tamanhos que precisa e baixe tudo em um único ZIP." },
+        { question: "Posso ajustar cada recorte?", answer: "Sim. Selecione uma saída, arraste a pré-visualização e ajuste preenchimento, encaixe e escala." },
+        { question: "As imagens são enviadas para algum servidor?", answer: "Não. A renderização e a criação do ZIP acontecem no seu navegador." },
+      ],
+    },
+    {
+      slug: "resize-image-for-social-media",
+      title: "Redimensionar Imagem para Redes Sociais Grátis | ImgSplit",
+      description: "Redimensione uma imagem para Instagram, YouTube, Facebook, X/Twitter, LinkedIn e TikTok em um único fluxo no navegador, com exportação em ZIP e sem upload.",
+      ogTitle: "Redimensionar Imagem para Redes Sociais",
+      ogDescription: "Gere vários recortes de plataforma a partir de uma imagem.",
+      overline: "Tamanhos para Redes Sociais",
+      headlinePart1: "Uma Imagem em ",
+      headlineAccent: "Vários Tamanhos Sociais",
+      headlinePart2: "",
+      heroDescription: "Envie uma vez, escolha os pacotes de predefinições, ajuste o recorte de cada tamanho e baixe um ZIP organizado, pronto para publicar.",
+      scenarios: [
+        { icon: "Layers2", title: "Operação de conteúdo", description: "Prepare imagens de lançamento, evento, produto ou anúncio para várias redes de uma só vez." },
+        { icon: "SlidersHorizontal", title: "Controle por tamanho", description: "Mantenha rostos, produtos e textos centralizados em cada proporção diferente." },
+      ],
+      faqEntries: [
+        { question: "Quais plataformas estão incluídas?", answer: "O pacote ocidental inclui predefinições para Instagram, Facebook, YouTube, X/Twitter, LinkedIn e TikTok. O pacote de criadores chineses inclui Xiaohongshu e WeChat." },
+        { question: "Posso exportar em JPEG ou WebP?", answer: "Sim. Escolha PNG, JPEG ou WebP antes de baixar o ZIP." },
+        { question: "Posso usar apenas um tamanho?", answer: "Sim. Desmarque todos os tamanhos, exceto o que você precisa." },
+      ],
+    },
+    {
+      slug: "instagram-image-size",
+      title: "Tamanho de Imagem para Instagram - Feed e Story | ImgSplit",
+      description: "Crie os tamanhos de imagem do Instagram para feed quadrado, feed vertical e Story/Reel a partir de uma única imagem. Exportação privada no navegador, sem upload.",
+      ogTitle: "Tamanhos de Imagem para Instagram",
+      ogDescription: "Gere os tamanhos de feed e story do Instagram a partir de uma imagem.",
+      overline: "Tamanho de Imagem do Instagram",
+      headlinePart1: "Crie ",
+      headlineAccent: "Tamanhos do Instagram",
+      headlinePart2: "em Segundos",
+      heroDescription: "Exporte quadrados de feed em 1080x1080, posts verticais em 1080x1350 e imagens de story ou reel em 1080x1920 a partir de um único envio.",
+      scenarios: [
+        { icon: "Instagram", title: "Feed e Stories", description: "Prepare imagens quadradas, verticais e de tela cheia para o Instagram em um único fluxo." },
+        { icon: "MousePointer2", title: "Foco do recorte", description: "Mova o recorte de cada saída para manter pessoas, produtos e textos visíveis." },
+      ],
+      faqEntries: [
+        { question: "Quais tamanhos do Instagram estão incluídos?", answer: "O editor inclui saídas de 1080x1080, 1080x1350 e 1080x1920." },
+        { question: "Posso exportar apenas os arquivos do Instagram?", answer: "Sim. Mantenha as predefinições do Instagram selecionadas e desmarque as demais." },
+        { question: "Serve para reels?", answer: "Sim. A predefinição vertical de 1080x1920 é ideal para imagens no estilo story e reel." },
+      ],
+    },
+    {
+      slug: "youtube-thumbnail-size",
+      title: "Tamanho de Miniatura do YouTube - 1280x720 | ImgSplit",
+      description: "Redimensione imagens para o tamanho de miniatura do YouTube (1280x720) e exporte tamanhos sociais complementares no navegador, com processamento privado e sem upload.",
+      ogTitle: "Miniatura do YouTube em 1280x720",
+      ogDescription: "Crie miniaturas de 1280x720 para o YouTube no navegador.",
+      overline: "Miniatura do YouTube",
+      headlinePart1: "Exporte Miniaturas em ",
+      headlineAccent: "1280x720",
+      headlinePart2: "",
+      heroDescription: "Crie uma miniatura 16:9 para o YouTube a partir de qualquer imagem e, se quiser, exporte tamanhos sociais complementares no mesmo ZIP.",
+      scenarios: [
+        { icon: "Youtube", title: "Miniaturas de vídeo", description: "Transforme um pôster, uma captura de tela, uma foto de produto ou uma arte de campanha em uma miniatura de 1280x720." },
+        { icon: "Share2", title: "Posts complementares", description: "Crie a miniatura do YouTube junto com imagens para Instagram, X ou TikTok na mesma exportação." },
+      ],
+      faqEntries: [
+        { question: "Qual é o tamanho da miniatura do YouTube?", answer: "A predefinição exporta 1280 x 720 pixels." },
+        { question: "Posso manter o recorte centralizado?", answer: "Sim. Use o modo preencher e arraste a pré-visualização até a área importante ficar centralizada." },
+        { question: "Posso baixar em PNG ou JPEG?", answer: "Sim. Selecione PNG, JPEG ou WebP antes de exportar." },
+      ],
+    },
+    {
+      slug: "wechat-cover-size",
+      title: "Tamanho de Capa do WeChat - Capa de Artigo | ImgSplit",
+      description: "Crie uma capa horizontal para artigos do WeChat a partir de uma imagem e exporte junto outros tamanhos sociais, direto no navegador e sem upload.",
+      ogTitle: "Tamanho de Capa do WeChat",
+      ogDescription: "Crie capas de artigo do WeChat e tamanhos sociais complementares.",
+      overline: "Capa do WeChat",
+      headlinePart1: "Crie ",
+      headlineAccent: "Capas do WeChat",
+      headlinePart2: "Online",
+      heroDescription: "Recorte uma imagem no formato de capa horizontal para artigos do WeChat e exporte tamanhos de outras plataformas sem enviar arquivos.",
+      scenarios: [
+        { icon: "Newspaper", title: "Capas de artigo", description: "Prepare uma capa horizontal para publicar artigos no WeChat." },
+        { icon: "Globe2", title: "Publicação multicanal", description: "Exporte tamanhos para WeChat, Instagram, YouTube, X e Xiaohongshu a partir de uma imagem." },
+      ],
+      faqEntries: [
+        { question: "Qual tamanho de capa do WeChat é usado?", answer: "A predefinição exporta uma capa horizontal de 900 x 383." },
+        { question: "Posso exportar apenas o WeChat?", answer: "Sim. Selecione apenas a saída de capa do WeChat antes de baixar." },
+        { question: "É privado?", answer: "Sim. A imagem é processada localmente no seu navegador." },
+      ],
+    },
+    {
+      slug: "social-media-image-sizes",
+      title: "Tamanhos de Imagem para Redes Sociais - Guia e Exportador | ImgSplit",
+      description: "Crie os tamanhos de imagem atuais de Instagram, YouTube, Facebook, X, LinkedIn e TikTok em um único editor privado no navegador, sem upload.",
+      ogTitle: "Tamanhos de Imagem para Redes Sociais",
+      ogDescription: "Exporte os tamanhos de imagem que cada plataforma realmente usa.",
+      overline: "Tamanhos de Imagem Sociais",
+      headlinePart1: "Crie ",
+      headlineAccent: "Tamanhos de Cada Plataforma",
+      headlinePart2: "",
+      heroDescription: "Use uma única imagem para exportar posts e stories do Instagram, miniaturas do YouTube, capas do Facebook, cabeçalhos do X, posts do LinkedIn e artes verticais para o TikTok.",
+      scenarios: [
+        { icon: "Ruler", title: "Referência de tamanhos", description: "Comece com predefinições práticas de cada plataforma em vez de montar as dimensões manualmente." },
+        { icon: "Package", title: "Exportação em lote", description: "Baixe os formatos selecionados em um único ZIP, com pastas por plataforma e o tamanho no nome do arquivo." },
+      ],
+      faqEntries: [
+        { question: "Quais tamanhos de imagem para redes sociais estão incluídos?", answer: "O editor inclui predefinições de feed e story do Instagram, miniatura do YouTube, capa do Facebook, cabeçalho do X/Twitter, post do LinkedIn, vertical do TikTok, capa do Xiaohongshu e capa do WeChat." },
+        { question: "Posso escolher apenas os tamanhos das plataformas ocidentais?", answer: "Sim. Use o pacote ocidental para saídas voltadas a Instagram, YouTube, Facebook, X/Twitter, LinkedIn e TikTok." },
+        { question: "Ainda posso exportar tamanhos das plataformas chinesas?", answer: "Sim. Use o pacote de criadores chineses para Xiaohongshu, WeChat e formatos verticais de vídeo curto." },
+      ],
+    },
+    {
+      slug: "instagram-post-size",
+      title: "Tamanho de Post do Instagram - 1080x1080 e 1080x1350 | ImgSplit",
+      description: "Crie os tamanhos de post do Instagram a partir de uma imagem: feed quadrado, feed vertical e recortes de story complementares. Exportação privada no navegador, sem upload.",
+      ogTitle: "Tamanho de Post do Instagram",
+      ogDescription: "Crie imagens de post do Instagram em 1080x1080 e 1080x1350.",
+      overline: "Tamanho de Post do Instagram",
+      headlinePart1: "Exporte ",
+      headlineAccent: "Posts do Instagram",
+      headlinePart2: "",
+      heroDescription: "Prepare posts quadrados de 1080x1080 e verticais de 1080x1350 a partir de um único envio e ajuste cada recorte antes de baixar.",
+      scenarios: [
+        { icon: "Instagram", title: "Posts de feed", description: "Crie imagens quadradas e verticais para o feed sem repetir o trabalho manual de redimensionar." },
+        { icon: "Crop", title: "Recorte por proporção", description: "Mantenha rostos, produtos e textos dentro do recorte em cada proporção do Instagram." },
+      ],
+      faqEntries: [
+        { question: "Quais tamanhos de post do Instagram são exportados?", answer: "As predefinições principais de feed exportam posts quadrados de 1080 x 1080 e verticais de 1080 x 1350." },
+        { question: "Posso criar um story com a mesma imagem?", answer: "Sim. Mantenha a predefinição Story/Reel de 1080 x 1920 selecionada e ajuste esse recorte separadamente." },
+        { question: "O ImgSplit envia minha imagem para algum servidor?", answer: "Não. A imagem é renderizada e compactada em ZIP localmente, no seu navegador." },
+      ],
+    },
+    {
+      slug: "instagram-story-size",
+      title: "Tamanho de Story do Instagram - 1080x1920 | ImgSplit",
+      description: "Redimensione uma imagem para o tamanho de story do Instagram (1080x1920) e exporte versões de feed a partir da mesma origem, no navegador e sem upload.",
+      ogTitle: "Tamanho de Story do Instagram",
+      ogDescription: "Crie imagens de story do Instagram em 1080x1920 no navegador.",
+      overline: "Tamanho de Story do Instagram",
+      headlinePart1: "Exporte Stories em ",
+      headlineAccent: "1080x1920",
+      headlinePart2: "",
+      heroDescription: "Transforme uma imagem em um story vertical do Instagram ou em uma arte no estilo reel e adicione saídas de feed, YouTube ou X no mesmo ZIP.",
+      scenarios: [
+        { icon: "Smartphone", title: "Stories verticais", description: "Prepare imagens 9:16 em tela cheia para publicações pensadas para o celular." },
+        { icon: "Share2", title: "Peças de campanha", description: "Exporte os tamanhos de story e de feed juntos para manter o mesmo visual em toda a campanha." },
+      ],
+      faqEntries: [
+        { question: "Qual é o tamanho da predefinição de story do Instagram?", answer: "A predefinição de story exporta 1080 x 1920 pixels, uma imagem vertical 9:16." },
+        { question: "Posso reposicionar a imagem?", answer: "Sim. Selecione a saída de story, arraste a pré-visualização e ajuste preenchimento, encaixe e escala." },
+        { question: "Posso exportar em WebP?", answer: "Sim. Escolha PNG, JPEG ou WebP antes de baixar o ZIP." },
+      ],
+    },
+    {
+      slug: "facebook-cover-photo-size",
+      title: "Tamanho de Foto de Capa do Facebook | ImgSplit",
+      description: "Crie fotos de capa para páginas do Facebook e versões no estilo capa de grupo a partir de uma imagem. Ferramenta gratuita e privada no navegador, sem upload.",
+      ogTitle: "Tamanho de Capa do Facebook",
+      ogDescription: "Exporte fotos de capa do Facebook com controle de recorte.",
+      overline: "Foto de Capa do Facebook",
+      headlinePart1: "Crie ",
+      headlineAccent: "Capas do Facebook",
+      headlinePart2: "",
+      heroDescription: "Recorte uma imagem como capa de página do Facebook e em formatos de capa relacionados, com controle de recorte separado para cada saída.",
+      scenarios: [
+        { icon: "Image", title: "Capas de página", description: "Prepare uma capa horizontal de página do Facebook com o assunto posicionado com intenção." },
+        { icon: "LayoutTemplate", title: "Variações de capa", description: "Exporte recortes de capa de página e de grupo a partir da mesma imagem." },
+      ],
+      faqEntries: [
+        { question: "Qual tamanho de capa do Facebook está incluído?", answer: "A predefinição de capa de página exporta 851 x 315 pixels. A predefinição no estilo capa de grupo exporta 1640 x 856 pixels." },
+        { question: "Posso manter o texto longe das bordas?", answer: "Sim. Use a pré-visualização para arrastar o recorte antes de baixar." },
+        { question: "Posso exportar apenas as capas do Facebook?", answer: "Sim. Selecione apenas as saídas do Facebook e baixe o ZIP." },
+      ],
+    },
+    {
+      slug: "linkedin-post-size",
+      title: "Tamanho de Post do LinkedIn - 1200x628 | ImgSplit",
+      description: "Redimensione uma imagem para o tamanho de post do LinkedIn (1200x628) e exporte tamanhos sociais complementares em um fluxo privado no navegador, sem upload.",
+      ogTitle: "Tamanho de Post do LinkedIn",
+      ogDescription: "Crie imagens de post do LinkedIn em 1200x628.",
+      overline: "Tamanho de Post do LinkedIn",
+      headlinePart1: "Exporte ",
+      headlineAccent: "Posts do LinkedIn",
+      headlinePart2: "",
+      heroDescription: "Crie uma imagem de post do LinkedIn em 1200x628 a partir de qualquer envio e, se quiser, exporte também versões para Instagram, YouTube, Facebook ou X.",
+      scenarios: [
+        { icon: "Share2", title: "Posts profissionais", description: "Prepare imagens de anúncio, lançamento e artigo para o feed do LinkedIn." },
+        { icon: "Layers", title: "Peças multicanal", description: "Deixe o mesmo visual pronto para o LinkedIn e para outras plataformas em uma única exportação." },
+      ],
+      faqEntries: [
+        { question: "Qual tamanho de post do LinkedIn é exportado?", answer: "A predefinição do LinkedIn exporta 1200 x 628 pixels." },
+        { question: "Posso mudar o recorte?", answer: "Sim. Selecione a saída do LinkedIn e ajuste preenchimento, encaixe, escala e posição." },
+        { question: "Funciona sem enviar a imagem?", answer: "Sim. A imagem permanece no seu navegador." },
+      ],
+    },
+    {
+      slug: "twitter-header-size",
+      title: "Tamanho de Capa do Twitter - Cabeçalho do X 1500x500 | ImgSplit",
+      description: "Crie um cabeçalho do Twitter/X em 1500x500 a partir de uma imagem, com controle de recorte e exportação privada no navegador. Sem upload, com saída em ZIP.",
+      ogTitle: "Tamanho de Cabeçalho do Twitter",
+      ogDescription: "Crie imagens de cabeçalho do X/Twitter em 1500x500.",
+      overline: "Cabeçalho do Twitter/X",
+      headlinePart1: "Exporte Cabeçalhos em ",
+      headlineAccent: "1500x500",
+      headlinePart2: "",
+      heroDescription: "Recorte qualquer imagem como cabeçalho de perfil do X/Twitter em 1500x500 e exporte tamanhos sociais relacionados a partir da mesma origem.",
+      scenarios: [
+        { icon: "Maximize2", title: "Cabeçalhos de perfil", description: "Crie um recorte horizontal com o assunto centralizado e longe das bordas." },
+        { icon: "Package", title: "ZIP social", description: "Adicione formatos de post, miniatura e feed ao mesmo ZIP organizado quando precisar." },
+      ],
+      faqEntries: [
+        { question: "Qual tamanho de cabeçalho do Twitter/X é usado?", answer: "A predefinição de cabeçalho exporta 1500 x 500 pixels." },
+        { question: "Posso exportar imagens de post do X também?", answer: "Sim. Mantenha a predefinição de post horizontal do X selecionada ou escolha o pacote com todas as predefinições." },
+        { question: "Posso usar JPEG?", answer: "Sim. Escolha PNG, JPEG ou WebP antes de exportar." },
+      ],
+    },
+  ],
 }
 
 seeds.en.push(
@@ -786,7 +1013,7 @@ seeds["zh-CN"].push(
   }
 )
 
-function buildPage(seed: SocialExportPageSeed, locale: LocaleKey): ToolPageData {
+function buildPage(seed: ToolPageSeed, locale: PseoLocale): ToolPageData {
   return {
     slug: seed.slug,
     category: "use-case",
@@ -810,15 +1037,17 @@ function buildPage(seed: SocialExportPageSeed, locale: LocaleKey): ToolPageData 
   }
 }
 
-export const socialExportPagesByLocale: LocaleSocialExportPages =
-  Object.fromEntries(
-    Object.entries(seeds).map(([locale, localeSeeds]) => [
-      locale,
-      Object.fromEntries(
-        localeSeeds.map((seed) => [
-          seed.slug,
-          buildPage(seed, locale as LocaleKey),
-        ])
-      ),
-    ])
-  ) as LocaleSocialExportPages
+function createPages(locale: PseoLocale): Record<string, ToolPageData> {
+  return Object.fromEntries(
+    seeds[locale].map((seed) => [seed.slug, buildPage(seed, locale)])
+  )
+}
+
+export const socialExportPagesByLocale: LocaleSocialExportPages = {
+  en: createPages("en"),
+  "zh-CN": createPages("zh-CN"),
+  ja: createPages("ja"),
+  ko: createPages("ko"),
+  es: createPages("es"),
+  "pt-BR": createPages("pt-BR"),
+}

@@ -1087,6 +1087,190 @@ const data: Record<string, ToolPageData> = {
     ],
   },
 
+  "social-media-image-sizes": {
+    slug: "social-media-image-sizes",
+    category: "use-case",
+    seo: { title: "SNS画像サイズ一覧＆書き出しツール | ImgSplit", description: "Instagram、YouTube、Facebook、X、LinkedIn、TikTokの最新SNS画像サイズを1つのブラウザツールで作成。アップロード不要でプライベート。", ogTitle: "SNS画像サイズ", ogDescription: "実際に投稿されるSNS画像サイズをまとめて書き出し。" },
+    hero: { overline: "SNS画像サイズ", headlinePart1: "", headlineAccent: "各SNSサイズ", headlinePart2: "をすばやく作成", description: "1枚の画像からInstagram投稿・ストーリー、YouTubeサムネイル、Facebookカバー、Xヘッダー、LinkedIn投稿、TikTok縦型素材を書き出せます。" },
+    scenarios: [
+      { icon: "Ruler", title: "サイズ早見表", description: "実用的なプラットフォームプリセットから始められるので、サイズを手動で調べ直す必要がありません。" },
+      { icon: "Package", title: "一括書き出し", description: "選択した形式をプラットフォーム別フォルダとサイズラベル付きの1つのZIPでダウンロードできます。" },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "画像を1枚アップロード", description: "PNG、JPEG、WebPを追加。画像はブラウザ内に留まります。" },
+      { stepNumber: 2, title: "SNSサイズを選択", description: "Instagram、YouTube、Facebook、X/Twitter、LinkedIn、TikTokの出力を選びます。" },
+      { stepNumber: 3, title: "ZIPを書き出し", description: "トリミングを調整し、形式を選んでプラットフォーム名付きのZIPを保存します。" },
+    ],
+    faqEntries: [
+      { question: "どのSNS画像サイズが含まれますか？", answer: "InstagramのFeedとStory、YouTubeサムネイル、Facebookカバー、X/Twitterヘッダー、LinkedIn投稿、TikTok縦型、小紅書カバー、WeChatカバーのプリセットを収録しています。" },
+      { question: "欧米プラットフォームのサイズだけを選べますか？", answer: "はい。欧米向けプリセットパックを使えば、Instagram、YouTube、Facebook、X/Twitter、LinkedIn、TikTok向けの出力に絞れます。" },
+      { question: "中国系プラットフォームのサイズも書き出せますか？", answer: "はい。中国クリエイター向けパックで小紅書、WeChat、縦型ショート動画向けの出力を選べます。" },
+    ],
+    relatedTools: [
+      { slug: "/social-export", title: "SNS書き出し", description: "1枚の画像から複数のSNSサイズを生成。" },
+      { slug: "/resize", title: "画像リサイズ", description: "カスタムトリミングや単一サイズを作成。" },
+      { slug: "/compress", title: "画像圧縮", description: "完成した書き出しを軽量化。" },
+    ],
+  },
+
+  "instagram-post-size": {
+    slug: "instagram-post-size",
+    category: "use-case",
+    seo: { title: "Instagram投稿サイズ書き出し - 1080x1080 & 1080x1350 | ImgSplit", description: "1枚の画像からInstagram投稿サイズを作成。正方形フィード、縦長フィード、Story用クロップも同時に。ブラウザ内処理でアップロード不要。", ogTitle: "Instagram投稿サイズ書き出し", ogDescription: "1080x1080と1080x1350のInstagram投稿画像を作成。" },
+    hero: { overline: "Instagram投稿サイズ", headlinePart1: "", headlineAccent: "Instagram投稿", headlinePart2: "を書き出し", description: "1回のアップロードで1080x1080の正方形投稿と1080x1350の縦長投稿を準備し、それぞれのトリミングを調整してからダウンロードできます。" },
+    scenarios: [
+      { icon: "Instagram", title: "フィード投稿", description: "正方形と縦長のフィード画像を、手動リサイズを繰り返さずに作成できます。" },
+      { icon: "Crop", title: "比率ごとのトリミング", description: "各アスペクト比で顔、商品、テキストがフレーム内に収まるよう調整できます。" },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "画像を1枚アップロード", description: "PNG、JPEG、WebPを追加。画像はブラウザ内に留まります。" },
+      { stepNumber: 2, title: "SNSサイズを選択", description: "Instagram、YouTube、Facebook、X/Twitter、LinkedIn、TikTokの出力を選びます。" },
+      { stepNumber: 3, title: "ZIPを書き出し", description: "トリミングを調整し、形式を選んでプラットフォーム名付きのZIPを保存します。" },
+    ],
+    faqEntries: [
+      { question: "書き出せるInstagram投稿サイズは？", answer: "メインのフィードプリセットは1080 x 1080の正方形投稿と1080 x 1350の縦長投稿を書き出します。" },
+      { question: "同じ画像からStoryも作れますか？", answer: "はい。1080 x 1920のStory/Reelプリセットを選択したまま、そのクロップを個別に調整できます。" },
+      { question: "画像はアップロードされますか？", answer: "いいえ。レンダリングとZIP作成はすべてブラウザ内で行われます。" },
+    ],
+    relatedTools: [
+      { slug: "/social-export", title: "SNS書き出し", description: "1枚の画像から複数のSNSサイズを生成。" },
+      { slug: "/resize", title: "画像リサイズ", description: "カスタムトリミングや単一サイズを作成。" },
+      { slug: "/compress", title: "画像圧縮", description: "完成した書き出しを軽量化。" },
+    ],
+  },
+
+  "instagram-story-size": {
+    slug: "instagram-story-size",
+    category: "use-case",
+    seo: { title: "Instagramストーリーサイズ書き出し - 1080x1920 | ImgSplit", description: "画像を1080x1920のInstagramストーリーサイズにリサイズし、同じ画像からフィード用サイズもブラウザ内で書き出せます。アップロード不要。", ogTitle: "Instagramストーリーサイズ書き出し", ogDescription: "1080x1920のInstagramストーリー画像をブラウザで作成。" },
+    hero: { overline: "Instagramストーリーサイズ", headlinePart1: "", headlineAccent: "1080x1920", headlinePart2: "のストーリーを書き出し", description: "1枚の画像を縦型のInstagramストーリーやReel向け素材に変換し、フィード、YouTube、X用の出力も同じZIPに追加できます。" },
+    scenarios: [
+      { icon: "Smartphone", title: "縦型ストーリー", description: "モバイルファーストの投稿向けに、全画面9:16画像を準備できます。" },
+      { icon: "Share2", title: "キャンペーン素材の統一", description: "ストーリーとフィードのサイズを一緒に書き出し、キャンペーンビジュアルの一貫性を保てます。" },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "画像を1枚アップロード", description: "PNG、JPEG、WebPを追加。画像はブラウザ内に留まります。" },
+      { stepNumber: 2, title: "SNSサイズを選択", description: "Instagram、YouTube、Facebook、X/Twitter、LinkedIn、TikTokの出力を選びます。" },
+      { stepNumber: 3, title: "ZIPを書き出し", description: "トリミングを調整し、形式を選んでプラットフォーム名付きのZIPを保存します。" },
+    ],
+    faqEntries: [
+      { question: "Instagramストーリープリセットのサイズは？", answer: "1080 x 1920ピクセル、9:16の縦型画像を書き出します。" },
+      { question: "画像の位置を調整できますか？", answer: "はい。Story出力を選択し、プレビューをドラッグしてフィル、フィット、拡大率を調整できます。" },
+      { question: "WebPで書き出せますか？", answer: "はい。ZIPをダウンロードする前にPNG、JPEG、WebPから選べます。" },
+    ],
+    relatedTools: [
+      { slug: "/social-export", title: "SNS書き出し", description: "1枚の画像から複数のSNSサイズを生成。" },
+      { slug: "/resize", title: "画像リサイズ", description: "カスタムトリミングや単一サイズを作成。" },
+      { slug: "/compress", title: "画像圧縮", description: "完成した書き出しを軽量化。" },
+    ],
+  },
+
+  "facebook-cover-photo-size": {
+    slug: "facebook-cover-photo-size",
+    category: "use-case",
+    seo: { title: "Facebookカバー写真サイズ書き出し | ImgSplit", description: "1枚の画像からFacebookページのカバー写真とグループカバーを作成。無料・プライベートなブラウザツールでアップロード不要。", ogTitle: "Facebookカバー写真サイズ", ogDescription: "トリミングを調整してFacebookカバー写真を書き出し。" },
+    hero: { overline: "Facebookカバー写真サイズ", headlinePart1: "", headlineAccent: "Facebookカバー", headlinePart2: "を作成", description: "1枚の画像をFacebookページカバーや関連するカバー形式にトリミングし、出力ごとに個別のクロップ調整ができます。" },
+    scenarios: [
+      { icon: "Image", title: "ページカバー", description: "被写体の位置を意識しながら、横長のFacebookページカバー画像を準備できます。" },
+      { icon: "LayoutTemplate", title: "カバーバリエーション", description: "同じ元画像からページ用とグループ用のカバークロップを書き出せます。" },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "画像を1枚アップロード", description: "PNG、JPEG、WebPを追加。画像はブラウザ内に留まります。" },
+      { stepNumber: 2, title: "SNSサイズを選択", description: "Instagram、YouTube、Facebook、X/Twitter、LinkedIn、TikTokの出力を選びます。" },
+      { stepNumber: 3, title: "ZIPを書き出し", description: "トリミングを調整し、形式を選んでプラットフォーム名付きのZIPを保存します。" },
+    ],
+    faqEntries: [
+      { question: "含まれるFacebookカバーサイズは？", answer: "ページカバープリセットは851 x 315ピクセル、グループカバー形式は1640 x 856ピクセルを書き出します。" },
+      { question: "テキストを端から離して配置できますか？", answer: "はい。ダウンロード前にプレビューをドラッグしてクロップを調整できます。" },
+      { question: "Facebookカバーだけを書き出せますか？", answer: "はい。Facebookの出力だけを選択してZIPをダウンロードできます。" },
+    ],
+    relatedTools: [
+      { slug: "/social-export", title: "SNS書き出し", description: "1枚の画像から複数のSNSサイズを生成。" },
+      { slug: "/resize", title: "画像リサイズ", description: "カスタムトリミングや単一サイズを作成。" },
+      { slug: "/compress", title: "画像圧縮", description: "完成した書き出しを軽量化。" },
+    ],
+  },
+
+  "linkedin-post-size": {
+    slug: "linkedin-post-size",
+    category: "use-case",
+    seo: { title: "LinkedIn投稿サイズ書き出し - 1200x628 | ImgSplit", description: "画像を1200x628のLinkedIn投稿サイズにリサイズし、他のSNSサイズも同時に書き出せます。ブラウザ内処理でアップロード不要。", ogTitle: "LinkedIn投稿サイズ書き出し", ogDescription: "1200x628のLinkedIn投稿画像を作成。" },
+    hero: { overline: "LinkedIn投稿サイズ", headlinePart1: "", headlineAccent: "LinkedIn投稿", headlinePart2: "を書き出し", description: "任意の画像から1200x628のLinkedIn投稿画像を作成し、必要に応じてInstagram、YouTube、Facebook、X用の素材も書き出せます。" },
+    scenarios: [
+      { icon: "Share2", title: "ビジネス投稿", description: "お知らせ、リリース、記事用の画像をLinkedInフィード向けに準備できます。" },
+      { icon: "Layers", title: "クロスチャネル素材", description: "同じビジュアルをLinkedInと他のプラットフォーム向けに1回の書き出しで用意できます。" },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "画像を1枚アップロード", description: "PNG、JPEG、WebPを追加。画像はブラウザ内に留まります。" },
+      { stepNumber: 2, title: "SNSサイズを選択", description: "Instagram、YouTube、Facebook、X/Twitter、LinkedIn、TikTokの出力を選びます。" },
+      { stepNumber: 3, title: "ZIPを書き出し", description: "トリミングを調整し、形式を選んでプラットフォーム名付きのZIPを保存します。" },
+    ],
+    faqEntries: [
+      { question: "書き出せるLinkedIn投稿サイズは？", answer: "LinkedInプリセットは1200 x 628ピクセルを書き出します。" },
+      { question: "トリミングを変更できますか？", answer: "はい。LinkedIn出力を選択し、フィル、フィット、拡大率、位置を調整できます。" },
+      { question: "アップロードなしで使えますか？", answer: "はい。画像はブラウザ内に留まります。" },
+    ],
+    relatedTools: [
+      { slug: "/social-export", title: "SNS書き出し", description: "1枚の画像から複数のSNSサイズを生成。" },
+      { slug: "/resize", title: "画像リサイズ", description: "カスタムトリミングや単一サイズを作成。" },
+      { slug: "/compress", title: "画像圧縮", description: "完成した書き出しを軽量化。" },
+    ],
+  },
+
+  "twitter-header-size": {
+    slug: "twitter-header-size",
+    category: "use-case",
+    seo: { title: "Twitterヘッダーサイズ書き出し - Xヘッダー1500x500 | ImgSplit", description: "1枚の画像から1500x500のTwitter/Xヘッダー画像を作成。トリミング調整とブラウザ内書き出しに対応。アップロード不要、ZIP保存。", ogTitle: "Twitterヘッダーサイズ書き出し", ogDescription: "1500x500のX/Twitterヘッダー画像を作成。" },
+    hero: { overline: "Twitterヘッダーサイズ", headlinePart1: "", headlineAccent: "1500x500", headlinePart2: "のヘッダーを書き出し", description: "任意の画像を1500x500のX/Twitterプロフィールヘッダーにトリミングし、同じ元画像から関連するSNSサイズも書き出せます。" },
+    scenarios: [
+      { icon: "Maximize2", title: "プロフィールヘッダー", description: "被写体を中央に配置し、端が切れない横長のヘッダークロップを作成できます。" },
+      { icon: "Package", title: "SNS一括ZIP", description: "必要に応じて投稿、サムネイル、フィード用の形式も同じZIPに追加できます。" },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "画像を1枚アップロード", description: "PNG、JPEG、WebPを追加。画像はブラウザ内に留まります。" },
+      { stepNumber: 2, title: "SNSサイズを選択", description: "Instagram、YouTube、Facebook、X/Twitter、LinkedIn、TikTokの出力を選びます。" },
+      { stepNumber: 3, title: "ZIPを書き出し", description: "トリミングを調整し、形式を選んでプラットフォーム名付きのZIPを保存します。" },
+    ],
+    faqEntries: [
+      { question: "Twitter/Xヘッダーのサイズは？", answer: "ヘッダープリセットは1500 x 500ピクセルを書き出します。" },
+      { question: "X投稿用の画像も書き出せますか？", answer: "はい。Xの横長投稿プリセットを選択したままにするか、すべてのプリセットパックを選べます。" },
+      { question: "JPEGで保存できますか？", answer: "はい。書き出す前にPNG、JPEG、WebPから選択できます。" },
+    ],
+    relatedTools: [
+      { slug: "/social-export", title: "SNS書き出し", description: "1枚の画像から複数のSNSサイズを生成。" },
+      { slug: "/resize", title: "画像リサイズ", description: "カスタムトリミングや単一サイズを作成。" },
+      { slug: "/compress", title: "画像圧縮", description: "完成した書き出しを軽量化。" },
+    ],
+  },
+
+  "canva-image-splitter": {
+    slug: "canva-image-splitter",
+    category: "use-case",
+    seo: { title: "Canva画像分割ツール - Canvaデザインをカルーセルに分割 | ImgSplit", description: "CanvaのデザインをPNGまたはJPEGで書き出し、ブラウザ内でカルーセルパネルに分割。無料・プライベート・登録不要。", ogTitle: "Canva画像分割ツール", ogDescription: "Canvaの書き出し画像をカルーセルパネルに即分割。" },
+    hero: { overline: "Canvaカルーセル分割", headlinePart1: "Canvaデザインを", headlineAccent: "カルーセルパネル", headlinePart2: "に分割", description: "Canvaのデザインを1枚の画像として書き出してここにドロップすれば、Instagram、LinkedIn、TikTok向けにぴったり揃ったカルーセルパネルへ分割できます。プラグイン不要。" },
+    scenarios: [
+      { icon: "Layers2", title: "Canvaカルーセルワークフロー", description: "横長のCanvaキャンバスを1枚の画像として書き出し、番号付きのカルーセルスライドに分割できます。" },
+      { icon: "Columns", title: "シームレスなパネル整列", description: "各パネルの境界がぴったり揃うため、カルーセルが1枚の連続した画像のように見えます。" },
+      { icon: "Download", title: "番号付きZIP書き出し", description: "パネルは順番に番号付きで保存されるので、そのまま順にカルーセルスライドとしてアップロードするだけです。" },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "Canvaから書き出し", description: "Canvaでデザインをフルサイズ・PNGまたはJPEG形式でダウンロードします。" },
+      { stepNumber: 2, title: "アップロードしてパネル数を設定", description: "書き出した画像をここにドロップし、何枚のパネルに分割するかを選択します。" },
+      { stepNumber: 3, title: "ダウンロードして投稿", description: "番号付きパネルのZIPを書き出し、スライドを順番にカルーセルへアップロードします。" },
+    ],
+    faqEntries: [
+      { question: "カルーセル分割用にCanvaデザインを書き出すには？", answer: "Canvaで「共有」→「ダウンロード」からPNGまたはJPEGを選択します。そのファイルをここにアップロードすればカルーセルパネルに分割できます。" },
+      { question: "Canvaの複数ページデザインにも対応していますか？", answer: "このツールは1枚のフラットな画像を分割します。複数ページのCanvaデザインは、各ページを個別に書き出すか、先に1枚の長い画像に結合してください。" },
+      { question: "パネルはシームレスなカルーセル用にぴったり揃いますか？", answer: "はい。正確なピクセル境界でカットするため、隣り合うパネルの境界がきれいに揃います。" },
+      { question: "利用にCanvaアカウントは必要ですか？", answer: "いいえ。このツールは独立して動作します。必要なのはPNGまたはJPEGファイルだけで、Canva以外の画像でも使えます。" },
+    ],
+    relatedTools: [
+      { slug: "/grid", title: "グリッド分割", description: "画像を均等なグリッドに分割します。" },
+      { slug: "/collage", title: "フォトコラージュ", description: "複数の画像を1つのコラージュにまとめます。" },
+      { slug: "/social-export", title: "SNS書き出し", description: "1枚の画像から複数のSNSサイズを生成。" },
+    ],
+  },
+
 }
 
 export default data

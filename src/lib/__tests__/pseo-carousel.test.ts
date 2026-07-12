@@ -22,19 +22,18 @@ describe("pseo carousel pages", () => {
     expect(data?.faqEntries.length).toBeGreaterThanOrEqual(3)
   })
 
-  it("carousel-splitter is available in en, es, ja, ko, zh-CN", () => {
+  it("carousel-splitter is available in every locale", () => {
     const locales = getToolPageLocales("carousel-splitter")
-    expect(locales).toContain("en")
-    expect(locales).toContain("es")
-    expect(locales).toContain("ja")
-    expect(locales).toContain("ko")
-    expect(locales).toContain("zh-CN")
-    expect(locales).not.toContain("pt-BR")
+    for (const locale of ["en", "zh-CN", "ja", "ko", "es", "pt-BR"]) {
+      expect(locales).toContain(locale)
+    }
   })
 
-  it("canva-image-splitter is only in en", () => {
+  it("canva-image-splitter is available in every locale", () => {
     const locales = getToolPageLocales("canva-image-splitter")
-    expect(locales).toEqual(["en"])
+    for (const locale of ["en", "zh-CN", "ja", "ko", "es", "pt-BR"]) {
+      expect(locales).toContain(locale)
+    }
   })
 
   it("all pt-BR slugs are available only in pt-BR", () => {

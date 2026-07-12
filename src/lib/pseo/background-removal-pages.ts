@@ -1,24 +1,8 @@
-import type { RelatedTool, ToolPageData } from "./types"
+import type { PseoLocale, RelatedTool, ToolPageData, ToolPageSeed } from "./types"
 
-type LocaleKey = "en" | "zh-CN" | "ja" | "ko" | "es"
-type LocaleBackgroundRemovalPages = Record<LocaleKey, Record<string, ToolPageData>>
+type LocaleBackgroundRemovalPages = Record<PseoLocale, Record<string, ToolPageData>>
 
-interface BackgroundRemovalPageSeed {
-  slug: string
-  title: string
-  description: string
-  ogTitle: string
-  ogDescription: string
-  overline: string
-  headlinePart1: string
-  headlineAccent: string
-  headlinePart2: string
-  heroDescription: string
-  scenarios: ToolPageData["scenarios"]
-  faqEntries: ToolPageData["faqEntries"]
-}
-
-const relatedTools: Record<LocaleKey, RelatedTool[]> = {
+const relatedTools: Record<PseoLocale, RelatedTool[]> = {
   en: [
     { slug: "/remove-background", title: "AI Background Remover", description: "Remove backgrounds locally and export transparent PNG, WebP, or JPG." },
     { slug: "/compress", title: "Image Compressor", description: "Compress finished transparent or white-background exports." },
@@ -44,9 +28,14 @@ const relatedTools: Record<LocaleKey, RelatedTool[]> = {
     { slug: "/compress", title: "Compresor de imágenes", description: "Comprime resultados con fondo transparente o blanco." },
     { slug: "/resize", title: "Redimensionar imagen", description: "Recorta o redimensiona antes de publicar." },
   ],
+  "pt-BR": [
+    { slug: "/remove-background", title: "Removedor de Fundo com IA", description: "Remova fundos localmente e exporte PNG transparente, WebP ou JPG." },
+    { slug: "/compress", title: "Compressor de Imagens", description: "Comprima os resultados com fundo transparente ou branco." },
+    { slug: "/resize", title: "Redimensionar Imagem", description: "Recorte ou redimensione imagens antes de publicar." },
+  ],
 }
 
-const howToSteps: Record<LocaleKey, ToolPageData["howToSteps"]> = {
+const howToSteps: Record<PseoLocale, ToolPageData["howToSteps"]> = {
   en: [
     { stepNumber: 1, title: "Upload Images", description: "Choose one image or add several PNG, JPEG, or WebP files for bulk processing." },
     { stepNumber: 2, title: "Run Local AI", description: "Download the model once, then remove backgrounds inside your browser." },
@@ -72,9 +61,14 @@ const howToSteps: Record<LocaleKey, ToolPageData["howToSteps"]> = {
     { stepNumber: 2, title: "Ejecuta IA local", description: "Descarga el modelo una vez y quita fondos dentro del navegador." },
     { stepNumber: 3, title: "Exporta resultados", description: "Descarga PNG/WebP transparente, JPG con fondo blanco o un ZIP de elementos listos." },
   ],
+  "pt-BR": [
+    { stepNumber: 1, title: "Envie suas imagens", description: "Escolha uma imagem ou adicione vários arquivos PNG, JPEG ou WebP para processar em lote." },
+    { stepNumber: 2, title: "Execute a IA local", description: "Baixe o modelo uma única vez e remova os fundos direto no seu navegador." },
+    { stepNumber: 3, title: "Exporte os resultados", description: "Baixe PNG/WebP transparente, JPG com fundo branco ou um ZIP com os itens prontos do lote." },
+  ],
 }
 
-const seeds: Record<LocaleKey, BackgroundRemovalPageSeed[]> = {
+const seeds: Record<PseoLocale, ToolPageSeed[]> = {
   en: [
     {
       slug: "transparent-background-maker",
@@ -415,9 +409,77 @@ const seeds: Record<LocaleKey, BackgroundRemovalPageSeed[]> = {
       ],
     },
   ],
+  "pt-BR": [
+    {
+      slug: "transparent-background-maker",
+      title: "Criar Fundo Transparente - IA Local Grátis | ImgSplit",
+      description: "Deixe o fundo de imagens PNG, JPG ou WebP transparente com remoção de fundo por IA local. Tudo no navegador, privado e sem enviar sua imagem.",
+      ogTitle: "Criar Fundo Transparente",
+      ogDescription: "Crie fundos transparentes em PNG e WebP direto no navegador.",
+      overline: "Fundo Transparente",
+      headlinePart1: "Crie ",
+      headlineAccent: "Fundos Transparentes",
+      headlinePart2: "Online",
+      heroDescription: "Remova o fundo das imagens com IA local, visualize o resultado transparente no padrão xadrez, ajuste as bordas e exporte PNG ou WebP sem enviar sua imagem para nenhum servidor.",
+      scenarios: [
+        { icon: "Image", title: "Exportação em PNG transparente", description: "Transforme fotos de produto, retratos, ícones e artes em recursos com fundo transparente." },
+        { icon: "ShieldCheck", title: "Processamento privado no navegador", description: "O modelo de IA é baixado uma única vez; sua imagem permanece no dispositivo durante a edição e a exportação." },
+        { icon: "Sparkles", title: "Ajuste de bordas", description: "Refine restos sutis, expansão de borda e suavização antes de baixar o resultado final." },
+      ],
+      faqEntries: [
+        { question: "Posso deixar o fundo de um JPG transparente?", answer: "Sim. Envie um JPG, remova o fundo e exporte o resultado como PNG ou WebP transparente." },
+        { question: "Minha imagem é enviada para algum servidor?", answer: "Não. O arquivo do modelo é baixado, mas o processamento e a exportação da imagem acontecem localmente no seu navegador." },
+        { question: "Por que a ferramenta baixa um modelo primeiro?", answer: "O modelo permite remover o fundo com IA no seu próprio dispositivo. Depois do download, o navegador reutiliza o modelo em cache." },
+      ],
+    },
+    {
+      slug: "remove-background-free",
+      title: "Remover Fundo de Imagem Grátis - IA Local Privada | ImgSplit",
+      description: "Remova o fundo de imagens grátis com IA local no navegador. Sem upload de imagens, com PNG/WebP transparente e download em ZIP por lote.",
+      ogTitle: "Remover Fundo Grátis",
+      ogDescription: "Remoção de fundo grátis com IA no navegador e processamento local privado.",
+      overline: "Removedor de Fundo Grátis",
+      headlinePart1: "Remova ",
+      headlineAccent: "Fundos Grátis",
+      headlinePart2: "Online",
+      heroDescription: "Use IA local para remover o fundo de fotos de produto, retratos e artes gratuitamente. O modelo é baixado uma única vez, as imagens ficam no seu dispositivo e os arquivos prontos são exportados em PNG, WebP, JPG ou ZIP.",
+      scenarios: [
+        { icon: "Sparkles", title: "Recortes com IA grátis", description: "Crie recortes limpos com fundo transparente sem cadastro e sem enviar arquivos de imagem." },
+        { icon: "ShieldCheck", title: "Privado por padrão", description: "Apenas o modelo é baixado; o processamento das imagens acontece dentro deste navegador." },
+        { icon: "Images", title: "Uma imagem ou lote", description: "Remova um fundo, adicione mais imagens ou baixe os resultados prontos do lote em um ZIP." },
+      ],
+      faqEntries: [
+        { question: "Este removedor de fundo é grátis?", answer: "Sim. A ferramenta é gratuita e executa a remoção de fundo localmente no navegador assim que o modelo estiver disponível." },
+        { question: "Preciso criar uma conta?", answer: "Não. Envie uma imagem, execute a remoção de fundo com IA local e exporte o resultado direto do navegador." },
+        { question: "Posso baixar o resultado com fundo transparente?", answer: "Sim. Exporte PNG ou WebP transparente, ou escolha JPG quando quiser fundo branco." },
+      ],
+    },
+    {
+      slug: "bulk-background-remover",
+      title: "Remover Fundo em Lote - IA no Navegador | ImgSplit",
+      description: "Remova o fundo de várias imagens em uma única fila no navegador. Adicione imagens, execute a IA local e baixe os resultados em um ZIP.",
+      ogTitle: "Remover Fundo em Lote",
+      ogDescription: "Remova o fundo de várias imagens localmente e baixe tudo em um ZIP.",
+      overline: "Remoção de Fundo em Lote",
+      headlinePart1: "Remova ",
+      headlineAccent: "Fundos em Lote",
+      headlinePart2: "Online",
+      heroDescription: "Envie várias imagens, processe uma fila de IA local em sequência, repita os itens que falharem, visualize os resultados prontos e exporte os arquivos transparentes juntos em um ZIP.",
+      scenarios: [
+        { icon: "Images", title: "Conjuntos de fotos de produto", description: "Processe várias imagens de catálogo, marketplace ou loja com os mesmos ajustes de acabamento." },
+        { icon: "Layers", title: "Controle da fila em lote", description: "Acompanhe itens não iniciados, em processamento, prontos, com falha e cancelados antes de baixar." },
+        { icon: "ShieldCheck", title: "Sem upload de imagens", description: "Cada imagem é processada no navegador assim que o modelo local estiver disponível." },
+      ],
+      faqEntries: [
+        { question: "Posso remover o fundo de várias imagens de uma vez?", answer: "Sim. Envie várias imagens ou use a opção de adicionar mais e depois inicie a fila em lote." },
+        { question: "Como funciona o download em lote?", answer: "Os itens prontos podem ser exportados em um único ZIP. Itens com falha ou cancelados ficam de fora até serem reprocessados." },
+        { question: "O modo em lote envia meus arquivos?", answer: "Não. As imagens permanecem no seu navegador; apenas o arquivo do modelo de IA é baixado quando necessário." },
+      ],
+    },
+  ],
 }
 
-function createPages(locale: LocaleKey): Record<string, ToolPageData> {
+function createPages(locale: PseoLocale): Record<string, ToolPageData> {
   return Object.fromEntries(
     seeds[locale].map((seed) => [
       seed.slug,
@@ -452,4 +514,5 @@ export const backgroundRemovalPagesByLocale: LocaleBackgroundRemovalPages = {
   ja: createPages("ja"),
   ko: createPages("ko"),
   es: createPages("es"),
+  "pt-BR": createPages("pt-BR"),
 }

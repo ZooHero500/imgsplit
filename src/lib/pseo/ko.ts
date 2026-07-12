@@ -1090,6 +1090,267 @@ const data: Record<string, ToolPageData> = {
     ],
   },
 
+  "social-media-image-sizes": {
+    slug: "social-media-image-sizes",
+    category: "use-case",
+    seo: {
+      title: "SNS 이미지 사이즈 가이드 & 내보내기 | ImgSplit",
+      description: "Instagram, YouTube, Facebook, X, LinkedIn, TikTok의 최신 이미지 사이즈를 하나의 브라우저 편집기에서 만드세요. 업로드 없이 비공개로 처리됩니다.",
+      ogTitle: "SNS 이미지 사이즈",
+      ogDescription: "각 플랫폼에서 실제로 쓰이는 이미지 사이즈를 내보내세요.",
+    },
+    hero: {
+      overline: "SNS 이미지 사이즈",
+      headlinePart1: "플랫폼별",
+      headlineAccent: "이미지 사이즈",
+      headlinePart2: "를 빠르게 제작",
+      description: "원본 이미지 한 장으로 Instagram 게시물과 스토리, YouTube 썸네일, Facebook 커버, X 헤더, LinkedIn 게시물, 세로형 TikTok 이미지를 내보내세요.",
+    },
+    scenarios: [
+      { icon: "Ruler", title: "사이즈 레퍼런스", description: "치수를 하나하나 직접 계산하는 대신 실용적인 플랫폼 프리셋에서 바로 시작하세요." },
+      { icon: "Package", title: "일괄 내보내기", description: "선택한 형식을 플랫폼별 폴더와 크기 라벨이 포함된 ZIP 하나로 다운로드하세요." },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "이미지 한 장 업로드", description: "PNG, JPEG, WebP 이미지를 추가하세요. 파일은 브라우저에 머뭅니다." },
+      { stepNumber: 2, title: "플랫폼 크기 선택", description: "Instagram, YouTube, X, TikTok, Xiaohongshu, WeChat, Facebook 출력을 선택하세요." },
+      { stepNumber: 3, title: "ZIP 내보내기", description: "자르기를 조정하고 형식을 선택한 뒤 플랫폼별 ZIP을 다운로드하세요." },
+    ],
+    faqEntries: [
+      { question: "어떤 SNS 이미지 사이즈가 포함되나요?", answer: "Instagram 피드와 스토리, YouTube 썸네일, Facebook 커버, X/Twitter 헤더, LinkedIn 게시물, TikTok 세로형, Xiaohongshu 커버, WeChat 커버 프리셋이 포함됩니다." },
+      { question: "해외 주요 플랫폼 사이즈만 선택할 수 있나요?", answer: "네. Western 프리셋 팩을 사용하면 Instagram, YouTube, Facebook, X/Twitter, LinkedIn, TikTok용 출력만 내보낼 수 있습니다." },
+      { question: "중국 플랫폼 사이즈도 내보낼 수 있나요?", answer: "네. 중국 크리에이터 팩으로 Xiaohongshu, WeChat, 세로형 숏폼 출력을 만들 수 있습니다." },
+    ],
+    relatedTools: [
+      { slug: "/social-export", title: "소셜 내보내기", description: "이미지 한 장에서 여러 소셜 크기를 만드세요." },
+      { slug: "/resize", title: "이미지 크기 조정", description: "사용자 지정 자르기나 단일 플랫폼 크기를 만드세요." },
+      { slug: "/compress", title: "이미지 압축", description: "완성된 내보내기 파일을 더 작게 압축하세요." },
+    ],
+  },
+
+  "instagram-post-size": {
+    slug: "instagram-post-size",
+    category: "use-case",
+    seo: {
+      title: "Instagram 게시물 사이즈 내보내기 — 1080x1080 & 1080x1350 | ImgSplit",
+      description: "이미지 한 장으로 Instagram 게시물 사이즈를 만드세요. 정사각형 피드, 세로형 피드, 함께 쓸 스토리 자르기까지 — 업로드 없이 브라우저에서 비공개로 내보냅니다.",
+      ogTitle: "Instagram 게시물 사이즈 내보내기",
+      ogDescription: "1080x1080과 1080x1350 Instagram 게시물 이미지를 만드세요.",
+    },
+    hero: {
+      overline: "Instagram 게시물 사이즈",
+      headlinePart1: "Instagram",
+      headlineAccent: "게시물",
+      headlinePart2: "내보내기",
+      description: "업로드 한 번으로 1080x1080 정사각형 게시물과 1080x1350 세로형 게시물을 준비하고, 다운로드 전에 각 자르기를 세밀하게 조정하세요.",
+    },
+    scenarios: [
+      { icon: "Instagram", title: "피드 게시물", description: "수동 리사이즈 작업을 반복하지 않고 정사각형과 세로형 피드 이미지를 만드세요." },
+      { icon: "Crop", title: "비율별 자르기", description: "각 Instagram 비율에서 얼굴, 제품, 텍스트가 잘리지 않도록 유지하세요." },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "이미지 한 장 업로드", description: "PNG, JPEG, WebP 이미지를 추가하세요. 파일은 브라우저에 머뭅니다." },
+      { stepNumber: 2, title: "플랫폼 크기 선택", description: "Instagram, YouTube, X, TikTok, Xiaohongshu, WeChat, Facebook 출력을 선택하세요." },
+      { stepNumber: 3, title: "ZIP 내보내기", description: "자르기를 조정하고 형식을 선택한 뒤 플랫폼별 ZIP을 다운로드하세요." },
+    ],
+    faqEntries: [
+      { question: "어떤 Instagram 게시물 사이즈를 내보내나요?", answer: "기본 피드 프리셋은 1080 x 1080 정사각형 게시물과 1080 x 1350 세로형 게시물을 내보냅니다." },
+      { question: "같은 이미지로 스토리도 만들 수 있나요?", answer: "네. 1080 x 1920 스토리/릴스 프리셋을 함께 선택하고 해당 자르기를 따로 조정하세요." },
+      { question: "ImgSplit이 이미지를 업로드하나요?", answer: "아니요. 이미지 렌더링과 ZIP 압축이 모두 브라우저에서 로컬로 처리됩니다." },
+    ],
+    relatedTools: [
+      { slug: "/social-export", title: "소셜 내보내기", description: "이미지 한 장에서 여러 소셜 크기를 만드세요." },
+      { slug: "/resize", title: "이미지 크기 조정", description: "사용자 지정 자르기나 단일 플랫폼 크기를 만드세요." },
+      { slug: "/compress", title: "이미지 압축", description: "완성된 내보내기 파일을 더 작게 압축하세요." },
+    ],
+  },
+
+  "instagram-story-size": {
+    slug: "instagram-story-size",
+    category: "use-case",
+    seo: {
+      title: "Instagram 스토리 사이즈 내보내기 — 1080x1920 | ImgSplit",
+      description: "이미지를 1080x1920 Instagram 스토리 사이즈로 조정하고, 같은 원본에서 피드용 이미지도 함께 내보내세요. 업로드 없이 브라우저에서 처리됩니다.",
+      ogTitle: "Instagram 스토리 사이즈 내보내기",
+      ogDescription: "브라우저에서 1080x1920 Instagram 스토리 이미지를 만드세요.",
+    },
+    hero: {
+      overline: "Instagram 스토리 사이즈",
+      headlinePart1: "스토리를",
+      headlineAccent: "1080x1920",
+      headlinePart2: "으로 내보내기",
+      description: "이미지 한 장을 세로형 Instagram 스토리나 릴스 스타일 이미지로 만들고, 피드, YouTube, X용 출력도 같은 ZIP에 담으세요.",
+    },
+    scenarios: [
+      { icon: "Smartphone", title: "세로형 스토리", description: "모바일 중심 게시를 위한 풀스크린 9:16 이미지를 준비하세요." },
+      { icon: "Share2", title: "캠페인 세트", description: "스토리와 피드 사이즈를 함께 내보내 하나의 캠페인 비주얼을 일관되게 유지하세요." },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "이미지 한 장 업로드", description: "PNG, JPEG, WebP 이미지를 추가하세요. 파일은 브라우저에 머뭅니다." },
+      { stepNumber: 2, title: "플랫폼 크기 선택", description: "Instagram, YouTube, X, TikTok, Xiaohongshu, WeChat, Facebook 출력을 선택하세요." },
+      { stepNumber: 3, title: "ZIP 내보내기", description: "자르기를 조정하고 형식을 선택한 뒤 플랫폼별 ZIP을 다운로드하세요." },
+    ],
+    faqEntries: [
+      { question: "Instagram 스토리 프리셋 크기는 얼마인가요?", answer: "스토리 프리셋은 1080 x 1920 픽셀, 9:16 세로형 이미지를 내보냅니다." },
+      { question: "이미지 위치를 조정할 수 있나요?", answer: "네. 스토리 출력을 선택한 뒤 미리보기를 드래그하고 채우기, 맞춤, 배율을 조정하세요." },
+      { question: "WebP로 내보낼 수 있나요?", answer: "네. ZIP을 다운로드하기 전에 PNG, JPEG 또는 WebP를 선택하세요." },
+    ],
+    relatedTools: [
+      { slug: "/social-export", title: "소셜 내보내기", description: "이미지 한 장에서 여러 소셜 크기를 만드세요." },
+      { slug: "/resize", title: "이미지 크기 조정", description: "사용자 지정 자르기나 단일 플랫폼 크기를 만드세요." },
+      { slug: "/compress", title: "이미지 압축", description: "완성된 내보내기 파일을 더 작게 압축하세요." },
+    ],
+  },
+
+  "facebook-cover-photo-size": {
+    slug: "facebook-cover-photo-size",
+    category: "use-case",
+    seo: {
+      title: "Facebook 커버 사진 사이즈 내보내기 | ImgSplit",
+      description: "원본 이미지 한 장으로 Facebook 페이지 커버 사진과 그룹 커버 스타일 이미지를 만드세요. 업로드 없는 무료 비공개 브라우저 도구입니다.",
+      ogTitle: "Facebook 커버 사진 사이즈",
+      ogDescription: "자르기를 조정하며 Facebook 커버 사진을 내보내세요.",
+    },
+    hero: {
+      overline: "Facebook 커버 사진 사이즈",
+      headlinePart1: "Facebook",
+      headlineAccent: "커버",
+      headlinePart2: "만들기",
+      description: "이미지 한 장을 Facebook 페이지 커버와 관련 커버 형식으로 자르고, 출력마다 자르기를 따로 조정하세요.",
+    },
+    scenarios: [
+      { icon: "Image", title: "페이지 커버", description: "피사체를 의도한 위치에 배치한 와이드 Facebook 페이지 커버를 준비하세요." },
+      { icon: "LayoutTemplate", title: "커버 변형", description: "같은 원본에서 페이지 커버와 그룹 스타일 커버 자르기를 함께 내보내세요." },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "이미지 한 장 업로드", description: "PNG, JPEG, WebP 이미지를 추가하세요. 파일은 브라우저에 머뭅니다." },
+      { stepNumber: 2, title: "플랫폼 크기 선택", description: "Instagram, YouTube, X, TikTok, Xiaohongshu, WeChat, Facebook 출력을 선택하세요." },
+      { stepNumber: 3, title: "ZIP 내보내기", description: "자르기를 조정하고 형식을 선택한 뒤 플랫폼별 ZIP을 다운로드하세요." },
+    ],
+    faqEntries: [
+      { question: "어떤 Facebook 커버 크기가 포함되나요?", answer: "페이지 커버 프리셋은 851 x 315 픽셀, 그룹 커버 스타일 프리셋은 1640 x 856 픽셀을 내보냅니다." },
+      { question: "텍스트가 가장자리에서 잘리지 않게 할 수 있나요?", answer: "네. 다운로드 전에 미리보기에서 자르기 위치를 드래그해 조정하세요." },
+      { question: "Facebook 커버만 내보낼 수 있나요?", answer: "네. Facebook 출력만 선택한 뒤 ZIP을 다운로드하세요." },
+    ],
+    relatedTools: [
+      { slug: "/social-export", title: "소셜 내보내기", description: "이미지 한 장에서 여러 소셜 크기를 만드세요." },
+      { slug: "/resize", title: "이미지 크기 조정", description: "사용자 지정 자르기나 단일 플랫폼 크기를 만드세요." },
+      { slug: "/compress", title: "이미지 압축", description: "완성된 내보내기 파일을 더 작게 압축하세요." },
+    ],
+  },
+
+  "linkedin-post-size": {
+    slug: "linkedin-post-size",
+    category: "use-case",
+    seo: {
+      title: "LinkedIn 게시물 사이즈 내보내기 — 1200x628 | ImgSplit",
+      description: "이미지를 1200x628 LinkedIn 게시물 사이즈로 조정하고 다른 소셜 크기도 함께 내보내세요. 업로드 없이 브라우저에서 비공개로 처리됩니다.",
+      ogTitle: "LinkedIn 게시물 사이즈 내보내기",
+      ogDescription: "1200x628 LinkedIn 게시물 이미지를 만드세요.",
+    },
+    hero: {
+      overline: "LinkedIn 게시물 사이즈",
+      headlinePart1: "LinkedIn",
+      headlineAccent: "게시물",
+      headlinePart2: "내보내기",
+      description: "어떤 이미지든 1200x628 LinkedIn 게시물 이미지로 만들고, 필요하면 Instagram, YouTube, Facebook, X 버전도 함께 내보내세요.",
+    },
+    scenarios: [
+      { icon: "Share2", title: "프로페셔널 게시물", description: "LinkedIn 피드용 공지, 출시, 아티클 이미지를 준비하세요." },
+      { icon: "Layers", title: "크로스 채널 자산", description: "같은 비주얼을 LinkedIn과 다른 플랫폼용으로 한 번의 내보내기로 준비하세요." },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "이미지 한 장 업로드", description: "PNG, JPEG, WebP 이미지를 추가하세요. 파일은 브라우저에 머뭅니다." },
+      { stepNumber: 2, title: "플랫폼 크기 선택", description: "Instagram, YouTube, X, TikTok, Xiaohongshu, WeChat, Facebook 출력을 선택하세요." },
+      { stepNumber: 3, title: "ZIP 내보내기", description: "자르기를 조정하고 형식을 선택한 뒤 플랫폼별 ZIP을 다운로드하세요." },
+    ],
+    faqEntries: [
+      { question: "어떤 LinkedIn 게시물 사이즈를 내보내나요?", answer: "LinkedIn 프리셋은 1200 x 628 픽셀을 내보냅니다." },
+      { question: "자르기를 변경할 수 있나요?", answer: "네. LinkedIn 출력을 선택하고 채우기, 맞춤, 배율, 위치를 조정하세요." },
+      { question: "업로드 없이 작동하나요?", answer: "네. 이미지는 브라우저에만 머뭅니다." },
+    ],
+    relatedTools: [
+      { slug: "/social-export", title: "소셜 내보내기", description: "이미지 한 장에서 여러 소셜 크기를 만드세요." },
+      { slug: "/resize", title: "이미지 크기 조정", description: "사용자 지정 자르기나 단일 플랫폼 크기를 만드세요." },
+      { slug: "/compress", title: "이미지 압축", description: "완성된 내보내기 파일을 더 작게 압축하세요." },
+    ],
+  },
+
+  "twitter-header-size": {
+    slug: "twitter-header-size",
+    category: "use-case",
+    seo: {
+      title: "Twitter 헤더 사이즈 내보내기 — X 헤더 1500x500 | ImgSplit",
+      description: "이미지 한 장으로 1500x500 Twitter/X 헤더를 만드세요. 자르기 조정과 ZIP 출력을 지원하며, 업로드 없이 브라우저에서 비공개로 처리됩니다.",
+      ogTitle: "Twitter 헤더 사이즈 내보내기",
+      ogDescription: "1500x500 X/Twitter 헤더 이미지를 만드세요.",
+    },
+    hero: {
+      overline: "Twitter/X 헤더 사이즈",
+      headlinePart1: "헤더를",
+      headlineAccent: "1500x500",
+      headlinePart2: "으로 내보내기",
+      description: "어떤 이미지든 1500x500 X/Twitter 프로필 헤더로 자르고, 같은 원본에서 관련 소셜 사이즈도 함께 내보내세요.",
+    },
+    scenarios: [
+      { icon: "Maximize2", title: "프로필 헤더", description: "피사체를 중앙에 두고 가장자리 여백을 확보한 와이드 헤더 자르기를 만드세요." },
+      { icon: "Package", title: "소셜 ZIP", description: "필요할 때 게시물, 썸네일, 피드 형식을 같은 ZIP에 함께 담으세요." },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "이미지 한 장 업로드", description: "PNG, JPEG, WebP 이미지를 추가하세요. 파일은 브라우저에 머뭅니다." },
+      { stepNumber: 2, title: "플랫폼 크기 선택", description: "Instagram, YouTube, X, TikTok, Xiaohongshu, WeChat, Facebook 출력을 선택하세요." },
+      { stepNumber: 3, title: "ZIP 내보내기", description: "자르기를 조정하고 형식을 선택한 뒤 플랫폼별 ZIP을 다운로드하세요." },
+    ],
+    faqEntries: [
+      { question: "Twitter/X 헤더 크기는 얼마인가요?", answer: "헤더 프리셋은 1500 x 500 픽셀을 내보냅니다." },
+      { question: "X 게시물 이미지도 내보낼 수 있나요?", answer: "네. X 가로형 게시물 프리셋을 함께 선택하거나 전체 프리셋 팩을 사용하세요." },
+      { question: "JPEG로 저장할 수 있나요?", answer: "네. 내보내기 전에 PNG, JPEG 또는 WebP를 선택하세요." },
+    ],
+    relatedTools: [
+      { slug: "/social-export", title: "소셜 내보내기", description: "이미지 한 장에서 여러 소셜 크기를 만드세요." },
+      { slug: "/resize", title: "이미지 크기 조정", description: "사용자 지정 자르기나 단일 플랫폼 크기를 만드세요." },
+      { slug: "/compress", title: "이미지 압축", description: "완성된 내보내기 파일을 더 작게 압축하세요." },
+    ],
+  },
+
+  "canva-image-splitter": {
+    slug: "canva-image-splitter",
+    category: "use-case",
+    seo: {
+      title: "Canva 이미지 분할기 — Canva 디자인을 캐러셀로 분할 | ImgSplit",
+      description: "Canva 디자인을 PNG나 JPEG로 내보낸 뒤 브라우저에서 바로 캐러셀 패널로 분할하세요. 무료, 비공개, 회원가입이 필요 없습니다.",
+      ogTitle: "Canva 이미지 분할기",
+      ogDescription: "Canva에서 내보낸 이미지를 캐러셀 패널로 즉시 분할하세요.",
+    },
+    hero: {
+      overline: "Canva 캐러셀 분할기",
+      headlinePart1: "Canva 디자인을",
+      headlineAccent: "캐러셀 패널",
+      headlinePart2: "로 분할",
+      description: "Canva 디자인을 이미지 한 장으로 내보내 여기에 올리면 Instagram, LinkedIn, TikTok용으로 완벽하게 정렬된 캐러셀 패널로 분할됩니다. 플러그인이 필요 없습니다.",
+    },
+    scenarios: [
+      { icon: "Layers2", title: "Canva 캐러셀 워크플로", description: "긴 Canva 캔버스를 이미지 한 장으로 내보낸 뒤 번호가 매겨진 캐러셀 슬라이드로 잘라내세요." },
+      { icon: "Columns", title: "매끄러운 패널 정렬", description: "패널 가장자리가 정확히 맞아떨어져 캐러셀이 하나의 연속된 이미지처럼 보입니다." },
+      { icon: "Download", title: "번호 ZIP 내보내기", description: "순서대로 번호가 매겨진 패널을 받아 캐러셀 슬라이드로 차례대로 업로드하세요." },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "Canva에서 내보내기", description: "Canva에서 디자인을 원본 크기의 PNG 또는 JPEG로 다운로드하세요." },
+      { stepNumber: 2, title: "업로드 후 패널 설정", description: "내보낸 이미지를 여기에 올리고 몇 개의 패널로 분할할지 선택하세요." },
+      { stepNumber: 3, title: "다운로드 후 게시", description: "번호가 매겨진 패널 ZIP을 내보내고 순서대로 캐러셀 슬라이드로 업로드하세요." },
+    ],
+    faqEntries: [
+      { question: "캐러셀 분할용 Canva 디자인은 어떻게 내보내나요?", answer: "Canva에서 공유 → 다운로드로 이동해 PNG 또는 JPEG를 선택하세요. 그 파일을 여기에 업로드하면 캐러셀 패널로 분할할 수 있습니다." },
+      { question: "Canva의 여러 페이지 디자인도 지원하나요?", answer: "이 도구는 단일 이미지를 분할합니다. 여러 페이지로 된 Canva 디자인은 페이지별로 내보내거나 먼저 하나의 긴 이미지로 합쳐 주세요." },
+      { question: "패널이 매끄러운 캐러셀로 정확히 정렬되나요?", answer: "네. 정확한 픽셀 경계에서 잘라내므로 인접한 패널이 깨끗한 가장자리를 공유합니다." },
+      { question: "이 도구를 쓰려면 Canva 계정이 필요한가요?", answer: "아니요. 이 도구는 독립적으로 작동합니다. Canva든 어디서든 PNG나 JPEG 파일만 있으면 됩니다." },
+    ],
+    relatedTools: [
+      { slug: "/grid", title: "그리드 분할", description: "이미지를 균일한 그리드 타일로 분할하세요." },
+      { slug: "/collage", title: "사진 콜라주", description: "여러 이미지를 하나의 콜라주 레이아웃으로 합치세요." },
+      { slug: "/social-export", title: "소셜 내보내기", description: "이미지 한 장에서 여러 소셜 크기를 만드세요." },
+    ],
+  },
+
 }
 
 export default data

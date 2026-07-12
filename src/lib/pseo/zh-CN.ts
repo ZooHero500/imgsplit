@@ -1135,6 +1135,190 @@ const data: Record<string, ToolPageData> = {
     ],
   },
 
+  "social-media-image-sizes": {
+    slug: "social-media-image-sizes",
+    category: "use-case",
+    seo: { title: "社交媒体图片尺寸大全与导出工具 | ImgSplit", description: "在浏览器中一站式生成 Instagram、YouTube、Facebook、X、LinkedIn 和 TikTok 的最新图片尺寸，隐私安全，无需上传。", ogTitle: "社交媒体图片尺寸大全", ogDescription: "一键导出各社交平台真正在用的图片尺寸。" },
+    hero: { overline: "社媒图片尺寸", headlinePart1: "一键生成", headlineAccent: "全平台图片尺寸", headlinePart2: "", description: "用一张源图导出 Instagram 帖子和 Story、YouTube 缩略图、Facebook 封面、X 头图、LinkedIn 帖子以及 TikTok 竖版素材。" },
+    scenarios: [
+      { icon: "Ruler", title: "尺寸速查", description: "直接使用各平台实用预设，无需手动记忆和换算尺寸。" },
+      { icon: "Package", title: "批量导出", description: "把选中的尺寸打包为一个 ZIP，按平台分文件夹并在文件名中标注尺寸。" },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "上传一张图片", description: "添加 PNG、JPEG 或 WebP，图片保留在浏览器本地。" },
+      { stepNumber: 2, title: "选择平台尺寸", description: "勾选小红书、微信、抖音/TikTok、Instagram、YouTube、Facebook、X 或 LinkedIn 输出。" },
+      { stepNumber: 3, title: "导出 ZIP", description: "微调裁剪，选择格式，然后下载按平台命名的 ZIP。" },
+    ],
+    faqEntries: [
+      { question: "包含哪些社交媒体图片尺寸？", answer: "编辑器内置 Instagram 帖子和 Story、YouTube 缩略图、Facebook 封面、X/Twitter 头图、LinkedIn 帖子、TikTok 竖版、小红书封面和微信公众号封面等预设。" },
+      { question: "可以只选海外平台的尺寸吗？", answer: "可以。使用海外平台预设包，一次导出 Instagram、YouTube、Facebook、X/Twitter、LinkedIn 和 TikTok 尺寸。" },
+      { question: "还能导出国内平台的尺寸吗？", answer: "可以。使用中文创作者包导出小红书、微信和竖版短视频尺寸。" },
+    ],
+    relatedTools: [
+      { slug: "/social-export", title: "社媒导出", description: "一张图片生成多个社交平台尺寸。" },
+      { slug: "/resize", title: "图片调整尺寸", description: "制作自定义裁剪或单个社媒尺寸。" },
+      { slug: "/compress", title: "图片压缩", description: "导出后压缩图片，方便上传。" },
+    ],
+  },
+
+  "instagram-post-size": {
+    slug: "instagram-post-size",
+    category: "use-case",
+    seo: { title: "Instagram 帖子尺寸导出 — 1080x1080 与 1080x1350 | ImgSplit", description: "一张图生成 Instagram 帖子尺寸：正方形帖子、竖版帖子及配套 Story 裁剪。浏览器端私密导出，无需上传。", ogTitle: "Instagram 帖子尺寸导出", ogDescription: "制作 1080x1080 和 1080x1350 的 Instagram 帖子图片。" },
+    hero: { overline: "Instagram 帖子尺寸", headlinePart1: "导出", headlineAccent: "Instagram 帖子", headlinePart2: "", description: "一次上传即可生成 1080x1080 正方形和 1080x1350 竖版帖子，下载前还能逐一微调裁剪。" },
+    scenarios: [
+      { icon: "Instagram", title: "动态帖子", description: "一次生成正方形和竖版动态图片，不用重复手动调整尺寸。" },
+      { icon: "Crop", title: "按比例裁剪", description: "在每个 Instagram 比例下都让人物、产品和文字保持在画面内。" },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "上传一张图片", description: "添加 PNG、JPEG 或 WebP，图片保留在浏览器本地。" },
+      { stepNumber: 2, title: "选择平台尺寸", description: "勾选小红书、微信、抖音/TikTok、Instagram、YouTube、Facebook、X 或 LinkedIn 输出。" },
+      { stepNumber: 3, title: "导出 ZIP", description: "微调裁剪，选择格式，然后下载按平台命名的 ZIP。" },
+    ],
+    faqEntries: [
+      { question: "会导出哪些 Instagram 帖子尺寸？", answer: "主要动态预设导出 1080 x 1080 正方形帖子和 1080 x 1350 竖版帖子。" },
+      { question: "同一张图可以顺便做 Story 吗？", answer: "可以。保持勾选 1080 x 1920 的 Story/Reel 预设，并单独调整该裁剪。" },
+      { question: "ImgSplit 会上传我的图片吗？", answer: "不会。图片渲染和 ZIP 打包都在浏览器本地完成。" },
+    ],
+    relatedTools: [
+      { slug: "/social-export", title: "社媒导出", description: "一张图片生成多个社交平台尺寸。" },
+      { slug: "/resize", title: "图片调整尺寸", description: "制作自定义裁剪或单个社媒尺寸。" },
+      { slug: "/compress", title: "图片压缩", description: "导出后压缩图片，方便上传。" },
+    ],
+  },
+
+  "instagram-story-size": {
+    slug: "instagram-story-size",
+    category: "use-case",
+    seo: { title: "Instagram Story 尺寸导出 — 1080x1920 | ImgSplit", description: "将图片调整为 1080x1920 的 Instagram Story 尺寸，并可从同一张源图导出动态配套尺寸。浏览器本地处理，无需上传。", ogTitle: "Instagram Story 尺寸导出", ogDescription: "在浏览器中制作 1080x1920 的 Instagram Story 图片。" },
+    hero: { overline: "Instagram Story 尺寸", headlinePart1: "导出", headlineAccent: "1080x1920", headlinePart2: "Story", description: "把一张图片变成竖版 Instagram Story 或 Reel 风格素材，还能在同一个 ZIP 中加入动态、YouTube 或 X 配套尺寸。" },
+    scenarios: [
+      { icon: "Smartphone", title: "竖版 Story", description: "为移动端优先的发布准备 9:16 全屏图片。" },
+      { icon: "Share2", title: "活动配套图", description: "同时导出 Story 和动态尺寸，让同一视觉在整场活动中保持一致。" },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "上传一张图片", description: "添加 PNG、JPEG 或 WebP，图片保留在浏览器本地。" },
+      { stepNumber: 2, title: "选择平台尺寸", description: "勾选小红书、微信、抖音/TikTok、Instagram、YouTube、Facebook、X 或 LinkedIn 输出。" },
+      { stepNumber: 3, title: "导出 ZIP", description: "微调裁剪，选择格式，然后下载按平台命名的 ZIP。" },
+    ],
+    faqEntries: [
+      { question: "Instagram Story 预设是多大？", answer: "Story 预设导出 1080 x 1920 像素的 9:16 竖版图片。" },
+      { question: "可以重新调整图片位置吗？", answer: "可以。选中 Story 输出后拖动预览，并调整填充、适配和缩放。" },
+      { question: "可以导出 WebP 吗？", answer: "可以。下载 ZIP 前选择 PNG、JPEG 或 WebP。" },
+    ],
+    relatedTools: [
+      { slug: "/social-export", title: "社媒导出", description: "一张图片生成多个社交平台尺寸。" },
+      { slug: "/resize", title: "图片调整尺寸", description: "制作自定义裁剪或单个社媒尺寸。" },
+      { slug: "/compress", title: "图片压缩", description: "导出后压缩图片，方便上传。" },
+    ],
+  },
+
+  "facebook-cover-photo-size": {
+    slug: "facebook-cover-photo-size",
+    category: "use-case",
+    seo: { title: "Facebook 封面图片尺寸导出 | ImgSplit", description: "一张源图生成 Facebook 主页封面图，并可附带小组封面样式裁剪。免费、私密的浏览器端工具，无需上传。", ogTitle: "Facebook 封面图片尺寸", ogDescription: "导出可控裁剪的 Facebook 封面图片。" },
+    hero: { overline: "Facebook 封面尺寸", headlinePart1: "制作", headlineAccent: "Facebook 封面", headlinePart2: "", description: "把一张图片裁剪为 Facebook 主页封面及相关封面样式，每个输出都有独立的裁剪控制。" },
+    scenarios: [
+      { icon: "Image", title: "主页封面", description: "准备横版 Facebook 主页封面，让主体位置恰到好处。" },
+      { icon: "LayoutTemplate", title: "封面变体", description: "用同一张源图导出主页封面和小组封面样式的裁剪。" },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "上传一张图片", description: "添加 PNG、JPEG 或 WebP，图片保留在浏览器本地。" },
+      { stepNumber: 2, title: "选择平台尺寸", description: "勾选小红书、微信、抖音/TikTok、Instagram、YouTube、Facebook、X 或 LinkedIn 输出。" },
+      { stepNumber: 3, title: "导出 ZIP", description: "微调裁剪，选择格式，然后下载按平台命名的 ZIP。" },
+    ],
+    faqEntries: [
+      { question: "包含哪种 Facebook 封面尺寸？", answer: "主页封面预设导出 851 x 315 像素，小组封面样式预设导出 1640 x 856 像素。" },
+      { question: "能让文字远离边缘吗？", answer: "可以。下载前在预览中拖动裁剪位置即可。" },
+      { question: "可以只导出 Facebook 封面吗？", answer: "可以。只勾选 Facebook 输出，然后下载 ZIP。" },
+    ],
+    relatedTools: [
+      { slug: "/social-export", title: "社媒导出", description: "一张图片生成多个社交平台尺寸。" },
+      { slug: "/resize", title: "图片调整尺寸", description: "制作自定义裁剪或单个社媒尺寸。" },
+      { slug: "/compress", title: "图片压缩", description: "导出后压缩图片，方便上传。" },
+    ],
+  },
+
+  "linkedin-post-size": {
+    slug: "linkedin-post-size",
+    category: "use-case",
+    seo: { title: "LinkedIn 帖子图片尺寸导出 — 1200x628 | ImgSplit", description: "将图片调整为 1200x628 的 LinkedIn 帖子尺寸，并可选导出其他社媒配套尺寸。浏览器端私密处理，无需上传。", ogTitle: "LinkedIn 帖子尺寸导出", ogDescription: "制作 1200x628 的 LinkedIn 帖子图片。" },
+    hero: { overline: "LinkedIn 帖子尺寸", headlinePart1: "导出", headlineAccent: "LinkedIn 帖子", headlinePart2: "", description: "上传任意图片即可生成 1200x628 的 LinkedIn 帖子图，还可以同时导出 Instagram、YouTube、Facebook 或 X 配套素材。" },
+    scenarios: [
+      { icon: "Share2", title: "职场内容", description: "为 LinkedIn 动态准备公告、发布和文章配图。" },
+      { icon: "Layers", title: "跨渠道素材", description: "一次导出，让同一视觉同时适配 LinkedIn 和其他平台。" },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "上传一张图片", description: "添加 PNG、JPEG 或 WebP，图片保留在浏览器本地。" },
+      { stepNumber: 2, title: "选择平台尺寸", description: "勾选小红书、微信、抖音/TikTok、Instagram、YouTube、Facebook、X 或 LinkedIn 输出。" },
+      { stepNumber: 3, title: "导出 ZIP", description: "微调裁剪，选择格式，然后下载按平台命名的 ZIP。" },
+    ],
+    faqEntries: [
+      { question: "导出的 LinkedIn 帖子尺寸是多少？", answer: "LinkedIn 预设导出 1200 x 628 像素。" },
+      { question: "可以修改裁剪吗？", answer: "可以。选中 LinkedIn 输出后调整填充、适配、缩放和位置。" },
+      { question: "不上传图片也能用吗？", answer: "可以。图片始终保留在你的浏览器中。" },
+    ],
+    relatedTools: [
+      { slug: "/social-export", title: "社媒导出", description: "一张图片生成多个社交平台尺寸。" },
+      { slug: "/resize", title: "图片调整尺寸", description: "制作自定义裁剪或单个社媒尺寸。" },
+      { slug: "/compress", title: "图片压缩", description: "导出后压缩图片，方便上传。" },
+    ],
+  },
+
+  "twitter-header-size": {
+    slug: "twitter-header-size",
+    category: "use-case",
+    seo: { title: "Twitter 头图尺寸导出 — X 封面 1500x500 | ImgSplit", description: "一张图生成 1500x500 的 Twitter/X 头图，支持裁剪控制和浏览器端私密导出。无需上传，ZIP 打包输出。", ogTitle: "Twitter 头图尺寸导出", ogDescription: "制作 1500x500 的 X/Twitter 头图。" },
+    hero: { overline: "Twitter/X 头图尺寸", headlinePart1: "导出", headlineAccent: "1500x500", headlinePart2: "头图", description: "把任意图片裁剪为 1500x500 的 X/Twitter 个人主页头图，并可用同一张源图导出相关社媒尺寸。" },
+    scenarios: [
+      { icon: "Maximize2", title: "主页头图", description: "制作主体居中、远离边缘的横版头图裁剪。" },
+      { icon: "Package", title: "社媒 ZIP", description: "需要时把帖子、缩略图和动态尺寸加入同一个按平台命名的 ZIP。" },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "上传一张图片", description: "添加 PNG、JPEG 或 WebP，图片保留在浏览器本地。" },
+      { stepNumber: 2, title: "选择平台尺寸", description: "勾选小红书、微信、抖音/TikTok、Instagram、YouTube、Facebook、X 或 LinkedIn 输出。" },
+      { stepNumber: 3, title: "导出 ZIP", description: "微调裁剪，选择格式，然后下载按平台命名的 ZIP。" },
+    ],
+    faqEntries: [
+      { question: "使用的 Twitter/X 头图尺寸是多少？", answer: "头图预设导出 1500 x 500 像素。" },
+      { question: "也能导出 X 帖子图片吗？", answer: "可以。保持勾选 X 横版帖子预设，或直接选择全部预设包。" },
+      { question: "可以用 JPEG 吗？", answer: "可以。导出前选择 PNG、JPEG 或 WebP。" },
+    ],
+    relatedTools: [
+      { slug: "/social-export", title: "社媒导出", description: "一张图片生成多个社交平台尺寸。" },
+      { slug: "/resize", title: "图片调整尺寸", description: "制作自定义裁剪或单个社媒尺寸。" },
+      { slug: "/compress", title: "图片压缩", description: "导出后压缩图片，方便上传。" },
+    ],
+  },
+
+  "canva-image-splitter": {
+    slug: "canva-image-splitter",
+    category: "use-case",
+    seo: { title: "Canva 图片切割工具 — 把 Canva 设计切成轮播图 | ImgSplit", description: "把 Canva 导出的 PNG 或 JPEG 直接在浏览器中切割为轮播面板。免费、私密，无需注册。", ogTitle: "Canva 图片切割工具", ogDescription: "秒切 Canva 导出图为轮播面板。" },
+    hero: { overline: "Canva 轮播切割", headlinePart1: "将 Canva 设计切割为", headlineAccent: "轮播面板", headlinePart2: "", description: "在 Canva 中把设计导出为一张图片，拖进来即可切割成完美对齐的轮播面板，用于 Instagram、小红书或 LinkedIn，无需任何插件。" },
+    scenarios: [
+      { icon: "Layers2", title: "Canva 轮播工作流", description: "把长版 Canva 画布导出为一张图，再切成按顺序编号的轮播幻灯片。" },
+      { icon: "Columns", title: "面板无缝对齐", description: "每个面板的边缘精准衔接，轮播看起来就像一张连续的长图。" },
+      { icon: "Download", title: "编号 ZIP 导出", description: "面板按顺序编号，直接依次上传为轮播幻灯片即可。" },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "从 Canva 导出", description: "在 Canva 中将设计以原尺寸下载为 PNG 或 JPEG。" },
+      { stepNumber: 2, title: "上传并设置面板数", description: "把导出的图片拖进来，选择要切割的面板数量。" },
+      { stepNumber: 3, title: "下载并发布", description: "导出按编号排序的面板 ZIP，按顺序上传到你的轮播贴文。" },
+    ],
+    faqEntries: [
+      { question: "如何从 Canva 导出设计用于轮播切割？", answer: "在 Canva 中打开「分享 → 下载」，选择 PNG 或 JPEG，然后把文件上传到这里切割为轮播面板。" },
+      { question: "支持 Canva 的多页设计吗？", answer: "本工具切割的是单张平面图片。多页 Canva 设计请逐页导出，或先把多页合并成一张长图。" },
+      { question: "切出来的面板能无缝拼接吗？", answer: "可以。切割按精确像素边界进行，相邻面板共享干净的接缝。" },
+      { question: "需要 Canva 账号才能用吗？", answer: "不需要。这个工具完全独立，你只需要一张 PNG 或 JPEG 图片——来自 Canva 或其他任何地方都行。" },
+    ],
+    relatedTools: [
+      { slug: "/grid", title: "网格切割", description: "将图片切割为均匀的网格。" },
+      { slug: "/collage", title: "图片拼贴", description: "将多张图片合并为一个拼贴版面。" },
+      { slug: "/social-export", title: "社媒导出", description: "一张图片生成多个社交平台尺寸。" },
+    ],
+  },
+
 }
 
 export default data

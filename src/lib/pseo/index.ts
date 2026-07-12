@@ -1,11 +1,12 @@
-import type { ToolCategory, ToolPageConfig, ToolPageData } from "./types"
-export type { ToolCategory, ToolPageConfig, ToolPageData, ScenarioCard, HowToStep, FaqEntry, RelatedTool, ToolPageSeo } from "./types"
+import type { PseoLocale, ToolCategory, ToolPageConfig, ToolPageData } from "./types"
+export type { PseoLocale, ToolCategory, ToolPageConfig, ToolPageData, ScenarioCard, HowToStep, FaqEntry, RelatedTool, ToolPageSeo } from "./types"
 
 import en from "./en"
 import zhCN from "./zh-CN"
 import ja from "./ja"
 import ko from "./ko"
 import es from "./es"
+import ptBR from "./pt-BR"
 import { watermarkPagesByLocale } from "./watermark-pages"
 import { mosaicPagesByLocale } from "./mosaic-pages"
 import { collagePagesByLocale } from "./collage-pages"
@@ -15,13 +16,13 @@ import { carouselPagesByLocale } from "./carousel-pages"
 
 // ─── Assemble ───
 
-const localeData: Record<string, Record<string, ToolPageData>> = {
+const localeData: Record<PseoLocale, Record<string, ToolPageData>> = {
   en: { ...en, ...watermarkPagesByLocale.en, ...mosaicPagesByLocale.en, ...collagePagesByLocale.en, ...socialExportPagesByLocale.en, ...backgroundRemovalPagesByLocale.en, ...carouselPagesByLocale.en },
   "zh-CN": { ...zhCN, ...watermarkPagesByLocale["zh-CN"], ...mosaicPagesByLocale["zh-CN"], ...collagePagesByLocale["zh-CN"], ...socialExportPagesByLocale["zh-CN"], ...backgroundRemovalPagesByLocale["zh-CN"], ...carouselPagesByLocale["zh-CN"] },
   ja: { ...ja, ...watermarkPagesByLocale.ja, ...mosaicPagesByLocale.ja, ...collagePagesByLocale.ja, ...socialExportPagesByLocale.ja, ...backgroundRemovalPagesByLocale.ja, ...carouselPagesByLocale.ja },
   ko: { ...ko, ...watermarkPagesByLocale.ko, ...mosaicPagesByLocale.ko, ...collagePagesByLocale.ko, ...socialExportPagesByLocale.ko, ...backgroundRemovalPagesByLocale.ko, ...carouselPagesByLocale.ko },
   es: { ...es, ...watermarkPagesByLocale.es, ...mosaicPagesByLocale.es, ...collagePagesByLocale.es, ...socialExportPagesByLocale.es, ...backgroundRemovalPagesByLocale.es, ...carouselPagesByLocale.es },
-  "pt-BR": { ...carouselPagesByLocale["pt-BR"] },
+  "pt-BR": { ...ptBR, ...watermarkPagesByLocale["pt-BR"], ...mosaicPagesByLocale["pt-BR"], ...collagePagesByLocale["pt-BR"], ...socialExportPagesByLocale["pt-BR"], ...backgroundRemovalPagesByLocale["pt-BR"], ...carouselPagesByLocale["pt-BR"] },
 }
 
 const slugMeta: { slug: string; category: ToolCategory }[] = [

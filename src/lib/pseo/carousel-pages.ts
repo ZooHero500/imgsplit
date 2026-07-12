@@ -1,8 +1,8 @@
-import type { RelatedTool, ToolPageData } from "./types"
+import type { PseoLocale, RelatedTool, ToolPageData } from "./types"
 
 // ─── Related Tools ───
 
-const relatedToolsByLocale: Record<string, RelatedTool[]> = {
+const relatedToolsByLocale: Record<PseoLocale, RelatedTool[]> = {
   en: [
     { slug: "/grid", title: "Grid Splitter", description: "Split an image into a uniform grid of equal tiles." },
     { slug: "/collage", title: "Photo Collage Maker", description: "Combine multiple images into a single collage layout." },
@@ -37,7 +37,7 @@ const relatedToolsByLocale: Record<string, RelatedTool[]> = {
 
 // ─── How-To Steps ───
 
-const howToStepsByLocale: Record<string, ToolPageData["howToSteps"]> = {
+const howToStepsByLocale: Record<PseoLocale, ToolPageData["howToSteps"]> = {
   en: [
     { stepNumber: 1, title: "Upload Your Image", description: "Add a PNG, JPEG, or WebP image. Everything stays in your browser." },
     { stepNumber: 2, title: "Set Carousel Slices", description: "Choose how many panels to split your image into for the carousel." },
@@ -72,7 +72,7 @@ const howToStepsByLocale: Record<string, ToolPageData["howToSteps"]> = {
 
 // ─── Pages ───
 
-export const carouselPagesByLocale: Record<string, Record<string, ToolPageData>> = {
+export const carouselPagesByLocale: Record<PseoLocale, Record<string, ToolPageData>> = {
   en: {
     "carousel-splitter": {
       slug: "carousel-splitter",
@@ -273,6 +273,71 @@ export const carouselPagesByLocale: Record<string, Record<string, ToolPageData>>
     },
   },
   "pt-BR": {
+    "carousel-splitter": {
+      slug: "carousel-splitter",
+      category: "use-case",
+      seo: {
+        title: "Divisor de Carrossel Grátis - Divida Imagens em Painéis | ImgSplit",
+        description: "Divida uma imagem larga em painéis iguais para carrosséis no Instagram, LinkedIn ou TikTok. Ferramenta gratuita no navegador, sem upload e sem cadastro.",
+        ogTitle: "Divisor de Carrossel",
+        ogDescription: "Divida qualquer imagem em painéis prontos para carrossel em segundos.",
+      },
+      hero: {
+        overline: "Divisor de Imagens para Carrossel",
+        headlinePart1: "Divida Imagens em ",
+        headlineAccent: "Painéis de Carrossel",
+        headlinePart2: "",
+        description: "Transforme uma imagem larga ou alta em vários painéis de largura igual, perfeitos para carrosséis no Instagram, LinkedIn e TikTok. Todo o processamento acontece no seu navegador.",
+      },
+      scenarios: [
+        { icon: "Columns", title: "Carrossel do Instagram", description: "Divida uma imagem panorâmica em 3 a 10 painéis deslizáveis do Instagram que se alinham perfeitamente." },
+        { icon: "Share2", title: "Carrosséis do LinkedIn", description: "Corte infográficos e apresentações em imagens prontas para carrossel e aumente o engajamento no LinkedIn." },
+        { icon: "Smartphone", title: "Slideshows do TikTok", description: "Crie conjuntos de painéis verticais a partir de imagens em retrato para carrosséis de fotos no TikTok." },
+        { icon: "Package", title: "Exportação em ZIP", description: "Baixe todos os painéis numerados em ordem, prontos para publicar como slides do carrossel." },
+      ],
+      howToSteps: howToStepsByLocale["pt-BR"],
+      faqEntries: [
+        { question: "O que é um divisor de carrossel?", answer: "É uma ferramenta que corta uma imagem larga em vários painéis iguais, que você publica um a um como slides de um carrossel no Instagram, LinkedIn ou TikTok." },
+        { question: "Em quantos painéis posso dividir minha imagem?", answer: "Você pode dividir em 2 a 10 painéis, dependendo do tamanho do seu carrossel." },
+        { question: "Minha imagem é enviada para algum servidor?", answer: "Não. A imagem é processada totalmente no seu navegador e nunca sai do seu dispositivo." },
+        { question: "Quais formatos de imagem são aceitos?", answer: "PNG, JPEG e WebP são aceitos como formatos de entrada e de saída." },
+      ],
+      relatedTools: relatedToolsByLocale["pt-BR"],
+    },
+    "canva-image-splitter": {
+      slug: "canva-image-splitter",
+      category: "use-case",
+      seo: {
+        title: "Dividir Imagem do Canva para Carrossel Online | ImgSplit",
+        description: "Exporte seu design do Canva em PNG ou JPEG e divida em painéis de carrossel direto no navegador. Gratuito, privado e sem cadastro.",
+        ogTitle: "Divisor de Imagens do Canva",
+        ogDescription: "Divida exportações do Canva em painéis de carrossel na hora.",
+      },
+      hero: {
+        overline: "Carrossel a partir do Canva",
+        headlinePart1: "Divida Designs do Canva em ",
+        headlineAccent: "Painéis de Carrossel",
+        headlinePart2: "",
+        description: "Exporte seu design do Canva como uma imagem única, solte aqui e divida em painéis perfeitamente alinhados para Instagram, LinkedIn ou TikTok. Sem plugins e sem instalar nada.",
+      },
+      scenarios: [
+        { icon: "Layers2", title: "Fluxo de carrossel com Canva", description: "Exporte um canvas longo do Canva como uma única imagem e corte em slides de carrossel numerados." },
+        { icon: "Columns", title: "Painéis perfeitamente alinhados", description: "Cada borda de painel se encaixa com precisão, e o carrossel parece uma imagem contínua." },
+        { icon: "Download", title: "ZIP numerado", description: "Receba os painéis numerados em ordem — basta publicá-los em sequência como slides do carrossel." },
+      ],
+      howToSteps: [
+        { stepNumber: 1, title: "Exporte do Canva", description: "No Canva, baixe seu design em PNG ou JPEG no tamanho original." },
+        { stepNumber: 2, title: "Envie e defina os painéis", description: "Solte a imagem exportada aqui e escolha em quantos painéis dividir." },
+        { stepNumber: 3, title: "Baixe e publique", description: "Exporte o ZIP com os painéis numerados e publique os slides do carrossel em ordem." },
+      ],
+      faqEntries: [
+        { question: "Como exportar um design do Canva para dividir em carrossel?", answer: "No Canva, vá em Compartilhar → Baixar e escolha PNG ou JPEG. Depois envie o arquivo aqui para dividir em painéis de carrossel." },
+        { question: "Funciona com designs de várias páginas do Canva?", answer: "A ferramenta divide uma única imagem. Para designs com várias páginas, exporte cada página separadamente ou junte tudo em uma imagem longa antes." },
+        { question: "Os painéis vão se alinhar perfeitamente no carrossel?", answer: "Sim. O corte é feito em limites exatos de pixel, então painéis vizinhos compartilham uma borda limpa." },
+        { question: "Preciso de conta no Canva para usar?", answer: "Não. A ferramenta é independente. Você só precisa de um arquivo PNG ou JPEG — do Canva ou de qualquer outro lugar." },
+      ],
+      relatedTools: relatedToolsByLocale["pt-BR"],
+    },
     "cortar-carrossel": {
       slug: "cortar-carrossel",
       category: "use-case",

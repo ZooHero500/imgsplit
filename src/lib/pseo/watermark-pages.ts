@@ -1,8 +1,8 @@
-import type { ToolPageData } from "./types"
+import type { PseoLocale, RelatedTool, ToolPageData } from "./types"
 
-type LocaleWatermarkPages = Record<string, Record<string, ToolPageData>>
+type LocaleWatermarkPages = Record<PseoLocale, Record<string, ToolPageData>>
 
-const relatedTools = {
+const relatedTools: Record<PseoLocale, RelatedTool[]> = {
   en: [
     { slug: "/watermark", title: "Watermark Tool", description: "Add text and logo watermarks directly in your browser." },
     { slug: "/compress-image", title: "Compress Image", description: "Reduce the size of the finished watermarked image." },
@@ -27,6 +27,11 @@ const relatedTools = {
     { slug: "/watermark", title: "Herramienta de Marca de Agua", description: "Añade marcas de agua de texto y logo en el navegador." },
     { slug: "/compress-image", title: "Comprimir Imagen", description: "Reduce el tamaño de la imagen final con marca de agua." },
     { slug: "/resize", title: "Redimensionar Imagen", description: "Redimensiona o recorta antes de añadir la marca de agua." },
+  ],
+  "pt-BR": [
+    { slug: "/watermark", title: "Ferramenta de Marca d'Água", description: "Adicione marcas d'água de texto e logo direto no navegador." },
+    { slug: "/compress-image", title: "Comprimir Imagem", description: "Reduza o tamanho da imagem final com marca d'água." },
+    { slug: "/resize", title: "Redimensionar Imagem", description: "Redimensione ou corte a imagem antes de adicionar a marca d'água." },
   ],
 }
 
@@ -507,6 +512,137 @@ export const watermarkPagesByLocale: LocaleWatermarkPages = {
         { question: "¿ImgSplit añade su propia marca?", answer: "No. La herramienta solo añade las capas que tú creas." },
       ],
       relatedTools: relatedTools.es,
+    },
+  },
+
+  "pt-BR": {
+    "watermark-maker": {
+      slug: "watermark-maker",
+      category: "use-case",
+      seo: {
+        title: "Criador de Marca d'Água Online - Grátis e Privado | ImgSplit",
+        description: "Crie marcas d'água de texto e logo online com controles de opacidade, repetição, posição e exportação. Grátis, direto no navegador, sem upload.",
+        ogTitle: "Criador de Marca d'Água Online",
+        ogDescription: "Adicione marcas d'água de texto ou logo às suas imagens direto no navegador.",
+      },
+      hero: {
+        overline: "Criador de Marca d'Água",
+        headlinePart1: "Crie ",
+        headlineAccent: "Marcas d'Água",
+        headlinePart2: "Online",
+        description: "Crie marcas d'água de texto ou logo para fotos, imagens de produto e peças de portfólio. Ajuste opacidade, posição, tamanho, rotação e repetição sem enviar seu arquivo para nenhum servidor.",
+      },
+      scenarios: [
+        { icon: "Shield", title: "Proteja Imagens Compartilhadas", description: "Adicione marcas de direitos autorais discretas antes de publicar fotos, provas ou prévias para clientes." },
+        { icon: "Stamp", title: "Fotos de Produto com sua Marca", description: "Coloque um logo ou identidade visual em imagens de e-commerce, artes para redes sociais e materiais de marketing." },
+      ],
+      howToSteps: [
+        { stepNumber: 1, title: "Envie uma Imagem", description: "Escolha uma imagem PNG, JPEG ou WebP. O processamento acontece localmente no seu navegador." },
+        { stepNumber: 2, title: "Adicione Texto ou Logo", description: "Comece com um modelo, digite o texto da marca d'água ou envie uma camada de logo." },
+        { stepNumber: 3, title: "Exporte", description: "Ajuste opacidade, repetição, posição e formato de saída, depois baixe a imagem pronta." },
+      ],
+      faqEntries: [
+        { question: "Este criador de marca d'água é privado?", answer: "Sim. O editor renderiza a imagem no navegador, então sua foto original e seu logo não precisam ser enviados para nenhum servidor." },
+        { question: "Posso adicionar marca d'água de texto e de logo ao mesmo tempo?", answer: "Sim. Você pode combinar várias camadas de texto e de logo e controlar cada uma de forma independente." },
+        { question: "Consigo criar um padrão de marca d'água repetido?", answer: "Sim. Mude a camada para o modo de repetição e crie padrões diagonais ou em mosaico por toda a imagem." },
+      ],
+      relatedTools: relatedTools["pt-BR"],
+    },
+    "add-watermark-to-photo": {
+      slug: "add-watermark-to-photo",
+      category: "use-case",
+      seo: {
+        title: "Colocar Marca d'Água em Foto Online - Grátis | ImgSplit",
+        description: "Coloque marca d'água em fotos online com camadas de texto ou logo. Ferramenta gratuita e privada no navegador, sem enviar fotos para servidores.",
+        ogTitle: "Colocar Marca d'Água em Foto Online",
+        ogDescription: "Proteja e assine suas fotos com marca d'água privada no navegador.",
+      },
+      hero: {
+        overline: "Marca d'Água para Fotos",
+        headlinePart1: "Coloque Marca d'Água ",
+        headlineAccent: "em Fotos",
+        headlinePart2: "Online",
+        description: "Assine suas fotos com texto de direitos autorais, nome da marca ou logo antes de compartilhar. Use controles precisos de posição ou repita a marca d'água pela foto inteira.",
+      },
+      scenarios: [
+        { icon: "Camera", title: "Provas de Fotografia", description: "Envie prévias para clientes com uma marca d'água visível e mantenha a foto final sem marca em segurança." },
+        { icon: "Share2", title: "Compartilhar nas Redes", description: "Adicione o nome do criador ou a sua marca antes de postar fotos nas redes sociais." },
+      ],
+      howToSteps: [
+        { stepNumber: 1, title: "Envie sua Foto", description: "Selecione uma foto do seu dispositivo. JPEG, PNG e WebP são aceitos." },
+        { stepNumber: 2, title: "Desenhe a Marca d'Água", description: "Escolha um modelo, edite o texto ou adicione uma camada de logo." },
+        { stepNumber: 3, title: "Baixe a Foto", description: "Exporte a foto com marca d'água em PNG, JPEG ou WebP." },
+      ],
+      faqEntries: [
+        { question: "Qual a melhor opacidade para marca d'água em foto?", answer: "Para a maioria das fotos, entre 25% e 45% de opacidade a marca fica visível sem tirar a atenção da imagem." },
+        { question: "Posso colocar a marca d'água no canto da foto?", answer: "Sim. Use os controles de posição para colocar uma marca única em qualquer canto ou perto do centro." },
+        { question: "A ferramenta altera minha foto original?", answer: "Não. O ImgSplit baixa um novo arquivo com marca d'água e mantém o original intacto." },
+      ],
+      relatedTools: relatedTools["pt-BR"],
+    },
+    "add-watermark-to-image": {
+      slug: "add-watermark-to-image",
+      category: "use-case",
+      seo: {
+        title: "Marca d'Água em Imagem Online - Texto ou Logo | ImgSplit",
+        description: "Adicione marcas d'água de texto ou logo em imagens PNG, JPG e WebP online. Edição no navegador com opacidade, repetição e sem upload.",
+        ogTitle: "Marca d'Água em Imagem Online",
+        ogDescription: "Coloque marca d'água em imagens PNG, JPG e WebP sem enviá-las.",
+      },
+      hero: {
+        overline: "Marca d'Água para Imagens",
+        headlinePart1: "Marca d'Água ",
+        headlineAccent: "em Imagens",
+        headlinePart2: "Rápido",
+        description: "Coloque marca d'água em capturas de tela, artes, fotos de produto e fotografias com camadas de texto ou logo. Tudo roda localmente e as imagens ficam no seu dispositivo.",
+      },
+      scenarios: [
+        { icon: "Image", title: "Imagens de Produto", description: "Adicione uma pequena marca em imagens de catálogo, fotos de marketplace ou artes promocionais." },
+        { icon: "Layers", title: "Marcas em Camadas", description: "Combine uma marca d'água de texto com uma camada de logo e ajuste cada camada separadamente." },
+      ],
+      howToSteps: [
+        { stepNumber: 1, title: "Escolha uma Imagem", description: "Envie uma imagem PNG, JPG, JPEG ou WebP do seu dispositivo." },
+        { stepNumber: 2, title: "Adicione Camadas de Marca d'Água", description: "Crie camadas de texto, envie um logo e defina posição única ou repetição para cada camada." },
+        { stepNumber: 3, title: "Salve o Resultado", description: "Confira a prévia no canvas e baixe a imagem pronta com marca d'água." },
+      ],
+      faqEntries: [
+        { question: "Posso colocar marca d'água em imagens PNG?", answer: "Sim. Imagens PNG, JPEG, JPG e WebP são aceitas." },
+        { question: "Posso usar um logo transparente?", answer: "Sim. Envie um logo PNG transparente e ajuste tamanho, opacidade e posição." },
+        { question: "A imagem é enviada para algum servidor?", answer: "Não. A prévia e a exportação da marca d'água são renderizadas localmente no seu navegador." },
+      ],
+      relatedTools: relatedTools["pt-BR"],
+    },
+    "online-watermark-tool": {
+      slug: "online-watermark-tool",
+      category: "use-case",
+      seo: {
+        title: "Ferramenta de Marca d'Água Online - Grátis | ImgSplit",
+        description: "Use uma ferramenta online gratuita para adicionar marca d'água de texto, logo, direitos autorais ou padrão repetido em imagens. Edição privada no navegador, sem upload.",
+        ogTitle: "Ferramenta de Marca d'Água Online",
+        ogDescription: "Uma ferramenta privada no navegador para marcas d'água de texto e logo.",
+      },
+      hero: {
+        overline: "Ferramenta de Marca d'Água Online",
+        headlinePart1: "Marca d'Água ",
+        headlineAccent: "em Imagens",
+        headlinePart2: "com Privacidade",
+        description: "Uma ferramenta focada em marcas de direitos autorais, logos de marca, padrões repetidos e etiquetas de canto. Sem conta, sem upload e sem marca escondida da ferramenta.",
+      },
+      scenarios: [
+        { icon: "Type", title: "Marcas d'Água de Texto", description: "Adicione texto de copyright, nome do criador, datas ou rótulos curtos com controle de fonte e opacidade." },
+        { icon: "Stamp", title: "Marcas d'Água de Logo", description: "Envie uma camada de logo e posicione como marca única ou padrão repetido." },
+      ],
+      howToSteps: [
+        { stepNumber: 1, title: "Abra a Ferramenta", description: "Inicie o editor de marca d'água e carregue uma imagem do seu dispositivo." },
+        { stepNumber: 2, title: "Escolha um Estilo", description: "Use os modelos de copyright no canto, repetição diagonal, rótulo central ou selo de marca." },
+        { stepNumber: 3, title: "Baixe", description: "Exporte a imagem final no formato e na qualidade que você precisa." },
+      ],
+      faqEntries: [
+        { question: "Esta ferramenta de marca d'água online é gratuita?", answer: "Sim. Você pode adicionar e exportar marcas d'água sem criar conta." },
+        { question: "Posso remover a marca d'água depois de exportar?", answer: "O arquivo exportado inclui a marca d'água. Guarde a imagem original se precisar de uma cópia sem marca." },
+        { question: "O ImgSplit adiciona a própria marca?", answer: "Não. A ferramenta só adiciona as camadas de marca d'água que você mesmo cria." },
+      ],
+      relatedTools: relatedTools["pt-BR"],
     },
   },
 }

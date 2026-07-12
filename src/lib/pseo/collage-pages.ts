@@ -1,24 +1,8 @@
-import type { RelatedTool, ToolPageData } from "./types"
+import type { PseoLocale, RelatedTool, ToolPageData, ToolPageSeed } from "./types"
 
-type LocaleKey = "en" | "zh-CN" | "ja" | "ko" | "es"
-type LocaleCollagePages = Record<LocaleKey, Record<string, ToolPageData>>
+type LocaleCollagePages = Record<PseoLocale, Record<string, ToolPageData>>
 
-interface CollagePageSeed {
-  slug: string
-  title: string
-  description: string
-  ogTitle: string
-  ogDescription: string
-  overline: string
-  headlinePart1: string
-  headlineAccent: string
-  headlinePart2: string
-  heroDescription: string
-  scenarios: ToolPageData["scenarios"]
-  faqEntries: ToolPageData["faqEntries"]
-}
-
-const relatedTools: Record<LocaleKey, RelatedTool[]> = {
+const relatedTools: Record<PseoLocale, RelatedTool[]> = {
   en: [
     { slug: "/collage", title: "Photo Collage Maker", description: "Combine multiple photos into one private browser-based collage." },
     { slug: "/resize", title: "Image Resizer", description: "Crop and resize images before adding them to a collage." },
@@ -44,9 +28,14 @@ const relatedTools: Record<LocaleKey, RelatedTool[]> = {
     { slug: "/resize", title: "Redimensionar Imagen", description: "Recorta o redimensiona imágenes antes de usarlas en un collage." },
     { slug: "/watermark", title: "Marca de Agua", description: "Añade texto o logo al collage exportado." },
   ],
+  "pt-BR": [
+    { slug: "/collage", title: "Criador de Colagem de Fotos", description: "Combine várias fotos em uma colagem privada, direto no navegador." },
+    { slug: "/resize", title: "Redimensionar Imagem", description: "Corte ou redimensione imagens antes de usá-las na colagem." },
+    { slug: "/watermark", title: "Marca d'Água", description: "Adicione texto ou logo à colagem exportada." },
+  ],
 }
 
-const howToSteps: Record<LocaleKey, ToolPageData["howToSteps"]> = {
+const howToSteps: Record<PseoLocale, ToolPageData["howToSteps"]> = {
   en: [
     { stepNumber: 1, title: "Upload Photos", description: "Add PNG, JPEG, or WebP images. Files stay in your browser." },
     { stepNumber: 2, title: "Choose a Layout", description: "Pick a collage template, then assign, drag, scale, rotate, or fit each photo." },
@@ -72,9 +61,14 @@ const howToSteps: Record<LocaleKey, ToolPageData["howToSteps"]> = {
     { stepNumber: 2, title: "Elige un diseño", description: "Selecciona una plantilla y ajusta cada foto con arrastre, escala, rotación o ajuste." },
     { stepNumber: 3, title: "Exporta", description: "Configura espacios, margen, bordes, fondo y descarga PNG, JPEG o WebP." },
   ],
+  "pt-BR": [
+    { stepNumber: 1, title: "Envie suas fotos", description: "Adicione imagens PNG, JPEG ou WebP. Os arquivos ficam no seu navegador." },
+    { stepNumber: 2, title: "Escolha um layout", description: "Selecione um modelo de colagem e ajuste cada foto arrastando, ampliando, girando ou encaixando." },
+    { stepNumber: 3, title: "Exporte", description: "Defina espaçamento, margem, cantos e fundo e baixe em PNG, JPEG ou WebP." },
+  ],
 }
 
-const seeds: Record<LocaleKey, CollagePageSeed[]> = {
+const seeds: Record<PseoLocale, ToolPageSeed[]> = {
   en: [
     {
       slug: "photo-collage-maker",
@@ -715,9 +709,137 @@ const seeds: Record<LocaleKey, CollagePageSeed[]> = {
       ],
     },
   ],
+  "pt-BR": [
+    {
+      slug: "photo-collage-maker",
+      title: "Colagem de Fotos Online - Grátis e Privado | ImgSplit",
+      description: "Faça colagem de fotos online com modelos, espaçamento, fundos e exportação no navegador. Grátis, privado e sem enviar suas fotos para nenhum servidor.",
+      ogTitle: "Colagem de Fotos Online",
+      ogDescription: "Combine várias fotos em uma colagem limpa, direto no navegador.",
+      overline: "Criador de Colagem de Fotos",
+      headlinePart1: "Faça ",
+      headlineAccent: "Colagens de Fotos",
+      headlinePart2: "Online",
+      heroDescription: "Combine fotos de viagem, produtos, eventos ou posts em uma colagem elegante com modelos, espaçamento, fundos e exportação privada no navegador.",
+      scenarios: [
+        { icon: "Images", title: "Coleções de memórias", description: "Junte fotos de família, viagens, eventos e comemorações em uma única imagem equilibrada." },
+        { icon: "LayoutTemplate", title: "Modelos prontos", description: "Comece com layouts de duas fotos, grade, mosaico ou Story em vez de montar tudo do zero." },
+      ],
+      faqEntries: [
+        { question: "Este criador de colagens é privado?", answer: "Sim. As imagens são carregadas, organizadas e exportadas localmente no seu navegador." },
+        { question: "Posso ajustar cada foto dentro da moldura?", answer: "Sim. Selecione uma moldura para arrastar, encaixar, preencher, ampliar ou girar a foto." },
+        { question: "Em quais formatos posso exportar?", answer: "Você pode exportar a colagem em PNG, JPEG ou WebP." },
+      ],
+    },
+    {
+      slug: "photo-grid-maker",
+      title: "Grade de Fotos Online - Ferramenta Grátis no Navegador | ImgSplit",
+      description: "Monte uma grade de fotos online com layouts de 2, 3, 4, 5 ou 6 imagens. Ajuste espaçamento, margens e fundo e exporte em privado no navegador.",
+      ogTitle: "Grade de Fotos Online",
+      ogDescription: "Crie grades de fotos organizadas com modelos no navegador.",
+      overline: "Criador de Grade de Fotos",
+      headlinePart1: "Monte ",
+      headlineAccent: "Grades de Fotos",
+      headlinePart2: "Rápido",
+      heroDescription: "Crie grades de fotos organizadas para portfólios, conjuntos de produtos, moodboards e posts. Controle espaçamento, margens, cantos e cor de fundo.",
+      scenarios: [
+        { icon: "Grid3X3", title: "Produtos ou portfólio", description: "Mostre várias imagens em uma grade limpa com espaçamento e tamanho de exportação consistentes." },
+        { icon: "Palette", title: "Moodboards", description: "Reúna cores, texturas, referências e estudos visuais em uma grade fácil de compartilhar." },
+      ],
+      faqEntries: [
+        { question: "Posso fazer uma grade de fotos 2x2?", answer: "Sim. Use o modelo de quatro quadros e coloque uma imagem em cada moldura." },
+        { question: "Posso mudar o espaçamento entre as fotos?", answer: "Sim. Use os controles de espaçamento e margem para ajustar os vãos internos e a borda externa." },
+        { question: "Posso exportar uma grade quadrada?", answer: "Sim. A prancheta padrão é 1080 x 1080 e você pode escolher outros tamanhos." },
+      ],
+    },
+    {
+      slug: "instagram-story-collage",
+      title: "Colagem para Story do Instagram - 1080x1920 | ImgSplit",
+      description: "Crie uma colagem 1080x1920 para Story do Instagram online. Use modelos de Story, espaçamento e fundos com exportação privada, sem upload.",
+      ogTitle: "Colagem para Story do Instagram",
+      ogDescription: "Monte colagens verticais de Story em 1080x1920.",
+      overline: "Colagem para Instagram Story",
+      headlinePart1: "Crie ",
+      headlineAccent: "Colagens de Story",
+      headlinePart2: "Online",
+      heroDescription: "Organize fotos em uma colagem vertical 1080x1920 com moldura principal, imagens de apoio, espaçamento limpo e tamanho pronto para publicar.",
+      scenarios: [
+        { icon: "Smartphone", title: "Resumo em Story", description: "Combine fotos de eventos, viagens, comida, looks ou produtos em uma única imagem vertical." },
+        { icon: "Share2", title: "Publicação social", description: "Exporte uma colagem vertical pronta para Stories do Instagram e formatos verticais parecidos." },
+      ],
+      faqEntries: [
+        { question: "Qual é o tamanho da colagem de Story?", answer: "O preset de Story usa 1080 x 1920 pixels, o formato vertical 9:16 mais comum." },
+        { question: "Posso usar uma colagem quadrada em vez disso?", answer: "Sim. Troque o tamanho de saída para a prancheta quadrada ou escolha outro modelo." },
+        { question: "Minhas fotos são enviadas para um servidor?", answer: "Não. A colagem é renderizada no seu navegador." },
+      ],
+    },
+    {
+      slug: "free-photo-collage-maker",
+      title: "Colagem de Fotos Grátis Online | ImgSplit",
+      description: "Faça uma colagem de fotos grátis online com modelos, grades, espaçamento e fundos. Exportação privada no navegador, sem enviar suas fotos.",
+      ogTitle: "Colagem de Fotos Grátis",
+      ogDescription: "Crie colagens de fotos grátis no navegador, sem enviar arquivos.",
+      overline: "Colagem de Fotos Grátis",
+      headlinePart1: "Crie uma ",
+      headlineAccent: "Colagem de Fotos Grátis",
+      headlinePart2: "Online",
+      heroDescription: "Transforme várias fotos em uma colagem elegante sem cadastro nem upload. Escolha um modelo, ajuste o layout e exporte PNG, JPEG ou WebP direto do navegador.",
+      scenarios: [
+        { icon: "Sparkles", title: "Sem cadastro", description: "Monte colagens de aniversário, viagem, família, produtos ou eventos sem criar conta." },
+        { icon: "ShieldCheck", title: "Exportação privada", description: "Mantenha suas fotos pessoais no navegador enquanto organiza e baixa a colagem final." },
+      ],
+      faqEntries: [
+        { question: "O criador de colagens é grátis?", answer: "Sim. Você pode adicionar fotos, escolher modelos, ajustar o estilo e exportar direto do navegador." },
+        { question: "Preciso de uma conta?", answer: "Não. O editor abre na hora e funciona sem cadastro." },
+        { question: "Minhas fotos são enviadas?", answer: "Não. Os arquivos ficam no seu navegador enquanto você cria e exporta a colagem." },
+      ],
+    },
+    {
+      slug: "picture-grid-maker",
+      title: "Grade de Imagens Online - Grátis e Privado | ImgSplit",
+      description: "Crie uma grade de imagens online para produtos, moodboards, portfólios e redes sociais. Ajuste o espaçamento e exporte em privado no navegador.",
+      ogTitle: "Grade de Imagens Online",
+      ogDescription: "Monte grades de imagens limpas com exportação privada no navegador.",
+      overline: "Grade de Imagens",
+      headlinePart1: "Monte uma ",
+      headlineAccent: "Grade de Imagens",
+      headlinePart2: "Online",
+      heroDescription: "Organize imagens em grades limpas com vãos, cantos e fundos consistentes. Use para conjuntos de imagens, comparações, referências e visuais para redes sociais.",
+      scenarios: [
+        { icon: "Grid3X3", title: "Conjuntos de imagens", description: "Coloque imagens relacionadas em layouts de dois, três, quatro, cinco ou seis quadros com espaçamento uniforme." },
+        { icon: "Images", title: "Comparações visuais", description: "Compare fotos de produto, antes e depois, referências ou direções criativas em uma única exportação." },
+      ],
+      faqEntries: [
+        { question: "Qual é a diferença entre grade de imagens e colagem?", answer: "A grade é mais estruturada, com molduras repetidas e espaçamento uniforme. Você ainda pode ajustar cada imagem dentro da moldura." },
+        { question: "Posso criar uma grade de imagens quadrada?", answer: "Sim. Use a prancheta quadrada e escolha um modelo de grade." },
+        { question: "Posso deixar espaços vazios na grade?", answer: "Sim. Molduras vazias podem ser preenchidas depois, clicando ou arrastando um arquivo para dentro delas." },
+      ],
+    },
+    {
+      slug: "instagram-collage-maker",
+      title: "Colagem para Instagram Online | ImgSplit",
+      description: "Crie colagens para posts, Stories, resumos e produtos no Instagram. Use modelos quadrados ou verticais com exportação privada, sem upload.",
+      ogTitle: "Colagem para Instagram",
+      ogDescription: "Monte colagens prontas para o Instagram, direto no navegador.",
+      overline: "Colagem para Instagram",
+      headlinePart1: "Crie ",
+      headlineAccent: "Colagens para Instagram",
+      headlinePart2: "Online",
+      heroDescription: "Monte colagens quadradas para o feed, layouts verticais de Story, posts de resumo ou conjuntos de produtos com modelos no tamanho certo para redes sociais.",
+      scenarios: [
+        { icon: "Instagram", title: "Feed e Story", description: "Alterne entre pranchetas quadradas e modelos verticais 1080x1920 para Stories." },
+        { icon: "Share2", title: "Resumos sociais", description: "Junte looks, viagens, comida, eventos ou ângulos de produto em uma imagem pronta para o Instagram." },
+      ],
+      faqEntries: [
+        { question: "Posso fazer colagens para posts e Stories do Instagram?", answer: "Sim. Use um layout quadrado para o feed ou um layout 1080 x 1920 para Stories." },
+        { question: "Posso controlar espaçamento e cantos arredondados?", answer: "Sim. Ajuste espaçamento, margens, raio dos cantos, fundo e exportação com transparência." },
+        { question: "Funciona no celular?", answer: "Sim. O editor roda no navegador e pode ser usado tanto no computador quanto no celular." },
+      ],
+    },
+  ],
 }
 
-function createPages(locale: LocaleKey): Record<string, ToolPageData> {
+function createPages(locale: PseoLocale): Record<string, ToolPageData> {
   return Object.fromEntries(
     seeds[locale].map((seed) => [
       seed.slug,
@@ -752,4 +874,5 @@ export const collagePagesByLocale: LocaleCollagePages = {
   ja: createPages("ja"),
   ko: createPages("ko"),
   es: createPages("es"),
+  "pt-BR": createPages("pt-BR"),
 }

@@ -1086,6 +1086,267 @@ const data: Record<string, ToolPageData> = {
     ],
   },
 
+  "social-media-image-sizes": {
+    slug: "social-media-image-sizes",
+    category: "use-case",
+    seo: {
+      title: "Tamaños de Imagen para Redes Sociales — Guía y Exportador | ImgSplit",
+      description: "Crea los tamaños de imagen actuales para Instagram, YouTube, Facebook, X, LinkedIn y TikTok desde un editor privado en tu navegador, sin subir archivos.",
+      ogTitle: "Tamaños de Imagen para Redes Sociales",
+      ogDescription: "Exporta los tamaños de imagen que realmente se publican en cada plataforma.",
+    },
+    hero: {
+      overline: "Tamaños para redes sociales",
+      headlinePart1: "Crea ",
+      headlineAccent: "Tamaños de Plataforma",
+      headlinePart2: "Rápido",
+      description: "Usa una sola imagen para exportar publicaciones e historias de Instagram, miniaturas de YouTube, portadas de Facebook, encabezados de X, publicaciones de LinkedIn y recursos verticales para TikTok.",
+    },
+    scenarios: [
+      { icon: "Ruler", title: "Referencia de tamaños", description: "Parte de preajustes de plataforma prácticos en lugar de reconstruir las dimensiones a mano." },
+      { icon: "Package", title: "Exportación por lotes", description: "Descarga los formatos seleccionados en un único ZIP con carpetas por plataforma y etiquetas de tamaño." },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "Sube una imagen", description: "Añade PNG, JPEG o WebP. El archivo permanece en tu navegador." },
+      { stepNumber: 2, title: "Elige tamaños", description: "Selecciona salidas para Instagram, YouTube, Facebook, X/Twitter, LinkedIn o TikTok." },
+      { stepNumber: 3, title: "Exporta ZIP", description: "Ajusta recortes, elige formato y descarga un ZIP por plataforma." },
+    ],
+    faqEntries: [
+      { question: "¿Qué tamaños de imagen para redes sociales incluye?", answer: "El editor incluye preajustes de feed e historia de Instagram, miniatura de YouTube, portada de Facebook, encabezado de X/Twitter, publicación de LinkedIn, vertical de TikTok, portada de Xiaohongshu y portada de WeChat." },
+      { question: "¿Puedo elegir solo tamaños de plataformas occidentales?", answer: "Sí. Usa el paquete de preajustes occidentales para salidas de Instagram, YouTube, Facebook, X/Twitter, LinkedIn y TikTok." },
+      { question: "¿Puedo exportar también tamaños de plataformas chinas?", answer: "Sí. Usa el paquete para creadores chinos con salidas de Xiaohongshu, WeChat y formato vertical." },
+    ],
+    relatedTools: [
+      { slug: "/social-export", title: "Exportación social", description: "Genera varios tamaños sociales desde una imagen." },
+      { slug: "/resize", title: "Redimensionar imagen", description: "Crea un recorte personalizado o un tamaño puntual." },
+      { slug: "/compress", title: "Compresor de imágenes", description: "Comprime los archivos finales para subirlos más rápido." },
+    ],
+  },
+
+  "instagram-post-size": {
+    slug: "instagram-post-size",
+    category: "use-case",
+    seo: {
+      title: "Tamaño de Publicación de Instagram — 1080x1080 y 1080x1350 | ImgSplit",
+      description: "Crea tamaños de publicación de Instagram desde una imagen: posts cuadrados, posts verticales y recortes de historia complementarios. Exportación privada en el navegador, sin subir archivos.",
+      ogTitle: "Exportador de Tamaño de Publicación de Instagram",
+      ogDescription: "Crea imágenes de Instagram de 1080x1080 y 1080x1350.",
+    },
+    hero: {
+      overline: "Tamaño de publicación de Instagram",
+      headlinePart1: "Exporta ",
+      headlineAccent: "Posts de Instagram",
+      headlinePart2: "",
+      description: "Prepara posts cuadrados de 1080x1080 y verticales de 1080x1350 desde una sola imagen, y ajusta cada recorte antes de descargar.",
+    },
+    scenarios: [
+      { icon: "Instagram", title: "Posts para el feed", description: "Crea imágenes cuadradas y verticales para el feed sin repetir el trabajo de redimensionar a mano." },
+      { icon: "Crop", title: "Recorte por proporción", description: "Mantén rostros, productos y texto dentro del recorte en cada proporción de Instagram." },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "Sube una imagen", description: "Añade PNG, JPEG o WebP. El archivo permanece en tu navegador." },
+      { stepNumber: 2, title: "Elige tamaños", description: "Selecciona salidas para Instagram, YouTube, Facebook, X/Twitter, LinkedIn o TikTok." },
+      { stepNumber: 3, title: "Exporta ZIP", description: "Ajusta recortes, elige formato y descarga un ZIP por plataforma." },
+    ],
+    faqEntries: [
+      { question: "¿Qué tamaños de publicación de Instagram exporta?", answer: "Los preajustes principales de feed exportan posts cuadrados de 1080 x 1080 y verticales de 1080 x 1350." },
+      { question: "¿Puedo crear una historia desde la misma imagen?", answer: "Sí. Mantén seleccionado el preajuste de Story/Reel de 1080 x 1920 y ajusta ese recorte por separado." },
+      { question: "¿ImgSplit sube mi imagen?", answer: "No. La imagen se procesa y se comprime en ZIP localmente en tu navegador." },
+    ],
+    relatedTools: [
+      { slug: "/social-export", title: "Exportación social", description: "Genera varios tamaños sociales desde una imagen." },
+      { slug: "/resize", title: "Redimensionar imagen", description: "Crea un recorte personalizado o un tamaño puntual." },
+      { slug: "/compress", title: "Compresor de imágenes", description: "Comprime los archivos finales para subirlos más rápido." },
+    ],
+  },
+
+  "instagram-story-size": {
+    slug: "instagram-story-size",
+    category: "use-case",
+    seo: {
+      title: "Tamaño de Historia de Instagram — 1080x1920 | ImgSplit",
+      description: "Redimensiona una imagen al tamaño de historia de Instagram de 1080x1920 y exporta formatos de feed complementarios desde la misma fuente en tu navegador, sin subir archivos.",
+      ogTitle: "Exportador de Tamaño de Historia de Instagram",
+      ogDescription: "Crea historias de Instagram de 1080x1920 en tu navegador.",
+    },
+    hero: {
+      overline: "Tamaño de historia de Instagram",
+      headlinePart1: "Exporta ",
+      headlineAccent: "1080x1920",
+      headlinePart2: "Historias",
+      description: "Convierte una imagen en una historia vertical de Instagram o recurso tipo Reel, y añade salidas complementarias de feed, YouTube o X en el mismo ZIP.",
+    },
+    scenarios: [
+      { icon: "Smartphone", title: "Historias verticales", description: "Prepara imágenes 9:16 a pantalla completa para publicación móvil." },
+      { icon: "Share2", title: "Piezas de campaña", description: "Exporta tamaños de historia y feed juntos para que el visual de la campaña se mantenga consistente." },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "Sube una imagen", description: "Añade PNG, JPEG o WebP. El archivo permanece en tu navegador." },
+      { stepNumber: 2, title: "Elige tamaños", description: "Selecciona salidas para Instagram, YouTube, Facebook, X/Twitter, LinkedIn o TikTok." },
+      { stepNumber: 3, title: "Exporta ZIP", description: "Ajusta recortes, elige formato y descarga un ZIP por plataforma." },
+    ],
+    faqEntries: [
+      { question: "¿Qué tamaño tiene el preajuste de historia de Instagram?", answer: "El preajuste de historia exporta 1080 x 1920 píxeles, una imagen vertical 9:16." },
+      { question: "¿Puedo reposicionar la imagen?", answer: "Sí. Selecciona la salida de historia, arrastra la vista previa y ajusta relleno, encaje y escala." },
+      { question: "¿Puedo exportar WebP?", answer: "Sí. Elige PNG, JPEG o WebP antes de descargar el ZIP." },
+    ],
+    relatedTools: [
+      { slug: "/social-export", title: "Exportación social", description: "Genera varios tamaños sociales desde una imagen." },
+      { slug: "/resize", title: "Redimensionar imagen", description: "Crea un recorte personalizado o un tamaño puntual." },
+      { slug: "/compress", title: "Compresor de imágenes", description: "Comprime los archivos finales para subirlos más rápido." },
+    ],
+  },
+
+  "facebook-cover-photo-size": {
+    slug: "facebook-cover-photo-size",
+    category: "use-case",
+    seo: {
+      title: "Tamaño de Foto de Portada de Facebook — Exportador Online | ImgSplit",
+      description: "Crea portadas para páginas de Facebook y variantes de portada de grupo desde una sola imagen. Herramienta gratuita y privada en el navegador, sin subir archivos.",
+      ogTitle: "Tamaño de Foto de Portada de Facebook",
+      ogDescription: "Exporta fotos de portada de Facebook con control del recorte.",
+    },
+    hero: {
+      overline: "Tamaño de portada de Facebook",
+      headlinePart1: "Crea ",
+      headlineAccent: "Portadas de Facebook",
+      headlinePart2: "",
+      description: "Recorta una imagen como portada de página de Facebook y formatos de portada relacionados, con control de recorte independiente para cada salida.",
+    },
+    scenarios: [
+      { icon: "Image", title: "Portadas de página", description: "Prepara una portada ancha de página de Facebook con el sujeto colocado con intención." },
+      { icon: "LayoutTemplate", title: "Variantes de portada", description: "Exporta recortes de portada de página y de grupo desde la misma imagen." },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "Sube una imagen", description: "Añade PNG, JPEG o WebP. El archivo permanece en tu navegador." },
+      { stepNumber: 2, title: "Elige tamaños", description: "Selecciona salidas para Instagram, YouTube, Facebook, X/Twitter, LinkedIn o TikTok." },
+      { stepNumber: 3, title: "Exporta ZIP", description: "Ajusta recortes, elige formato y descarga un ZIP por plataforma." },
+    ],
+    faqEntries: [
+      { question: "¿Qué tamaño de portada de Facebook incluye?", answer: "El preajuste de portada de página exporta 851 x 315 píxeles. El preajuste tipo portada de grupo exporta 1640 x 856 píxeles." },
+      { question: "¿Puedo mantener el texto lejos del borde?", answer: "Sí. Usa la vista previa para arrastrar el recorte antes de descargar." },
+      { question: "¿Puedo exportar solo portadas de Facebook?", answer: "Sí. Selecciona únicamente las salidas de Facebook y descarga el ZIP." },
+    ],
+    relatedTools: [
+      { slug: "/social-export", title: "Exportación social", description: "Genera varios tamaños sociales desde una imagen." },
+      { slug: "/resize", title: "Redimensionar imagen", description: "Crea un recorte personalizado o un tamaño puntual." },
+      { slug: "/compress", title: "Compresor de imágenes", description: "Comprime los archivos finales para subirlos más rápido." },
+    ],
+  },
+
+  "linkedin-post-size": {
+    slug: "linkedin-post-size",
+    category: "use-case",
+    seo: {
+      title: "Tamaño de Publicación de LinkedIn — 1200x628 | ImgSplit",
+      description: "Redimensiona una imagen al tamaño de publicación de LinkedIn de 1200x628 y exporta tamaños sociales complementarios en un flujo privado del navegador, sin subir archivos.",
+      ogTitle: "Exportador de Tamaño de Publicación de LinkedIn",
+      ogDescription: "Crea imágenes de publicación de LinkedIn de 1200x628.",
+    },
+    hero: {
+      overline: "Tamaño de publicación de LinkedIn",
+      headlinePart1: "Exporta ",
+      headlineAccent: "Posts de LinkedIn",
+      headlinePart2: "",
+      description: "Crea una imagen de publicación de LinkedIn de 1200x628 desde cualquier archivo y exporta opcionalmente piezas complementarias para Instagram, YouTube, Facebook o X.",
+    },
+    scenarios: [
+      { icon: "Share2", title: "Publicaciones profesionales", description: "Prepara imágenes de anuncios, lanzamientos y artículos para el feed de LinkedIn." },
+      { icon: "Layers", title: "Piezas multicanal", description: "Mantén el mismo visual listo para LinkedIn y otras plataformas en una sola exportación." },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "Sube una imagen", description: "Añade PNG, JPEG o WebP. El archivo permanece en tu navegador." },
+      { stepNumber: 2, title: "Elige tamaños", description: "Selecciona salidas para Instagram, YouTube, Facebook, X/Twitter, LinkedIn o TikTok." },
+      { stepNumber: 3, title: "Exporta ZIP", description: "Ajusta recortes, elige formato y descarga un ZIP por plataforma." },
+    ],
+    faqEntries: [
+      { question: "¿Qué tamaño de publicación de LinkedIn exporta?", answer: "El preajuste de LinkedIn exporta 1200 x 628 píxeles." },
+      { question: "¿Puedo cambiar el recorte?", answer: "Sí. Selecciona la salida de LinkedIn y ajusta relleno, encaje, escala y posición." },
+      { question: "¿Funciona sin subir archivos?", answer: "Sí. La imagen permanece en tu navegador." },
+    ],
+    relatedTools: [
+      { slug: "/social-export", title: "Exportación social", description: "Genera varios tamaños sociales desde una imagen." },
+      { slug: "/resize", title: "Redimensionar imagen", description: "Crea un recorte personalizado o un tamaño puntual." },
+      { slug: "/compress", title: "Compresor de imágenes", description: "Comprime los archivos finales para subirlos más rápido." },
+    ],
+  },
+
+  "twitter-header-size": {
+    slug: "twitter-header-size",
+    category: "use-case",
+    seo: {
+      title: "Tamaño de Encabezado de Twitter — X Header 1500x500 | ImgSplit",
+      description: "Crea un encabezado de Twitter/X de 1500x500 desde una sola imagen con control del recorte y exportación privada en el navegador. Sin subir archivos y con salida en ZIP.",
+      ogTitle: "Exportador de Encabezados de Twitter/X",
+      ogDescription: "Crea encabezados de X/Twitter de 1500x500.",
+    },
+    hero: {
+      overline: "Tamaño de encabezado de Twitter",
+      headlinePart1: "Exporta ",
+      headlineAccent: "1500x500",
+      headlinePart2: "Encabezados",
+      description: "Recorta cualquier imagen como encabezado de perfil de X/Twitter de 1500x500 y exporta tamaños sociales relacionados desde la misma fuente.",
+    },
+    scenarios: [
+      { icon: "Maximize2", title: "Encabezados de perfil", description: "Crea un recorte horizontal con el sujeto centrado y alejado de los bordes." },
+      { icon: "Package", title: "ZIP social", description: "Añade formatos de post, miniatura y feed al mismo ZIP organizado cuando lo necesites." },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "Sube una imagen", description: "Añade PNG, JPEG o WebP. El archivo permanece en tu navegador." },
+      { stepNumber: 2, title: "Elige tamaños", description: "Selecciona salidas para Instagram, YouTube, Facebook, X/Twitter, LinkedIn o TikTok." },
+      { stepNumber: 3, title: "Exporta ZIP", description: "Ajusta recortes, elige formato y descarga un ZIP por plataforma." },
+    ],
+    faqEntries: [
+      { question: "¿Qué tamaño de encabezado de Twitter/X usa?", answer: "El preajuste de encabezado exporta 1500 x 500 píxeles." },
+      { question: "¿Puedo exportar también imágenes de post de X?", answer: "Sí. Mantén seleccionado el preajuste de post horizontal de X o elige el paquete con todos los preajustes." },
+      { question: "¿Puedo usar JPEG?", answer: "Sí. Elige PNG, JPEG o WebP antes de exportar." },
+    ],
+    relatedTools: [
+      { slug: "/social-export", title: "Exportación social", description: "Genera varios tamaños sociales desde una imagen." },
+      { slug: "/resize", title: "Redimensionar imagen", description: "Crea un recorte personalizado o un tamaño puntual." },
+      { slug: "/compress", title: "Compresor de imágenes", description: "Comprime los archivos finales para subirlos más rápido." },
+    ],
+  },
+
+  "canva-image-splitter": {
+    slug: "canva-image-splitter",
+    category: "use-case",
+    seo: {
+      title: "Divisor de Imágenes de Canva — Divide Diseños en Carrusel | ImgSplit",
+      description: "Exporta tu diseño de Canva como PNG o JPEG y divídelo en paneles de carrusel directamente en tu navegador. Gratis, privado y sin registro.",
+      ogTitle: "Divisor de Imágenes de Canva",
+      ogDescription: "Divide exportaciones de Canva en paneles de carrusel al instante.",
+    },
+    hero: {
+      overline: "Divisor de carrusel para Canva",
+      headlinePart1: "Divide diseños de Canva en ",
+      headlineAccent: "Paneles de Carrusel",
+      headlinePart2: "",
+      description: "Exporta tu diseño de Canva como imagen plana, súbelo aquí y divídelo en paneles de carrusel perfectamente alineados para Instagram, LinkedIn o TikTok. Sin plugins.",
+    },
+    scenarios: [
+      { icon: "Layers2", title: "Flujo de carrusel con Canva", description: "Exporta un lienzo largo de Canva como una sola imagen y córtalo en diapositivas de carrusel numeradas." },
+      { icon: "Columns", title: "Paneles alineados sin cortes", description: "Cada borde de panel encaja a la perfección para que el carrusel parezca una imagen continua." },
+      { icon: "Download", title: "ZIP numerado", description: "Recibe los paneles numerados en orden: solo súbelos en secuencia como diapositivas del carrusel." },
+    ],
+    howToSteps: [
+      { stepNumber: 1, title: "Exporta desde Canva", description: "En Canva, descarga tu diseño como PNG o JPEG a tamaño completo." },
+      { stepNumber: 2, title: "Sube y define los paneles", description: "Arrastra la imagen exportada aquí y elige en cuántos paneles dividirla." },
+      { stepNumber: 3, title: "Descarga y publica", description: "Exporta el ZIP con paneles numerados y sube las diapositivas a tu carrusel en orden." },
+    ],
+    faqEntries: [
+      { question: "¿Cómo exporto un diseño de Canva para dividirlo en carrusel?", answer: "En Canva, ve a Compartir → Descargar y elige PNG o JPEG. Luego sube ese archivo aquí para dividirlo en paneles de carrusel." },
+      { question: "¿Funciona con diseños de varias páginas de Canva?", answer: "Esta herramienta divide una sola imagen plana. Para diseños de varias páginas, exporta cada página por separado o únelas primero en una imagen larga." },
+      { question: "¿Los paneles quedarán perfectamente alineados?", answer: "Sí. El divisor corta en límites exactos de píxel, así que los paneles adyacentes comparten un borde limpio." },
+      { question: "¿Necesito una cuenta de Canva para usarlo?", answer: "No. Esta herramienta es independiente. Solo necesitas un archivo PNG o JPEG, de Canva o de cualquier otro lugar." },
+    ],
+    relatedTools: [
+      { slug: "/grid", title: "Divisor de cuadrícula", description: "Divide una imagen en una cuadrícula uniforme de mosaicos." },
+      { slug: "/collage", title: "Creador de collage", description: "Combina varias imágenes en un único diseño de collage." },
+      { slug: "/social-export", title: "Exportación social", description: "Genera varios tamaños sociales desde una imagen." },
+    ],
+  },
+
 }
 
 export default data
