@@ -1,139 +1,58 @@
 "use client"
 
-import { useState, useCallback, useMemo, useRef, useEffect } from "react"
 import { useTranslations } from "next-intl"
 import { Link } from "@/i18n/navigation"
 import { LogoIcon } from "@/components/LogoIcon"
 import { LocaleSwitcher } from "@/components/LocaleSwitcher"
 import { GridSteps } from "@/components/grid/GridSteps"
-import { GridUploadZone } from "@/components/grid/GridUploadZone"
+import { SingleImageUploadZone } from "@/components/SingleImageUploadZone"
 import { GridTypeSelector } from "@/components/grid/GridTypeSelector"
 import { DynamicGridEditor } from "@/components/grid/DynamicGridEditor"
 import { DynamicGridPreview as GridPreview } from "@/components/grid/DynamicGridPreview"
 import { useGridEditor } from "@/hooks/use-grid-editor"
+import { useFramedImageWorkspace } from "@/hooks/use-framed-image-workspace"
 import { getGridConfig } from "@/lib/grid-splitter"
 import { consumePendingGridUpload } from "@/lib/pending-grid-upload"
-import { loadImage } from "@/lib/upload-utils"
 import type { GridSplitResult } from "@/lib/grid-splitter"
 
-type Step = 1 | 2 | 3
+function getSingleFileName(result: GridSplitResult, _index: number, ext: string): string {
+  return `grid-${result.index}.${ext}`
+}
+
+async function exportZip(
+  results: GridSplitResult[],
+  ext: string
+): Promise<{ blob: Blob; fileName: string }> {
+  const { exportGridAsZip, getGridZipFileName } = await import("@/lib/zip-exporter")
+  const blob = await exportGridAsZip(results.map((r) => r.blob), ext)
+  return { blob, fileName: getGridZipFileName() }
+}
 
 export function GridWorkspaceClient() {
   const tDownload = useTranslations("grid.download")
 
-  const [step, setStep] = useState<Step>(1)
-  const [image, setImage] = useState<HTMLImageElement | null>(null)
-  const [imageUrl, setImageUrl] = useState<string>("")
-  const [mimeType, setMimeType] = useState<string>("image/png")
-  const [results, setResults] = useState<GridSplitResult[] | null>(null)
-  const containerRef = useRef<HTMLDivElement>(null)
-  const [containerSize, setContainerSize] = useState({ width: 400, height: 400 })
-  const pendingConsumed = useRef(false)
+  const {
+    step,
+    image,
+    mimeType,
+    imageSize,
+    containerRef,
+    containerSize,
+    results,
+    resultUrls,
+    handleImageLoaded,
+    handleReupload,
+    completeWithResults,
+    handleReadjust,
+    handleSaveSingle,
+    handleDownloadAll,
+  } = useFramedImageWorkspace<GridSplitResult>({
+    consumePendingUpload: consumePendingGridUpload,
+    getSingleFileName,
+    exportZip,
+  })
 
-  const editor = useGridEditor(
-    image ? { width: image.naturalWidth, height: image.naturalHeight } : { width: 1, height: 1 },
-    containerSize
-  )
-
-  // Consume pending upload on mount
-  useEffect(() => {
-    if (pendingConsumed.current) return
-    pendingConsumed.current = true
-    const file = consumePendingGridUpload()
-    if (!file) return
-    loadImage(file).then((img) => {
-      const url = URL.createObjectURL(file)
-      setImage(img)
-      setImageUrl(url)
-      setMimeType(file.type)
-      setStep(2)
-      requestAnimationFrame(() => {
-        if (containerRef.current) {
-          const rect = containerRef.current.getBoundingClientRect()
-          setContainerSize({
-            width: Math.min(rect.width - 48, 600),
-            height: Math.min(rect.height - 48, 600),
-          })
-        }
-      })
-    })
-  }, [])
-
-  const handleImageLoaded = useCallback((img: HTMLImageElement, file: File) => {
-    if (imageUrl) URL.revokeObjectURL(imageUrl)
-    const url = URL.createObjectURL(file)
-    setImage(img)
-    setImageUrl(url)
-    setMimeType(file.type)
-    setResults(null)
-    setStep(2)
-    requestAnimationFrame(() => {
-      if (containerRef.current) {
-        const rect = containerRef.current.getBoundingClientRect()
-        setContainerSize({
-          width: Math.min(rect.width - 48, 600),
-          height: Math.min(rect.height - 48, 600),
-        })
-      }
-    })
-  }, [imageUrl])
-
-  const handleReupload = useCallback(() => {
-    setResults(null)
-    setStep(1)
-  }, [])
-
-  const handleGenerated = useCallback((r: GridSplitResult[]) => {
-    setResults(r)
-    setStep(3)
-  }, [])
-
-  const handleReadjust = useCallback(() => {
-    setResults(null)
-    setStep(2)
-  }, [])
-
-  const resultUrls = useMemo(() => {
-    if (!results) return []
-    return results.map((r) => URL.createObjectURL(r.blob))
-  }, [results])
-
-  useEffect(() => {
-    return () => {
-      resultUrls.forEach((url) => URL.revokeObjectURL(url))
-    }
-  }, [resultUrls])
-
-  const handleSaveSingle = useCallback(
-    (result: GridSplitResult) => {
-      const ext = mimeType === "image/jpeg" ? "jpg" : "png"
-      const url = URL.createObjectURL(result.blob)
-      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
-      if (isIOS) {
-        window.open(url, "_blank")
-      } else {
-        const a = document.createElement("a")
-        a.href = url
-        a.download = `grid-${result.index}.${ext}`
-        a.click()
-        setTimeout(() => URL.revokeObjectURL(url), 1000)
-      }
-    },
-    [mimeType]
-  )
-
-  const handleDownloadAll = useCallback(async () => {
-    if (!results) return
-    const { exportGridAsZip, getGridZipFileName } = await import("@/lib/zip-exporter")
-    const ext = mimeType === "image/jpeg" ? "jpg" : "png"
-    const zipBlob = await exportGridAsZip(results.map((r) => r.blob), ext)
-    const url = URL.createObjectURL(zipBlob)
-    const a = document.createElement("a")
-    a.href = url
-    a.download = getGridZipFileName()
-    a.click()
-    URL.revokeObjectURL(url)
-  }, [results, mimeType])
+  const editor = useGridEditor(imageSize, containerSize)
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
@@ -160,7 +79,7 @@ export function GridWorkspaceClient() {
         {/* Step 1: Upload */}
         {step === 1 && (
           <div className="max-w-[800px] mx-auto w-full px-4 md:px-8 py-8">
-            <GridUploadZone onImageLoaded={handleImageLoaded} />
+            <SingleImageUploadZone namespace="grid.upload" onImageLoaded={handleImageLoaded} />
           </div>
         )}
 
@@ -226,7 +145,7 @@ export function GridWorkspaceClient() {
                 state={editor.state}
                 frameWidth={editor.frameSize.width}
                 frameHeight={editor.frameSize.height}
-                onGenerated={handleGenerated}
+                onGenerated={completeWithResults}
               />
             </div>
 
@@ -238,7 +157,7 @@ export function GridWorkspaceClient() {
                 state={editor.state}
                 frameWidth={editor.frameSize.width}
                 frameHeight={editor.frameSize.height}
-                onGenerated={handleGenerated}
+                onGenerated={completeWithResults}
               />
             </div>
           </div>
@@ -260,12 +179,13 @@ export function GridWorkspaceClient() {
               {results.map((result, i) => (
                 <button
                   key={result.index}
-                  onClick={() => handleSaveSingle(result)}
+                  onClick={() => handleSaveSingle(result, i)}
                   className="relative aspect-square overflow-hidden group cursor-pointer"
                 >
+                  {/* eslint-disable-next-line @next/next/no-img-element -- blob object URL, next/image not applicable */}
                   <img
                     src={resultUrls[i]}
-                    alt={`Grid ${result.index}`}
+                    alt={tDownload("itemAlt", { index: result.index })}
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/20 transition-colors duration-300 flex items-center justify-center">

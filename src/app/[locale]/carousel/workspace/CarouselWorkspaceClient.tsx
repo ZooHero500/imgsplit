@@ -1,89 +1,63 @@
 "use client"
 
-import { useState, useCallback, useMemo, useRef, useEffect } from "react"
+import { useState, useCallback } from "react"
 import { useTranslations } from "next-intl"
 import { Link } from "@/i18n/navigation"
 import { LogoIcon } from "@/components/LogoIcon"
 import { LocaleSwitcher } from "@/components/LocaleSwitcher"
 import { CarouselSteps } from "@/components/carousel/CarouselSteps"
-import { CarouselUploadZone } from "@/components/carousel/CarouselUploadZone"
+import { SingleImageUploadZone } from "@/components/SingleImageUploadZone"
 import { CarouselCountSelector } from "@/components/carousel/CarouselCountSelector"
 import { AspectSelector } from "@/components/carousel/AspectSelector"
 import { DynamicCarouselEditor } from "@/components/carousel/DynamicCarouselEditor"
 import { CarouselPreview } from "@/components/carousel/CarouselPreview"
 import { useCarouselEditor } from "@/hooks/use-carousel-editor"
+import { useFramedImageWorkspace } from "@/hooks/use-framed-image-workspace"
 import { splitCarousel } from "@/lib/carousel-splitter"
 import { consumePendingCarouselUpload } from "@/lib/pending-carousel-upload"
-import { loadImage } from "@/lib/upload-utils"
 import type { CarouselSlide } from "@/lib/carousel-splitter"
 
-type Step = 1 | 2 | 3
+function getSingleFileName(_slide: CarouselSlide, index: number, ext: string): string {
+  return `carousel-${index + 1}.${ext}`
+}
+
+async function exportZip(
+  slides: CarouselSlide[],
+  ext: string
+): Promise<{ blob: Blob; fileName: string }> {
+  const { exportCarouselAsZip, getCarouselZipFileName } = await import("@/lib/zip-exporter")
+  const blob = await exportCarouselAsZip(slides.map((s) => s.blob), ext)
+  return { blob, fileName: getCarouselZipFileName() }
+}
 
 export function CarouselWorkspaceClient() {
   const tDownload = useTranslations("carousel.download")
 
-  const [step, setStep] = useState<Step>(1)
-  const [image, setImage] = useState<HTMLImageElement | null>(null)
-  const [imageUrl, setImageUrl] = useState<string>("")
-  const [mimeType, setMimeType] = useState<string>("image/png")
-  const [slides, setSlides] = useState<CarouselSlide[] | null>(null)
   const [generating, setGenerating] = useState(false)
-  const containerRef = useRef<HTMLDivElement>(null)
-  const [containerSize, setContainerSize] = useState({ width: 400, height: 400 })
-  const pendingConsumed = useRef(false)
 
-  const editor = useCarouselEditor(
-    image ? { width: image.naturalWidth, height: image.naturalHeight } : { width: 1, height: 1 },
-    containerSize
-  )
+  const {
+    step,
+    image,
+    imageUrl,
+    mimeType,
+    imageSize,
+    containerRef,
+    containerSize,
+    results: slides,
+    resultUrls: slideUrls,
+    handleImageLoaded,
+    handleReupload,
+    completeWithResults,
+    handleReadjust,
+    handleSaveSingle,
+    handleDownloadAll,
+  } = useFramedImageWorkspace<CarouselSlide>({
+    consumePendingUpload: consumePendingCarouselUpload,
+    getSingleFileName,
+    exportZip,
+  })
 
-  // Consume pending upload on mount
-  useEffect(() => {
-    if (pendingConsumed.current) return
-    pendingConsumed.current = true
-    const file = consumePendingCarouselUpload()
-    if (!file) return
-    loadImage(file).then((img) => {
-      const url = URL.createObjectURL(file)
-      setImage(img)
-      setImageUrl(url)
-      setMimeType(file.type)
-      setStep(2)
-      requestAnimationFrame(() => {
-        if (containerRef.current) {
-          const rect = containerRef.current.getBoundingClientRect()
-          setContainerSize({
-            width: Math.min(rect.width - 48, 600),
-            height: Math.min(rect.height - 48, 600),
-          })
-        }
-      })
-    })
-  }, [])
-
-  const handleImageLoaded = useCallback((img: HTMLImageElement, file: File) => {
-    if (imageUrl) URL.revokeObjectURL(imageUrl)
-    const url = URL.createObjectURL(file)
-    setImage(img)
-    setImageUrl(url)
-    setMimeType(file.type)
-    setSlides(null)
-    setStep(2)
-    requestAnimationFrame(() => {
-      if (containerRef.current) {
-        const rect = containerRef.current.getBoundingClientRect()
-        setContainerSize({
-          width: Math.min(rect.width - 48, 600),
-          height: Math.min(rect.height - 48, 600),
-        })
-      }
-    })
-  }, [imageUrl])
-
-  const handleReupload = useCallback(() => {
-    setSlides(null)
-    setStep(1)
-  }, [])
+  const editor = useCarouselEditor(imageSize, containerSize)
 
   const handleGenerate = useCallback(async () => {
     if (!image) return
@@ -95,59 +69,11 @@ export function CarouselWorkspaceClient() {
         { displayWidth: editor.frameSize.width, displayHeight: editor.frameSize.height },
         mimeType,
       )
-      setSlides(result)
-      setStep(3)
+      completeWithResults(result)
     } finally {
       setGenerating(false)
     }
-  }, [image, editor.state, editor.frameSize.width, editor.frameSize.height, mimeType])
-
-  const handleReadjust = useCallback(() => {
-    setSlides(null)
-    setStep(2)
-  }, [])
-
-  const slideUrls = useMemo(() => {
-    if (!slides) return []
-    return slides.map((s) => URL.createObjectURL(s.blob))
-  }, [slides])
-
-  useEffect(() => {
-    return () => {
-      slideUrls.forEach((url) => URL.revokeObjectURL(url))
-    }
-  }, [slideUrls])
-
-  const handleSaveSingle = useCallback(
-    (slide: CarouselSlide, index: number) => {
-      const ext = mimeType === "image/jpeg" ? "jpg" : "png"
-      const url = URL.createObjectURL(slide.blob)
-      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
-      if (isIOS) {
-        window.open(url, "_blank")
-      } else {
-        const a = document.createElement("a")
-        a.href = url
-        a.download = `carousel-${index + 1}.${ext}`
-        a.click()
-        setTimeout(() => URL.revokeObjectURL(url), 1000)
-      }
-    },
-    [mimeType]
-  )
-
-  const handleDownloadAll = useCallback(async () => {
-    if (!slides) return
-    const { exportCarouselAsZip, getCarouselZipFileName } = await import("@/lib/zip-exporter")
-    const ext = mimeType === "image/jpeg" ? "jpg" : "png"
-    const zipBlob = await exportCarouselAsZip(slides.map((s) => s.blob), ext)
-    const url = URL.createObjectURL(zipBlob)
-    const a = document.createElement("a")
-    a.href = url
-    a.download = getCarouselZipFileName()
-    a.click()
-    setTimeout(() => URL.revokeObjectURL(url), 1000)
-  }, [slides, mimeType])
+  }, [image, editor.state, editor.frameSize.width, editor.frameSize.height, mimeType, completeWithResults])
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
@@ -174,7 +100,7 @@ export function CarouselWorkspaceClient() {
         {/* Step 1: Upload */}
         {step === 1 && (
           <div className="max-w-[800px] mx-auto w-full px-4 md:px-8 py-8">
-            <CarouselUploadZone onImageLoaded={handleImageLoaded} />
+            <SingleImageUploadZone namespace="carousel.upload" onImageLoaded={handleImageLoaded} />
           </div>
         )}
 
@@ -285,9 +211,10 @@ export function CarouselWorkspaceClient() {
                   onClick={() => handleSaveSingle(slide, i)}
                   className="relative aspect-square overflow-hidden group cursor-pointer"
                 >
+                  {/* eslint-disable-next-line @next/next/no-img-element -- blob object URL, next/image not applicable */}
                   <img
                     src={slideUrls[i]}
-                    alt={`Slide ${slide.index}`}
+                    alt={tDownload("slideAlt", { index: slide.index })}
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/20 transition-colors duration-300 flex items-center justify-center">

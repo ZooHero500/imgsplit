@@ -2,14 +2,17 @@
 
 import { useCallback, useRef, useState } from "react"
 import { useTranslations } from "next-intl"
-import { validateFiles, loadImage, ACCEPTED_TYPES } from "@/lib/upload-utils"
+import { loadUploadResults, ACCEPTED_TYPES } from "@/lib/upload-utils"
 
-interface GridUploadZoneProps {
+interface SingleImageUploadZoneProps {
+  /** i18n namespace providing title / dragHint / clickHint / formatHint. */
+  namespace: "grid.upload" | "carousel.upload"
   onImageLoaded: (image: HTMLImageElement, file: File) => void
 }
 
-export function GridUploadZone({ onImageLoaded }: GridUploadZoneProps) {
-  const t = useTranslations("grid.upload")
+/** Single-image drop zone shared by the grid and carousel tools. */
+export function SingleImageUploadZone({ namespace, onImageLoaded }: SingleImageUploadZoneProps) {
+  const t = useTranslations(namespace)
   const [error, setError] = useState<string | null>(null)
   const [isDragOver, setIsDragOver] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
@@ -21,18 +24,17 @@ export function GridUploadZone({ onImageLoaded }: GridUploadZoneProps) {
       const file = files[0]
       if (!file) return
 
-      const result = validateFiles([file])
-      if (!result.valid) {
-        setError(tUpload(result.error!.key, result.error!.params))
+      const outcome = await loadUploadResults([file])
+      if (outcome.status === "invalid") {
+        setError(tUpload(outcome.error.key, outcome.error.params))
         return
       }
-
-      try {
-        const image = await loadImage(result.files[0])
-        onImageLoaded(image, result.files[0])
-      } catch {
+      if (outcome.status === "loadFailed") {
         setError(tUpload("loadFailed"))
+        return
       }
+      const { image, file: loadedFile } = outcome.results[0]
+      onImageLoaded(image, loadedFile)
     },
     [onImageLoaded, tUpload]
   )

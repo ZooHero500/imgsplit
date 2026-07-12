@@ -90,7 +90,7 @@ export function GridPreview({
       <div className="mb-6 flex justify-center">
         <Stage width={stageWidth} height={stageHeight} listening={false}>
           <Layer>
-            {cells.map(({ r, c, x, y, clipX, clipY }, i) => (
+            {cells.map(({ x, y, clipX, clipY }, i) => (
               <Group
                 key={i}
                 x={x}

@@ -4,7 +4,7 @@ import { useCallback, useRef, useState } from "react"
 import { useTranslations } from "next-intl"
 import { toast } from "sonner"
 import type { UploadResult } from "@/types"
-import { validateFiles, loadImage, ACCEPTED_TYPES } from "@/lib/upload-utils"
+import { loadUploadResults, ACCEPTED_TYPES } from "@/lib/upload-utils"
 
 interface UploadZoneProps {
   onImageLoaded?: (result: UploadResult) => void
@@ -35,33 +35,26 @@ export function UploadZone({
       setError(null)
 
       const selectedFiles = multiple ? Array.from(files) : Array.from(files).slice(0, 1)
-      const result = validateFiles(selectedFiles)
-      if (!result.valid) {
-        setError(t(result.error!.key, result.error!.params))
+      const outcome = await loadUploadResults(selectedFiles)
+      if (outcome.status === "invalid") {
+        setError(t(outcome.error.key, outcome.error.params))
+        return
+      }
+      if (outcome.status === "loadFailed") {
+        setError(t("loadFailed"))
         return
       }
 
-      if (result.totalSizeWarning) {
-        const totalSize = result.files.reduce((sum, f) => sum + f.size, 0)
+      if (outcome.totalSizeWarning) {
         toast.warning(
-          t("totalSizeWarning", { size: (totalSize / 1024 / 1024).toFixed(1) })
+          t("totalSizeWarning", { size: (outcome.totalSize / 1024 / 1024).toFixed(1) })
         )
       }
 
-      try {
-        const results: UploadResult[] = []
-        for (const file of result.files) {
-          const image = await loadImage(file)
-          results.push({ file, image, mimeType: file.type })
-        }
-
-        if (onImagesLoaded) {
-          onImagesLoaded(results)
-        } else if (onImageLoaded && results.length > 0) {
-          onImageLoaded(results[0])
-        }
-      } catch {
-        setError(t("loadFailed"))
+      if (onImagesLoaded) {
+        onImagesLoaded(outcome.results)
+      } else if (onImageLoaded && outcome.results.length > 0) {
+        onImageLoaded(outcome.results[0])
       }
     },
     [multiple, onImageLoaded, onImagesLoaded, t]

@@ -71,7 +71,10 @@ function renderSlideToBlob(
     ctx.drawImage(image, srcX, srcY, srcW, srcH, 0, 0, outW, outH)
     const quality = mimeType === "image/jpeg" ? JPEG_QUALITY : undefined
     canvas.toBlob(
-      (blob) => { blob ? resolve(blob) : reject(new Error("Failed to create blob from canvas")) },
+      (blob) => {
+        if (blob) resolve(blob)
+        else reject(new Error("Failed to create blob from canvas"))
+      },
       mimeType, quality,
     )
   })

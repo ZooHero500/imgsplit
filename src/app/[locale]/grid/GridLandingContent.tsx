@@ -2,7 +2,7 @@
 
 import { useCallback } from "react"
 import { useRouter } from "@/i18n/navigation"
-import { GridUploadZone } from "@/components/grid/GridUploadZone"
+import { SingleImageUploadZone } from "@/components/SingleImageUploadZone"
 import { setPendingGridUpload } from "@/lib/pending-grid-upload"
 
 export function GridLandingContent() {
@@ -16,5 +16,5 @@ export function GridLandingContent() {
     [router]
   )
 
-  return <GridUploadZone onImageLoaded={handleImageLoaded} />
+  return <SingleImageUploadZone namespace="grid.upload" onImageLoaded={handleImageLoaded} />
 }
