@@ -1,7 +1,12 @@
 import { NextRequest, NextResponse } from "next/server"
 import OpenAI from "openai"
+import { createRateLimiter, getClientIp } from "@/lib/rate-limit"
 
-const MAX_IMAGE_SIZE = 15_000_000 // ~10MB as base64
+// ~10MB binary image as a base64 data URL (10MB × 4/3 ≈ 13.4M chars + headroom)
+const MAX_IMAGE_SIZE = 14_000_000
+
+// Per-instance abuse brake for the paid xAI endpoint (see @/lib/rate-limit)
+const rateLimiter = createRateLimiter({ windowMs: 60_000, max: 20 })
 
 function getClient() {
   return new OpenAI({
@@ -49,8 +54,20 @@ function validateElements(parsed: unknown): Array<{ label_en: string; label_zh: 
 }
 
 export async function POST(request: NextRequest) {
+  const rate = rateLimiter.check(getClientIp(request.headers))
+  if (!rate.ok) {
+    return NextResponse.json(
+      { error: "Too many requests, please try again later" },
+      {
+        status: 429,
+        headers: { "Retry-After": String(Math.ceil(rate.retryAfterMs / 1000)) },
+      }
+    )
+  }
+
   try {
-    const { image } = await request.json()
+    const body: unknown = await request.json()
+    const { image } = (body ?? {}) as { image?: unknown }
 
     if (!image) {
       return NextResponse.json(
@@ -59,7 +76,16 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    if (typeof image === "string" && image.length > MAX_IMAGE_SIZE) {
+    // Only accept inline data URLs — never http(s) URLs, which the upstream
+    // model would fetch server-side (SSRF surface).
+    if (typeof image !== "string" || !image.startsWith("data:image/")) {
+      return NextResponse.json(
+        { error: "Image must be a base64 data URL (data:image/...)" },
+        { status: 400 }
+      )
+    }
+
+    if (image.length > MAX_IMAGE_SIZE) {
       return NextResponse.json(
         { error: "Image too large (max 10MB)" },
         { status: 413 }
