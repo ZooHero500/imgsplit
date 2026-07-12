@@ -3,6 +3,7 @@ import {
   type SocialExportPreset,
   type SocialExportPresetId,
 } from "./social-export-presets"
+import { stripExtension } from "@/lib/utils"
 
 export type SocialExportOutputFormat = "image/png" | "image/jpeg" | "image/webp"
 export type SocialExportFitMode = "fill" | "fit"
@@ -108,7 +109,7 @@ export function getSocialExportOutputExtension(
 }
 
 export function getSocialExportBaseName(fileName: string): string {
-  return fileName.replace(/\.[^.]+$/, "") || "social-export"
+  return stripExtension(fileName, "social-export")
 }
 
 export function getSocialExportFileName(

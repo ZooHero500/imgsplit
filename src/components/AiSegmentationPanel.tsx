@@ -16,7 +16,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
 import { useAiAnalyze } from "@/hooks/use-ai-analyze"
 import { useAiSegment } from "@/hooks/use-ai-segment"
-import { downloadBlob } from "@/lib/ai-segmentation"
+import { downloadBlob } from "@/lib/download"
 import type { RecognizedElement, AiSegmentStep, SegmentLayer } from "@/types"
 
 interface AiSegmentationPanelProps {

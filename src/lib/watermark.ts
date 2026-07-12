@@ -1,3 +1,5 @@
+import { stripExtension } from "@/lib/utils"
+
 export type WatermarkLayerType = "text" | "image"
 export type WatermarkRepeatMode = "single" | "repeat"
 export type WatermarkOutputFormat = "image/png" | "image/jpeg" | "image/webp"
@@ -158,7 +160,7 @@ export function getWatermarkOutputExtension(
 }
 
 export function getWatermarkBaseName(fileName: string): string {
-  return fileName.replace(/\.[^.]+$/, "") || "image"
+  return stripExtension(fileName)
 }
 
 function drawTextWatermark(

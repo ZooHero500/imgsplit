@@ -1,5 +1,11 @@
-import { describe, it, expect } from "vitest"
-import { validateFiles, ACCEPTED_TYPES, MAX_SIZE, MAX_TOTAL_SIZE } from "../upload-utils"
+import { describe, it, expect, vi, afterEach } from "vitest"
+import {
+  validateFiles,
+  MAX_SIZE,
+  loadImageFromSrc,
+  readFileAsDataUrl,
+  loadUploadResults,
+} from "../upload-utils"
 
 describe("validateFiles", () => {
   function makeFile(name: string, size: number, type: string): File {
@@ -75,5 +81,119 @@ describe("validateFiles", () => {
     const result = validateFiles([file], existingSize)
     expect(result.valid).toBe(true)
     expect(result.totalSizeWarning).toBe(false)
+  })
+})
+
+/** Stub the global Image so assigning `src` fires onload (or onerror) asynchronously. */
+function stubImage(behavior: "load" | "error") {
+  // jsdom does not implement URL.createObjectURL — stub it for loadImage(file)
+  vi.stubGlobal("URL", {
+    ...URL,
+    createObjectURL: vi.fn(() => "blob:mock-url"),
+    revokeObjectURL: vi.fn(),
+  })
+  class FakeImage {
+    onload: (() => void) | null = null
+    onerror: (() => void) | null = null
+    crossOrigin: string | null = null
+    naturalWidth = 100
+    naturalHeight = 50
+    #src = ""
+    set src(value: string) {
+      this.#src = value
+      queueMicrotask(() => {
+        if (behavior === "load") this.onload?.()
+        else this.onerror?.()
+      })
+    }
+    get src() {
+      return this.#src
+    }
+  }
+  vi.stubGlobal("Image", FakeImage)
+}
+
+afterEach(() => {
+  vi.unstubAllGlobals()
+})
+
+describe("loadImageFromSrc", () => {
+  it("resolves with the image on load and applies crossOrigin", async () => {
+    stubImage("load")
+    const img = await loadImageFromSrc("data:image/png;base64,x", {
+      crossOrigin: "anonymous",
+    })
+    expect(img.src).toBe("data:image/png;base64,x")
+    expect(img.crossOrigin).toBe("anonymous")
+  })
+
+  it("rejects with the default message on error", async () => {
+    stubImage("error")
+    await expect(loadImageFromSrc("bad-src")).rejects.toThrow("Failed to load image")
+  })
+
+  it("rejects with a custom error message", async () => {
+    stubImage("error")
+    await expect(
+      loadImageFromSrc("bad-src", { errorMessage: "Failed to load mask image" })
+    ).rejects.toThrow("Failed to load mask image")
+  })
+})
+
+describe("readFileAsDataUrl", () => {
+  it("reads a file as a base64 data URL", async () => {
+    const file = new File(["hello"], "note.txt", { type: "text/plain" })
+    const dataUrl = await readFileAsDataUrl(file)
+    expect(dataUrl.startsWith("data:text/plain")).toBe(true)
+    expect(dataUrl).toContain("base64")
+  })
+})
+
+describe("loadUploadResults", () => {
+  function makeFile(name: string, size: number, type: string): File {
+    const buffer = new ArrayBuffer(size)
+    return new File([buffer], name, { type })
+  }
+
+  it("returns invalid with the validation error for unsupported files", async () => {
+    stubImage("load")
+    const outcome = await loadUploadResults([makeFile("a.gif", 10, "image/gif")])
+    expect(outcome).toEqual({ status: "invalid", error: { key: "unsupportedFormat" } })
+  })
+
+  it("loads every valid file into an UploadResult", async () => {
+    stubImage("load")
+    const files = [
+      makeFile("a.png", 10, "image/png"),
+      makeFile("b.jpg", 10, "image/jpeg"),
+    ]
+    const outcome = await loadUploadResults(files)
+    expect(outcome.status).toBe("success")
+    if (outcome.status === "success") {
+      expect(outcome.results).toHaveLength(2)
+      expect(outcome.results[0].file).toBe(files[0])
+      expect(outcome.results[0].mimeType).toBe("image/png")
+      expect(outcome.results[1].mimeType).toBe("image/jpeg")
+      expect(outcome.totalSizeWarning).toBe(false)
+      expect(outcome.totalSize).toBe(20)
+    }
+  })
+
+  it("flags a total-size warning including existingSize", async () => {
+    stubImage("load")
+    const outcome = await loadUploadResults(
+      [makeFile("a.png", 10 * 1024 * 1024, "image/png")],
+      { existingSize: 45 * 1024 * 1024 }
+    )
+    expect(outcome.status).toBe("success")
+    if (outcome.status === "success") {
+      expect(outcome.totalSizeWarning).toBe(true)
+    }
+  })
+
+  it("returns loadFailed when an image cannot be decoded", async () => {
+    stubImage("error")
+    const outcome = await loadUploadResults([makeFile("a.png", 10, "image/png")])
+    expect(outcome).toEqual({ status: "loadFailed" })
   })
 })

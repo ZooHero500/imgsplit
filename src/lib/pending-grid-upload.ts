@@ -1,11 +1,11 @@
-let pendingFile: File | null = null
+import { createPendingSlot } from "@/lib/pending-slot"
+
+const slot = createPendingSlot<File>()
 
 export function setPendingGridUpload(file: File) {
-  pendingFile = file
+  slot.set(file)
 }
 
 export function consumePendingGridUpload(): File | null {
-  const f = pendingFile
-  pendingFile = null
-  return f
+  return slot.consume()
 }

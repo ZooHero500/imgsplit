@@ -5,6 +5,7 @@ import {
   type CollagePoint,
   type CollageTemplateId,
 } from "./collage-presets"
+import { stripExtension } from "@/lib/utils"
 
 export type CollageOutputFormat = "image/png" | "image/jpeg" | "image/webp"
 export type CollageFitMode = "fill" | "fit"
@@ -646,12 +647,8 @@ export function getCollageOutputExtension(format: CollageOutputFormat): string {
   }
 }
 
-function stripExtension(fileName: string): string {
-  return fileName.replace(/\.[^.]+$/, "")
-}
-
 export function getCollageBaseName(fileNames: string[]): string {
   if (fileNames.length === 0) return "collage"
-  if (fileNames.length === 1) return `${stripExtension(fileNames[0])}_collage`
+  if (fileNames.length === 1) return `${stripExtension(fileNames[0], "")}_collage`
   return "photo-collage"
 }

@@ -1,13 +1,12 @@
+import { createPendingSlot } from "@/lib/pending-slot"
 import type { UploadResult } from "@/types"
 
-let pending: UploadResult[] | null = null
+const slot = createPendingSlot<UploadResult[]>()
 
 export function setPendingUpload(data: UploadResult[]) {
-  pending = data
+  slot.set(data)
 }
 
 export function consumePendingUpload(): UploadResult[] | null {
-  const d = pending
-  pending = null
-  return d
+  return slot.consume()
 }

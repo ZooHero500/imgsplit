@@ -1,3 +1,5 @@
+import { loadImageFromSrc } from "@/lib/upload-utils"
+
 export const LAYER_COLORS = [
   "#3B82F6", // blue
   "#22C55E", // green
@@ -25,20 +27,5 @@ export function blobToBase64DataUrl(blob: Blob): Promise<string> {
 }
 
 export function loadImage(url: string): Promise<HTMLImageElement> {
-  return new Promise((resolve, reject) => {
-    const img = new Image()
-    img.crossOrigin = "anonymous"
-    img.onload = () => resolve(img)
-    img.onerror = reject
-    img.src = url
-  })
-}
-
-export function downloadBlob(blob: Blob, fileName: string): void {
-  const url = URL.createObjectURL(blob)
-  const a = document.createElement("a")
-  a.href = url
-  a.download = fileName
-  a.click()
-  URL.revokeObjectURL(url)
+  return loadImageFromSrc(url, { crossOrigin: "anonymous" })
 }

@@ -1,3 +1,5 @@
+import { stripExtension } from "@/lib/utils"
+
 export type BackgroundRemovalOutputFormat =
   | "image/png"
   | "image/jpeg"
@@ -28,8 +30,7 @@ export function formatModelBytes(bytes: number): string {
 }
 
 export function getBackgroundRemovalBaseName(fileName: string): string {
-  const lastDot = fileName.lastIndexOf(".")
-  return lastDot === -1 ? fileName : fileName.slice(0, lastDot)
+  return stripExtension(fileName, "")
 }
 
 export function getBackgroundRemovalOutputExtension(

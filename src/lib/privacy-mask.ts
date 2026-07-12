@@ -1,3 +1,6 @@
+import { loadImageFromSrc } from "@/lib/upload-utils"
+import { stripExtension } from "@/lib/utils"
+
 export type PrivacyMaskEffect = "mosaic" | "blur" | "solid"
 export type PrivacyMaskBrushMode = "mask" | "erase"
 export type PrivacyMaskOutputFormat = "image/png" | "image/jpeg" | "image/webp"
@@ -310,7 +313,7 @@ export function getPrivacyMaskOutputExtension(
 }
 
 export function getPrivacyMaskBaseName(fileName: string): string {
-  return fileName.replace(/\.[^.]+$/, "") || "image"
+  return stripExtension(fileName)
 }
 
 function drawPrivacyMaskRegion(
@@ -625,12 +628,7 @@ function encodeCanvas(
 }
 
 function loadImage(src: string): Promise<HTMLImageElement> {
-  return new Promise((resolve, reject) => {
-    const image = new Image()
-    image.onload = () => resolve(image)
-    image.onerror = () => reject(new Error("Failed to load mask image"))
-    image.src = src
-  })
+  return loadImageFromSrc(src, { errorMessage: "Failed to load mask image" })
 }
 
 function clamp(value: number, min: number, max: number): number {
