@@ -251,6 +251,7 @@
       "readjust": "Reajustar",
       "count": "{count} imagens",
       "tapToSave": "Toque em uma imagem para salvar individualmente",
+      "itemAlt": "Imagem da grade {index}",
       "failed": "Falha no download. Por favor, tente novamente.",
       "generating": "Gerando...",
       "reupload": "Reenviar"
@@ -490,6 +491,9 @@
     "github": "GitHub",
     "twitter": "Twitter",
     "toolRemoveBackground": "Remover Fundo com IA"
+  },
+  "editorToolsNav": {
+    "title": "Ferramentas"
   },
   "pseoChrome": {
     "scenariosTitle": "Casos de Uso",
@@ -965,6 +969,7 @@
       "readjust": "Reajustar",
       "count": "{count} slides",
       "tapToSave": "Toque em um slide para salvar individualmente",
+      "slideAlt": "Slide {index}",
       "failed": "Falha no download. Por favor, tente novamente.",
       "reupload": "Reenviar"
     },
@@ -1051,6 +1056,7 @@
     "preset_custom": "Personalizado",
     "download": "Baixar",
     "downloadAs": "Baixar como {format}",
+    "settings": "Configurações",
     "reset": "Redefinir",
     "replaceImage": "Substituir Imagem",
     "cropMode": "Modo de Recorte",

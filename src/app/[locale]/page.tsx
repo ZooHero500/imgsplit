@@ -13,7 +13,7 @@ import {
   Shield,
   Download,
   Zap,
-  Image,
+  Image as ImageIcon,
   Grid3X3,
   MousePointerClick,
   Layers,
@@ -234,7 +234,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             desc={t("trust.speedDesc")}
           />
           <TrustItem
-            icon={<Image className="h-4 w-4" strokeWidth={1.5} />}
+            icon={<ImageIcon className="h-4 w-4" strokeWidth={1.5} />}
             label={t("trust.qualityLabel")}
             desc={t("trust.qualityDesc")}
           />
@@ -342,7 +342,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
               href="/grid"
             />
             <FeatureCard
-              icon={<Image className="h-4 w-4" strokeWidth={1.5} />}
+              icon={<ImageIcon className="h-4 w-4" strokeWidth={1.5} />}
               title={t("features.formatTitle")}
               description={t("features.formatDesc")}
               href="/split-horizontally"

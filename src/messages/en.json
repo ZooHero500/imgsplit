@@ -251,6 +251,7 @@
       "readjust": "Readjust",
       "count": "{count} images",
       "tapToSave": "Tap an image to save individually",
+      "itemAlt": "Grid image {index}",
       "failed": "Download failed. Please try again.",
       "generating": "Generating...",
       "reupload": "Re-upload"
@@ -490,6 +491,9 @@
     "github": "GitHub",
     "twitter": "Twitter",
     "toolRemoveBackground": "AI Background Remover"
+  },
+  "editorToolsNav": {
+    "title": "Tools"
   },
   "pseoChrome": {
     "scenariosTitle": "Use Cases",
@@ -965,6 +969,7 @@
       "readjust": "Readjust",
       "count": "{count} slides",
       "tapToSave": "Tap a slide to save individually",
+      "slideAlt": "Slide {index}",
       "failed": "Download failed. Please try again.",
       "reupload": "Re-upload"
     },
@@ -1051,6 +1056,7 @@
     "preset_custom": "Custom",
     "download": "Download",
     "downloadAs": "Download as {format}",
+    "settings": "Settings",
     "reset": "Reset",
     "replaceImage": "Replace Image",
     "cropMode": "Crop Mode",

@@ -251,6 +251,7 @@
       "readjust": "再調整",
       "count": "{count}枚の画像",
       "tapToSave": "画像をタップして個別に保存",
+      "itemAlt": "グリッド画像 {index}",
       "failed": "ダウンロードに失敗しました。もう一度お試しください。",
       "generating": "生成中...",
       "reupload": "再アップロード"
@@ -491,6 +492,9 @@
     "twitter": "Twitter",
     "toolRemoveBackground": "AI背景削除"
   },
+  "editorToolsNav": {
+    "title": "ツール"
+  },
   "pseoChrome": {
     "scenariosTitle": "活用シーン",
     "howItWorksTitle": "使い方",
@@ -702,6 +706,7 @@
     "preset_custom": "カスタム",
     "download": "ダウンロード",
     "downloadAs": "{format}でダウンロード",
+    "settings": "設定",
     "reset": "リセット",
     "replaceImage": "画像を入替",
     "cropMode": "トリミングモード",
@@ -1027,6 +1032,7 @@
       "readjust": "再調整",
       "count": "{count}枚のスライド",
       "tapToSave": "スライドをタップして個別保存",
+      "slideAlt": "スライド {index}",
       "failed": "ダウンロードに失敗しました。もう一度お試しください。",
       "reupload": "再アップロード"
     },

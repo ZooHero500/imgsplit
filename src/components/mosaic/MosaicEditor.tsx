@@ -24,9 +24,13 @@ import {
   Upload,
 } from "lucide-react"
 import { Link } from "@/i18n/navigation"
+import { EditorToolsNav } from "@/components/EditorToolsNav"
 import { LocaleSwitcher } from "@/components/LocaleSwitcher"
 import { LogoIcon } from "@/components/LogoIcon"
 import { UploadZone } from "@/components/UploadZone"
+import { useElementSize } from "@/hooks/use-element-size"
+import { useExportAction } from "@/hooks/use-export-action"
+import { downloadBlob } from "@/lib/download"
 import {
   createPrivacyMaskBrushStroke,
   createPrivacyMaskImageLayer,
@@ -50,7 +54,11 @@ import {
   type PrivacyMaskRegion,
   type PrivacyMaskState,
 } from "@/lib/privacy-mask"
-import { ACCEPTED_TYPES } from "@/lib/upload-utils"
+import {
+  ACCEPTED_TYPES,
+  loadImageFromSrc,
+  readFileAsDataUrl,
+} from "@/lib/upload-utils"
 import type { UploadResult } from "@/types"
 
 const OUTPUT_FORMATS: Array<{
@@ -129,33 +137,6 @@ function clamp(value: number, min: number, max: number) {
   return Math.min(max, Math.max(min, value))
 }
 
-function downloadBlob(blob: Blob, fileName: string) {
-  const url = URL.createObjectURL(blob)
-  const a = document.createElement("a")
-  a.href = url
-  a.download = fileName
-  a.click()
-  URL.revokeObjectURL(url)
-}
-
-function readFileAsDataUrl(file: File): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader()
-    reader.onload = () => resolve(String(reader.result))
-    reader.onerror = () => reject(new Error("Failed to read mask image"))
-    reader.readAsDataURL(file)
-  })
-}
-
-function loadImageFromSrc(src: string): Promise<HTMLImageElement> {
-  return new Promise((resolve, reject) => {
-    const image = new Image()
-    image.onload = () => resolve(image)
-    image.onerror = () => reject(new Error("Failed to load mask image"))
-    image.src = src
-  })
-}
-
 function SectionTitle({
   icon,
   children,
@@ -232,16 +213,19 @@ export function MosaicEditor() {
     useState<PrivacyMaskOutputFormat>("image/png")
   const [quality, setQuality] = useState(92)
   const [isRendering, setIsRendering] = useState(false)
-  const [isExporting, setIsExporting] = useState(false)
   const [isInteracting, setIsInteracting] = useState(false)
   const [draftRegion, setDraftRegion] = useState<PrivacyMaskRegion | null>(null)
   const [draftStroke, setDraftStroke] =
     useState<PrivacyMaskBrushStroke | null>(null)
-  const [displaySize, setDisplaySize] = useState({ width: 0, height: 0 })
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const overlayRef = useRef<SVGSVGElement>(null)
   const maskImageInputRef = useRef<HTMLInputElement>(null)
   const interactionRef = useRef<Interaction | null>(null)
+  const displaySize = useElementSize(canvasRef, {
+    mode: "bounding-rect",
+    resetKey: source,
+  })
+  const { isExporting, run: runExport } = useExportAction()
 
   const selectedRegion = useMemo(
     () =>
@@ -267,31 +251,11 @@ export function MosaicEditor() {
     maskState.strokes.length > 0 ||
     maskState.imageLayers.length > 0
 
-  const updateDisplaySize = useCallback(() => {
-    const canvas = canvasRef.current
-    if (!canvas) return
-    const rect = canvas.getBoundingClientRect()
-    setDisplaySize({ width: rect.width, height: rect.height })
-  }, [])
-
-  useEffect(() => {
-    const canvas = canvasRef.current
-    if (!canvas) return
-
-    const observer = new ResizeObserver(updateDisplaySize)
-    observer.observe(canvas)
-    const frame = requestAnimationFrame(updateDisplaySize)
-
-    return () => {
-      cancelAnimationFrame(frame)
-      observer.disconnect()
-    }
-  }, [source, updateDisplaySize])
-
   useEffect(() => {
     if (!source || !canvasRef.current || isInteracting) return
 
     let cancelled = false
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsRendering(true)
 
     renderPrivacyMaskToCanvas(
@@ -300,9 +264,6 @@ export function MosaicEditor() {
       maskState,
       imageAssets
     )
-      .then(() => {
-        if (!cancelled) updateDisplaySize()
-      })
       .catch(() => {
         if (!cancelled) toast.error(t("previewFailed"))
       })
@@ -313,7 +274,7 @@ export function MosaicEditor() {
     return () => {
       cancelled = true
     }
-  }, [source, maskState, imageAssets, isInteracting, t, updateDisplaySize])
+  }, [source, maskState, imageAssets, isInteracting, t])
 
   const handleImageLoaded = useCallback((result: UploadResult) => {
     setSource(result)
@@ -800,7 +761,9 @@ export function MosaicEditor() {
 
       try {
         const imageSrc = await readFileAsDataUrl(file)
-        const maskImage = await loadImageFromSrc(imageSrc)
+        const maskImage = await loadImageFromSrc(imageSrc, {
+          errorMessage: "Failed to load mask image",
+        })
         const aspectRatio =
           maskImage.naturalWidth > 0 && maskImage.naturalHeight > 0
             ? maskImage.naturalWidth / maskImage.naturalHeight
@@ -850,25 +813,25 @@ export function MosaicEditor() {
 
   const handleDownload = useCallback(async () => {
     if (!source) return
-    setIsExporting(true)
-    try {
-      const blob = await exportPrivacyMaskedImage(
-        source.image,
-        maskState,
-        outputFormat,
-        quality / 100,
-        imageAssets
-      )
-      const ext = getPrivacyMaskOutputExtension(outputFormat)
-      const baseName = getPrivacyMaskBaseName(source.file.name)
-      downloadBlob(blob, `${baseName}_masked.${ext}`)
-      toast.success(t("downloadReady"))
-    } catch {
-      toast.error(t("exportFailed"))
-    } finally {
-      setIsExporting(false)
-    }
-  }, [source, maskState, outputFormat, quality, imageAssets, t])
+    await runExport(
+      async () => {
+        const blob = await exportPrivacyMaskedImage(
+          source.image,
+          maskState,
+          outputFormat,
+          quality / 100,
+          imageAssets
+        )
+        const ext = getPrivacyMaskOutputExtension(outputFormat)
+        const baseName = getPrivacyMaskBaseName(source.file.name)
+        downloadBlob(blob, `${baseName}_masked.${ext}`)
+      },
+      {
+        onSuccess: () => toast.success(t("downloadReady")),
+        onError: () => toast.error(t("exportFailed")),
+      }
+    )
+  }, [source, maskState, outputFormat, quality, imageAssets, t, runExport])
 
   return (
     <>
@@ -889,36 +852,7 @@ export function MosaicEditor() {
                 ImgSplit
               </span>
             </Link>
-            <div className="hidden items-center gap-4 text-[10px] uppercase tracking-[0.2em] text-muted-foreground sm:flex">
-              <Link href="/" className="transition-colors hover:text-foreground">
-                Split
-              </Link>
-              <Link href="/grid" className="transition-colors hover:text-foreground">
-                Grid
-              </Link>
-              <Link href="/resize" className="transition-colors hover:text-foreground">
-                Resize
-              </Link>
-              <Link href="/compress" className="transition-colors hover:text-foreground">
-                Compress
-              </Link>
-              <Link href="/watermark" className="transition-colors hover:text-foreground">
-                Watermark
-              </Link>
-              <Link href="/collage" className="transition-colors hover:text-foreground">
-                Collage
-              </Link>
-              <Link href="/social-export" className="transition-colors hover:text-foreground">
-                Social Export
-              </Link>
-              <Link href="/remove-background" className="transition-colors hover:text-foreground">
-                Remove BG
-              </Link>
-              <Link href="/tools" className="transition-colors hover:text-foreground">
-                Tools
-              </Link>
-              <span className="font-medium text-foreground">Mosaic</span>
-            </div>
+            <EditorToolsNav currentToolId="mosaic" />
           </div>
           <div className="flex items-center gap-3">
             {source && (

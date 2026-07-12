@@ -126,6 +126,7 @@ export function HistorySidebar({
               className="flex gap-3 p-3 border-b cursor-pointer hover:bg-muted/50 transition-colors group"
               onClick={() => handleClick(record)}
             >
+              {/* eslint-disable-next-line @next/next/no-img-element -- IndexedDB thumbnail data URL, next/image cannot optimize it */}
               <img
                 src={record.thumbnailDataUrl}
                 alt={record.originalFileName}

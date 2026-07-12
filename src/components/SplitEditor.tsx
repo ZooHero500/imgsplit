@@ -14,12 +14,15 @@ import { useSplitLines } from "@/hooks/use-split-lines"
 import { useImageExport } from "@/hooks/use-image-export"
 import { useRulerDrag } from "@/hooks/use-ruler-drag"
 import { useCanvasViewport } from "@/hooks/use-canvas-viewport"
+import { useElementSize } from "@/hooks/use-element-size"
 import { consumePendingUpload } from "@/lib/pending-upload"
-import { validateFiles, loadImage } from "@/lib/upload-utils"
+import { loadUploadResults } from "@/lib/upload-utils"
+import { createThumbnailDataUrl, imageToBlob, resolveOutputMimeType } from "@/lib/image-canvas"
+import { getFileExtension, getFileNameWithoutExtension } from "@/lib/utils"
 import { calculateWorkspaceBounds } from "@/lib/workspace-bounds"
 import { toast } from "sonner"
 import type { SplitLine, UploadResult } from "@/types"
-import { X, ImagePlus, Keyboard, Undo2, Redo2, RefreshCw } from "lucide-react"
+import { ImagePlus, Keyboard, Undo2, Redo2, RefreshCw } from "lucide-react"
 
 const RULER_THICKNESS = 20
 const IMAGE_GAP = 40
@@ -204,16 +207,7 @@ interface SplitEditorProps {
   showShortcutHints?: boolean
 }
 
-function getFileExtension(mimeType: string): string {
-  if (mimeType === "image/webp") return "png"
-  if (mimeType === "image/jpeg") return "jpg"
-  if (mimeType === "image/png") return "png"
-  return "png"
-}
-
-function getFileNameWithoutExtension(fileName: string): string {
-  return fileName.replace(/\.[^.]+$/, "")
-}
+const DEFAULT_CONTAINER_SIZE = { width: 800, height: 600 }
 
 export function SplitEditor({
   onSplitComplete,
@@ -229,7 +223,6 @@ export function SplitEditor({
   const stageContainerRef = useRef<HTMLDivElement>(null)
   const [images, setImages] = useState<ImageItem[]>([])
   const [imagePositions, setImagePositions] = useState<{ x: number; y: number }[]>([])
-  const [containerSize, setContainerSize] = useState({ width: 800, height: 600 })
   const [selectedLineId, setSelectedLineId] = useState<string | null>(null)
   const [splitCount, setSplitCount] = useState(0)
   const [sheetOpen, setSheetOpen] = useState(false)
@@ -244,13 +237,20 @@ export function SplitEditor({
 
   const isMultiImage = images.length > 1
 
+  // Container size via shared ResizeObserver hook; the container remounts when
+  // going from the upload zone to the editor, so re-subscribe on images.length.
+  // Fall back to the pre-measurement default so the stage never renders at 0×0.
+  const measuredContainerSize = useElementSize(containerRef, { resetKey: images.length })
+  const containerSize =
+    measuredContainerSize.width > 0 || measuredContainerSize.height > 0
+      ? measuredContainerSize
+      : DEFAULT_CONTAINER_SIZE
+
   // Stable layout for viewport (only depends on images identity, not positions)
   const layout = useMemo(() => calculateLayout(images), [images])
 
-  // Reference image (first) for split line positioning
+  // Reference image (first) for original file name / MIME type
   const refImage = images[0] ?? null
-  const refWidth = refImage?.image.naturalWidth ?? 1
-  const refHeight = refImage?.image.naturalHeight ?? 1
   const originalFileName = refImage?.fileName ?? ""
   const originalMimeType = refImage?.mimeType ?? ""
 
@@ -363,23 +363,6 @@ export function SplitEditor({
     }
   }, [])
 
-  // Resize observer
-  useEffect(() => {
-    const el = containerRef.current
-    if (!el) return
-    const observer = new ResizeObserver((entries) => {
-      const entry = entries[0]
-      if (entry) {
-        setContainerSize({
-          width: entry.contentRect.width,
-          height: entry.contentRect.height,
-        })
-      }
-    })
-    observer.observe(el)
-    return () => observer.disconnect()
-  }, [images.length])
-
   // Helper: set images + initial positions from layout
   const initializeImages = useCallback((newImages: ImageItem[]) => {
     setImages(newImages)
@@ -470,34 +453,33 @@ export function SplitEditor({
       const existingSize = images.reduce((sum, img) => {
         return sum + img.image.naturalWidth * img.image.naturalHeight * 4
       }, 0)
-      const result = validateFiles(Array.from(fileList), existingSize)
-      if (!result.valid) {
-        toast.error(tUpload(result.error!.key, result.error!.params))
+      const outcome = await loadUploadResults(Array.from(fileList), { existingSize })
+      if (outcome.status === "invalid") {
+        toast.error(tUpload(outcome.error.key, outcome.error.params))
         return
       }
-      if (result.totalSizeWarning) {
-        const totalSize = result.files.reduce((sum, f) => sum + f.size, 0)
+      if (outcome.status === "loadFailed") {
+        toast.error(t("appendFailed"))
+        return
+      }
+      if (outcome.totalSizeWarning) {
         toast.warning(
-          tUpload("totalSizeWarning", { size: (totalSize / 1024 / 1024).toFixed(1) })
+          tUpload("totalSizeWarning", { size: (outcome.totalSize / 1024 / 1024).toFixed(1) })
         )
       }
-      try {
-        const newItems: ImageItem[] = []
-        for (const file of result.files) {
-          const image = await loadImage(file)
-          newItems.push({ image, fileName: file.name, mimeType: file.type })
-        }
-        setImages((prev) => {
-          const merged = [...prev, ...newItems]
-          const newLayout = calculateLayout(merged)
-          setImagePositions(newLayout.offsets)
-          return merged
-        })
-        clearResults()
-        toast.success(t("imagesAdded", { count: newItems.length }))
-      } catch {
-        toast.error(t("appendFailed"))
-      }
+      const newItems: ImageItem[] = outcome.results.map((r) => ({
+        image: r.image,
+        fileName: r.file.name,
+        mimeType: r.mimeType,
+      }))
+      setImages((prev) => {
+        const merged = [...prev, ...newItems]
+        const newLayout = calculateLayout(merged)
+        setImagePositions(newLayout.offsets)
+        return merged
+      })
+      clearResults()
+      toast.success(t("imagesAdded", { count: newItems.length }))
     },
     [images, clearResults, t, tUpload]
   )
@@ -635,53 +617,30 @@ export function SplitEditor({
     if (onSaveHistory && images.length > 0) {
       try {
         // 缩略图：始终使用第一张图片
-        const firstImage = images[0].image
-        const thumbCanvas = document.createElement("canvas")
-        const thumbSize = 128
-        const ratio = Math.min(thumbSize / firstImage.naturalWidth, thumbSize / firstImage.naturalHeight)
-        thumbCanvas.width = firstImage.naturalWidth * ratio
-        thumbCanvas.height = firstImage.naturalHeight * ratio
-        const thumbCtx = thumbCanvas.getContext("2d")
-        if (thumbCtx) {
-          thumbCtx.drawImage(firstImage, 0, 0, thumbCanvas.width, thumbCanvas.height)
-          const thumbnailDataUrl = thumbCanvas.toDataURL("image/jpeg", 0.6)
+        const thumbnailDataUrl = createThumbnailDataUrl(images[0].image, 128)
 
-          // 将所有图片转换为 Blob
-          const imageDataList = await Promise.all(
-            images.map(async (item) => {
-              const canvas = document.createElement("canvas")
-              canvas.width = item.image.naturalWidth
-              canvas.height = item.image.naturalHeight
-              const ctx = canvas.getContext("2d")
-              if (!ctx) throw new Error("canvas context is null")
-              ctx.drawImage(item.image, 0, 0)
-              const mime = ["image/png", "image/jpeg"].includes(item.mimeType)
-                ? item.mimeType
-                : "image/png"
-              const blob = await new Promise<Blob>((resolve, reject) =>
-                canvas.toBlob(
-                  (b) => (b ? resolve(b) : reject(new Error("toBlob returned null"))),
-                  mime
-                )
-              )
-              return { blob, fileName: item.fileName, mimeType: item.mimeType }
-            })
-          )
+        // 将所有图片转换为 Blob
+        const imageDataList = await Promise.all(
+          images.map(async (item) => ({
+            blob: await imageToBlob(item.image, resolveOutputMimeType(item.mimeType)),
+            fileName: item.fileName,
+            mimeType: item.mimeType,
+          }))
+        )
 
-          onSaveHistory({
-            originalFileName: images[0].fileName,
-            originalMimeType: images[0].mimeType,
-            lines: [...lines],
-            imageBlob: imageDataList[0].blob,
-            thumbnailDataUrl,
-            images: imageDataList,
-          })
-        }
+        onSaveHistory({
+          originalFileName: images[0].fileName,
+          originalMimeType: images[0].mimeType,
+          lines: [...lines],
+          imageBlob: imageDataList[0].blob,
+          thumbnailDataUrl,
+          images: imageDataList,
+        })
       } catch (err) {
         console.error("Save history failed:", err)
       }
     }
-  }, [images, lines, imagePositions, isMultiImage, getLocalLines, generateSplit, generateBatchSplit, splitCount, onSplitComplete, onSaveHistory])
+  }, [images, lines, imagePositions, isMultiImage, getLocalLines, generateSplit, generateBatchSplit, splitCount, onSplitComplete, onSaveHistory, t])
 
   const handleDownloadAll = useCallback(() => {
     if (isMultiImage) {
@@ -893,7 +852,6 @@ export function SplitEditor({
             length={stageWidth}
             viewportScale={viewport.scale}
             viewportOffset={viewport.position.x}
-            imageSize={workspaceBounds.width}
             thickness={RULER_THICKNESS}
             lines={lines}
             onDragStart={startDrag}
@@ -903,7 +861,6 @@ export function SplitEditor({
             length={stageHeight}
             viewportScale={viewport.scale}
             viewportOffset={viewport.position.y}
-            imageSize={workspaceBounds.height}
             thickness={RULER_THICKNESS}
             lines={lines}
             onDragStart={startDrag}

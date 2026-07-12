@@ -251,6 +251,7 @@
       "readjust": "重新调整",
       "count": "{count} 张图片",
       "tapToSave": "点击单张图片可单独保存",
+      "itemAlt": "宫格图 {index}",
       "failed": "下载失败，请重试",
       "generating": "生成中...",
       "reupload": "重新上传"
@@ -491,6 +492,9 @@
     "twitter": "Twitter",
     "toolRemoveBackground": "AI 去背景"
   },
+  "editorToolsNav": {
+    "title": "工具"
+  },
   "pseoChrome": {
     "scenariosTitle": "使用场景",
     "howItWorksTitle": "使用说明",
@@ -702,6 +706,7 @@
     "preset_custom": "自定义",
     "download": "下载",
     "downloadAs": "下载为 {format}",
+    "settings": "设置",
     "reset": "重置",
     "replaceImage": "替换图片",
     "cropMode": "裁剪模式",
@@ -1027,6 +1032,7 @@
       "readjust": "重新调整",
       "count": "{count} 张幻灯片",
       "tapToSave": "点击单张幻灯片可单独保存",
+      "slideAlt": "轮播图 {index}",
       "failed": "下载失败，请重试",
       "reupload": "重新上传"
     },

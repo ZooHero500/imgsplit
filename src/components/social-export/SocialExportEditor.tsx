@@ -20,10 +20,14 @@ import {
   Upload,
 } from "lucide-react"
 import { Checkbox } from "@/components/ui/checkbox"
+import { EditorToolsNav } from "@/components/EditorToolsNav"
 import { LocaleSwitcher } from "@/components/LocaleSwitcher"
 import { LogoIcon } from "@/components/LogoIcon"
 import { UploadZone } from "@/components/UploadZone"
+import { useElementSize } from "@/hooks/use-element-size"
+import { useExportAction } from "@/hooks/use-export-action"
 import { Link } from "@/i18n/navigation"
+import { downloadBlob } from "@/lib/download"
 import {
   clampSocialExportScale,
   createSocialExportCropStateMap,
@@ -88,15 +92,6 @@ interface DragState {
   start: CanvasPoint
   offsetX: number
   offsetY: number
-}
-
-function downloadBlob(blob: Blob, fileName: string) {
-  const url = URL.createObjectURL(blob)
-  const a = document.createElement("a")
-  a.href = url
-  a.download = fileName
-  a.click()
-  URL.revokeObjectURL(url)
 }
 
 function SectionTitle({
@@ -219,8 +214,7 @@ export function SocialExportEditor() {
     useState<SocialExportOutputFormat>("image/png")
   const [quality, setQuality] = useState(92)
   const [isRendering, setIsRendering] = useState(false)
-  const [isExporting, setIsExporting] = useState(false)
-  const [previewAreaSize, setPreviewAreaSize] = useState({ width: 0, height: 0 })
+  const { isExporting, run: runExport } = useExportAction()
   const mainCanvasRef = useRef<HTMLCanvasElement>(null)
   const previewAreaRef = useRef<HTMLDivElement>(null)
   const previewCanvasRefs = useRef(new Map<SocialExportPresetId, HTMLCanvasElement>())
@@ -243,6 +237,13 @@ export function SocialExportEditor() {
   const selectedCrop = cropStates[selectedPreset.id]
   const hasImage = uploaded != null
   const canExport = hasImage && selectedPresets.length > 0
+
+  // The preview area has responsive padding (p-3 md:p-5); the previous manual
+  // ResizeObserver subtracted that padding from getBoundingClientRect, which is
+  // exactly the content box — so "content-rect" mode (not "bounding-rect")
+  // preserves the measured values. `resetKey` re-subscribes when the preview
+  // area mounts after upload.
+  const previewAreaSize = useElementSize(previewAreaRef, { resetKey: hasImage })
 
   const previewDisplaySize = useMemo(() => {
     if (previewAreaSize.width <= 0 || previewAreaSize.height <= 0) return null
@@ -270,36 +271,6 @@ export function SocialExportEditor() {
     if (selectedPresetIds.includes(selectedPresetId)) return
     setSelectedPresetId(selectedPresetIds[0] ?? SOCIAL_EXPORT_PRESETS[0].id)
   }, [selectedPresetId, selectedPresetIds])
-
-  useEffect(() => {
-    const previewArea = previewAreaRef.current
-    if (!previewArea) return
-
-    const updatePreviewAreaSize = () => {
-      const rect = previewArea.getBoundingClientRect()
-      const style = window.getComputedStyle(previewArea)
-      const horizontalPadding =
-        Number.parseFloat(style.paddingLeft) + Number.parseFloat(style.paddingRight)
-      const verticalPadding =
-        Number.parseFloat(style.paddingTop) + Number.parseFloat(style.paddingBottom)
-
-      setPreviewAreaSize({
-        width: Math.max(0, rect.width - horizontalPadding),
-        height: Math.max(0, rect.height - verticalPadding),
-      })
-    }
-
-    const observer = new ResizeObserver(updatePreviewAreaSize)
-    observer.observe(previewArea)
-    const frame = requestAnimationFrame(updatePreviewAreaSize)
-    window.addEventListener("resize", updatePreviewAreaSize)
-
-    return () => {
-      cancelAnimationFrame(frame)
-      observer.disconnect()
-      window.removeEventListener("resize", updatePreviewAreaSize)
-    }
-  }, [hasImage])
 
   useEffect(() => {
     if (!uploaded || !mainCanvasRef.current) return
@@ -475,24 +446,25 @@ export function SocialExportEditor() {
   const handleExport = useCallback(async () => {
     if (!uploaded || selectedPresets.length === 0) return
 
-    setIsExporting(true)
-    try {
-      const blob = await exportSocialPresetsAsZip({
-        image: uploaded.image,
-        originalFileName: uploaded.file.name,
-        presets: selectedPresets,
-        cropStates,
-        format: outputFormat,
-        quality: quality / 100,
-      })
-      downloadBlob(blob, getSocialExportZipFileName(uploaded.file.name))
-      toast.success(t("downloadReady", { count: selectedPresets.length }))
-    } catch {
-      toast.error(t("exportFailed"))
-    } finally {
-      setIsExporting(false)
-    }
-  }, [cropStates, outputFormat, quality, selectedPresets, t, uploaded])
+    await runExport(
+      async () => {
+        const blob = await exportSocialPresetsAsZip({
+          image: uploaded.image,
+          originalFileName: uploaded.file.name,
+          presets: selectedPresets,
+          cropStates,
+          format: outputFormat,
+          quality: quality / 100,
+        })
+        downloadBlob(blob, getSocialExportZipFileName(uploaded.file.name))
+      },
+      {
+        onSuccess: () =>
+          toast.success(t("downloadReady", { count: selectedPresets.length })),
+        onError: () => toast.error(t("exportFailed")),
+      }
+    )
+  }, [cropStates, outputFormat, quality, runExport, selectedPresets, t, uploaded])
 
   return (
     <>
@@ -505,36 +477,7 @@ export function SocialExportEditor() {
                 ImgSplit
               </span>
             </Link>
-            <div className="hidden items-center gap-4 text-[10px] uppercase tracking-[0.2em] text-muted-foreground md:flex">
-              <Link href="/" className="transition-colors hover:text-foreground">
-                Split
-              </Link>
-              <Link href="/grid" className="transition-colors hover:text-foreground">
-                Grid
-              </Link>
-              <Link href="/resize" className="transition-colors hover:text-foreground">
-                Resize
-              </Link>
-              <Link href="/compress" className="transition-colors hover:text-foreground">
-                Compress
-              </Link>
-              <Link href="/watermark" className="transition-colors hover:text-foreground">
-                Watermark
-              </Link>
-              <Link href="/mosaic" className="transition-colors hover:text-foreground">
-                Mosaic
-              </Link>
-              <Link href="/collage" className="transition-colors hover:text-foreground">
-                Collage
-              </Link>
-              <Link href="/remove-background" className="transition-colors hover:text-foreground">
-                Remove BG
-              </Link>
-              <span className="font-medium text-foreground">Social Export</span>
-              <Link href="/tools" className="transition-colors hover:text-foreground">
-                Tools
-              </Link>
-            </div>
+            <EditorToolsNav currentToolId="socialExport" className="sm:hidden md:flex" />
           </div>
           <div className="flex items-center gap-3">
             {hasImage && (

@@ -24,11 +24,12 @@ import {
 } from "lucide-react"
 import { toast } from "sonner"
 import { Link } from "@/i18n/navigation"
+import { EditorToolsNav } from "@/components/EditorToolsNav"
 import { LocaleSwitcher } from "@/components/LocaleSwitcher"
 import { LogoIcon } from "@/components/LogoIcon"
 import { UploadZone } from "@/components/UploadZone"
 import { BatchRemovalList } from "@/components/background-removal/BatchRemovalList"
-import { useBackgroundRemovalBatch } from "@/components/background-removal/useBackgroundRemovalBatch"
+import { useBackgroundRemovalBatch } from "@/hooks/use-background-removal-batch"
 import {
   BACKGROUND_REMOVAL_ESTIMATED_MODEL_BYTES,
   BACKGROUND_REMOVAL_CACHE_VERSION,
@@ -51,7 +52,9 @@ import {
   getBackgroundRemovalZipFileName,
 } from "@/lib/background-removal-batch"
 import type { BatchRemovalItem, BatchRemovalZipItem } from "@/lib/background-removal-batch"
-import { ACCEPTED_TYPES, loadImage, validateFiles } from "@/lib/upload-utils"
+import { downloadBlob } from "@/lib/download"
+import { getModelCacheVersion, setModelCacheVersion } from "@/lib/storage-service"
+import { ACCEPTED_TYPES, loadUploadResults } from "@/lib/upload-utils"
 import type { UploadResult } from "@/types"
 
 type ProcessingState =
@@ -153,11 +156,10 @@ export function BackgroundRemovalEditor() {
 
     void (async () => {
       try {
-        const cacheKey = "imgsplit-background-removal-cache-version"
-        const currentVersion = window.localStorage.getItem(cacheKey)
+        const currentVersion = getModelCacheVersion()
         if (currentVersion !== BACKGROUND_REMOVAL_CACHE_VERSION) {
           await clearBackgroundRemovalModelCache()
-          window.localStorage.setItem(cacheKey, BACKGROUND_REMOVAL_CACHE_VERSION)
+          setModelCacheVersion(BACKGROUND_REMOVAL_CACHE_VERSION)
         }
       } catch {
         // Cache versioning is best-effort; the editor can still run without localStorage.
@@ -206,32 +208,26 @@ export function BackgroundRemovalEditor() {
       if (files.length === 0) return
       const uploadGeneration = uploadGenerationRef.current
 
-      const result = validateFiles(files)
-      if (!result.valid) {
-        toast.error(uploadT(result.error!.key, result.error!.params))
+      const outcome = await loadUploadResults(files)
+      if (outcome.status === "invalid") {
+        toast.error(uploadT(outcome.error.key, outcome.error.params))
+        return
+      }
+      if (outcome.status === "loadFailed") {
+        toast.error(uploadT("loadFailed"))
         return
       }
 
-      if (result.totalSizeWarning) {
-        const totalSize = result.files.reduce((sum, file) => sum + file.size, 0)
+      if (outcome.totalSizeWarning) {
         toast.warning(
           uploadT("totalSizeWarning", {
-            size: (totalSize / 1024 / 1024).toFixed(1),
+            size: (outcome.totalSize / 1024 / 1024).toFixed(1),
           })
         )
       }
 
-      try {
-        const results: UploadResult[] = []
-        for (const file of result.files) {
-          const image = await loadImage(file)
-          results.push({ file, image, mimeType: file.type })
-        }
-        if (uploadGenerationRef.current !== uploadGeneration) return
-        handleImagesLoaded(results)
-      } catch {
-        toast.error(uploadT("loadFailed"))
-      }
+      if (uploadGenerationRef.current !== uploadGeneration) return
+      handleImagesLoaded(outcome.results)
     },
     [handleImagesLoaded, uploadT]
   )
@@ -286,12 +282,7 @@ export function BackgroundRemovalEditor() {
         format,
         quality / 100
       )
-      const url = URL.createObjectURL(blob)
-      const a = document.createElement("a")
-      a.href = url
-      a.download = getBackgroundRemovalOutputFileName(selectedItem.file.name, format)
-      a.click()
-      URL.revokeObjectURL(url)
+      downloadBlob(blob, getBackgroundRemovalOutputFileName(selectedItem.file.name, format))
     } catch {
       toast.error(t("exportFailed"))
     }
@@ -319,12 +310,7 @@ export function BackgroundRemovalEditor() {
       if (zipItems.length === 0) return
 
       const blob = await exportBackgroundRemovalBatchAsZip(zipItems)
-      const url = URL.createObjectURL(blob)
-      const a = document.createElement("a")
-      a.href = url
-      a.download = getBackgroundRemovalZipFileName()
-      a.click()
-      URL.revokeObjectURL(url)
+      downloadBlob(blob, getBackgroundRemovalZipFileName())
     } catch {
       toast.error(t("exportFailed"))
     }
@@ -389,17 +375,7 @@ export function BackgroundRemovalEditor() {
                 ImgSplit
               </span>
             </Link>
-            <div className="hidden items-center gap-4 text-[10px] uppercase tracking-[0.2em] text-muted-foreground sm:flex">
-              <Link href="/" className="transition-colors hover:text-foreground">{t("navSplit")}</Link>
-              <Link href="/grid" className="transition-colors hover:text-foreground">{t("navGrid")}</Link>
-              <Link href="/resize" className="transition-colors hover:text-foreground">{t("navResize")}</Link>
-              <Link href="/compress" className="transition-colors hover:text-foreground">{t("navCompress")}</Link>
-              <Link href="/watermark" className="transition-colors hover:text-foreground">{t("navWatermark")}</Link>
-              <Link href="/mosaic" className="transition-colors hover:text-foreground">{t("navMosaic")}</Link>
-              <Link href="/collage" className="transition-colors hover:text-foreground">{t("navCollage")}</Link>
-              <Link href="/social-export" className="transition-colors hover:text-foreground">{t("navSocialExport")}</Link>
-              <span className="font-medium text-foreground">{t("shortNav")}</span>
-            </div>
+            <EditorToolsNav currentToolId="removeBackground" />
           </div>
           <div className="flex items-center gap-3">
             {selectedItem && (

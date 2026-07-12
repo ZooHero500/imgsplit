@@ -5,8 +5,7 @@ import { useTranslations } from "next-intl"
 import { Link } from "@/i18n/navigation"
 import { ArrowRight, EyeOff, Grid3X3, LayoutTemplate, Maximize2, Send, Scissors, Sparkles, Stamp, Zap } from "lucide-react"
 import { CORE_TOOLS, type CoreToolIcon } from "@/lib/tools/catalog"
-
-const VISITED_KEY = "imgsplit_visited"
+import { hasVisited, markVisited } from "@/lib/storage-service"
 
 const iconMap: Record<CoreToolIcon, typeof Scissors> = {
   scissors: Scissors,
@@ -25,14 +24,10 @@ export function ReturningUserToolbar() {
   const t = useTranslations("footer")
 
   useEffect(() => {
-    try {
-      if (localStorage.getItem(VISITED_KEY)) {
-        queueMicrotask(() => setShow(true))
-      }
-      localStorage.setItem(VISITED_KEY, "1")
-    } catch {
-      // localStorage unavailable (e.g. private browsing)
+    if (hasVisited()) {
+      queueMicrotask(() => setShow(true))
     }
+    markVisited()
   }, [])
 
   if (!show) return null

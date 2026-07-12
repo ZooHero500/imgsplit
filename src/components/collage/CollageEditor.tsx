@@ -27,9 +27,12 @@ import {
   Upload,
 } from "lucide-react"
 import { Link } from "@/i18n/navigation"
+import { EditorToolsNav } from "@/components/EditorToolsNav"
 import { LocaleSwitcher } from "@/components/LocaleSwitcher"
 import { LogoIcon } from "@/components/LogoIcon"
 import { UploadZone } from "@/components/UploadZone"
+import { useExportAction } from "@/hooks/use-export-action"
+import { downloadBlob } from "@/lib/download"
 import {
   assignImagesToFrames,
   calculateFrameRects,
@@ -104,15 +107,6 @@ function isCollageTemplateId(value: string | null): value is CollageTemplateId {
 
 function clamp(value: number, min: number, max: number) {
   return Math.min(max, Math.max(min, value))
-}
-
-function downloadBlob(blob: Blob, fileName: string) {
-  const url = URL.createObjectURL(blob)
-  const a = document.createElement("a")
-  a.href = url
-  a.download = fileName
-  a.click()
-  URL.revokeObjectURL(url)
 }
 
 function SectionTitle({
@@ -226,7 +220,7 @@ export function CollageEditor() {
     useState<CollageOutputFormat>("image/png")
   const [quality, setQuality] = useState(92)
   const [isRendering, setIsRendering] = useState(false)
-  const [isExporting, setIsExporting] = useState(false)
+  const { isExporting, run: runExport } = useExportAction()
   const [canvasEpoch, setCanvasEpoch] = useState(0)
   const [displaySize, setDisplaySize] = useState({ width: 0, height: 0 })
   const [previewAreaSize, setPreviewAreaSize] = useState({
@@ -591,24 +585,24 @@ export function CollageEditor() {
   )
 
   const handleDownload = useCallback(async () => {
-    setIsExporting(true)
-    try {
-      const blob = await exportCollageImage(
-        collageState,
-        assetMap,
-        outputFormat,
-        quality / 100
-      )
-      const extension = getCollageOutputExtension(outputFormat)
-      const baseName = getCollageBaseName(images.map((image) => image.fileName))
-      downloadBlob(blob, `${baseName}.${extension}`)
-      toast.success(t("downloadReady"))
-    } catch {
-      toast.error(t("exportFailed"))
-    } finally {
-      setIsExporting(false)
-    }
-  }, [assetMap, collageState, images, outputFormat, quality, t])
+    await runExport(
+      async () => {
+        const blob = await exportCollageImage(
+          collageState,
+          assetMap,
+          outputFormat,
+          quality / 100
+        )
+        const extension = getCollageOutputExtension(outputFormat)
+        const baseName = getCollageBaseName(images.map((image) => image.fileName))
+        downloadBlob(blob, `${baseName}.${extension}`)
+      },
+      {
+        onSuccess: () => toast.success(t("downloadReady")),
+        onError: () => toast.error(t("exportFailed")),
+      }
+    )
+  }, [assetMap, collageState, images, outputFormat, quality, runExport, t])
 
   return (
     <>
@@ -630,36 +624,7 @@ export function CollageEditor() {
                 ImgSplit
               </span>
             </Link>
-            <div className="hidden items-center gap-4 text-[10px] uppercase tracking-[0.2em] text-muted-foreground md:flex">
-              <Link href="/" className="transition-colors hover:text-foreground">
-                Split
-              </Link>
-              <Link href="/grid" className="transition-colors hover:text-foreground">
-                Grid
-              </Link>
-              <Link href="/resize" className="transition-colors hover:text-foreground">
-                Resize
-              </Link>
-              <Link href="/compress" className="transition-colors hover:text-foreground">
-                Compress
-              </Link>
-              <Link href="/watermark" className="transition-colors hover:text-foreground">
-                Watermark
-              </Link>
-              <Link href="/mosaic" className="transition-colors hover:text-foreground">
-                Mosaic
-              </Link>
-              <span className="font-medium text-foreground">Collage</span>
-              <Link href="/social-export" className="transition-colors hover:text-foreground">
-                Social Export
-              </Link>
-              <Link href="/remove-background" className="transition-colors hover:text-foreground">
-                Remove BG
-              </Link>
-              <Link href="/tools" className="transition-colors hover:text-foreground">
-                Tools
-              </Link>
-            </div>
+            <EditorToolsNav currentToolId="collage" className="sm:hidden md:flex" />
           </div>
           <div className="flex items-center gap-3">
             {hasImages && (

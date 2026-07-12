@@ -1,8 +1,9 @@
 "use client"
 
-import { useCallback, useEffect, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { useTranslations } from "next-intl"
 import { X, Download, ZoomIn, Check, ChevronLeft, ChevronRight } from "lucide-react"
+import { getFileExtension, getFileNameWithoutExtension } from "@/lib/utils"
 import type { SplitResult, BatchSplitResult } from "@/types"
 
 interface ResultSheetProps {
@@ -34,17 +35,6 @@ function getFileName(
   ext: string
 ): string {
   return `${originalFileName}_r${result.row}_c${result.col}.${ext}`
-}
-
-function getFileExtension(mimeType: string): string {
-  if (mimeType === "image/webp") return "png"
-  if (mimeType === "image/jpeg") return "jpg"
-  if (mimeType === "image/png") return "png"
-  return "png"
-}
-
-function getFileNameWithoutExtension(fileName: string): string {
-  return fileName.replace(/\.[^.]+$/, "")
 }
 
 /* ─── Lightbox ─── */
@@ -117,6 +107,7 @@ function Lightbox({
 
       {/* Image */}
       {current.src && (
+        // eslint-disable-next-line @next/next/no-img-element -- blob object URL, next/image cannot optimize it
         <img
           src={current.src}
           alt={current.alt}
@@ -181,6 +172,7 @@ function ResultItem({
         className="relative aspect-[4/3] overflow-hidden cursor-pointer bg-secondary/30"
         onClick={() => onPreview(index)}
       >
+        {/* eslint-disable-next-line @next/next/no-img-element -- blob object URL, next/image cannot optimize it */}
         <img
           src={previewUrl}
           alt={fileName}
@@ -284,11 +276,21 @@ export function ResultSheet({
   // Manage blob URLs for the active lightbox image (and preload neighbors)
   const [lightboxUrls, setLightboxUrls] = useState<Map<number, string>>(new Map())
 
+  // Mirror the map in a ref so the unmount cleanup can revoke the latest URLs
+  // without re-running on every change.
+  const lightboxUrlsRef = useRef(lightboxUrls)
+  useEffect(() => {
+    lightboxUrlsRef.current = lightboxUrls
+  }, [lightboxUrls])
+
   useEffect(() => {
     if (lightboxIndex === null) {
       // Revoke all URLs when lightbox closes
-      lightboxUrls.forEach((url) => URL.revokeObjectURL(url))
-      setLightboxUrls(new Map())
+      setLightboxUrls((prev) => {
+        if (prev.size === 0) return prev
+        prev.forEach((url) => URL.revokeObjectURL(url))
+        return new Map()
+      })
       return
     }
     const indices = [lightboxIndex - 1, lightboxIndex, lightboxIndex + 1].filter(
@@ -308,7 +310,7 @@ export function ResultSheet({
   // Clean up all URLs on unmount
   useEffect(() => {
     return () => {
-      lightboxUrls.forEach((url) => URL.revokeObjectURL(url))
+      lightboxUrlsRef.current.forEach((url) => URL.revokeObjectURL(url))
     }
   }, [])
 

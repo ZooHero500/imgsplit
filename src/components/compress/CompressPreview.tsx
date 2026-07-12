@@ -46,9 +46,10 @@ export function CompressPreview({
         </div>
         <div className="flex-1 bg-muted/30 rounded-lg overflow-hidden flex items-center justify-center min-h-0">
           {originalUrl ? (
+            // eslint-disable-next-line @next/next/no-img-element
             <img
               src={originalUrl}
-              alt="Original"
+              alt={t("original")}
               className="max-w-full max-h-full object-contain"
             />
           ) : (
@@ -81,9 +82,10 @@ export function CompressPreview({
         </div>
         <div className="flex-1 bg-muted/30 rounded-lg overflow-hidden flex items-center justify-center min-h-0">
           {resultUrl ? (
+            // eslint-disable-next-line @next/next/no-img-element
             <img
               src={resultUrl}
-              alt="Compressed"
+              alt={t("compressed")}
               className="max-w-full max-h-full object-contain"
             />
           ) : (

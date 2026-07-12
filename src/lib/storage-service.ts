@@ -1,8 +1,51 @@
 import Dexie, { type EntityTable } from "dexie"
-import type { HistoryRecord, ImageData } from "@/types"
+import type { HistoryRecord } from "@/types"
 
 const MAX_RECORDS = 50
 const LS_RECORD_PREFIX = "img-split:record:"
+
+// localStorage keys shared across the app. Do NOT rename: existing users
+// already have data stored under these keys.
+const VISITED_KEY = "imgsplit_visited"
+const MODEL_CACHE_VERSION_KEY = "imgsplit-background-removal-cache-version"
+
+/** Whether this browser has visited the site before (see ReturningUserToolbar). */
+export function hasVisited(): boolean {
+  try {
+    return localStorage.getItem(VISITED_KEY) !== null
+  } catch {
+    // localStorage unavailable (e.g. private browsing / SSR)
+    return false
+  }
+}
+
+/** Record that this browser has visited the site. Best-effort. */
+export function markVisited(): void {
+  try {
+    localStorage.setItem(VISITED_KEY, "1")
+  } catch {
+    // localStorage unavailable (e.g. private browsing / SSR)
+  }
+}
+
+/** Stored cache version of the local background-removal model, or null. */
+export function getModelCacheVersion(): string | null {
+  try {
+    return localStorage.getItem(MODEL_CACHE_VERSION_KEY)
+  } catch {
+    // localStorage unavailable; treat as "no version recorded"
+    return null
+  }
+}
+
+/** Persist the cache version of the local background-removal model. Best-effort. */
+export function setModelCacheVersion(version: string): void {
+  try {
+    localStorage.setItem(MODEL_CACHE_VERSION_KEY, version)
+  } catch {
+    // Cache versioning is best-effort; callers can still run without localStorage.
+  }
+}
 
 interface DBHistoryRecord {
   id?: number

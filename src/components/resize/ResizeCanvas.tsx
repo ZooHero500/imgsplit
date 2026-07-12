@@ -5,6 +5,7 @@ import { useTheme } from "next-themes"
 import { Stage, Layer, Rect, Image, Transformer, Group, Line } from "@/lib/konva"
 import { useTranslations } from "next-intl"
 import { Upload } from "lucide-react"
+import { useElementSize } from "@/hooks/use-element-size"
 import { ACCEPTED_TYPES } from "@/lib/upload-utils"
 import { calculateInitialCropRect } from "@/lib/resize-utils"
 import { calculateSnap, type SnapGuide } from "@/lib/resize-snap"
@@ -60,7 +61,7 @@ export function ResizeCanvas({
   const imageRef = useRef<Konva.Image>(null)
   const transformerRef = useRef<Konva.Transformer>(null)
   const inputRef = useRef<HTMLInputElement>(null)
-  const [containerSize, setContainerSize] = useState({ width: 800, height: 600 })
+  const containerSize = useElementSize(containerRef)
   const [isDragOver, setIsDragOver] = useState(false)
   const [isPanning, setIsPanning] = useState(false)
   const isPanningRef = useRef(false)
@@ -68,19 +69,6 @@ export function ResizeCanvas({
   const [snapGuides, setSnapGuides] = useState<{ x: SnapGuide[]; y: SnapGuide[] }>({ x: [], y: [] })
   const [isDraggingImage, setIsDraggingImage] = useState(false)
   const isTouchDevice = typeof window !== "undefined" && ("ontouchstart" in window || navigator.maxTouchPoints > 0)
-
-  useEffect(() => {
-    const el = containerRef.current
-    if (!el) return
-    const observer = new ResizeObserver((entries) => {
-      const entry = entries[0]
-      if (entry) {
-        setContainerSize({ width: entry.contentRect.width, height: entry.contentRect.height })
-      }
-    })
-    observer.observe(el)
-    return () => observer.disconnect()
-  }, [])
 
   const artboardX = viewportPosition.x
   const artboardY = viewportPosition.y
@@ -460,6 +448,7 @@ export function ResizeCanvas({
               <Image
                 ref={imageRef}
                 image={image}
+                alt={t("statusImage")}
                 x={artboardX + transform.x * viewportScale + displayW * viewportScale / 2}
                 y={artboardY + transform.y * viewportScale + displayH * viewportScale / 2}
                 width={displayW * viewportScale}

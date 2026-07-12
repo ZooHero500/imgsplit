@@ -18,6 +18,7 @@ import {
   BackgroundRemovalWorkerClient,
   type BackgroundRemovalWorkerDevice,
 } from "@/lib/background-removal-worker-client"
+import { canvasFromImage, canvasObjectUrl } from "@/lib/image-canvas"
 import type { UploadResult } from "@/types"
 
 type BatchAction =
@@ -60,32 +61,9 @@ function createBatchId() {
 
 function createBackgroundRemovalWorker() {
   return new Worker(
-    new URL("../../workers/background-removal.worker.ts", import.meta.url),
+    new URL("../workers/background-removal.worker.ts", import.meta.url),
     { type: "module" }
   )
-}
-
-function createCanvasFromImage(image: HTMLImageElement): HTMLCanvasElement {
-  const canvas = document.createElement("canvas")
-  canvas.width = image.naturalWidth || image.width
-  canvas.height = image.naturalHeight || image.height
-  const ctx = canvas.getContext("2d")
-  if (!ctx) throw new Error("Canvas is not available")
-  ctx.drawImage(image, 0, 0)
-  return canvas
-}
-
-function createCanvasObjectUrl(canvas: HTMLCanvasElement): Promise<string> {
-  return new Promise((resolve, reject) => {
-    canvas.toBlob((blob) => {
-      if (!blob) {
-        reject(new Error("Could not create preview"))
-        return
-      }
-
-      resolve(URL.createObjectURL(blob))
-    }, "image/png")
-  })
 }
 
 function isActiveStatus(item: BatchRemovalItem) {
@@ -384,10 +362,10 @@ export function useBackgroundRemovalBatch(options: UseBackgroundRemovalBatchOpti
           if (!isCurrentRequest(runId, requestId, nextItem.id)) continue
 
           const resultCanvas = refineBackgroundRemovalCanvas(
-            createCanvasFromImage(outputImage),
+            canvasFromImage(outputImage),
             refineOptionsForRun
           )
-          const resultUrl = await createCanvasObjectUrl(resultCanvas)
+          const resultUrl = await canvasObjectUrl(resultCanvas)
 
           if (!isCurrentRequest(runId, requestId, nextItem.id)) {
             URL.revokeObjectURL(resultUrl)

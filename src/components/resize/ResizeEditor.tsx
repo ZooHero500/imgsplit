@@ -13,12 +13,15 @@ import {
 import { Link } from "@/i18n/navigation"
 import { useResizeEditor } from "@/hooks/use-resize-editor"
 import { useCanvasViewport } from "@/hooks/use-canvas-viewport"
+import { useElementSize } from "@/hooks/use-element-size"
+import { downloadBlob } from "@/lib/download"
 import { exportArtboard } from "@/lib/resize-export"
 import { calculateInitialCropRect } from "@/lib/resize-utils"
 import { ACCEPTED_TYPES } from "@/lib/upload-utils"
 import { CanvasSizeControl } from "./CanvasSizeControl"
 import { ResizeCanvas } from "./ResizeCanvas"
 import { ResizeStatusBar } from "./ResizeStatusBar"
+import { EditorToolsNav } from "@/components/EditorToolsNav"
 import { ZoomIndicator } from "@/components/ZoomIndicator"
 import { LogoIcon } from "@/components/LogoIcon"
 import { LocaleSwitcher } from "@/components/LocaleSwitcher"
@@ -38,6 +41,7 @@ const CROP_RATIOS = [
 ] as const
 
 function DownloadDropdown({ onDownload }: { onDownload: (format: "image/png" | "image/jpeg" | "image/webp") => void }) {
+  const t = useTranslations("resize")
   const [open, setOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
 
@@ -59,7 +63,7 @@ function DownloadDropdown({ onDownload }: { onDownload: (format: "image/png" | "
         className="flex items-center gap-1.5 px-3 py-1.5 text-xs uppercase tracking-wider bg-foreground text-background rounded cursor-pointer hover:bg-foreground/90 transition-colors"
       >
         <Download className="h-3.5 w-3.5" />
-        <span className="hidden sm:inline">Download</span>
+        <span className="hidden sm:inline">{t("download")}</span>
         <ChevronDown className={`h-3 w-3 transition-transform ${open ? "rotate-180" : ""}`} />
       </button>
       {open && (
@@ -296,22 +300,7 @@ export function ResizeEditor({
   const [cropAspectRatio, setCropAspectRatio] = useState<number | null>(initialCropAspectRatio)
 
   // Track container size reactively
-  const [containerSize, setContainerSize] = useState({ width: 800, height: 600 })
-  useEffect(() => {
-    const el = containerRef.current
-    if (!el) return
-    const observer = new ResizeObserver((entries) => {
-      const entry = entries[0]
-      if (entry) {
-        setContainerSize({
-          width: entry.contentRect.width,
-          height: entry.contentRect.height,
-        })
-      }
-    })
-    observer.observe(el)
-    return () => observer.disconnect()
-  }, [])
+  const containerSize = useElementSize(containerRef)
 
   const viewport = useCanvasViewport({
     containerWidth: containerSize.width,
@@ -394,12 +383,7 @@ export function ResizeEditor({
         const ext = format === "image/jpeg" ? ".jpg" : format === "image/webp" ? ".webp" : ".png"
         const baseName = fileName ? fileName.replace(/\.[^.]+$/, "") : "resized"
         const downloadName = `${baseName}_${canvasSize.width}x${canvasSize.height}${ext}`
-        const url = URL.createObjectURL(blob)
-        const a = document.createElement("a")
-        a.href = url
-        a.download = downloadName
-        a.click()
-        URL.revokeObjectURL(url)
+        downloadBlob(blob, downloadName)
       } catch {
         toast.error("Export failed. Please try again.")
       }
@@ -500,24 +484,7 @@ export function ResizeEditor({
           <Link href="/" className="hidden md:inline text-muted-foreground hover:text-foreground transition-colors">
             {t("navHome")}
           </Link>
-          <Link href="/tools" className="hidden md:inline text-muted-foreground hover:text-foreground transition-colors">
-            {t("navTools")}
-          </Link>
-          <Link href="/watermark" className="hidden md:inline text-muted-foreground hover:text-foreground transition-colors">
-            Watermark
-          </Link>
-          <Link href="/mosaic" className="hidden md:inline text-muted-foreground hover:text-foreground transition-colors">
-            Mosaic
-          </Link>
-          <Link href="/collage" className="hidden md:inline text-muted-foreground hover:text-foreground transition-colors">
-            Collage
-          </Link>
-          <Link href="/social-export" className="hidden md:inline text-muted-foreground hover:text-foreground transition-colors">
-            Social Export
-          </Link>
-          <Link href="/remove-background" className="hidden md:inline text-muted-foreground hover:text-foreground transition-colors">
-            Remove BG
-          </Link>
+          <EditorToolsNav currentToolId="resize" className="sm:hidden md:flex" />
           <LocaleSwitcher variant="compact" />
         </div>
       </nav>
@@ -619,7 +586,7 @@ export function ResizeEditor({
                   <button
                     onClick={() => setSidebarOpen(true)}
                     className="md:hidden w-8 h-8 flex items-center justify-center text-muted-foreground rounded cursor-pointer hover:bg-muted hover:text-foreground transition-colors ml-0.5"
-                    title="Settings"
+                    title={t("settings")}
                   >
                     <Settings2 className="h-3.5 w-3.5" />
                   </button>

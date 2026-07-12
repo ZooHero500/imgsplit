@@ -10,6 +10,8 @@ import {
   getSelectedZipFileName,
   getBatchZipFileName,
 } from "@/lib/zip-exporter"
+import { downloadBlob } from "@/lib/download"
+import { getFileExtension, getFileNameWithoutExtension } from "@/lib/utils"
 import type { SplitLine, SplitResult, BatchSplitResult } from "@/types"
 
 function getResultKey(result: SplitResult, imageIndex?: number): string {
@@ -17,17 +19,6 @@ function getResultKey(result: SplitResult, imageIndex?: number): string {
     return `${imageIndex}-${result.row}-${result.col}`
   }
   return `${result.row}-${result.col}`
-}
-
-function getFileExtension(mimeType: string): string {
-  if (mimeType === "image/webp") return "png"
-  if (mimeType === "image/jpeg") return "jpg"
-  if (mimeType === "image/png") return "png"
-  return "png"
-}
-
-function getFileNameWithoutExtension(fileName: string): string {
-  return fileName.replace(/\.[^.]+$/, "")
 }
 
 interface ImageItem {
@@ -135,12 +126,7 @@ export function useImageExport(): UseImageExportReturn {
         results: splitResults,
         fileExtension,
       })
-      const url = URL.createObjectURL(zipBlob)
-      const a = document.createElement("a")
-      a.href = url
-      a.download = getZipFileName(originalFileName)
-      a.click()
-      URL.revokeObjectURL(url)
+      downloadBlob(zipBlob, getZipFileName(originalFileName))
     },
     [splitResults]
   )
@@ -154,12 +140,7 @@ export function useImageExport(): UseImageExportReturn {
         fileExtension: getFileExtension(b.mimeType),
       })),
     })
-    const url = URL.createObjectURL(zipBlob)
-    const a = document.createElement("a")
-    a.href = url
-    a.download = getBatchZipFileName()
-    a.click()
-    URL.revokeObjectURL(url)
+    downloadBlob(zipBlob, getBatchZipFileName())
   }, [batchResults])
 
   const downloadOne = useCallback(
@@ -219,12 +200,7 @@ export function useImageExport(): UseImageExportReturn {
         results: selected,
         fileExtension,
       })
-      const url = URL.createObjectURL(zipBlob)
-      const a = document.createElement("a")
-      a.href = url
-      a.download = getSelectedZipFileName(originalFileName)
-      a.click()
-      URL.revokeObjectURL(url)
+      downloadBlob(zipBlob, getSelectedZipFileName(originalFileName))
     },
     [splitResults, selectedKeys]
   )
@@ -241,12 +217,7 @@ export function useImageExport(): UseImageExportReturn {
     if (items.length === 0) return
 
     const zipBlob = await exportBatchAsZip({ items })
-    const url = URL.createObjectURL(zipBlob)
-    const a = document.createElement("a")
-    a.href = url
-    a.download = "selected_split.zip"
-    a.click()
-    URL.revokeObjectURL(url)
+    downloadBlob(zipBlob, "selected_split.zip")
   }, [batchResults, selectedKeys])
 
   return {

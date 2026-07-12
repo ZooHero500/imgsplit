@@ -251,6 +251,7 @@
       "readjust": "Reajustar",
       "count": "{count} imágenes",
       "tapToSave": "Toca una imagen para guardarla individualmente",
+      "itemAlt": "Imagen de cuadrícula {index}",
       "failed": "Error en la descarga. Inténtalo de nuevo.",
       "generating": "Generando...",
       "reupload": "Volver a subir"
@@ -491,6 +492,9 @@
     "twitter": "Twitter",
     "toolRemoveBackground": "Quitar fondo IA"
   },
+  "editorToolsNav": {
+    "title": "Herramientas"
+  },
   "pseoChrome": {
     "scenariosTitle": "Casos de uso",
     "howItWorksTitle": "Cómo funciona",
@@ -702,6 +706,7 @@
     "preset_custom": "Personalizado",
     "download": "Descargar",
     "downloadAs": "Descargar como {format}",
+    "settings": "Ajustes",
     "reset": "Restablecer",
     "replaceImage": "Reemplazar imagen",
     "cropMode": "Modo recorte",
@@ -1027,6 +1032,7 @@
       "readjust": "Reajustar",
       "count": "{count} diapositivas",
       "tapToSave": "Toca una diapositiva para guardarla individualmente",
+      "slideAlt": "Diapositiva {index}",
       "failed": "Error en la descarga. Inténtalo de nuevo.",
       "reupload": "Volver a subir"
     },

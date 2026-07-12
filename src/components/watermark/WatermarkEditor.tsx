@@ -20,9 +20,12 @@ import {
   Upload,
 } from "lucide-react"
 import { Link } from "@/i18n/navigation"
+import { EditorToolsNav } from "@/components/EditorToolsNav"
 import { LocaleSwitcher } from "@/components/LocaleSwitcher"
 import { LogoIcon } from "@/components/LogoIcon"
 import { UploadZone } from "@/components/UploadZone"
+import { useExportAction } from "@/hooks/use-export-action"
+import { downloadBlob } from "@/lib/download"
 import {
   createWatermarkLayer,
   createWatermarkState,
@@ -42,7 +45,11 @@ import {
   WATERMARK_TEMPLATES,
   type WatermarkTemplateId,
 } from "@/lib/watermark-presets"
-import { ACCEPTED_TYPES } from "@/lib/upload-utils"
+import {
+  ACCEPTED_TYPES,
+  loadImageFromSrc,
+  readFileAsDataUrl,
+} from "@/lib/upload-utils"
 import type { UploadResult } from "@/types"
 
 const OUTPUT_FORMATS: Array<{
@@ -65,33 +72,6 @@ const COLOR_SWATCHES = [
 
 function clamp(value: number, min: number, max: number) {
   return Math.min(max, Math.max(min, value))
-}
-
-function readFileAsDataUrl(file: File): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader()
-    reader.onload = () => resolve(String(reader.result))
-    reader.onerror = () => reject(new Error("Failed to read image"))
-    reader.readAsDataURL(file)
-  })
-}
-
-function loadImageFromSrc(src: string): Promise<HTMLImageElement> {
-  return new Promise((resolve, reject) => {
-    const image = new Image()
-    image.onload = () => resolve(image)
-    image.onerror = () => reject(new Error("Failed to load image"))
-    image.src = src
-  })
-}
-
-function downloadBlob(blob: Blob, fileName: string) {
-  const url = URL.createObjectURL(blob)
-  const a = document.createElement("a")
-  a.href = url
-  a.download = fileName
-  a.click()
-  URL.revokeObjectURL(url)
 }
 
 function getDefaultState(image: HTMLImageElement): WatermarkState {
@@ -128,9 +108,9 @@ export function WatermarkEditor() {
     useState<WatermarkOutputFormat>("image/png")
   const [quality, setQuality] = useState(92)
   const [isRendering, setIsRendering] = useState(false)
-  const [isExporting, setIsExporting] = useState(false)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const logoInputRef = useRef<HTMLInputElement>(null)
+  const { isExporting, run: runExport } = useExportAction()
 
   const selectedLayer = useMemo(
     () =>
@@ -144,6 +124,7 @@ export function WatermarkEditor() {
     if (!source || !canvasRef.current) return
 
     let cancelled = false
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsRendering(true)
 
     renderWatermarkToCanvas(
@@ -273,25 +254,25 @@ export function WatermarkEditor() {
 
   const handleDownload = useCallback(async () => {
     if (!source) return
-    setIsExporting(true)
-    try {
-      const blob = await exportWatermarkedImage(
-        source.image,
-        watermarkState,
-        outputFormat,
-        quality / 100,
-        imageAssets
-      )
-      const ext = getWatermarkOutputExtension(outputFormat)
-      const baseName = getWatermarkBaseName(source.file.name)
-      downloadBlob(blob, `${baseName}_watermark.${ext}`)
-      toast.success(t("downloadReady"))
-    } catch {
-      toast.error(t("exportFailed"))
-    } finally {
-      setIsExporting(false)
-    }
-  }, [source, watermarkState, outputFormat, quality, imageAssets, t])
+    await runExport(
+      async () => {
+        const blob = await exportWatermarkedImage(
+          source.image,
+          watermarkState,
+          outputFormat,
+          quality / 100,
+          imageAssets
+        )
+        const ext = getWatermarkOutputExtension(outputFormat)
+        const baseName = getWatermarkBaseName(source.file.name)
+        downloadBlob(blob, `${baseName}_watermark.${ext}`)
+      },
+      {
+        onSuccess: () => toast.success(t("downloadReady")),
+        onError: () => toast.error(t("exportFailed")),
+      }
+    )
+  }, [source, watermarkState, outputFormat, quality, imageAssets, t, runExport])
 
   const hasLayers = watermarkState.layers.length > 0
 
@@ -306,36 +287,7 @@ export function WatermarkEditor() {
                 ImgSplit
               </span>
             </Link>
-            <div className="hidden sm:flex items-center gap-4 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-              <Link href="/" className="hover:text-foreground transition-colors">
-                Split
-              </Link>
-              <Link href="/grid" className="hover:text-foreground transition-colors">
-                Grid
-              </Link>
-              <Link href="/resize" className="hover:text-foreground transition-colors">
-                Resize
-              </Link>
-              <Link href="/compress" className="hover:text-foreground transition-colors">
-                Compress
-              </Link>
-              <Link href="/mosaic" className="hover:text-foreground transition-colors">
-                Mosaic
-              </Link>
-              <Link href="/collage" className="hover:text-foreground transition-colors">
-                Collage
-              </Link>
-              <Link href="/social-export" className="hover:text-foreground transition-colors">
-                Social Export
-              </Link>
-              <Link href="/remove-background" className="hover:text-foreground transition-colors">
-                Remove BG
-              </Link>
-              <Link href="/tools" className="hover:text-foreground transition-colors">
-                Tools
-              </Link>
-              <span className="text-foreground font-medium">Watermark</span>
-            </div>
+            <EditorToolsNav currentToolId="watermark" />
           </div>
           <div className="flex items-center gap-3">
             {source && (

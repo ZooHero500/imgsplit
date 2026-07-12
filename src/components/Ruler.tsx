@@ -13,7 +13,6 @@ interface RulerProps {
   length: number
   viewportScale: number
   viewportOffset: number
-  imageSize: number
   thickness?: number
   lines: SplitLine[]
   onDragStart: (orientation: "horizontal" | "vertical") => void
@@ -34,7 +33,6 @@ export function Ruler({
   length,
   viewportScale,
   viewportOffset,
-  imageSize,
   thickness = 20,
   lines,
   onDragStart,
@@ -158,7 +156,7 @@ export function Ruler({
       ctx.lineTo(thickness - 0.5, length)
     }
     ctx.stroke()
-  }, [orientation, length, viewportScale, viewportOffset, imageSize, thickness, lines])
+  }, [orientation, length, viewportScale, viewportOffset, thickness, lines])
 
   useEffect(() => {
     const rafId = requestAnimationFrame(draw)

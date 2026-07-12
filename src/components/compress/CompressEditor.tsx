@@ -21,6 +21,7 @@ import type { UploadResult } from "@/types"
 import { Link } from "@/i18n/navigation"
 import { LogoIcon } from "@/components/LogoIcon"
 import { LocaleSwitcher } from "@/components/LocaleSwitcher"
+import { EditorToolsNav } from "@/components/EditorToolsNav"
 
 let nextId = 0
 function genId() {
@@ -270,17 +271,7 @@ export function CompressEditor() {
                 ImgSplit
               </span>
             </Link>
-            <div className="hidden sm:flex items-center gap-4 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-              <Link href="/" className="hover:text-foreground transition-colors">Split</Link>
-              <Link href="/grid" className="hover:text-foreground transition-colors">Grid</Link>
-              <Link href="/resize" className="hover:text-foreground transition-colors">Resize</Link>
-              <span className="text-foreground font-medium">Compress</span>
-              <Link href="/watermark" className="hover:text-foreground transition-colors">Watermark</Link>
-              <Link href="/mosaic" className="hover:text-foreground transition-colors">Mosaic</Link>
-              <Link href="/collage" className="hover:text-foreground transition-colors">Collage</Link>
-              <Link href="/social-export" className="hover:text-foreground transition-colors">Social Export</Link>
-              <Link href="/remove-background" className="hover:text-foreground transition-colors">Remove BG</Link>
-            </div>
+            <EditorToolsNav currentToolId="compress" />
           </div>
           <div className="flex items-center gap-3">
             {hasImages && (
