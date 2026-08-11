@@ -86,7 +86,7 @@ export function CanvasSizeControl({
       key={preset.slug}
       onClick={() => handlePreset(preset)}
       title={`${t(preset.labelKey)} · ${preset.width} × ${preset.height}`}
-      className={`flex min-w-0 items-center justify-between gap-2 px-3 py-2.5 md:py-2 text-xs rounded cursor-pointer transition-colors ${
+      className={`flex min-w-0 items-center justify-between gap-2 px-3 py-2.5 md:py-2 text-xs  cursor-pointer transition-colors ${
         activePreset === preset.slug
           ? "bg-accent/10 text-accent"
           : "text-muted-foreground hover:bg-muted hover:text-foreground"
@@ -121,7 +121,7 @@ export function CanvasSizeControl({
               onKeyDown={handleKeyDown}
               min={1}
               max={4096}
-              className="w-full h-10 md:h-8 px-2 text-sm bg-background border border-border rounded text-foreground text-center focus:outline-none focus:border-accent"
+              className="w-full h-10 md:h-8 px-2 text-sm bg-background border border-border  text-foreground text-center focus:outline-none focus:border-accent"
             />
           </div>
 
@@ -145,7 +145,7 @@ export function CanvasSizeControl({
               onKeyDown={handleKeyDown}
               min={1}
               max={4096}
-              className="w-full h-10 md:h-8 px-2 text-sm bg-background border border-border rounded text-foreground text-center focus:outline-none focus:border-accent"
+              className="w-full h-10 md:h-8 px-2 text-sm bg-background border border-border  text-foreground text-center focus:outline-none focus:border-accent"
             />
           </div>
         </div>

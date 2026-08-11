@@ -808,7 +808,7 @@ export function SplitEditor({
       {/* Editor area with rulers */}
       <div
         ref={containerRef}
-        className={`relative w-full bg-muted/30 rounded-lg overflow-hidden flex-1 ${
+        className={`relative w-full bg-workspace-ruler overflow-hidden flex-1 ${
           isFileDragOver ? "ring-2 ring-accent bg-accent/5" : ""
         }`}
         style={{ minHeight: "min(400px, calc(100vh - 160px))" }}
@@ -867,7 +867,7 @@ export function SplitEditor({
           />
 
           {/* Canvas */}
-          <div ref={stageContainerRef} className="relative overflow-hidden">
+          <div ref={stageContainerRef} className="relative overflow-hidden bg-workspace-canvas">
             <Stage
               width={stageWidth}
               height={stageHeight}
@@ -903,18 +903,6 @@ export function SplitEditor({
               }}
               style={{ cursor: isPanning ? "grab" : "default" }}
             >
-              {/* Background */}
-              <Layer listening={false}>
-                <Rect
-                  x={-viewport.position.x / viewport.scale}
-                  y={-viewport.position.y / viewport.scale}
-                  width={stageWidth / viewport.scale}
-                  height={stageHeight / viewport.scale}
-                  fill="#e0e0e0"
-                  listening={false}
-                />
-              </Layer>
-
               {/* Image groups (draggable) */}
               <Layer>
                 {images.map((item, index) => {

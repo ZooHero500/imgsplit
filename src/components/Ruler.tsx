@@ -3,11 +3,6 @@
 import { useEffect, useRef, useCallback } from "react"
 import type { SplitLine } from "@/types"
 
-const RULER_BG = "#e8e8e8"
-const RULER_TEXT = "#666"
-const RULER_TICK = "#999"
-const RULER_MARKER = "#ef4444"
-
 interface RulerProps {
   orientation: "horizontal" | "vertical"
   length: number
@@ -57,9 +52,11 @@ export function Ruler({
     if (!ctx) return
     ctx.scale(dpr, dpr)
 
-    // Background
-    ctx.fillStyle = RULER_BG
-    ctx.fillRect(0, 0, w, h)
+    const styles = getComputedStyle(document.documentElement)
+    const rulerText = styles.getPropertyValue("--ink-soft").trim()
+    const rulerTick = styles.getPropertyValue("--rule").trim()
+    const rulerMarker = styles.getPropertyValue("--signal").trim()
+    const rulerBorder = styles.getPropertyValue("--rule-soft").trim()
 
     // Calculate visible world range
     const worldStart = -viewportOffset / viewportScale
@@ -68,10 +65,10 @@ export function Ruler({
     // Tick step based on viewport scale (pixels per world unit)
     const step = calculateTickStep(viewportScale)
 
-    ctx.fillStyle = RULER_TEXT
-    ctx.strokeStyle = RULER_TICK
+    ctx.fillStyle = rulerText
+    ctx.strokeStyle = rulerTick
     ctx.lineWidth = 0.5
-    ctx.font = "9px sans-serif"
+    ctx.font = '10px "Archivo Narrow Variable", "Arial Narrow", sans-serif'
 
     // Start from first visible tick
     const firstTick = Math.floor(worldStart / step) * step
@@ -124,7 +121,7 @@ export function Ruler({
 
     // Line markers (triangles) — convert world pos to screen
     const relevantLines = lines.filter((l) => l.orientation === orientation)
-    ctx.fillStyle = RULER_MARKER
+    ctx.fillStyle = rulerMarker
     for (const line of relevantLines) {
       const pos = line.position * viewportScale + viewportOffset
       if (pos < 0 || pos > length) continue
@@ -145,7 +142,7 @@ export function Ruler({
     }
 
     // Border
-    ctx.strokeStyle = "#ccc"
+    ctx.strokeStyle = rulerBorder
     ctx.lineWidth = 1
     ctx.beginPath()
     if (isHorizontal) {
@@ -175,6 +172,7 @@ export function Ruler({
     <canvas
       ref={canvasRef}
       style={{
+        backgroundColor: "var(--workspace-ruler)",
         cursor: orientation === "horizontal" ? "s-resize" : "e-resize",
         display: "block",
       }}
@@ -189,9 +187,9 @@ export function CornerBlock({ thickness = 20 }: { thickness?: number }) {
       style={{
         width: thickness,
         height: thickness,
-        backgroundColor: RULER_BG,
-        borderRight: "1px solid #ccc",
-        borderBottom: "1px solid #ccc",
+        backgroundColor: "var(--workspace-ruler)",
+        borderRight: "1px solid var(--rule)",
+        borderBottom: "1px solid var(--rule)",
         flexShrink: 0,
       }}
     />

@@ -888,7 +888,7 @@ export function MosaicEditor() {
           <div className="flex min-h-0 flex-1 items-center justify-center bg-muted/20 p-3 md:p-5">
             <div className="relative max-h-full max-w-full overflow-auto border border-border bg-background p-2 shadow-sm">
               {isRendering && (
-                <div className="absolute left-3 top-3 z-20 rounded bg-background/90 px-2 py-1 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                <div className="absolute left-3 top-3 z-20  bg-background/90 px-2 py-1 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
                   {t("rendering")}
                 </div>
               )}
@@ -984,7 +984,7 @@ export function MosaicEditor() {
                         key={tool.value}
                         type="button"
                         onClick={() => setToolMode(tool.value)}
-                        className={`flex min-h-14 cursor-pointer flex-col items-center justify-center gap-1 rounded border px-2 py-2 text-xs uppercase tracking-wider transition-colors ${
+                        className={`flex min-h-14 cursor-pointer flex-col items-center justify-center gap-1  border px-2 py-2 text-xs uppercase tracking-wider transition-colors ${
                           toolMode === tool.value
                             ? "border-accent bg-accent/5 text-accent"
                             : "border-border text-muted-foreground hover:bg-muted hover:text-foreground"
@@ -999,7 +999,7 @@ export function MosaicEditor() {
                 <button
                   type="button"
                   onClick={() => maskImageInputRef.current?.click()}
-                  className="mt-3 flex w-full cursor-pointer items-center justify-center gap-1.5 rounded border border-border py-2 text-xs uppercase tracking-wider text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                  className="mt-3 flex w-full cursor-pointer items-center justify-center gap-1.5  border border-border py-2 text-xs uppercase tracking-wider text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
                 >
                   <ImagePlus className="h-3.5 w-3.5" />
                   {t("addImageMask")}
@@ -1017,7 +1017,7 @@ export function MosaicEditor() {
                           key={effect.value}
                           type="button"
                           onClick={() => selectEffect(effect.value)}
-                          className={`flex min-h-16 cursor-pointer flex-col items-center justify-center gap-1 rounded border px-2 py-2 text-xs uppercase tracking-wider transition-colors ${
+                          className={`flex min-h-16 cursor-pointer flex-col items-center justify-center gap-1  border px-2 py-2 text-xs uppercase tracking-wider transition-colors ${
                             currentEffect === effect.value
                               ? "border-accent bg-accent/5 text-accent"
                               : "border-border text-muted-foreground hover:bg-muted hover:text-foreground"
@@ -1089,14 +1089,14 @@ export function MosaicEditor() {
                             type="color"
                             value={currentColor}
                             onChange={(event) => handleColorChange(event.target.value)}
-                            className="h-8 w-10 rounded border border-border bg-background"
+                            className="h-8 w-10  border border-border bg-background"
                           />
                           {COLOR_SWATCHES.map((color) => (
                             <button
                               key={color}
                               type="button"
                               onClick={() => handleColorChange(color)}
-                              className={`h-7 w-7 cursor-pointer rounded border ${
+                              className={`h-7 w-7 cursor-pointer  border ${
                                 currentColor === color
                                   ? "border-accent"
                                   : "border-border"
@@ -1129,7 +1129,7 @@ export function MosaicEditor() {
                             selectedImageLayerId: null,
                           }))
                         }
-                        className={`flex w-full cursor-pointer items-center justify-between rounded border px-3 py-2 text-left transition-colors ${
+                        className={`flex w-full cursor-pointer items-center justify-between  border px-3 py-2 text-left transition-colors ${
                           region.id === maskState.selectedRegionId
                             ? "border-accent bg-accent/5"
                             : "border-border hover:bg-muted"
@@ -1159,7 +1159,7 @@ export function MosaicEditor() {
                             selectedImageLayerId: layer.id,
                           }))
                         }
-                        className={`flex w-full cursor-pointer items-center justify-between rounded border px-3 py-2 text-left transition-colors ${
+                        className={`flex w-full cursor-pointer items-center justify-between  border px-3 py-2 text-left transition-colors ${
                           layer.id === maskState.selectedImageLayerId
                             ? "border-accent bg-accent/5"
                             : "border-border hover:bg-muted"
@@ -1179,7 +1179,7 @@ export function MosaicEditor() {
                       </button>
                     ))}
                     {maskState.strokes.length > 0 && (
-                      <div className="flex items-center justify-between rounded border border-border bg-muted/30 px-3 py-2">
+                      <div className="flex items-center justify-between  border border-border bg-muted/30 px-3 py-2">
                         <span className="text-xs text-foreground">
                           {t("brushStrokes")}
                         </span>
@@ -1190,7 +1190,7 @@ export function MosaicEditor() {
                     )}
                   </div>
                 ) : (
-                  <p className="rounded border border-border bg-muted/30 px-3 py-2 text-xs text-muted-foreground">
+                  <p className=" border border-border bg-muted/30 px-3 py-2 text-xs text-muted-foreground">
                     {t("emptyLayers")}
                   </p>
                 )}
@@ -1200,7 +1200,7 @@ export function MosaicEditor() {
                     type="button"
                     onClick={removeSelectedLayer}
                     disabled={!selectedRegion && !selectedImageLayer}
-                    className="flex cursor-pointer items-center justify-center gap-1.5 rounded border border-border py-2 text-xs uppercase tracking-wider text-muted-foreground transition-colors hover:bg-muted hover:text-foreground disabled:cursor-default disabled:opacity-40 disabled:hover:bg-transparent"
+                    className="flex cursor-pointer items-center justify-center gap-1.5  border border-border py-2 text-xs uppercase tracking-wider text-muted-foreground transition-colors hover:bg-muted hover:text-foreground disabled:cursor-default disabled:opacity-40 disabled:hover:bg-transparent"
                   >
                     <Trash2 className="h-3.5 w-3.5" />
                     {t("deleteLayer")}
@@ -1209,7 +1209,7 @@ export function MosaicEditor() {
                     type="button"
                     onClick={clearRegions}
                     disabled={!hasLayers}
-                    className="flex cursor-pointer items-center justify-center gap-1.5 rounded border border-border py-2 text-xs uppercase tracking-wider text-muted-foreground transition-colors hover:bg-muted hover:text-foreground disabled:cursor-default disabled:opacity-40 disabled:hover:bg-transparent"
+                    className="flex cursor-pointer items-center justify-center gap-1.5  border border-border py-2 text-xs uppercase tracking-wider text-muted-foreground transition-colors hover:bg-muted hover:text-foreground disabled:cursor-default disabled:opacity-40 disabled:hover:bg-transparent"
                   >
                     <RotateCcw className="h-3.5 w-3.5" />
                     {t("clear")}
@@ -1225,7 +1225,7 @@ export function MosaicEditor() {
                       key={format.value}
                       type="button"
                       onClick={() => setOutputFormat(format.value)}
-                      className={`rounded py-2 text-xs uppercase tracking-wider transition-colors ${
+                      className={` py-2 text-xs uppercase tracking-wider transition-colors ${
                         outputFormat === format.value
                           ? "bg-accent/10 text-accent"
                           : "border border-border text-muted-foreground hover:bg-muted hover:text-foreground"

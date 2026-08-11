@@ -173,7 +173,7 @@ function TemplatePreview({ template }: { template: CollageTemplate }) {
 
   return (
     <span
-      className="relative block w-12 shrink-0 overflow-hidden rounded border border-current/20 bg-muted"
+      className="relative block w-12 shrink-0 overflow-hidden  border border-current/20 bg-muted"
       style={{ aspectRatio: template.aspectRatio }}
     >
       {template.slots.map((slot) => (
@@ -670,7 +670,7 @@ export function CollageEditor() {
                       key={template.id}
                       type="button"
                       onClick={() => selectTemplate(template.id)}
-                      className={`flex min-h-16 cursor-pointer items-center gap-3 rounded border p-2 text-left transition-colors ${
+                      className={`flex min-h-16 cursor-pointer items-center gap-3  border p-2 text-left transition-colors ${
                         collageState.templateId === template.id
                           ? "border-accent bg-accent/5 text-accent"
                           : "border-border text-muted-foreground hover:bg-muted hover:text-foreground"
@@ -697,7 +697,7 @@ export function CollageEditor() {
                 <button
                   type="button"
                   onClick={() => openFilePicker()}
-                  className="flex w-full cursor-pointer items-center justify-center gap-1.5 rounded border border-border py-2 text-xs uppercase tracking-wider text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                  className="flex w-full cursor-pointer items-center justify-center gap-1.5  border border-border py-2 text-xs uppercase tracking-wider text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
                 >
                   <ImagePlus className="h-3.5 w-3.5" />
                   {t("addPhotos")}
@@ -713,7 +713,7 @@ export function CollageEditor() {
             >
               <div className="relative max-h-full max-w-full border border-border bg-background p-2 shadow-sm">
                 {isRendering && (
-                  <div className="absolute left-3 top-3 z-20 rounded bg-background/90 px-2 py-1 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                  <div className="absolute left-3 top-3 z-20  bg-background/90 px-2 py-1 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
                     {t("rendering")}
                   </div>
                 )}
@@ -820,7 +820,7 @@ export function CollageEditor() {
                   return (
                     <div
                       key={image.id}
-                      className={`group relative h-20 w-20 shrink-0 overflow-hidden rounded border ${
+                      className={`group relative h-20 w-20 shrink-0 overflow-hidden  border ${
                         selected
                           ? "border-accent"
                           : used
@@ -843,7 +843,7 @@ export function CollageEditor() {
                       <button
                         type="button"
                         onClick={() => removeImage(image.id)}
-                        className="absolute right-1 top-1 flex h-6 w-6 cursor-pointer items-center justify-center rounded bg-background/90 text-muted-foreground opacity-0 transition-opacity hover:text-foreground group-hover:opacity-100"
+                        className="absolute right-1 top-1 flex h-6 w-6 cursor-pointer items-center justify-center  bg-background/90 text-muted-foreground opacity-0 transition-opacity hover:text-foreground group-hover:opacity-100"
                         aria-label={t("removePhoto")}
                       >
                         <Trash2 className="h-3.5 w-3.5" />
@@ -854,7 +854,7 @@ export function CollageEditor() {
                 <button
                   type="button"
                   onClick={() => openFilePicker()}
-                  className="flex h-20 w-20 shrink-0 cursor-pointer items-center justify-center rounded border border-dashed border-border text-muted-foreground transition-colors hover:border-accent hover:text-accent"
+                  className="flex h-20 w-20 shrink-0 cursor-pointer items-center justify-center  border border-dashed border-border text-muted-foreground transition-colors hover:border-accent hover:text-accent"
                   aria-label={t("addPhotos")}
                 >
                   <Plus className="h-5 w-5" />
@@ -881,7 +881,7 @@ export function CollageEditor() {
                       )
                       if (artboard) selectArtboard(artboard)
                     }}
-                    className="h-9 w-full rounded border border-border bg-background px-3 text-sm"
+                    className="h-9 w-full  border border-border bg-background px-3 text-sm"
                   >
                     {COLLAGE_ARTBOARDS.map((artboard) => (
                       <option key={artboard.id} value={artboard.id}>
@@ -940,7 +940,7 @@ export function CollageEditor() {
                         backgroundColor: event.target.value,
                       }))
                     }
-                    className="h-8 w-10 rounded border border-border bg-background disabled:opacity-40"
+                    className="h-8 w-10  border border-border bg-background disabled:opacity-40"
                   />
                   {BACKGROUND_SWATCHES.map((color) => (
                     <button
@@ -953,7 +953,7 @@ export function CollageEditor() {
                           transparentBackground: false,
                         }))
                       }
-                      className={`h-7 w-7 cursor-pointer rounded border ${
+                      className={`h-7 w-7 cursor-pointer  border ${
                         collageState.backgroundColor === color &&
                         !collageState.transparentBackground
                           ? "border-accent"
@@ -991,7 +991,7 @@ export function CollageEditor() {
                           key={mode}
                           type="button"
                           onClick={() => updateSelectedImage({ fitMode: mode })}
-                          className={`flex cursor-pointer items-center justify-center gap-1.5 rounded border py-2 text-xs uppercase tracking-wider transition-colors ${
+                          className={`flex cursor-pointer items-center justify-center gap-1.5  border py-2 text-xs uppercase tracking-wider transition-colors ${
                             selectedFrame.image?.fitMode === mode
                               ? "border-accent bg-accent/5 text-accent"
                               : "border-border text-muted-foreground hover:bg-muted hover:text-foreground"
@@ -1026,7 +1026,7 @@ export function CollageEditor() {
                             rotation: selectedFrame.image!.rotation - 90,
                           })
                         }
-                        className="flex cursor-pointer items-center justify-center gap-1.5 rounded border border-border py-2 text-xs uppercase tracking-wider text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                        className="flex cursor-pointer items-center justify-center gap-1.5  border border-border py-2 text-xs uppercase tracking-wider text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
                         aria-label={t("rotateLeft")}
                       >
                         <RotateCcw className="h-3.5 w-3.5" />
@@ -1038,7 +1038,7 @@ export function CollageEditor() {
                             scale: clamp(selectedFrame.image!.scale - 0.1, 0.6, 2.6),
                           })
                         }
-                        className="flex cursor-pointer items-center justify-center rounded border border-border py-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                        className="flex cursor-pointer items-center justify-center  border border-border py-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
                         aria-label={t("scaleDown")}
                       >
                         <Minus className="h-3.5 w-3.5" />
@@ -1050,7 +1050,7 @@ export function CollageEditor() {
                             rotation: selectedFrame.image!.rotation + 90,
                           })
                         }
-                        className="flex cursor-pointer items-center justify-center gap-1.5 rounded border border-border py-2 text-xs uppercase tracking-wider text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                        className="flex cursor-pointer items-center justify-center gap-1.5  border border-border py-2 text-xs uppercase tracking-wider text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
                         aria-label={t("rotateRight")}
                       >
                         <RotateCw className="h-3.5 w-3.5" />
@@ -1060,14 +1060,14 @@ export function CollageEditor() {
                     <button
                       type="button"
                       onClick={clearSelectedFrame}
-                      className="flex w-full cursor-pointer items-center justify-center gap-1.5 rounded border border-border py-2 text-xs uppercase tracking-wider text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                      className="flex w-full cursor-pointer items-center justify-center gap-1.5  border border-border py-2 text-xs uppercase tracking-wider text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
                     >
                       <Trash2 className="h-3.5 w-3.5" />
                       {t("clearFrame")}
                     </button>
                   </div>
                 ) : (
-                  <p className="rounded border border-border bg-muted/30 px-3 py-2 text-xs text-muted-foreground">
+                  <p className=" border border-border bg-muted/30 px-3 py-2 text-xs text-muted-foreground">
                     {t("emptyFrameHint")}
                   </p>
                 )}
@@ -1081,7 +1081,7 @@ export function CollageEditor() {
                       key={format.value}
                       type="button"
                       onClick={() => setOutputFormat(format.value)}
-                      className={`rounded py-2 text-xs uppercase tracking-wider transition-colors ${
+                      className={` py-2 text-xs uppercase tracking-wider transition-colors ${
                         outputFormat === format.value
                           ? "bg-accent/10 text-accent"
                           : "border border-border text-muted-foreground hover:bg-muted hover:text-foreground"

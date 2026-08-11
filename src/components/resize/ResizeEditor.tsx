@@ -60,14 +60,14 @@ function DownloadDropdown({ onDownload }: { onDownload: (format: "image/png" | "
     <div ref={dropdownRef} className="relative">
       <button
         onClick={() => setOpen(!open)}
-        className="flex items-center gap-1.5 px-3 py-1.5 text-xs uppercase tracking-wider bg-foreground text-background rounded cursor-pointer hover:bg-foreground/90 transition-colors"
+        className="flex items-center gap-1.5 px-3 py-1.5 text-xs uppercase tracking-wider bg-foreground text-background  cursor-pointer hover:bg-foreground/90 transition-colors"
       >
         <Download className="h-3.5 w-3.5" />
         <span className="hidden sm:inline">{t("download")}</span>
         <ChevronDown className={`h-3 w-3 transition-transform ${open ? "rotate-180" : ""}`} />
       </button>
       {open && (
-        <div className="absolute right-0 top-full mt-1 w-48 bg-background border border-border rounded-md shadow-lg z-50 py-1">
+        <div className="absolute right-0 top-full mt-1 w-48 bg-background border border-border  shadow-lg z-50 py-1">
           {DOWNLOAD_FORMATS.map((fmt) => (
             <button
               key={fmt.label}
@@ -95,7 +95,7 @@ function ToolbarButton({ onClick, disabled, title, children, className = "" }: {
     <button
       onClick={onClick}
       disabled={disabled}
-      className={`w-8 h-8 md:w-7 md:h-7 flex items-center justify-center text-muted-foreground rounded cursor-pointer hover:bg-muted hover:text-foreground transition-colors disabled:opacity-30 disabled:cursor-default disabled:pointer-events-none ${className}`}
+      className={`w-8 h-8 md:w-7 md:h-7 flex items-center justify-center text-muted-foreground  cursor-pointer hover:bg-muted hover:text-foreground transition-colors disabled:opacity-30 disabled:cursor-default disabled:pointer-events-none ${className}`}
       title={title}
     >
       {children}
@@ -155,7 +155,7 @@ function SidebarContent({
                 <button
                   key={m}
                   onClick={() => setFitMode(m)}
-                  className={`flex-1 py-2 text-xs uppercase tracking-wider rounded cursor-pointer transition-colors ${
+                  className={`flex-1 py-2 text-xs uppercase tracking-wider  cursor-pointer transition-colors ${
                     fitMode === m ? "bg-accent/10 text-accent" : "text-muted-foreground hover:bg-muted hover:text-foreground"
                   }`}
                 >
@@ -179,7 +179,7 @@ function SidebarContent({
                   type="number"
                   value={Math.round(transform.x)}
                   onChange={(e) => handlePositionChange("x", e.target.value)}
-                  className="w-full h-9 md:h-7 px-1.5 text-sm md:text-xs bg-background border border-border rounded text-foreground text-center focus:outline-none focus:border-accent"
+                  className="w-full h-9 md:h-7 px-1.5 text-sm md:text-xs bg-background border border-border  text-foreground text-center focus:outline-none focus:border-accent"
                 />
               </div>
               <div>
@@ -188,7 +188,7 @@ function SidebarContent({
                   type="number"
                   value={Math.round(transform.y)}
                   onChange={(e) => handlePositionChange("y", e.target.value)}
-                  className="w-full h-9 md:h-7 px-1.5 text-sm md:text-xs bg-background border border-border rounded text-foreground text-center focus:outline-none focus:border-accent"
+                  className="w-full h-9 md:h-7 px-1.5 text-sm md:text-xs bg-background border border-border  text-foreground text-center focus:outline-none focus:border-accent"
                 />
               </div>
               <div>
@@ -198,7 +198,7 @@ function SidebarContent({
                   value={Math.round(transform.scale * 100)}
                   onChange={(e) => handleScaleChange(e.target.value)}
                   min={1}
-                  className="w-full h-9 md:h-7 px-1.5 text-sm md:text-xs bg-background border border-border rounded text-foreground text-center focus:outline-none focus:border-accent"
+                  className="w-full h-9 md:h-7 px-1.5 text-sm md:text-xs bg-background border border-border  text-foreground text-center focus:outline-none focus:border-accent"
                 />
               </div>
             </div>
@@ -216,7 +216,7 @@ function SidebarContent({
                 <button
                   key={ratio.key}
                   onClick={() => setCropAspectRatio(ratio.value)}
-                  className={`px-3 py-1.5 text-xs uppercase tracking-wider rounded cursor-pointer transition-colors ${
+                  className={`px-3 py-1.5 text-xs uppercase tracking-wider  cursor-pointer transition-colors ${
                     cropAspectRatio === ratio.value ? "bg-accent/10 text-accent" : "text-muted-foreground hover:bg-muted hover:text-foreground"
                   }`}
                 >
@@ -233,7 +233,7 @@ function SidebarContent({
         <div className="border-t border-border px-4 py-3 flex flex-col gap-2">
           <button
             onClick={() => replaceInputRef.current?.click()}
-            className="flex items-center justify-center gap-1.5 w-full py-2.5 text-xs uppercase tracking-wider border border-border text-muted-foreground rounded cursor-pointer hover:text-foreground transition-colors"
+            className="flex items-center justify-center gap-1.5 w-full py-2.5 text-xs uppercase tracking-wider border border-border text-muted-foreground  cursor-pointer hover:text-foreground transition-colors"
           >
             <ImagePlus className="h-3.5 w-3.5" />
             {t("replaceImage")}
@@ -241,7 +241,7 @@ function SidebarContent({
           {transform.crop && (
             <button
               onClick={resetImage}
-              className="flex items-center justify-center gap-1.5 w-full py-2.5 text-xs uppercase tracking-wider border border-border text-muted-foreground rounded cursor-pointer hover:text-foreground transition-colors"
+              className="flex items-center justify-center gap-1.5 w-full py-2.5 text-xs uppercase tracking-wider border border-border text-muted-foreground  cursor-pointer hover:text-foreground transition-colors"
             >
               <RotateCcw className="h-3.5 w-3.5" />
               {t("reset")}
@@ -464,7 +464,7 @@ export function ResizeEditor({
           {/* Mobile sidebar toggle */}
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="md:hidden w-8 h-8 flex items-center justify-center text-muted-foreground rounded hover:bg-muted hover:text-foreground transition-colors cursor-pointer"
+            className="md:hidden w-8 h-8 flex items-center justify-center text-muted-foreground  hover:bg-muted hover:text-foreground transition-colors cursor-pointer"
           >
             {sidebarOpen ? <PanelLeftClose className="h-4 w-4" /> : <PanelLeftOpen className="h-4 w-4" />}
           </button>
@@ -510,7 +510,7 @@ export function ResizeEditor({
                 <span className="text-xs uppercase tracking-[0.2em] font-medium">{t("canvasSize")}</span>
                 <button
                   onClick={() => setSidebarOpen(false)}
-                  className="w-8 h-8 flex items-center justify-center text-muted-foreground rounded hover:bg-muted hover:text-foreground transition-colors cursor-pointer"
+                  className="w-8 h-8 flex items-center justify-center text-muted-foreground  hover:bg-muted hover:text-foreground transition-colors cursor-pointer"
                 >
                   <X className="h-4 w-4" />
                 </button>
@@ -585,7 +585,7 @@ export function ResizeEditor({
                   {/* Mobile: settings button to open sidebar */}
                   <button
                     onClick={() => setSidebarOpen(true)}
-                    className="md:hidden w-8 h-8 flex items-center justify-center text-muted-foreground rounded cursor-pointer hover:bg-muted hover:text-foreground transition-colors ml-0.5"
+                    className="md:hidden w-8 h-8 flex items-center justify-center text-muted-foreground  cursor-pointer hover:bg-muted hover:text-foreground transition-colors ml-0.5"
                     title={t("settings")}
                   >
                     <Settings2 className="h-3.5 w-3.5" />
@@ -637,17 +637,17 @@ export function ResizeEditor({
 
             {/* Floating crop actions */}
             {mode === "crop" && (
-              <div className="absolute top-3 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 bg-background/90 backdrop-blur-sm border border-border rounded-lg shadow-lg px-2 md:px-3 py-2">
+              <div className="absolute top-3 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 bg-background/90 backdrop-blur-sm border border-border  shadow-lg px-2 md:px-3 py-2">
                 <button
                   onClick={applyCrop}
-                  className="flex items-center gap-1.5 px-3 py-2 md:py-1.5 text-xs uppercase tracking-wider bg-accent text-accent-foreground rounded cursor-pointer hover:bg-accent/90 transition-colors"
+                  className="flex items-center gap-1.5 px-3 py-2 md:py-1.5 text-xs uppercase tracking-wider bg-accent text-accent-foreground  cursor-pointer hover:bg-accent/90 transition-colors"
                 >
                   <Check className="h-3.5 w-3.5" />
                   <span className="hidden sm:inline">{t("applyCrop")}</span>
                 </button>
                 <button
                   onClick={cancelCrop}
-                  className="flex items-center gap-1.5 px-3 py-2 md:py-1.5 text-xs uppercase tracking-wider border border-border text-muted-foreground rounded cursor-pointer hover:text-foreground transition-colors"
+                  className="flex items-center gap-1.5 px-3 py-2 md:py-1.5 text-xs uppercase tracking-wider border border-border text-muted-foreground  cursor-pointer hover:text-foreground transition-colors"
                 >
                   <X className="h-3.5 w-3.5" />
                   <span className="hidden sm:inline">{t("cancelCrop")}</span>
@@ -655,7 +655,7 @@ export function ResizeEditor({
                 {transform.crop && (
                   <button
                     onClick={resetImage}
-                    className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 text-xs uppercase tracking-wider border border-border text-muted-foreground rounded cursor-pointer hover:text-foreground transition-colors"
+                    className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 text-xs uppercase tracking-wider border border-border text-muted-foreground  cursor-pointer hover:text-foreground transition-colors"
                   >
                     <RotateCcw className="h-3.5 w-3.5" />
                     {t("reset")}

@@ -101,7 +101,7 @@ export function GridPreview({
                 clipHeight={cellH}
               >
                 {/* Cell background */}
-                <Rect width={cellW} height={cellH} fill="#EBE5DE" />
+                <Rect width={cellW} height={cellH} fill="oklch(0.965 0.012 78)" />
                 {/* Scaled-down image, offset to show only this cell's portion */}
                 <KonvaImage
                   image={image}
@@ -117,13 +117,13 @@ export function GridPreview({
             {Array.from({ length: cols - 1 }, (_, c) => {
               const x = (c + 1) * (cellW + gap) - gap
               return (
-                <Rect key={`v${c}`} x={x} y={0} width={gap} height={stageHeight} fill="#F9F8F6" />
+                <Rect key={`v${c}`} x={x} y={0} width={gap} height={stageHeight} fill="oklch(0.94 0.018 78)" />
               )
             })}
             {Array.from({ length: rows - 1 }, (_, r) => {
               const y = (r + 1) * (cellH + gap) - gap
               return (
-                <Rect key={`h${r}`} x={0} y={y} width={stageWidth} height={gap} fill="#F9F8F6" />
+                <Rect key={`h${r}`} x={0} y={y} width={stageWidth} height={gap} fill="oklch(0.94 0.018 78)" />
               )
             })}
           </Layer>

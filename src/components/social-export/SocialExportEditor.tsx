@@ -164,7 +164,7 @@ function PresetCard({
 }) {
   return (
     <div
-      className={`rounded border transition-colors ${
+      className={` border transition-colors ${
         selected
           ? "border-accent bg-accent/5"
           : "border-border bg-background hover:bg-muted/50"
@@ -591,7 +591,7 @@ export function SocialExportEditor() {
             >
               <div className="relative max-h-full max-w-full border border-border bg-background p-2 shadow-sm">
                 {isRendering && (
-                  <div className="absolute left-3 top-3 z-20 rounded bg-background/90 px-2 py-1 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                  <div className="absolute left-3 top-3 z-20  bg-background/90 px-2 py-1 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
                     {t("rendering")}
                   </div>
                 )}
@@ -628,7 +628,7 @@ export function SocialExportEditor() {
                     key={preset.id}
                     type="button"
                     onClick={() => setSelectedPresetId(preset.id)}
-                    className={`w-32 shrink-0 cursor-pointer rounded border p-2 text-left transition-colors ${
+                    className={`w-32 shrink-0 cursor-pointer  border p-2 text-left transition-colors ${
                       preset.id === selectedPreset.id
                         ? "border-accent bg-accent/5"
                         : "border-border hover:bg-muted"
@@ -671,7 +671,7 @@ export function SocialExportEditor() {
                       key={mode}
                       type="button"
                       onClick={() => setFitMode(mode)}
-                      className={`flex h-10 cursor-pointer items-center justify-center gap-1.5 rounded border text-xs uppercase tracking-[0.18em] transition-colors ${
+                      className={`flex h-10 cursor-pointer items-center justify-center gap-1.5  border text-xs uppercase tracking-[0.18em] transition-colors ${
                         selectedCrop.fitMode === mode
                           ? "border-accent bg-accent/5 text-accent"
                           : "border-border text-muted-foreground hover:bg-muted hover:text-foreground"
@@ -705,7 +705,7 @@ export function SocialExportEditor() {
                   <button
                     type="button"
                     onClick={resetSelectedCrop}
-                    className="flex w-full cursor-pointer items-center justify-center gap-1.5 rounded border border-border py-2 text-xs uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                    className="flex w-full cursor-pointer items-center justify-center gap-1.5  border border-border py-2 text-xs uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
                   >
                     <RefreshCcw className="h-3.5 w-3.5" />
                     {t("resetCrop")}
@@ -723,7 +723,7 @@ export function SocialExportEditor() {
                       key={format.value}
                       type="button"
                       onClick={() => setOutputFormat(format.value)}
-                      className={`h-9 cursor-pointer rounded border text-[10px] uppercase tracking-[0.16em] transition-colors ${
+                      className={`h-9 cursor-pointer  border text-[10px] uppercase tracking-[0.16em] transition-colors ${
                         outputFormat === format.value
                           ? "border-accent bg-accent/5 text-accent"
                           : "border-border text-muted-foreground hover:bg-muted hover:text-foreground"

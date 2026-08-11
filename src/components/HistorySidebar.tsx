@@ -130,7 +130,7 @@ export function HistorySidebar({
               <img
                 src={record.thumbnailDataUrl}
                 alt={record.originalFileName}
-                className="w-12 h-12 object-cover rounded flex-shrink-0"
+                className="w-12 h-12 object-cover flex-shrink-0"
               />
               <div className="flex-1 min-w-0">
                 <p className="text-xs font-medium truncate">

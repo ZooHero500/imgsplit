@@ -24,7 +24,7 @@ export function AspectSelector({ value, onChange }: Props) {
             onClick={() => onChange(o.key)}
             aria-pressed={value === o.key}
             className={
-              "h-9 flex-1 rounded-md border px-2 text-sm transition " +
+              "h-9 flex-1  border px-2 text-sm transition " +
               (value === o.key
                 ? "border-primary bg-primary text-primary-foreground"
                 : "border-border bg-background hover:bg-accent")

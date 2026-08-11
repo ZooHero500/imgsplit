@@ -12,7 +12,7 @@ export function CarouselPreview({ slides }: { slides: CarouselSlide[] }) {
     return () => next.forEach((u) => URL.revokeObjectURL(u))
   }, [slides])
   return (
-    <div className="flex overflow-x-auto rounded-md border border-border">
+    <div className="flex overflow-x-auto  border border-border">
       {urls.map((u, i) => (
         // eslint-disable-next-line @next/next/no-img-element
         <img key={i} src={u} alt={`slide ${i + 1}`} className="h-32 w-auto shrink-0" />

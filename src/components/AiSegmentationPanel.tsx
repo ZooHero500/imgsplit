@@ -252,7 +252,7 @@ export function AiSegmentationPanel({
         {step === "analyze" && isAnalyzing && (
           <div className="space-y-3">
             {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="h-8 bg-muted motion-safe:animate-pulse rounded" />
+              <div key={i} className="h-8 bg-muted motion-safe:animate-pulse" />
             ))}
             <p className="text-xs text-muted-foreground text-center">
               {t("analyzing")}
@@ -283,7 +283,7 @@ export function AiSegmentationPanel({
               {allLabels.map((el) => (
                 <label
                   key={el.label_en}
-                  className="flex items-center gap-3 p-2 rounded hover:bg-muted/50 cursor-pointer transition-colors"
+                  className="flex items-center gap-3 p-2 hover:bg-muted/50 cursor-pointer transition-colors"
                 >
                   <Checkbox
                     checked={selectedLabels.has(el.label_en)}
@@ -382,14 +382,14 @@ export function AiSegmentationPanel({
               {layers.map((layer) => (
                 <div
                   key={layer.id}
-                  className="flex items-center gap-2 p-2 rounded hover:bg-muted/50 transition-colors group cursor-pointer"
+                  className="flex items-center gap-2 p-2 hover:bg-muted/50 transition-colors group cursor-pointer"
                   onClick={() => handleIsolate(layer.id)}
                   onMouseEnter={() => onHoverLayer(layer.id)}
                   onMouseLeave={() => onHoverLayer(null)}
                 >
                   {/* S5 fix: aria-label uses i18n */}
                   <button
-                    className="p-1 hover:bg-muted rounded transition-colors"
+                    className="p-1 hover:bg-muted transition-colors"
                     onClick={(e) => {
                       e.stopPropagation()
                       handleToggleVisibility(layer.id)
@@ -404,7 +404,7 @@ export function AiSegmentationPanel({
                   </button>
 
                   <div
-                    className="w-3 h-3 rounded-sm flex-shrink-0"
+                    className="w-3 h-3 flex-shrink-0"
                     style={{ backgroundColor: layer.color }}
                   />
 
@@ -417,7 +417,7 @@ export function AiSegmentationPanel({
                   </span>
 
                   <button
-                    className="p-1 opacity-0 group-hover:opacity-100 hover:bg-muted rounded transition-all"
+                    className="p-1 opacity-0 group-hover:opacity-100 hover:bg-muted transition-all"
                     onClick={(e) => {
                       e.stopPropagation()
                       handleExportOne(layer)

@@ -105,8 +105,8 @@ export function ResizeCanvas({
 
   const checkerboardPattern = useMemo(() => {
     if (typeof document === "undefined") return undefined
-    const color1 = isDark ? "#2a2a2a" : "#f0f0f0"
-    const color2 = isDark ? "#333333" : "#ffffff"
+    const color1 = isDark ? "#2a2a2a" : "oklch(0.9 0.015 78)"
+    const color2 = isDark ? "#333333" : "oklch(0.965 0.012 78)"
     const size = CHECKER_SIZE * 2
     const canvas = document.createElement("canvas")
     canvas.width = size
@@ -387,7 +387,7 @@ export function ResizeCanvas({
       {isDragOver && (
         <div className="absolute inset-0 z-10 flex items-center justify-center bg-accent/5 pointer-events-none">
           <div
-            className="flex items-center justify-center border-2 border-dashed border-accent rounded-lg transition-transform duration-200 scale-[1.02]"
+            className="flex items-center justify-center border-2 border-dashed border-accent  transition-transform duration-200 scale-[1.02]"
             style={{
               left: artboardX,
               top: artboardY,

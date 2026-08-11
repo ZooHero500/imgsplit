@@ -151,11 +151,18 @@ function ResultItem({
   selected: boolean
   onToggleSelect: () => void
 }) {
-  const previewUrl = useMemo(() => URL.createObjectURL(result.blob), [result.blob])
+  const previewRef = useRef<HTMLImageElement>(null)
 
   useEffect(() => {
-    return () => URL.revokeObjectURL(previewUrl)
-  }, [previewUrl])
+    const url = URL.createObjectURL(result.blob)
+    const preview = previewRef.current
+    preview?.setAttribute("src", url)
+
+    return () => {
+      preview?.removeAttribute("src")
+      URL.revokeObjectURL(url)
+    }
+  }, [result.blob])
 
   const fileName = getFileName(originalFileName, result, fileExtension)
 
@@ -174,7 +181,7 @@ function ResultItem({
       >
         {/* eslint-disable-next-line @next/next/no-img-element -- blob object URL, next/image cannot optimize it */}
         <img
-          src={previewUrl}
+          ref={previewRef}
           alt={fileName}
           className="w-full h-full object-contain transition-transform duration-[1500ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group-hover:scale-105"
         />
@@ -374,14 +381,13 @@ export function ResultSheet({
         </div>
 
         {/* Download all button */}
-        <div className="px-6 py-4 border-b border-border shrink-0 space-y-3">
+        <div className="px-6 py-4 border-b border-ink shrink-0 space-y-3">
           <button
             onClick={onDownloadAll}
-            className="group relative w-full inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-6 py-3 text-xs uppercase tracking-[0.2em] overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.15)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.25)] transition-shadow duration-500"
+            className="group relative w-full inline-flex items-center justify-center gap-2 border border-ink bg-primary text-primary-foreground px-6 py-3 font-condensed text-xs font-bold uppercase tracking-[0.2em] hover:bg-signal hover:border-signal hover:text-signal-ink transition-colors duration-500 press"
           >
-            <span className="absolute inset-0 bg-accent -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]" />
-            <Download className="relative z-10 h-3.5 w-3.5" strokeWidth={1.5} />
-            <span className="relative z-10">{t("downloadAll")}</span>
+            <Download className="h-3.5 w-3.5" strokeWidth={1.5} />
+            <span>{t("downloadAll")}</span>
           </button>
 
           {/* Selection action bar */}

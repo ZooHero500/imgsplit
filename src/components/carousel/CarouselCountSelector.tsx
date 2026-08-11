@@ -19,7 +19,7 @@ export function CarouselCountSelector({ value, onChange }: Props) {
             onClick={() => onChange(n)}
             aria-pressed={value === n}
             className={
-              "h-9 w-9 rounded-md border text-sm transition " +
+              "h-9 w-9  border text-sm transition " +
               (value === n
                 ? "border-primary bg-primary text-primary-foreground"
                 : "border-border bg-background hover:bg-accent")

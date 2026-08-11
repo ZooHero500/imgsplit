@@ -49,7 +49,7 @@ export function ZoomIndicator({
   )
 
   return (
-    <div className="absolute bottom-3 right-3 flex items-center gap-1 bg-background/80 backdrop-blur-sm border rounded-md px-2 py-1 text-xs z-10">
+    <div className="absolute bottom-3 right-3 flex items-center gap-1 bg-background/80 backdrop-blur-sm border px-2 py-1 text-xs z-10">
       <Button size="sm" variant="ghost" className="h-6 px-2 text-xs" onClick={onFitToView}>
         Fit
       </Button>
@@ -65,12 +65,12 @@ export function ZoomIndicator({
           onChange={(e) => setInputValue(e.target.value)}
           onBlur={handleSubmit}
           onKeyDown={handleKeyDown}
-          className="w-12 h-6 text-center text-xs bg-transparent border rounded px-1"
+          className="w-12 h-6 text-center text-xs bg-transparent border px-1"
         />
       ) : (
         <button
           onClick={handleClick}
-          className="h-6 px-2 text-xs hover:bg-accent rounded cursor-pointer"
+          className="h-6 px-2 text-xs hover:bg-accent cursor-pointer"
         >
           {zoomPercent}%
         </button>

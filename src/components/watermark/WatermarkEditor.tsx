@@ -323,7 +323,7 @@ export function WatermarkEditor() {
           <div className="flex-1 min-h-0 bg-muted/20 flex items-center justify-center p-3 md:p-5">
             <div className="relative max-w-full max-h-full overflow-auto border border-border bg-background p-2 shadow-sm">
               {isRendering && (
-                <div className="absolute left-3 top-3 z-10 rounded bg-background/90 px-2 py-1 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                <div className="absolute left-3 top-3 z-10  bg-background/90 px-2 py-1 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
                   {t("rendering")}
                 </div>
               )}
@@ -355,7 +355,7 @@ export function WatermarkEditor() {
                       key={template.id}
                       type="button"
                       onClick={() => selectTemplate(template.id)}
-                      className="min-h-16 rounded border border-border px-3 py-2 text-left hover:border-accent hover:bg-accent/5 transition-colors cursor-pointer"
+                      className="min-h-16  border border-border px-3 py-2 text-left hover:border-accent hover:bg-accent/5 transition-colors cursor-pointer"
                     >
                       <span className="block text-xs font-medium text-foreground">
                         {t(template.labelKey)}
@@ -376,7 +376,7 @@ export function WatermarkEditor() {
                   <button
                     type="button"
                     onClick={addTextLayer}
-                    className="flex-1 flex items-center justify-center gap-1.5 rounded border border-border py-2 text-xs uppercase tracking-wider text-muted-foreground hover:text-foreground hover:bg-muted transition-colors cursor-pointer"
+                    className="flex-1 flex items-center justify-center gap-1.5  border border-border py-2 text-xs uppercase tracking-wider text-muted-foreground hover:text-foreground hover:bg-muted transition-colors cursor-pointer"
                   >
                     <Type className="h-3.5 w-3.5" />
                     {t("addText")}
@@ -384,7 +384,7 @@ export function WatermarkEditor() {
                   <button
                     type="button"
                     onClick={() => logoInputRef.current?.click()}
-                    className="flex-1 flex items-center justify-center gap-1.5 rounded border border-border py-2 text-xs uppercase tracking-wider text-muted-foreground hover:text-foreground hover:bg-muted transition-colors cursor-pointer"
+                    className="flex-1 flex items-center justify-center gap-1.5  border border-border py-2 text-xs uppercase tracking-wider text-muted-foreground hover:text-foreground hover:bg-muted transition-colors cursor-pointer"
                   >
                     <ImagePlus className="h-3.5 w-3.5" />
                     {t("addLogo")}
@@ -402,7 +402,7 @@ export function WatermarkEditor() {
                           selectedLayerId: layer.id,
                         }))
                       }
-                      className={`flex w-full items-center justify-between rounded border px-3 py-2 text-left transition-colors cursor-pointer ${
+                      className={`flex w-full items-center justify-between  border px-3 py-2 text-left transition-colors cursor-pointer ${
                         layer.id === watermarkState.selectedLayerId
                           ? "border-accent bg-accent/5"
                           : "border-border hover:bg-muted"
@@ -456,7 +456,7 @@ export function WatermarkEditor() {
                             onChange={(event) =>
                               updateSelectedLayer({ text: event.target.value })
                             }
-                            className="h-9 w-full rounded border border-border bg-background px-3 text-sm text-foreground focus:outline-none focus:border-accent"
+                            className="h-9 w-full  border border-border bg-background px-3 text-sm text-foreground focus:outline-none focus:border-accent"
                           />
                         </label>
 
@@ -471,14 +471,14 @@ export function WatermarkEditor() {
                               onChange={(event) =>
                                 updateSelectedLayer({ color: event.target.value })
                               }
-                              className="h-8 w-10 rounded border border-border bg-background"
+                              className="h-8 w-10  border border-border bg-background"
                             />
                             {COLOR_SWATCHES.map((color) => (
                               <button
                                 key={color}
                                 type="button"
                                 onClick={() => updateSelectedLayer({ color })}
-                                className="h-7 w-7 rounded border border-border cursor-pointer"
+                                className="h-7 w-7  border border-border cursor-pointer"
                                 style={{ backgroundColor: color }}
                                 aria-label={color}
                               />
@@ -487,7 +487,7 @@ export function WatermarkEditor() {
                         </div>
                       </>
                     ) : (
-                      <p className="rounded border border-border bg-muted/30 px-3 py-2 text-xs text-muted-foreground">
+                      <p className=" border border-border bg-muted/30 px-3 py-2 text-xs text-muted-foreground">
                         {selectedLayer.imageName}
                       </p>
                     )}
@@ -568,7 +568,7 @@ export function WatermarkEditor() {
                             key={mode}
                             type="button"
                             onClick={() => updateSelectedLayer({ repeatMode: mode })}
-                            className={`rounded py-2 text-xs uppercase tracking-wider transition-colors cursor-pointer ${
+                            className={` py-2 text-xs uppercase tracking-wider transition-colors cursor-pointer ${
                               selectedLayer.repeatMode === mode
                                 ? "bg-accent/10 text-accent"
                                 : "border border-border text-muted-foreground hover:text-foreground hover:bg-muted"
@@ -608,7 +608,7 @@ export function WatermarkEditor() {
                     <button
                       type="button"
                       onClick={removeSelectedLayer}
-                      className="flex w-full items-center justify-center gap-1.5 rounded border border-border py-2 text-xs uppercase tracking-wider text-muted-foreground hover:text-destructive hover:border-destructive/40 transition-colors cursor-pointer"
+                      className="flex w-full items-center justify-center gap-1.5  border border-border py-2 text-xs uppercase tracking-wider text-muted-foreground hover:text-destructive hover:border-destructive/40 transition-colors cursor-pointer"
                     >
                       <Trash2 className="h-3.5 w-3.5" />
                       {t("removeLayer")}
@@ -643,7 +643,7 @@ export function WatermarkEditor() {
                     onChange={(event) =>
                       setOutputFormat(event.target.value as WatermarkOutputFormat)
                     }
-                    className="h-9 w-full rounded border border-border bg-background px-2 text-xs text-foreground focus:outline-none focus:border-accent"
+                    className="h-9 w-full  border border-border bg-background px-2 text-xs text-foreground focus:outline-none focus:border-accent"
                   >
                     {OUTPUT_FORMATS.map((format) => (
                       <option key={format.value} value={format.value}>
@@ -657,7 +657,7 @@ export function WatermarkEditor() {
                 type="button"
                 disabled={!hasLayers || isExporting}
                 onClick={handleDownload}
-                className="flex w-full items-center justify-center gap-2 rounded bg-foreground py-2.5 text-xs uppercase tracking-wider text-background transition-colors hover:bg-foreground/90 disabled:opacity-50 disabled:cursor-default cursor-pointer"
+                className="flex w-full items-center justify-center gap-2  bg-foreground py-2.5 text-xs uppercase tracking-wider text-background transition-colors hover:bg-foreground/90 disabled:opacity-50 disabled:cursor-default cursor-pointer"
               >
                 <Download className="h-4 w-4" />
                 {isExporting ? t("exporting") : t("download")}

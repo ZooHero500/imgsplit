@@ -44,7 +44,7 @@ export function CompressBatchList({
         {items.map((item) => (
           <div
             key={item.id}
-            className="group flex items-center gap-3 px-3 py-2.5 bg-card border border-border rounded hover:border-primary/30 transition-colors"
+            className="group flex items-center gap-3 px-3 py-2.5 bg-card border border-border  hover:border-primary/30 transition-colors"
           >
             <span className="text-xs text-foreground truncate flex-1 min-w-0">
               {item.file.name}
@@ -88,14 +88,14 @@ export function CompressBatchList({
         {/* Add more drop zone */}
         <button
           onClick={onAddMore}
-          className="w-full py-3 border border-dashed border-border rounded text-[11px] uppercase tracking-[0.15em] text-muted-foreground hover:border-primary/40 hover:text-accent transition-colors duration-300 cursor-pointer"
+          className="w-full py-3 border border-dashed border-border  text-[11px] uppercase tracking-[0.15em] text-muted-foreground hover:border-primary/40 hover:text-accent transition-colors duration-300 cursor-pointer"
         >
           + {t("addMore")}
         </button>
       </div>
 
       {/* Summary bar */}
-      <div className="flex items-center justify-between px-3 py-2 bg-muted/30 rounded text-xs text-muted-foreground">
+      <div className="flex items-center justify-between px-3 py-2 bg-muted/30  text-xs text-muted-foreground">
         <span>{t("filesCount", { count: items.length })}</span>
         {allReady && totalSaved > 0 && (
           <span>
