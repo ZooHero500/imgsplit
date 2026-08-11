@@ -33,16 +33,17 @@ export function ReturningUserToolbar() {
   if (!show) return null
 
   return (
-    <div className="border-b border-border bg-background/80 backdrop-blur-sm">
-      <div className="max-w-[1600px] mx-auto px-4 md:px-16 h-10 flex items-center gap-6 overflow-x-auto text-[10px] uppercase tracking-[0.2em]">
-        {CORE_TOOLS.map((tool) => {
+    <div className="border-b border-ink bg-paper/90 backdrop-blur-sm">
+      <div className="max-w-[1600px] mx-auto px-4 md:px-16 h-11 flex items-center gap-4 sm:gap-5 overflow-hidden font-condensed text-[11px] font-semibold uppercase tracking-[0.14em]">
+        {CORE_TOOLS.slice(0, 5).map((tool, index) => {
           const Icon = iconMap[tool.icon]
+          const visibility = index >= 4 ? "hidden lg:flex" : index >= 2 ? "hidden sm:flex" : "flex"
 
           return (
             <Link
               key={tool.id}
               href={tool.quickAccessHref}
-              className="flex items-center gap-1.5 text-muted-foreground hover:text-accent transition-colors duration-300 whitespace-nowrap"
+              className={`${visibility} items-center gap-1.5 text-muted-foreground hover:text-accent transition-colors duration-300 whitespace-nowrap`}
             >
               <Icon className="h-3 w-3" strokeWidth={1.5} />
               {t(tool.labelKey)}

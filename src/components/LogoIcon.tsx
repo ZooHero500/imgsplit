@@ -9,6 +9,7 @@ export function LogoIcon({ className = "h-4 w-4" }: LogoIconProps) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
+      aria-hidden="true"
     >
       <rect x="-34" y="-34" width="30" height="30" fill="currentColor" />
       <rect x="4" y="-34" width="30" height="30" fill="currentColor" />

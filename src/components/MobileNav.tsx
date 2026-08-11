@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useCallback } from "react"
+import { useState, useCallback, useEffect, useId, useRef } from "react"
 import { createPortal } from "react-dom"
 import {
   Menu,
@@ -17,6 +17,7 @@ import {
   Zap,
 } from "lucide-react"
 import { Link } from "@/i18n/navigation"
+import { InkButton } from "@/components/ui/InkButton"
 import type { CoreToolIcon } from "@/lib/tools/catalog"
 import type { LucideIcon } from "lucide-react"
 import type { ReactNode } from "react"
@@ -60,10 +61,57 @@ export function MobileNav({
   closeLabel = "Close",
 }: MobileNavProps) {
   const [open, setOpen] = useState(false)
+  const panelId = useId()
+  const panelRef = useRef<HTMLDivElement>(null)
+  const triggerRef = useRef<HTMLButtonElement>(null)
 
   const handleLinkClick = useCallback(() => {
     setOpen(false)
   }, [])
+
+  useEffect(() => {
+    if (!open) return
+
+    const previousOverflow = document.body.style.overflow
+    const trigger = triggerRef.current
+    document.body.style.overflow = "hidden"
+
+    const panel = panelRef.current
+    panel?.querySelector<HTMLElement>("button, a[href]")?.focus()
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault()
+        setOpen(false)
+        return
+      }
+
+      if (event.key !== "Tab" || !panel) return
+      const focusable = Array.from(
+        panel.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        )
+      )
+      if (focusable.length === 0) return
+
+      const first = focusable[0]
+      const last = focusable[focusable.length - 1]
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault()
+        last.focus()
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault()
+        first.focus()
+      }
+    }
+
+    document.addEventListener("keydown", handleKeyDown)
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown)
+      document.body.style.overflow = previousOverflow
+      trigger?.focus()
+    }
+  }, [open])
 
   // Portal content — rendered to document.body to escape nav's backdrop-filter containing block
   const overlay = (
@@ -73,17 +121,21 @@ export function MobileNav({
         <div
           className="fixed inset-0 z-40 bg-primary/20 backdrop-blur-[2px] md:hidden"
           onClick={() => setOpen(false)}
+          aria-hidden="true"
         />
       )}
 
       {/* Panel */}
       <div
-        className={`fixed top-0 right-0 z-50 h-full w-72 bg-background shadow-[-8px_0_32px_rgba(0,0,0,0.08)] transform transition-transform duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] flex flex-col md:hidden ${
-          open ? "translate-x-0" : "translate-x-full pointer-events-none"
-        }`}
+        ref={panelRef}
+        id={panelId}
+        role="dialog"
+        aria-modal="true"
+        aria-label={menuLabel}
+        className="fixed top-0 right-0 z-50 h-full w-72 bg-paper border-l border-ink shadow-[-8px_0_32px_rgba(0,0,0,0.08)] flex flex-col md:hidden"
       >
         {/* Close button */}
-        <div className="flex items-center justify-end p-4 border-b border-border">
+        <div className="flex items-center justify-end p-4 border-b border-ink">
           <button
             onClick={() => setOpen(false)}
             className="w-8 h-8 flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
@@ -112,16 +164,16 @@ export function MobileNav({
         </nav>
 
         {/* CTA */}
-        <div className="p-6 border-t border-border">
-          <MobileLink
+        <div className="p-6 border-t border-ink">
+          <InkButton
             href={ctaHref}
+            size="dense"
+            icon={<ArrowRight />}
+            className="w-full"
             onClick={handleLinkClick}
-            className="group relative flex items-center justify-center gap-2 bg-primary text-primary-foreground px-6 py-3 text-xs uppercase tracking-[0.2em] overflow-hidden"
           >
-            <span className="absolute inset-0 bg-accent -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]" />
-            <span className="relative z-10">{ctaLabel}</span>
-            <ArrowRight className="relative z-10 h-3 w-3" />
-          </MobileLink>
+            {ctaLabel}
+          </InkButton>
         </div>
       </div>
     </>
@@ -131,9 +183,12 @@ export function MobileNav({
     <div className="md:hidden">
       {/* Hamburger trigger */}
       <button
+        ref={triggerRef}
         onClick={() => setOpen(true)}
         className="w-8 h-8 flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
         aria-label={menuLabel}
+        aria-expanded={open}
+        aria-controls={panelId}
       >
         <Menu className="h-4 w-4" strokeWidth={1.5} />
       </button>
