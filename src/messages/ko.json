@@ -9,7 +9,9 @@
     "faq": "FAQ",
     "getStarted": "시작하기",
     "menu": "메뉴",
-    "close": "닫기"
+    "close": "닫기",
+    "editionSub": "이미지 도구 · 온라인 이미지 도구",
+    "localPrivateFree": "로컬 · 프라이빗 · 무료"
   },
   "hero": {
     "overline": "무료 온라인 이미지 분할 도구",
@@ -490,7 +492,9 @@
     "socialTitle": "소셜",
     "github": "GitHub",
     "twitter": "Twitter",
-    "toolRemoveBackground": "AI 배경 제거"
+    "toolRemoveBackground": "AI 배경 제거",
+    "editionLabel": "ImgSplit · 잉크 에디션 01",
+    "madeWith": "종이와 잉크로 제작"
   },
   "editorToolsNav": {
     "title": "도구"
@@ -1089,5 +1093,37 @@
         "button": "캐러셀 분할 시작"
       }
     }
-  }
+  },
+  "index": {
+    "aTitle": "Split",
+    "aDesc": "분할선 드래그 / 픽셀 단위 크롭",
+    "bTitle": "Grid",
+    "bDesc": "9그리드 / 캐러셀 / 콜라주",
+    "cTitle": "Export",
+    "cDesc": "다중 형식 / 일괄 다운로드",
+    "dTitle": "Private",
+    "dDesc": "업로드 제로 / 닫으면 삭제"
+  },
+  "stage": {
+    "kicker": "Signature ink action",
+    "copy": "이미지를 하나 이상 끌어다 놓으세요. 파싱, 미리보기, 크롭은 모두 로컬에서 처리되며 어떤 데이터도 업로드되지 않습니다.",
+    "note": "클라이언트 전용 → 업로드 제로"
+  },
+  "principle": {
+    "line1": "이미지를 나누고,",
+    "line2": "픽셀은 지킨다."
+  },
+  "lab": {
+    "toolCount": "도구 9개 · 클라이언트측",
+    "noSignup": "가입 불필요 · 설치 불필요"
+  },
+  "inspector": {
+    "specsTitle": "사양",
+    "guaranteeTitle": "보장",
+    "specFormat": "형식",
+    "specLimit": "상한",
+    "specPrice": "가격",
+    "specUpload": "업로드"
+  },
+  "faqFeedback": "다른 도구가 필요하신가요? 피드백 보내기 →"
 }

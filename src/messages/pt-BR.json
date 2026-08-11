@@ -9,7 +9,9 @@
     "faq": "Perguntas Frequentes",
     "getStarted": "Começar",
     "menu": "Menu",
-    "close": "Fechar"
+    "close": "Fechar",
+    "editionSub": "Ferramentas de imagem · Online",
+    "localPrivateFree": "Local · Privado · Grátis"
   },
   "hero": {
     "overline": "Divisor de Imagens Online Grátis",
@@ -490,7 +492,9 @@
     "socialTitle": "Social",
     "github": "GitHub",
     "twitter": "Twitter",
-    "toolRemoveBackground": "Remover Fundo com IA"
+    "toolRemoveBackground": "Remover Fundo com IA",
+    "editionLabel": "ImgSplit · Edição Ink 01",
+    "madeWith": "Feito com papel e tinta"
   },
   "editorToolsNav": {
     "title": "Ferramentas"
@@ -1089,5 +1093,37 @@
     "ratio4_3": "4:3",
     "ratio16_9": "16:9",
     "ratio3_2": "3:2"
-  }
+  },
+  "index": {
+    "aTitle": "Split",
+    "aDesc": "Arraste linhas / corte em pixel exato",
+    "bTitle": "Grid",
+    "bDesc": "Grade / carrossel / colagem",
+    "cTitle": "Export",
+    "cDesc": "Multi-formato / download em lote",
+    "dTitle": "Private",
+    "dDesc": "Zero uploads / limpa ao fechar"
+  },
+  "stage": {
+    "kicker": "Signature ink action",
+    "copy": "Solte uma ou mais imagens. A análise, a prévia e o corte acontecem no seu navegador — nada é enviado para servidores.",
+    "note": "Somente cliente → zero uploads"
+  },
+  "principle": {
+    "line1": "Divida a imagem,",
+    "line2": "mantenha os pixels."
+  },
+  "lab": {
+    "toolCount": "9 ferramentas · no cliente",
+    "noSignup": "Sem cadastro · Sem instalação"
+  },
+  "inspector": {
+    "specsTitle": "Especificações",
+    "guaranteeTitle": "Garantia",
+    "specFormat": "Formatos",
+    "specLimit": "Máximo",
+    "specPrice": "Preço",
+    "specUpload": "Uploads"
+  },
+  "faqFeedback": "Precisa de outra ferramenta? Envie feedback →"
 }

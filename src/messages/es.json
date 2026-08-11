@@ -9,7 +9,9 @@
     "faq": "Preguntas frecuentes",
     "getStarted": "Comenzar",
     "menu": "Menú",
-    "close": "Cerrar"
+    "close": "Cerrar",
+    "editionSub": "Herramientas de imagen · En línea",
+    "localPrivateFree": "Local · Privado · Gratis"
   },
   "hero": {
     "overline": "Divisor de Imágenes Online Gratis",
@@ -490,7 +492,9 @@
     "socialTitle": "Redes sociales",
     "github": "GitHub",
     "twitter": "Twitter",
-    "toolRemoveBackground": "Quitar fondo IA"
+    "toolRemoveBackground": "Quitar fondo IA",
+    "editionLabel": "ImgSplit · Edición Ink 01",
+    "madeWith": "Hecho con papel y tinta"
   },
   "editorToolsNav": {
     "title": "Herramientas"
@@ -1089,5 +1093,37 @@
         "button": "Iniciar división de carrusel"
       }
     }
-  }
+  },
+  "index": {
+    "aTitle": "Split",
+    "aDesc": "Arrastra líneas / recorte a píxel exacto",
+    "bTitle": "Grid",
+    "bDesc": "Cuadrícula / carrusel / collage",
+    "cTitle": "Export",
+    "cDesc": "Multiformato / descarga por lotes",
+    "dTitle": "Private",
+    "dDesc": "Cero subidas / se borra al cerrar"
+  },
+  "stage": {
+    "kicker": "Signature ink action",
+    "copy": "Suelta una o más imágenes. El análisis, la vista previa y el recorte ocurren en tu navegador: nada se sube a ningún servidor.",
+    "note": "Solo cliente → cero subidas"
+  },
+  "principle": {
+    "line1": "Divide la imagen,",
+    "line2": "conserva los píxeles."
+  },
+  "lab": {
+    "toolCount": "9 herramientas · en el cliente",
+    "noSignup": "Sin registro · Sin instalación"
+  },
+  "inspector": {
+    "specsTitle": "Especificaciones",
+    "guaranteeTitle": "Garantía",
+    "specFormat": "Formatos",
+    "specLimit": "Máximo",
+    "specPrice": "Precio",
+    "specUpload": "Subidas"
+  },
+  "faqFeedback": "¿Necesitas otra herramienta? Envía comentarios →"
 }

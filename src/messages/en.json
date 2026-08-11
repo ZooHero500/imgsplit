@@ -9,7 +9,9 @@
     "faq": "FAQ",
     "getStarted": "Get Started",
     "menu": "Menu",
-    "close": "Close"
+    "close": "Close",
+    "editionSub": "Image tools · Online image tools",
+    "localPrivateFree": "Local · Private · Free"
   },
   "hero": {
     "overline": "Free Online Image Splitter",
@@ -490,7 +492,9 @@
     "socialTitle": "Social",
     "github": "GitHub",
     "twitter": "Twitter",
-    "toolRemoveBackground": "AI Background Remover"
+    "toolRemoveBackground": "AI Background Remover",
+    "editionLabel": "ImgSplit · Ink Edition 01",
+    "madeWith": "Made with paper & ink"
   },
   "editorToolsNav": {
     "title": "Tools"
@@ -1089,5 +1093,37 @@
     "ratio4_3": "4:3",
     "ratio16_9": "16:9",
     "ratio3_2": "3:2"
-  }
+  },
+  "index": {
+    "aTitle": "Split",
+    "aDesc": "Drag split lines / pixel-precise cropping",
+    "bTitle": "Grid",
+    "bDesc": "9-grid / carousel / collage",
+    "cTitle": "Export",
+    "cDesc": "Multi-format / batch download",
+    "dTitle": "Private",
+    "dDesc": "Zero uploads / clear on close"
+  },
+  "stage": {
+    "kicker": "Signature ink action",
+    "copy": "Drop in one or more images. Parsing, preview and cropping all happen locally — nothing is ever uploaded.",
+    "note": "Client-side only → zero uploads"
+  },
+  "principle": {
+    "line1": "Split the image.",
+    "line2": "Keep the pixels."
+  },
+  "lab": {
+    "toolCount": "9 tools · client-side",
+    "noSignup": "No signup · No install"
+  },
+  "inspector": {
+    "specsTitle": "Specs",
+    "guaranteeTitle": "Guarantee",
+    "specFormat": "Formats",
+    "specLimit": "Max",
+    "specPrice": "Price",
+    "specUpload": "Uploads"
+  },
+  "faqFeedback": "Need another tool? Send feedback →"
 }

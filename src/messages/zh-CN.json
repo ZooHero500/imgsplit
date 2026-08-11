@@ -9,7 +9,9 @@
     "faq": "常见问题",
     "getStarted": "开始使用",
     "menu": "菜单",
-    "close": "关闭"
+    "close": "关闭",
+    "editionSub": "图片工具 · 在线图片工具",
+    "localPrivateFree": "本地 · 私密 · 免费"
   },
   "hero": {
     "overline": "免费在线图片裁剪分割工具",
@@ -490,7 +492,9 @@
     "socialTitle": "社交媒体",
     "github": "GitHub",
     "twitter": "Twitter",
-    "toolRemoveBackground": "AI 去背景"
+    "toolRemoveBackground": "AI 去背景",
+    "editionLabel": "ImgSplit · 墨印版 01",
+    "madeWith": "纸墨之作"
   },
   "editorToolsNav": {
     "title": "工具"
@@ -1089,5 +1093,37 @@
         "button": "开始轮播分割"
       }
     }
-  }
+  },
+  "index": {
+    "aTitle": "Split",
+    "aDesc": "拖拽分割线 / 精准裁切",
+    "bTitle": "Grid",
+    "bDesc": "九宫格 / 轮播 / 拼图",
+    "cTitle": "Export",
+    "cDesc": "多格式 / 批量打包",
+    "dTitle": "Private",
+    "dDesc": "零上传 / 关页即清"
+  },
+  "stage": {
+    "kicker": "Signature ink action",
+    "copy": "拖入一张或多张图片。解析、预览、裁切全部发生在本地，没有任何数据被上传到服务器。",
+    "note": "仅客户端处理 → 零上传"
+  },
+  "principle": {
+    "line1": "切割图片，",
+    "line2": "保留像素。"
+  },
+  "lab": {
+    "toolCount": "9 个工具 · 纯客户端",
+    "noSignup": "无需注册 · 无需安装"
+  },
+  "inspector": {
+    "specsTitle": "规格",
+    "guaranteeTitle": "承诺",
+    "specFormat": "格式",
+    "specLimit": "上限",
+    "specPrice": "价格",
+    "specUpload": "上传"
+  },
+  "faqFeedback": "需要其他工具？欢迎提交反馈 →"
 }

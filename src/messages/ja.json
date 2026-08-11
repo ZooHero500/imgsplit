@@ -9,7 +9,9 @@
     "faq": "よくある質問",
     "getStarted": "今すぐ始める",
     "menu": "メニュー",
-    "close": "閉じる"
+    "close": "閉じる",
+    "editionSub": "画像ツール · オンライン画像ツール",
+    "localPrivateFree": "ローカル · プライベート · 無料"
   },
   "hero": {
     "overline": "無料オンライン画像分割ツール",
@@ -490,7 +492,9 @@
     "socialTitle": "ソーシャル",
     "github": "GitHub",
     "twitter": "Twitter",
-    "toolRemoveBackground": "AI背景削除"
+    "toolRemoveBackground": "AI背景削除",
+    "editionLabel": "ImgSplit · インク版 01",
+    "madeWith": "紙とインクで制作"
   },
   "editorToolsNav": {
     "title": "ツール"
@@ -1089,5 +1093,37 @@
         "button": "カルーセル分割を開始"
       }
     }
-  }
+  },
+  "index": {
+    "aTitle": "Split",
+    "aDesc": "分割線のドラッグ / ピクセル単位の裁断",
+    "bTitle": "Grid",
+    "bDesc": "9グリッド / カルーセル / コラージュ",
+    "cTitle": "Export",
+    "cDesc": "多形式 / 一括ダウンロード",
+    "dTitle": "Private",
+    "dDesc": "アップロードゼロ / 閉じたら消去"
+  },
+  "stage": {
+    "kicker": "Signature ink action",
+    "copy": "1枚または複数の画像をドロップ。解析・プレビュー・裁断はすべてローカルで完結し、データは一切アップロードされません。",
+    "note": "クライアントのみ → アップロードゼロ"
+  },
+  "principle": {
+    "line1": "画像を分割、",
+    "line2": "ピクセルは保持。"
+  },
+  "lab": {
+    "toolCount": "9ツール · クライアント側",
+    "noSignup": "登録不要 · インストール不要"
+  },
+  "inspector": {
+    "specsTitle": "仕様",
+    "guaranteeTitle": "保証",
+    "specFormat": "形式",
+    "specLimit": "上限",
+    "specPrice": "価格",
+    "specUpload": "アップロード"
+  },
+  "faqFeedback": "別のツールが必要？フィードバックを送る →"
 }
