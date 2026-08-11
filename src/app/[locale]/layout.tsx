@@ -1,5 +1,4 @@
 import type { Metadata } from "next"
-import { Playfair_Display, Inter } from "next/font/google"
 import { NextIntlClientProvider, hasLocale } from "next-intl"
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server"
 import { notFound } from "next/navigation"
@@ -8,19 +7,10 @@ import { Toaster } from "@/components/ui/sonner"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { Analytics } from "@vercel/analytics/react"
 import { SWRegister } from "@/components/sw-register"
+import "@fontsource-variable/bodoni-moda"
+import "@fontsource-variable/manrope"
+import "@fontsource-variable/archivo-narrow"
 import "../globals.css"
-
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
-  subsets: ["latin"],
-  display: "swap",
-})
-
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-  display: "swap",
-})
 
 type Props = {
   children: React.ReactNode
@@ -100,15 +90,12 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   return (
     <html lang={locale} suppressHydrationWarning>
-      <body
-        className={`${playfair.variable} ${inter.variable} font-sans antialiased`}
-      >
+      <body className="font-sans antialiased">
         <NextIntlClientProvider messages={messages}>
           <TooltipProvider>{children}</TooltipProvider>
           <Toaster />
           <Analytics />
           <SWRegister />
-          <div className="noise-overlay" aria-hidden="true" />
         </NextIntlClientProvider>
       </body>
     </html>
