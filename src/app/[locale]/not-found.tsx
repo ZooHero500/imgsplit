@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl"
 import { LogoIcon } from "@/components/LogoIcon"
-import { Link } from "@/i18n/navigation"
+import { InkButton } from "@/components/ui/InkButton"
 import { ArrowLeft } from "lucide-react"
 
 export default function NotFound() {
@@ -25,14 +25,9 @@ export default function NotFound() {
           {t("description")}
         </p>
 
-        <Link
-          href="/"
-          className="group relative inline-flex items-center gap-2 bg-primary text-primary-foreground px-8 py-3.5 text-xs uppercase tracking-[0.2em] overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.15)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.25)] transition-shadow duration-500"
-        >
-          <span className="absolute inset-0 bg-accent -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]" />
-          <ArrowLeft className="relative z-10 h-3 w-3" />
-          <span className="relative z-10">{t("backHome")}</span>
-        </Link>
+        <InkButton href="/" icon={<ArrowLeft />}>
+          {t("backHome")}
+        </InkButton>
       </div>
     </main>
   )

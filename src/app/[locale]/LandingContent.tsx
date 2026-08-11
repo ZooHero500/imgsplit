@@ -17,5 +17,5 @@ export function LandingContent() {
     [router]
   )
 
-  return <UploadZone onImagesLoaded={handleImagesLoaded} />
+  return <UploadZone onImagesLoaded={handleImagesLoaded} surface="blend" />
 }

@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useRef, useState } from "react"
+import { useCallback, useId, useRef, useState } from "react"
 import { useTranslations } from "next-intl"
 import { toast } from "sonner"
 import type { UploadResult } from "@/types"
@@ -10,6 +10,7 @@ interface UploadZoneProps {
   onImageLoaded?: (result: UploadResult) => void
   onImagesLoaded?: (results: UploadResult[]) => void
   multiple?: boolean
+  surface?: "paper" | "blend"
   title?: string
   dragHint?: string
   clickHint?: string
@@ -20,6 +21,7 @@ export function UploadZone({
   onImageLoaded,
   onImagesLoaded,
   multiple = true,
+  surface = "paper",
   title,
   dragHint,
   clickHint,
@@ -29,6 +31,8 @@ export function UploadZone({
   const [error, setError] = useState<string | null>(null)
   const [isDragOver, setIsDragOver] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
+  const hintId = useId()
+  const errorId = useId()
 
   const processFiles = useCallback(
     async (files: FileList) => {
@@ -93,15 +97,14 @@ export function UploadZone({
 
   return (
     <div
-      className={`group flex flex-col items-center justify-center border-t border-b p-8 sm:p-16 md:p-24 transition-all duration-700 ease-luxury cursor-pointer ${
+      className={`group flex flex-col items-center justify-center border border-ink transition-colors duration-500 ease-luxury ${
         isDragOver
-          ? "border-accent bg-accent/5"
-          : "border-primary/20 hover:border-primary/40"
+          ? "border-signal bg-signal/5"
+          : `${surface === "blend" ? "bg-transparent" : "bg-paper"} hover:border-primary/40`
       }`}
       onDrop={handleDrop}
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
-      onClick={() => inputRef.current?.click()}
     >
       <input
         ref={inputRef}
@@ -112,28 +115,35 @@ export function UploadZone({
         onChange={handleFileChange}
       />
 
-      <div className="text-center">
-        <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-6">
+      <button
+        type="button"
+        onClick={() => inputRef.current?.click()}
+        aria-describedby={`${hintId}${error ? ` ${errorId}` : ""}`}
+        className="flex w-full cursor-pointer flex-col items-center justify-center p-10 text-center sm:p-14"
+      >
+        <p className="font-condensed text-[11px] font-bold uppercase tracking-[0.3em] text-ink-soft mb-6">
           {title ?? t("title")}
         </p>
         <p className="font-serif text-2xl md:text-3xl text-foreground mb-4">
           {dragHint ?? t("dragHint")}
         </p>
         <div className="flex items-center gap-4 justify-center mb-6">
-          <span className="h-px w-8 bg-primary/20" />
-          <span className="text-xs uppercase tracking-[0.25em] text-muted-foreground">{t("or")}</span>
-          <span className="h-px w-8 bg-primary/20" />
+          <span className="h-px w-8 bg-rule" />
+          <span className="font-condensed text-[10px] font-bold uppercase tracking-[0.25em] text-ink-soft">
+            {t("or")}
+          </span>
+          <span className="h-px w-8 bg-rule" />
         </div>
-        <p className="text-sm text-foreground group-hover:text-accent transition-colors duration-500">
+        <p className="font-condensed text-xs font-bold uppercase tracking-[0.2em] text-foreground group-hover:text-signal transition-colors duration-500">
           {clickHint ?? t("clickHint")}
         </p>
-        <p className="mt-4 text-[10px] uppercase tracking-[0.25em] text-muted-foreground/70">
+        <p id={hintId} className="mt-4 font-condensed text-[11px] font-bold uppercase tracking-[0.2em] text-ink-soft">
           {formatHint ?? t("formatHint")}
         </p>
-      </div>
+      </button>
 
       {error && (
-        <p className="mt-6 text-sm text-destructive">{error}</p>
+        <p id={errorId} className="pb-6 text-sm text-destructive" role="alert">{error}</p>
       )}
     </div>
   )

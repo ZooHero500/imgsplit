@@ -2,8 +2,9 @@ import { getTranslations, setRequestLocale } from "next-intl/server"
 import { JsonLd } from "@/components/JsonLd"
 import { FaqItem } from "../FaqSection"
 import { CarouselLandingContent } from "./CarouselLandingContent"
-import { GridLines } from "@/components/GridLines"
+import { InkButton } from "@/components/ui/InkButton"
 import { SiteFooter } from "@/components/SiteFooter"
+import { SiteFrame } from "@/components/SiteFrame"
 import { SiteNav } from "@/components/SiteNav"
 import {
   MonitorPlay,
@@ -97,7 +98,7 @@ export default async function CarouselPage({
       />
 
       {/* Visible Grid Lines */}
-      <GridLines />
+      <SiteFrame>
 
       <SiteNav
         locale={locale}
@@ -111,22 +112,15 @@ export default async function CarouselPage({
       />
 
       {/* HERO */}
-      <section className="relative py-12 sm:py-24 md:py-32 px-4 sm:px-8 md:px-16 max-w-[1600px] mx-auto">
+      <section className="relative border-b border-ink px-4 sm:px-8 md:px-16 py-12 sm:py-16 md:py-24">
         <div className="grid grid-cols-12 gap-4">
           <div className="col-span-12 md:col-span-8 md:col-start-1">
-            <div className="drift-slow">
-              <div className="flex items-center gap-4 mb-8 hero-enter hero-delay-1">
-                <span className="h-px w-8 md:w-12 bg-primary" />
-                <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
-                  {tLanding("hero.overline")}
-                </span>
-              </div>
-            </div>
+            <div className="kicker mb-8 hero-enter hero-delay-1">{tLanding("hero.overline")}</div>
 
             <div className="drift-medium">
               <h1 className="font-serif text-4xl sm:text-5xl md:text-7xl lg:text-9xl leading-[0.9] tracking-tight mb-6 sm:mb-8 hero-enter hero-delay-2">
                 {tLanding("hero.headlinePart1")}
-                <em className="text-accent not-italic font-serif italic">
+                <em className="text-signal-deep italic">
                   {tLanding("hero.headlineAccent")}
                 </em>
                 <br />
@@ -135,24 +129,19 @@ export default async function CarouselPage({
             </div>
 
             <div className="drift-fast">
-              <p className="text-sm sm:text-base md:text-lg text-muted-foreground leading-relaxed max-w-md mb-8 sm:mb-10 hero-enter hero-delay-3">
+              <p className="text-sm sm:text-base md:text-lg text-ink-soft leading-relaxed max-w-md mb-8 sm:mb-10 hero-enter hero-delay-3">
                 {tLanding("hero.description")}
               </p>
             </div>
 
             <div className="drift-fast">
               <div className="flex flex-col sm:flex-row gap-4 hero-enter hero-delay-4">
-                <a
-                  href="#upload"
-                  className="group relative inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-6 sm:px-10 py-3 sm:py-4 text-xs uppercase tracking-[0.2em] overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.15)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.25)] transition-shadow duration-500 press"
-                >
-                  <span className="absolute inset-0 bg-accent -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]" />
-                  <span className="relative z-10">{tLanding("hero.ctaPrimary")}</span>
-                  <ArrowRight className="relative z-10 h-3.5 w-3.5" />
-                </a>
+                <InkButton href="#upload" icon={<ArrowRight />}>
+                  {tLanding("hero.ctaPrimary")}
+                </InkButton>
                 <a
                   href="#carousel-types"
-                  className="inline-flex items-center justify-center gap-2 border border-primary text-foreground px-6 sm:px-10 py-3 sm:py-4 text-xs uppercase tracking-[0.2em] hover:bg-primary hover:text-primary-foreground transition-all duration-500 press"
+                  className="inline-flex items-center justify-center gap-2 border border-ink px-6 sm:px-10 py-3 sm:py-4 text-xs uppercase tracking-[0.2em] text-ink hover:bg-ink hover:text-paper transition-all duration-500 press"
                 >
                   {tLanding("hero.ctaSecondary")}
                 </a>
@@ -162,7 +151,7 @@ export default async function CarouselPage({
 
           {/* Vertical decorative text */}
           <div className="hidden lg:flex col-span-2 col-start-11 items-end justify-end pb-4 hero-enter hero-delay-4">
-            <span className="writing-vertical text-[10px] uppercase tracking-[0.3em] text-muted-foreground/50">
+            <span className="writing-vertical text-[10px] uppercase tracking-[0.3em] text-ink-soft/50">
               Carousel / Vol. 01
             </span>
           </div>
@@ -170,51 +159,51 @@ export default async function CarouselPage({
       </section>
 
       {/* CAROUSEL TYPES */}
-      <section id="carousel-types" className="border-t border-border py-12 sm:py-24 md:py-32 px-4 sm:px-8 md:px-16">
+      <section id="carousel-types" className="border-t border-ink py-12 sm:py-16 md:py-24 px-4 sm:px-8 md:px-16">
         <div className="max-w-[1600px] mx-auto">
           <div className="grid grid-cols-12 gap-4 mb-16 reveal">
             <div className="col-span-12 md:col-span-8 md:col-start-2">
-              <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mb-4 block">
+              <span className="text-[10px] uppercase tracking-[0.3em] text-ink-soft mb-4 block">
                 {tLanding("types.overline")}
               </span>
               <h2 className="font-serif text-3xl sm:text-4xl md:text-6xl lg:text-7xl leading-[0.9]">
                 {tLanding("types.headlinePart1")}
-                <em className="text-accent italic">{tLanding("types.headlineAccent")}</em>
+                <em className="text-signal italic">{tLanding("types.headlineAccent")}</em>
               </h2>
             </div>
           </div>
 
           <div className="grid md:grid-cols-3 gap-0 reveal-stagger">
-            <div className="group border-t border-border p-8 md:p-12 transition-colors duration-700 hover:bg-background/50">
-              <div className="text-muted-foreground mb-6 group-hover:text-accent transition-colors duration-500">
+            <div className="group border-t border-ink p-8 md:p-12 transition-colors duration-700 hover:bg-secondary/40">
+              <div className="text-ink-soft mb-6 group-hover:text-signal transition-colors duration-500">
                 <Columns3 className="h-5 w-5" strokeWidth={1.5} />
               </div>
               <h3 className="text-sm uppercase tracking-[0.15em] text-foreground mb-3 font-medium">
                 {tLanding("types.instagramTitle")}
               </h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">
+              <p className="text-sm text-ink-soft leading-relaxed">
                 {tLanding("types.instagramDesc")}
               </p>
             </div>
-            <div className="group border-t border-border p-8 md:p-12 transition-colors duration-700 hover:bg-background/50">
-              <div className="text-muted-foreground mb-6 group-hover:text-accent transition-colors duration-500">
+            <div className="group border-t border-ink p-8 md:p-12 transition-colors duration-700 hover:bg-secondary/40">
+              <div className="text-ink-soft mb-6 group-hover:text-signal transition-colors duration-500">
                 <MonitorPlay className="h-5 w-5" strokeWidth={1.5} />
               </div>
               <h3 className="text-sm uppercase tracking-[0.15em] text-foreground mb-3 font-medium">
                 {tLanding("types.wideTitle")}
               </h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">
+              <p className="text-sm text-ink-soft leading-relaxed">
                 {tLanding("types.wideDesc")}
               </p>
             </div>
-            <div className="group border-t border-border p-8 md:p-12 transition-colors duration-700 hover:bg-background/50">
-              <div className="text-muted-foreground mb-6 group-hover:text-accent transition-colors duration-500">
+            <div className="group border-t border-ink p-8 md:p-12 transition-colors duration-700 hover:bg-secondary/40">
+              <div className="text-ink-soft mb-6 group-hover:text-signal transition-colors duration-500">
                 <SlidersHorizontal className="h-5 w-5" strokeWidth={1.5} />
               </div>
               <h3 className="text-sm uppercase tracking-[0.15em] text-foreground mb-3 font-medium">
                 {tLanding("types.customTitle")}
               </h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">
+              <p className="text-sm text-ink-soft leading-relaxed">
                 {tLanding("types.customDesc")}
               </p>
             </div>
@@ -225,7 +214,7 @@ export default async function CarouselPage({
       {/* UPLOAD */}
       <section id="upload" className="px-4 sm:px-8 md:px-16 pb-12 sm:pb-24 md:pb-32 max-w-[1600px] mx-auto">
         <div className="mb-8">
-          <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
+          <span className="text-[10px] uppercase tracking-[0.3em] text-ink-soft">
             {tLanding("howItWorks.step1Title")}
           </span>
         </div>
@@ -233,51 +222,51 @@ export default async function CarouselPage({
       </section>
 
       {/* HOW IT WORKS */}
-      <section id="how-it-works" className="border-t border-border py-12 sm:py-24 md:py-32 px-4 sm:px-8 md:px-16">
+      <section id="how-it-works" className="border-t border-ink py-12 sm:py-16 md:py-24 px-4 sm:px-8 md:px-16">
         <div className="max-w-[1600px] mx-auto">
           <div className="mb-16 reveal">
-            <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mb-4 block">
+            <span className="text-[10px] uppercase tracking-[0.3em] text-ink-soft mb-4 block">
               {tLanding("howItWorks.overline")}
             </span>
             <h2 className="font-serif text-3xl sm:text-4xl md:text-6xl lg:text-7xl leading-[0.9]">
               {tLanding("howItWorks.headlinePart1")}
-              <em className="text-accent italic">
+              <em className="text-signal italic">
                 {tLanding("howItWorks.headlineAccent")}
               </em>
             </h2>
           </div>
 
           <div className="grid md:grid-cols-3 gap-0 reveal-stagger">
-            <div className="border-t border-border p-8 md:p-12">
+            <div className="border-t border-ink p-8 md:p-12">
               <span className="font-serif text-5xl md:text-6xl text-foreground/10 leading-none mb-6 block">
                 01
               </span>
               <h3 className="text-sm uppercase tracking-[0.15em] text-foreground mb-3 font-medium">
                 {tLanding("howItWorks.step1Title")}
               </h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">
+              <p className="text-sm text-ink-soft leading-relaxed">
                 {tLanding("howItWorks.step1Desc")}
               </p>
             </div>
-            <div className="border-t border-border p-8 md:p-12">
+            <div className="border-t border-ink p-8 md:p-12">
               <span className="font-serif text-5xl md:text-6xl text-foreground/10 leading-none mb-6 block">
                 02
               </span>
               <h3 className="text-sm uppercase tracking-[0.15em] text-foreground mb-3 font-medium">
                 {tLanding("howItWorks.step2Title")}
               </h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">
+              <p className="text-sm text-ink-soft leading-relaxed">
                 {tLanding("howItWorks.step2Desc")}
               </p>
             </div>
-            <div className="border-t border-border p-8 md:p-12">
+            <div className="border-t border-ink p-8 md:p-12">
               <span className="font-serif text-5xl md:text-6xl text-foreground/10 leading-none mb-6 block">
                 03
               </span>
               <h3 className="text-sm uppercase tracking-[0.15em] text-foreground mb-3 font-medium">
                 {tLanding("howItWorks.step3Title")}
               </h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">
+              <p className="text-sm text-ink-soft leading-relaxed">
                 {tLanding("howItWorks.step3Desc")}
               </p>
             </div>
@@ -286,45 +275,40 @@ export default async function CarouselPage({
       </section>
 
       {/* CTA */}
-      <section className="bg-primary py-12 sm:py-24 md:py-32 px-4 sm:px-8 md:px-16">
+      <section className="bg-primary py-12 sm:py-16 md:py-24 px-4 sm:px-8 md:px-16">
         <div className="max-w-[1600px] mx-auto grid grid-cols-12 gap-4">
           <div className="col-span-12 md:col-span-7 md:col-start-2 reveal">
             <h2 className="font-serif text-3xl sm:text-4xl md:text-6xl lg:text-7xl leading-[0.9] text-primary-foreground mb-6">
               {tLanding("cta.headlinePart1")}
-              <em className="text-accent italic">
+              <em className="text-signal italic">
                 {tLanding("cta.headlineAccent")}
               </em>
             </h2>
             <p className="text-sm text-primary-foreground/60 leading-relaxed max-w-md mb-10">
               {tLanding("cta.description")}
             </p>
-            <a
-              href="#upload"
-              className="group relative inline-flex items-center gap-2 bg-background text-foreground px-6 sm:px-10 py-3 sm:py-4 text-xs uppercase tracking-[0.2em] overflow-hidden hover:shadow-[0_8px_24px_rgba(0,0,0,0.25)] transition-shadow duration-500 press"
-            >
-              <span className="absolute inset-0 bg-accent -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]" />
-              <span className="relative z-10 group-hover:text-primary-foreground">{tLanding("cta.button")}</span>
-              <ArrowRight className="relative z-10 h-3.5 w-3.5 group-hover:text-primary-foreground" />
-            </a>
+            <InkButton href="#upload" variant="inverse" icon={<ArrowRight />}>
+              {tLanding("cta.button")}
+            </InkButton>
           </div>
         </div>
       </section>
 
       {/* FAQ */}
-      <section id="faq" className="border-t border-border py-12 sm:py-24 md:py-32 px-4 sm:px-8 md:px-16">
+      <section id="faq" className="border-t border-ink py-12 sm:py-16 md:py-24 px-4 sm:px-8 md:px-16">
         <div className="max-w-[1600px] mx-auto">
           <div className="grid grid-cols-12 gap-8 md:gap-16">
             <div className="col-span-12 md:col-span-4 reveal">
-              <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mb-4 block">
+              <span className="text-[10px] uppercase tracking-[0.3em] text-ink-soft mb-4 block">
                 {tLanding("faq.overline")}
               </span>
               <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl leading-[0.9] mb-4">
                 {tLanding("faq.headlinePart1")}
-                <em className="text-accent italic">
+                <em className="text-signal italic">
                   {tLanding("faq.headlineAccent")}
                 </em>
               </h2>
-              <p className="text-sm text-muted-foreground leading-relaxed">
+              <p className="text-sm text-ink-soft leading-relaxed">
                 {tLanding("faq.subtitle")}
               </p>
             </div>
@@ -341,6 +325,7 @@ export default async function CarouselPage({
       </section>
 
       <SiteFooter locale={locale} />
+      </SiteFrame>
     </main>
   )
 }

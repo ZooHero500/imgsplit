@@ -18,7 +18,7 @@ export function RelatedTools({ tools, locale, title }: RelatedToolsProps) {
 
   return (
     <section className="mt-24">
-      <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mb-12">
+      <p className="font-condensed text-[10px] font-bold uppercase tracking-[0.3em] text-ink-soft mb-12">
         {title}
       </p>
 
@@ -28,15 +28,15 @@ export function RelatedTools({ tools, locale, title }: RelatedToolsProps) {
             key={tool.slug}
             href={tool.slug}
             locale={locale}
-            className="group border-t border-border p-8 hover:bg-background/50 transition-colors duration-700"
+            className="group border-t border-ink p-8 hover:bg-secondary/40 transition-colors duration-700"
           >
-            <h3 className="text-sm uppercase tracking-[0.15em] text-foreground font-medium mb-3">
+            <h3 className="font-condensed text-sm font-bold uppercase tracking-[0.15em] text-foreground mb-3">
               {tool.title}
             </h3>
-            <p className="text-sm text-muted-foreground leading-relaxed mb-6">
+            <p className="text-sm text-ink-soft leading-relaxed mb-6">
               {tool.description}
             </p>
-            <ArrowRight className="h-4 w-4 text-muted-foreground/40 group-hover:text-accent transition-colors duration-500" />
+            <ArrowRight className="h-4 w-4 text-ink-soft/40 group-hover:text-signal transition-colors duration-500" />
           </Link>
         ))}
       </div>

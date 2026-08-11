@@ -4,20 +4,17 @@ import { LandingContent } from "./LandingContent"
 import { SmartCTA } from "./SmartCTA"
 import { FaqItem } from "./FaqSection"
 import { JsonLd } from "@/components/JsonLd"
-import { GridLines } from "@/components/GridLines"
 import { ReturningUserToolbar } from "@/components/ReturningUserToolbar"
 import { SiteFooter } from "@/components/SiteFooter"
+import { SiteFrame } from "@/components/SiteFrame"
 import { SiteNav } from "@/components/SiteNav"
 import {
-  Scissors,
-  Shield,
-  Download,
-  Zap,
-  Image as ImageIcon,
-  Grid3X3,
-  MousePointerClick,
-  Layers,
+  ArrowRight,
   CheckCircle2,
+  Download,
+  Image as ImageIcon,
+  Shield,
+  Zap,
 } from "lucide-react"
 import type React from "react"
 
@@ -147,126 +144,118 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         }}
       />
 
-      {/* Visible Grid Lines */}
-      <GridLines />
+      <SiteFrame>
+        <SiteNav
+          locale={locale}
+          links={[
+            { href: "#features", label: t("nav.features") },
+            { href: "#how-it-works", label: t("nav.howItWorks") },
+            { href: "#faq", label: t("nav.faq") },
+          ]}
+          ctaLabel={t("nav.getStarted")}
+          ctaHref="#upload"
+          smartCta
+        />
 
-      <SiteNav
-        locale={locale}
-        links={[
-          { href: "#features", label: t("nav.features") },
-          { href: "#how-it-works", label: t("nav.howItWorks") },
-          { href: "#faq", label: t("nav.faq") },
-        ]}
-        ctaLabel={t("nav.getStarted")}
-        ctaHref="#upload"
-        smartCta
-      />
+        {/* QUICK ACCESS — returning users only */}
+        <ReturningUserToolbar />
 
-      {/* QUICK ACCESS — returning users only */}
-      <ReturningUserToolbar />
+        {/* HERO */}
+        <section className="relative border-b border-ink">
+          <div className="grid lg:grid-cols-[minmax(0,1fr)_300px]">
+            <div className="min-w-0 px-4 sm:px-8 md:px-16 py-12 sm:py-16 md:py-24">
+              <div className="kicker mb-8 hero-enter hero-delay-1">{t("hero.overline")}</div>
 
-      {/* HERO */}
-      <section className="relative py-12 sm:py-12 sm:py-24 md:py-32 px-4 sm:px-8 md:px-16 max-w-[1600px] mx-auto">
-        <div className="grid grid-cols-12 gap-4">
-          <div className="col-span-12 md:col-span-8 md:col-start-1">
-            {/* Overline */}
-            <div className="drift-slow">
-              <div className="flex items-center gap-4 mb-8 hero-enter hero-delay-1">
-                <span className="h-px w-8 md:w-12 bg-primary" />
-                <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
-                  {t("hero.overline")}
-                </span>
-              </div>
-            </div>
-
-            {/* Hero headline with mixed italic */}
-            <div className="drift-medium">
-              <h1 className="font-serif text-4xl sm:text-5xl md:text-7xl lg:text-9xl leading-[0.9] tracking-tight mb-6 sm:mb-8 hero-enter hero-delay-2">
-                {t("hero.headlinePart1")}
-                <em className="text-accent not-italic font-serif italic">{t("hero.headlineAccent")}</em>
+              <h1
+                className="font-serif mb-6 sm:mb-8 hero-enter hero-delay-2"
+                style={{
+                  maxWidth: "14ch",
+                  fontSize: "clamp(2.75rem, 6.25vw, 7.25rem)",
+                  lineHeight: 0.98,
+                  letterSpacing: "-0.035em",
+                  textWrap: "balance",
+                }}
+              >
+                {t("hero.headlinePart1")}{" "}
+                <em className="text-accent-deep italic">{t("hero.headlineAccent")}</em>{" "}
                 <br />
                 {t("hero.headlinePart2")}
               </h1>
-            </div>
 
-            <div className="drift-fast">
-              <p className="text-sm sm:text-base md:text-lg text-muted-foreground leading-relaxed max-w-md mb-8 sm:mb-10 hero-enter hero-delay-3">
+              <p className="text-sm sm:text-base md:text-lg text-ink-soft leading-relaxed max-w-md mb-8 sm:mb-10 hero-enter hero-delay-3">
                 {t("hero.description")}
               </p>
-            </div>
 
-            <div className="drift-fast">
               <div className="flex flex-col sm:flex-row gap-4 hero-enter hero-delay-4">
-                <SmartCTA
-                  label={t("hero.ctaPrimary")}
-                  className="group relative inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-6 sm:px-10 py-3 sm:py-4 text-xs uppercase tracking-[0.2em] overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.15)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.25)] transition-shadow duration-500 cursor-pointer press"
-                />
+                <SmartCTA label={t("hero.ctaPrimary")} />
                 <a
                   href="#how-it-works"
-                  className="inline-flex items-center justify-center gap-2 border border-primary text-foreground px-6 sm:px-10 py-3 sm:py-4 text-xs uppercase tracking-[0.2em] hover:bg-primary hover:text-primary-foreground transition-all duration-500 press"
+                  className="inline-flex items-center justify-center gap-2 border border-ink px-6 sm:px-10 py-3 sm:py-4 text-xs uppercase tracking-[0.2em] text-ink hover:bg-ink hover:text-paper transition-all duration-500 press"
                 >
                   {t("hero.ctaSecondary")}
                 </a>
               </div>
             </div>
+
+            {/* Hero index rail */}
+            <aside className="hero-index hidden lg:grid" aria-label={t("hero.overline")}>
+              <IndexItem letter="A" title={t("index.aTitle")} desc={t("index.aDesc")} />
+              <IndexItem letter="B" title={t("index.bTitle")} desc={t("index.bDesc")} />
+              <IndexItem letter="C" title={t("index.cTitle")} desc={t("index.cDesc")} />
+              <IndexItem letter="D" title={t("index.dTitle")} desc={t("index.dDesc")} />
+            </aside>
           </div>
+        </section>
 
-          {/* Vertical decorative text */}
-          <div className="hidden lg:flex col-span-2 col-start-11 items-end justify-end pb-4 hero-enter hero-delay-4">
-            <span className="writing-vertical text-[10px] uppercase tracking-[0.3em] text-muted-foreground/50">
-              Editorial / Vol. 01
-            </span>
+        {/* TRUST INDICATORS */}
+        <section className="border-t border-ink px-4 sm:px-8 md:px-16 py-12 md:py-16">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+            <TrustItem
+              icon={<Shield className="h-4 w-4" strokeWidth={1.5} />}
+              label={t("trust.privacyLabel")}
+              desc={t("trust.privacyDesc")}
+            />
+            <TrustItem
+              icon={<Zap className="h-4 w-4" strokeWidth={1.5} />}
+              label={t("trust.speedLabel")}
+              desc={t("trust.speedDesc")}
+            />
+            <TrustItem
+              icon={<ImageIcon className="h-4 w-4" strokeWidth={1.5} />}
+              label={t("trust.qualityLabel")}
+              desc={t("trust.qualityDesc")}
+            />
+            <TrustItem
+              icon={<Download className="h-4 w-4" strokeWidth={1.5} />}
+              label={t("trust.freeLabel")}
+              desc={t("trust.freeDesc")}
+            />
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* TRUST INDICATORS */}
-      <section className="border-t border-border py-16 md:py-20 px-4 sm:px-8 md:px-16">
-        <div className="max-w-[1600px] mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 reveal-stagger">
-          <TrustItem
-            icon={<Shield className="h-4 w-4" strokeWidth={1.5} />}
-            label={t("trust.privacyLabel")}
-            desc={t("trust.privacyDesc")}
-          />
-          <TrustItem
-            icon={<Zap className="h-4 w-4" strokeWidth={1.5} />}
-            label={t("trust.speedLabel")}
-            desc={t("trust.speedDesc")}
-          />
-          <TrustItem
-            icon={<ImageIcon className="h-4 w-4" strokeWidth={1.5} />}
-            label={t("trust.qualityLabel")}
-            desc={t("trust.qualityDesc")}
-          />
-          <TrustItem
-            icon={<Download className="h-4 w-4" strokeWidth={1.5} />}
-            label={t("trust.freeLabel")}
-            desc={t("trust.freeDesc")}
-          />
-        </div>
-      </section>
+        {/* UPLOAD */}
+        <section
+          id="upload"
+          className="signature-stage"
+          style={{ "--stage-note": t("stage.note") } as React.CSSProperties}
+        >
+          <div className="stage-copy">
+            <div className="kicker mb-6">{t("stage.kicker")}</div>
+            <p>{t("stage.copy")}</p>
+            <LandingContent />
+          </div>
+        </section>
 
-      {/* UPLOAD */}
-      <section id="upload" className="px-4 sm:px-8 md:px-16 pb-12 sm:pb-24 md:pb-32 max-w-[1600px] mx-auto">
-        <div className="mb-8">
-          <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
-            {t("uploadSection.overline")}
-          </span>
-        </div>
-        <LandingContent />
-      </section>
-
-      {/* BENEFITS - Dark Section */}
-      <section className="bg-primary py-12 sm:py-24 md:py-32 px-4 sm:px-8 md:px-16">
-        <div className="max-w-[1600px] mx-auto">
-          <div className="grid grid-cols-12 gap-4 mb-16 reveal">
+        {/* BENEFITS - Dark Section */}
+        <section className="bg-primary px-4 sm:px-8 md:px-16 py-12 sm:py-16 md:py-20">
+          <div className="grid grid-cols-12 gap-4 mb-12">
             <div className="col-span-12 md:col-span-6">
-              <span className="text-[10px] uppercase tracking-[0.3em] text-primary-foreground/40 mb-4 block">
+              <span className="font-condensed text-xs font-bold uppercase tracking-[0.14em] text-primary-foreground/65 mb-4 block">
                 {t("benefits.overline")}
               </span>
-              <h2 className="font-serif text-3xl sm:text-4xl md:text-6xl lg:text-7xl leading-[0.9] text-primary-foreground">
+              <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05] text-primary-foreground">
                 {t("benefits.headlinePart1")}
-                <em className="text-accent italic">{t("benefits.headlineAccent")}</em>
+                <em className="text-signal italic">{t("benefits.headlineAccent")}</em>
               </h2>
             </div>
             <div className="col-span-12 md:col-span-4 md:col-start-8 flex items-end">
@@ -276,101 +265,99 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-0 reveal-stagger">
+          <div className="benefits">
             <BenefitCard
-              icon={<MousePointerClick className="h-4 w-4" strokeWidth={1.5} />}
+              num="01"
+              label="Private"
               title={t("benefits.noPsTitle")}
               description={t("benefits.noPsDesc")}
             />
             <BenefitCard
-              icon={<Shield className="h-4 w-4" strokeWidth={1.5} />}
+              num="02"
+              label="Speed"
               title={t("benefits.privacyTitle")}
               description={t("benefits.privacyDesc")}
             />
             <BenefitCard
-              icon={<Grid3X3 className="h-4 w-4" strokeWidth={1.5} />}
+              num="03"
+              label="Batch"
               title={t("benefits.batchTitle")}
               description={t("benefits.batchDesc")}
             />
             <BenefitCard
-              icon={<Layers className="h-4 w-4" strokeWidth={1.5} />}
+              num="04"
+              label="Devices"
               title={t("benefits.crossPlatformTitle")}
               description={t("benefits.crossPlatformDesc")}
             />
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* FEATURES */}
-      <section id="features" className="py-12 sm:py-24 md:py-32 px-4 sm:px-8 md:px-16">
-        <div className="max-w-[1600px] mx-auto">
-          <div className="grid grid-cols-12 gap-4 mb-16 reveal">
+        {/* FEATURES */}
+        <section id="features" className="px-4 sm:px-8 md:px-16 py-12 sm:py-16 md:py-24 border-t border-ink">
+          <div className="grid grid-cols-12 gap-4 mb-12">
             <div className="col-span-12 md:col-span-8 md:col-start-2">
-              <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mb-4 block">
-                {t("features.overline")}
-              </span>
-              <h2 className="font-serif text-3xl sm:text-4xl md:text-6xl lg:text-7xl leading-[0.9]">
+              <div className="kicker mb-4">{t("features.overline")}</div>
+              <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05]">
                 {t("features.headlinePart1")}
-                <em className="text-accent italic">{t("features.headlineAccent")}</em>
+                <em className="text-accent-deep italic">{t("features.headlineAccent")}</em>
               </h2>
             </div>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-0 reveal-stagger">
-            <FeatureCard
-              icon={<Scissors className="h-4 w-4" strokeWidth={1.5} />}
+          <div className="tool-grid">
+            <FeatureCell
+              num="01"
               title={t("features.preciseTitle")}
               description={t("features.preciseDesc")}
               href="/split-in-half"
             />
-            <FeatureCard
-              icon={<Shield className="h-4 w-4" strokeWidth={1.5} />}
+            <FeatureCell
+              num="02"
               title={t("features.privacyTitle")}
               description={t("features.privacyDesc")}
               href="/no-photoshop-slicer"
             />
-            <FeatureCard
-              icon={<Download className="h-4 w-4" strokeWidth={1.5} />}
+            <FeatureCell
+              num="03"
               title={t("features.downloadTitle")}
               description={t("features.downloadDesc")}
               href="/split-into-equal-parts"
             />
-            <FeatureCard
-              icon={<Grid3X3 className="h-4 w-4" strokeWidth={1.5} />}
+            <FeatureCell
+              num="04"
               title={t("features.gridTitle")}
               description={t("features.gridDesc")}
               href="/grid"
             />
-            <FeatureCard
-              icon={<ImageIcon className="h-4 w-4" strokeWidth={1.5} />}
+            <FeatureCell
+              num="05"
               title={t("features.formatTitle")}
               description={t("features.formatDesc")}
               href="/split-horizontally"
             />
-            <FeatureCard
-              icon={<Zap className="h-4 w-4" strokeWidth={1.5} />}
+            <FeatureCell
+              num="06"
               title={t("features.previewTitle")}
               description={t("features.previewDesc")}
               href="/split-vertically"
             />
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* HOW IT WORKS */}
-      <section id="how-it-works" className="border-t border-border py-12 sm:py-24 md:py-32 px-4 sm:px-8 md:px-16">
-        <div className="max-w-[1600px] mx-auto">
-          <div className="mb-16 reveal">
-            <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mb-4 block">
-              {t("steps.overline")}
-            </span>
-            <h2 className="font-serif text-3xl sm:text-4xl md:text-6xl lg:text-7xl leading-[0.9]">
-              {t("steps.headlinePart1")}
-              <em className="text-accent italic">{t("steps.headlineAccent")}</em>
-            </h2>
+        {/* HOW IT WORKS */}
+        <section id="how-it-works" className="border-t border-ink px-4 sm:px-8 md:px-16 py-12 sm:py-16 md:py-24">
+          <div className="grid grid-cols-12 gap-4 mb-12">
+            <div className="col-span-12 md:col-span-8">
+              <div className="kicker mb-4">{t("steps.overline")}</div>
+              <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05]">
+                {t("steps.headlinePart1")}
+                <em className="text-accent-deep italic">{t("steps.headlineAccent")}</em>
+              </h2>
+            </div>
           </div>
 
-          <div className="grid md:grid-cols-4 gap-0 reveal-stagger">
+          <div className="step-row">
             <StepCard
               step={1}
               title={t("steps.step1Title")}
@@ -392,25 +379,23 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
               description={t("steps.step4Desc")}
             />
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* USE CASES */}
-      <section className="bg-primary py-12 sm:py-24 md:py-32 px-4 sm:px-8 md:px-16">
-        <div className="max-w-[1600px] mx-auto">
-          <div className="grid grid-cols-12 gap-4 mb-16 reveal">
+        {/* USE CASES */}
+        <section className="bg-primary px-4 sm:px-8 md:px-16 py-12 sm:py-16 md:py-20">
+          <div className="grid grid-cols-12 gap-4 mb-12">
             <div className="col-span-12 md:col-span-6">
-              <span className="text-[10px] uppercase tracking-[0.3em] text-primary-foreground/40 mb-4 block">
+              <span className="font-condensed text-xs font-bold uppercase tracking-[0.14em] text-primary-foreground/65 mb-4 block">
                 {t("useCases.overline")}
               </span>
-              <h2 className="font-serif text-3xl sm:text-4xl md:text-6xl lg:text-7xl leading-[0.9] text-primary-foreground">
+              <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05] text-primary-foreground">
                 {t("useCases.headlinePart1")}
-                <em className="text-accent italic">{t("useCases.headlineAccent")}</em>
+                <em className="text-signal italic">{t("useCases.headlineAccent")}</em>
               </h2>
             </div>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-0 reveal-stagger">
+          <div className="grid md:grid-cols-3 gap-0 border-t border-primary-foreground/10">
             <UseCaseCard
               title={t("useCases.ecommerceTitle")}
               description={t("useCases.ecommerceDesc")}
@@ -430,28 +415,24 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
               href="/split-for-instagram"
             />
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* WHY IMGSPLIT */}
-      <section className="py-12 sm:py-24 md:py-32 px-4 sm:px-8 md:px-16 border-t border-border">
-        <div className="max-w-[1600px] mx-auto">
-          <div className="grid grid-cols-12 gap-4 mb-16 reveal">
+        {/* WHY IMGSPLIT */}
+        <section className="px-4 sm:px-8 md:px-16 py-12 sm:py-16 md:py-24 border-t border-ink">
+          <div className="grid grid-cols-12 gap-4 mb-12">
             <div className="col-span-12 md:col-span-8 md:col-start-2">
-              <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mb-4 block">
-                {t("comparison.overline")}
-              </span>
-              <h2 className="font-serif text-3xl sm:text-4xl md:text-6xl lg:text-7xl leading-[0.9] mb-4">
+              <div className="kicker mb-4">{t("comparison.overline")}</div>
+              <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05] mb-4">
                 {t("comparison.headlinePart1")}{" "}
-                <em className="text-accent italic">{t("comparison.headlineAccent")}</em>
+                <em className="text-accent-deep italic">{t("comparison.headlineAccent")}</em>
               </h2>
-              <p className="text-sm text-muted-foreground leading-relaxed max-w-lg">
+              <p className="text-sm text-ink-soft leading-relaxed max-w-lg">
                 {t("comparison.subtitle")}
               </p>
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-0 reveal-stagger">
+          <div className="grid md:grid-cols-2 gap-0">
             <ComparisonCard
               title={t("comparison.feature1")}
               description={t("comparison.feature1Desc")}
@@ -477,22 +458,20 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
               description={t("comparison.feature6Desc")}
             />
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* STATS */}
-      <section className="bg-primary py-12 sm:py-16 md:py-20 px-4 sm:px-8 md:px-16">
-        <div className="max-w-[1600px] mx-auto">
-          <div className="mb-12 reveal">
-            <span className="text-[10px] uppercase tracking-[0.3em] text-primary-foreground/40 mb-4 block">
+        {/* STATS */}
+        <section className="bg-primary px-4 sm:px-8 md:px-16 py-12 sm:py-14 md:py-16">
+          <div className="mb-10">
+            <span className="font-condensed text-xs font-bold uppercase tracking-[0.14em] text-primary-foreground/65 mb-4 block">
               {t("stats.overline")}
             </span>
-            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl leading-[0.9] text-primary-foreground">
+            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl leading-[1.05] text-primary-foreground">
               {t("stats.headlinePart1")}{" "}
-              <em className="text-accent italic">{t("stats.headlineAccent")}</em>
+              <em className="text-signal italic">{t("stats.headlineAccent")}</em>
             </h2>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-0 reveal-stagger">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-0">
             <StatCard value={t("stats.stat1Value")} label={t("stats.stat1Label")} />
             <StatCard value={t("stats.stat2Value")} label={t("stats.stat2Label")} />
             <StatCard value={t("stats.stat3Value")} label={t("stats.stat3Label")} />
@@ -500,78 +479,81 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             <StatCard value={t("stats.stat5Value")} label={t("stats.stat5Label")} />
             <StatCard value={t("stats.stat6Value")} label={t("stats.stat6Label")} />
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* CTA */}
-      <section className="py-12 sm:py-24 md:py-32 px-4 sm:px-8 md:px-16 border-t border-border">
-        <div className="max-w-[1600px] mx-auto grid grid-cols-12 gap-4">
-          <div className="col-span-12 md:col-span-7 md:col-start-2 reveal">
-            <h2 className="font-serif text-3xl sm:text-4xl md:text-6xl lg:text-7xl leading-[0.9] mb-6">
-              {t("cta.headlinePart1")}
-              <em className="text-accent italic">{t("cta.headlineAccent")}</em>
-            </h2>
-            <p className="text-sm text-muted-foreground leading-relaxed max-w-md mb-10">
-              {t("cta.description")}
-            </p>
-            <SmartCTA
-              label={t("cta.button")}
-              className="group relative inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 sm:px-10 py-3 sm:py-4 text-xs uppercase tracking-[0.2em] overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.15)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.25)] transition-shadow duration-500 cursor-pointer press"
-            />
+        {/* CTA */}
+        <section className="cta-band">
+          <h2>
+            {t("cta.headlinePart1")}
+            <em className="text-accent-deep italic">{t("cta.headlineAccent")}</em>
+          </h2>
+          <p>{t("cta.description")}</p>
+          <div>
+            <SmartCTA label={t("cta.button")} size="hero" />
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* FAQ */}
-      <section id="faq" className="border-t border-border py-12 sm:py-24 md:py-32 px-4 sm:px-8 md:px-16">
-        <div className="max-w-[1600px] mx-auto">
-          <div className="grid grid-cols-12 gap-8 md:gap-16">
-            <div className="col-span-12 md:col-span-4 reveal">
-              <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mb-4 block">
-                {t("faq.overline")}
-              </span>
-              <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl leading-[0.9] mb-4">
-                {t("faq.headlinePart1")}
-                <em className="text-accent italic">{t("faq.headlineAccent")}</em>
-              </h2>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                {t("faq.subtitle")}
-              </p>
-            </div>
-            <div className="col-span-12 md:col-span-7 md:col-start-6">
-              <div className="space-y-0">
-                <FaqItem
-                  question={t("faq.q1")}
-                  answer={t("faq.a1")}
-                />
-                <FaqItem
-                  question={t("faq.q2")}
-                  answer={t("faq.a2")}
-                />
-                <FaqItem
-                  question={t("faq.q3")}
-                  answer={t("faq.a3")}
-                />
-                <FaqItem
-                  question={t("faq.q4")}
-                  answer={t("faq.a4")}
-                />
-                <FaqItem
-                  question={t("faq.q5")}
-                  answer={t("faq.a5")}
-                />
-                <FaqItem
-                  question={t("faq.q6")}
-                  answer={t("faq.a6")}
-                />
+        {/* FAQ */}
+        <section id="faq" className="border-t border-ink">
+          <div className="grid lg:grid-cols-[minmax(0,1fr)_330px]">
+            <div className="min-w-0 border-b border-ink lg:border-b-0 lg:border-r lg:border-ink">
+              <header className="p-[30px_26px] border-b border-ink">
+                <div className="kicker mb-4">{t("faq.overline")}</div>
+                <h2 className="font-serif text-3xl sm:text-4xl leading-[1.1] mb-4">
+                  {t("faq.headlinePart1")}
+                  <em className="text-accent-deep italic">{t("faq.headlineAccent")}</em>
+                </h2>
+                <p className="text-sm text-ink-soft leading-relaxed">
+                  {t("faq.subtitle")}
+                </p>
+              </header>
+              <div className="px-[26px] pb-6">
+                <FaqItem question={t("faq.q1")} answer={t("faq.a1")} />
+                <FaqItem question={t("faq.q2")} answer={t("faq.a2")} />
+                <FaqItem question={t("faq.q3")} answer={t("faq.a3")} />
+                <FaqItem question={t("faq.q4")} answer={t("faq.a4")} />
+                <FaqItem question={t("faq.q5")} answer={t("faq.a5")} />
+                <FaqItem question={t("faq.q6")} answer={t("faq.a6")} />
               </div>
             </div>
-          </div>
-        </div>
-      </section>
 
-      <SiteFooter locale={locale} />
+            <aside className="grid content-between gap-8 p-[30px_26px]">
+              <div>
+                <div className="eyebrow mb-2.5">FAQ</div>
+                <p className="font-condensed text-2xl font-bold uppercase leading-[1.15] tracking-[-0.01em] mb-2">
+                  {t("faq.headlinePart1")}
+                  <em className="text-accent-deep italic normal-case">{t("faq.headlineAccent")}</em>
+                </p>
+              </div>
+              <p className="text-xs leading-[1.8] text-ink">{t("faqFeedback")}</p>
+            </aside>
+          </div>
+        </section>
+
+        <SiteFooter locale={locale} />
+      </SiteFrame>
     </main>
+  )
+}
+
+/* ─── Hero index item ─── */
+function IndexItem({
+  letter,
+  title,
+  desc,
+}: {
+  letter: string
+  title: string
+  desc: string
+}) {
+  return (
+    <div className="index-item">
+      <span className="index-number">{letter}</span>
+      <span className="index-copy">
+        <strong>{title}</strong>
+        <span>{desc}</span>
+      </span>
+    </div>
   )
 }
 
@@ -586,12 +568,12 @@ function TrustItem({
   desc: string
 }) {
   return (
-    <div className="flex flex-col items-start gap-3 p-6 border-t border-border">
-      <div className="text-muted-foreground">{icon}</div>
-      <span className="text-xs uppercase tracking-[0.2em] font-medium text-foreground">
+    <div className="flex flex-col items-start gap-3 p-6 border-t border-ink">
+      <div className="text-signal">{icon}</div>
+      <span className="font-condensed text-xs font-bold uppercase tracking-[0.2em] text-foreground">
         {label}
       </span>
-      <span className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground">
+      <span className="font-condensed text-[10px] font-bold uppercase tracking-[0.25em] text-ink-soft">
         {desc}
       </span>
     </div>
@@ -600,54 +582,52 @@ function TrustItem({
 
 /* ─── Benefit Card (Dark bg) ─── */
 function BenefitCard({
-  icon,
+  num,
+  label,
   title,
   description,
 }: {
-  icon: React.ReactNode
+  num: string
+  label: string
   title: string
   description: string
 }) {
   return (
-    <div className="group border-t border-primary-foreground/10 p-8 md:p-12 transition-colors duration-700 hover:bg-background/[0.03]">
-      <div className="text-primary-foreground/40 mb-6 group-hover:text-accent transition-colors duration-500">
-        {icon}
+    <div className="benefit">
+      <div className="benefit-rail">
+        <strong>{num}</strong>
+        <span>{label}</span>
       </div>
-      <h3 className="text-sm uppercase tracking-[0.15em] text-primary-foreground mb-3 font-medium">
-        {title}
-      </h3>
-      <p className="text-sm text-primary-foreground/50 leading-relaxed">{description}</p>
+      <h3>{title}</h3>
+      <p>{description}</p>
     </div>
   )
 }
 
-/* ─── Feature Card ─── */
-function FeatureCard({
-  icon,
+/* ─── Feature Cell (tool register) ─── */
+function FeatureCell({
+  num,
   title,
   description,
   href,
 }: {
-  icon: React.ReactNode
+  num: string
   title: string
   description: string
-  href?: string
+  href: string
 }) {
-  const content = (
-    <div className="group border-t border-border p-8 md:p-12 transition-colors duration-700 hover:bg-background/50">
-      <div className="text-muted-foreground mb-6 group-hover:text-accent transition-colors duration-500">
-        {icon}
-      </div>
-      <h3 className="text-sm uppercase tracking-[0.15em] text-foreground mb-3 font-medium">
-        {title}
-      </h3>
-      <p className="text-sm text-muted-foreground leading-relaxed">{description}</p>
-    </div>
+  return (
+    <Link href={href} className="tool-cell">
+      <span className="tool-top">
+        <span className="tool-num">{num}</span>
+        <span className="tool-arrow" aria-hidden="true">
+          <ArrowRight />
+        </span>
+      </span>
+      <span className="tool-title">{title}</span>
+      <span className="tool-desc">{description}</span>
+    </Link>
   )
-  if (href) {
-    return <Link href={href}>{content}</Link>
-  }
-  return content
 }
 
 /* ─── Step Card ─── */
@@ -661,14 +641,10 @@ function StepCard({
   description: string
 }) {
   return (
-    <div className="border-t border-border p-8 md:p-12">
-      <span className="font-serif text-5xl md:text-6xl text-foreground/10 leading-none mb-6 block">
-        {String(step).padStart(2, "0")}
-      </span>
-      <h3 className="text-sm uppercase tracking-[0.15em] text-foreground mb-3 font-medium">
-        {title}
-      </h3>
-      <p className="text-sm text-muted-foreground leading-relaxed">{description}</p>
+    <div className="step">
+      <span className="step-num">{String(step).padStart(2, "0")}</span>
+      <strong>{title}</strong>
+      <p>{description}</p>
     </div>
   )
 }
@@ -687,11 +663,11 @@ function UseCaseCard({
 }) {
   const content = (
     <div className="group border-t border-primary-foreground/10 p-8 md:p-12 transition-colors duration-700 hover:bg-background/[0.03]">
-      <h3 className="text-sm uppercase tracking-[0.15em] text-primary-foreground mb-3 font-medium">
+      <h3 className="font-condensed text-sm font-bold uppercase tracking-[0.15em] text-primary-foreground mb-3">
         {title}
       </h3>
       <p className="text-sm text-primary-foreground/50 leading-relaxed mb-6">{description}</p>
-      <div className="flex items-center gap-3 text-[10px] uppercase tracking-[0.25em] text-accent">
+      <div className="flex items-center gap-3 font-condensed text-[10px] font-bold uppercase tracking-[0.25em] text-signal">
         <CheckCircle2 className="h-3 w-3" strokeWidth={1.5} />
         {result}
       </div>
@@ -712,11 +688,11 @@ function ComparisonCard({
   description: string
 }) {
   return (
-    <div className="border-t border-border p-8 md:p-12">
-      <h3 className="text-sm uppercase tracking-[0.15em] text-foreground mb-3 font-medium">
+    <div className="border-t border-ink p-8 md:p-12">
+      <h3 className="font-condensed text-sm font-bold uppercase tracking-[0.15em] text-foreground mb-3">
         {title}
       </h3>
-      <p className="text-sm text-muted-foreground leading-relaxed">{description}</p>
+      <p className="text-sm text-ink-soft leading-relaxed">{description}</p>
     </div>
   )
 }
@@ -734,7 +710,7 @@ function StatCard({
       <span className="font-serif text-3xl md:text-4xl text-primary-foreground leading-none block mb-2">
         {value}
       </span>
-      <span className="text-[10px] uppercase tracking-[0.25em] text-primary-foreground/50">
+      <span className="font-condensed text-[10px] font-bold uppercase tracking-[0.25em] text-primary-foreground/50">
         {label}
       </span>
     </div>
