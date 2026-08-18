@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { getTranslations, setRequestLocale } from "next-intl/server"
 import { routing } from "@/i18n/routing"
+import { buildOgImages, openGraphLocale } from "@/lib/seo/metadata"
 import { JsonLd } from "@/components/JsonLd"
 import { SiteFooter } from "@/components/SiteFooter"
 import { SiteFrame } from "@/components/SiteFrame"
@@ -44,11 +45,14 @@ export async function generateMetadata({
       url: canonicalUrl,
       siteName: "ImgSplit",
       type: "website",
+      locale: openGraphLocale(locale),
+      images: buildOgImages(t("title")),
     },
     twitter: {
       card: "summary_large_image",
       title: t("title"),
       description: t("description"),
+      images: [`${BASE_URL}/og-image.png`],
     },
   }
 }
@@ -72,7 +76,7 @@ export default async function AboutPage({
           "@id": `${BASE_URL}/#organization`,
           name: "ImgSplit",
           url: BASE_URL,
-          logo: `${BASE_URL}/favicon.svg`,
+          logo: `${BASE_URL}/logo-256.png`,
           sameAs: [
             "https://github.com/ZooHero500",
             "https://x.com/zooheroes",
@@ -277,6 +281,24 @@ export default async function AboutPage({
               </h3>
               <p className="text-sm text-ink-soft leading-relaxed">
                 {t("tech.items.freeDesc")}
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* BRAND */}
+      <section className="border-t border-ink py-12 sm:py-16 md:py-24 px-4 sm:px-8 md:px-16">
+        <div className="max-w-[1600px] mx-auto">
+          <div className="grid grid-cols-12 gap-8 md:gap-16">
+            <div className="col-span-12 md:col-span-4">
+              <span className="text-[10px] uppercase tracking-[0.3em] text-ink-soft mb-4 block">
+                {t("brand.title")}
+              </span>
+            </div>
+            <div className="col-span-12 md:col-span-7 md:col-start-6">
+              <p className="text-sm sm:text-base text-ink-soft leading-relaxed">
+                {t("brand.description")}
               </p>
             </div>
           </div>

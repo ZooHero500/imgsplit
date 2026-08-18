@@ -416,209 +416,9 @@ const data: Record<string, ToolPageData> = {
     ],
   },
 
-  "photo-splitter": {
-    slug: "photo-splitter",
-    category: "use-case",
-    seo: {
-      title: "Divisor de Fotos Online — Grátis | ImgSplit",
-      description: "Divisor de fotos online gratuito — divida qualquer foto em várias partes com precisão de arrastar e soltar. Sem upload para servidores, 100% no navegador, funciona em qualquer dispositivo.",
-      ogTitle: "Divisor de Fotos — Ferramenta Online Grátis",
-      ogDescription: "Divida qualquer foto em várias partes na hora. Grátis, privado, no navegador.",
-    },
-    hero: {
-      overline: "Ferramenta de Divisão de Fotos",
-      headlinePart1: "Divisor de",
-      headlineAccent: "Fotos",
-      headlinePart2: "— Grátis e Instantâneo",
-      description: "Divida qualquer foto em várias partes com precisão de pixel. Linhas de arrastar e soltar, alinhamento automático e download imediato — tudo no seu navegador.",
-    },
-    scenarios: [
-      {
-        icon: "Camera",
-        title: "Pós-Produção Fotográfica",
-        description: "Divida fotos de grupo, panorâmicas ou composições em seções individuais para editar, compartilhar ou imprimir separadamente.",
-      },
-      {
-        icon: "Smartphone",
-        title: "Gestão de Fotos no Celular",
-        description: "Divida fotos tiradas no celular em seções — extraia rostos, recorte detalhes ou separe o primeiro plano do fundo.",
-      },
-      {
-        icon: "ShoppingBag",
-        title: "Preparação de Fotos de Produto",
-        description: "Divida fotos de produto em imagens de detalhe para anúncios de e-commerce — mostre ângulos, recursos ou close-ups a partir de uma única foto original.",
-      },
-    ],
-    howToSteps: [
-      { stepNumber: 1, title: "Envie sua Foto", description: "Arraste e solte ou clique para enviar qualquer foto — PNG, JPG ou WebP de até 20 MB." },
-      { stepNumber: 2, title: "Posicione as Linhas de Corte", description: "Adicione linhas horizontais ou verticais e arraste-as para dividir a foto exatamente onde quiser." },
-      { stepNumber: 3, title: "Visualize e Ajuste", description: "Veja cada parte em tempo real. Faça o ajuste fino das linhas com o alinhamento automático para máxima precisão." },
-      { stepNumber: 4, title: "Baixe as Partes", description: "Baixe todas as partes em um arquivo ZIP ou salve seções individuais uma a uma." },
-    ],
-    faqEntries: [
-      { question: "Quais formatos de foto são aceitos?", answer: "Fotos PNG, JPG/JPEG e WebP são aceitas, com tamanho máximo de 20 MB por foto." },
-      { question: "Dividir reduz a qualidade da minha foto?", answer: "Não. Cada parte mantém a resolução e os pixels originais. Não há compressão nem redimensionamento — zero perda de qualidade garantida." },
-      { question: "Posso dividir uma foto em partes desiguais?", answer: "Sim. Arraste as linhas de corte para qualquer posição e crie partes de tamanhos personalizados. Você não está limitado a divisões iguais." },
-      { question: "Existe limite de quantas partes posso criar?", answer: "Você pode adicionar até 20 linhas horizontais e 20 verticais, criando centenas de partes a partir de uma única foto." },
-      { question: "Funciona com fotos do celular?", answer: "Sim — funciona com qualquer foto de qualquer dispositivo. A ferramenta roda no navegador do celular também, então você pode dividir fotos direto no smartphone." },
-    ],
-    relatedTools: [
-      { slug: "/split-in-half", title: "Dividir ao Meio", description: "A divisão mais simples — qualquer imagem em duas metades iguais." },
-      { slug: "/split-into-equal-parts", title: "Divisor em Partes Iguais", description: "Divida imagens em segmentos perfeitamente iguais." },
-      { slug: "/split-for-instagram", title: "Divisor para Instagram", description: "Divida fotos para carrosséis e grades do Instagram." },
-      { slug: "/", title: "Divisor de Imagens", description: "Divisão completa de imagens com linhas personalizadas de arrastar e soltar." },
-    ],
-  },
 
-  "image-cutter": {
-    slug: "image-cutter",
-    category: "use-case",
-    seo: {
-      title: "Cortador de Imagem Online — Grátis | ImgSplit",
-      description: "Cortador de imagem online gratuito — corte qualquer imagem em partes com controle preciso. Arraste linhas de corte, use o encaixe automático e baixe na hora. Sem upload, 100% no navegador.",
-      ogTitle: "Cortador de Imagem Online — Ferramenta Grátis",
-      ogDescription: "Corte qualquer imagem em partes com precisão de arrastar e soltar. Grátis e no navegador.",
-    },
-    hero: {
-      overline: "Ferramenta de Corte de Imagem",
-      headlinePart1: "Cortador de",
-      headlineAccent: "Imagem",
-      headlinePart2: "— Corte com Precisão",
-      description: "Corte qualquer imagem em várias partes com linhas de arrastar e soltar. Precisão de pixel, alinhamento automático e download imediato — sem instalar nenhum software.",
-    },
-    scenarios: [
-      {
-        icon: "Scissors",
-        title: "Recursos para Web Design",
-        description: "Corte mockups de design em recursos individuais — cabeçalhos, botões, ícones e seções de conteúdo — prontos para implementação em HTML/CSS.",
-      },
-      {
-        icon: "Mail",
-        title: "Fatias para Templates de E-mail",
-        description: "Corte designs de e-mail em seções de imagem otimizadas para templates HTML que renderizam perfeitamente em todos os clientes de e-mail.",
-      },
-      {
-        icon: "FileImage",
-        title: "Extração de Regiões de Documentos",
-        description: "Corte regiões específicas de documentos digitalizados, certificados ou capturas de tela — extraia exatamente a seção que precisa sem descartar o resto.",
-      },
-    ],
-    howToSteps: [
-      { stepNumber: 1, title: "Envie sua Imagem", description: "Envie qualquer imagem — PNG, JPG ou WebP. Arraste e solte ou clique para selecionar." },
-      { stepNumber: 2, title: "Posicione as Linhas de Corte", description: "Adicione linhas horizontais e verticais. Arraste-as para definir exatamente onde a imagem deve ser dividida." },
-      { stepNumber: 3, title: "Baixe as Partes Cortadas", description: "Visualize cada parte e baixe tudo de uma vez em ZIP ou escolha seções individuais." },
-    ],
-    faqEntries: [
-      { question: "Qual é a diferença entre cortar e recortar (crop)?", answer: "O recorte (crop) remove as bordas externas da imagem para manter uma região. O corte divide a imagem inteira em várias partes — nada é descartado, cada pixel é preservado em uma das partes." },
-      { question: "Posso cortar uma imagem em formas irregulares?", answer: "A ferramenta usa linhas retas horizontais e verticais, produzindo partes retangulares. Para formas não retangulares, considere usar uma ferramenta de máscara dedicada." },
-      { question: "Qual é a precisão das linhas de corte?", answer: "As linhas se encaixam nos limites de pixel e permitem um arrasto refinado. Você pode posicioná-las com precisão de um pixel." },
-      { question: "Existe um tamanho máximo de imagem?", answer: "Arquivos de até 20 MB são aceitos. Não há limite de dimensões em pixels, mas imagens muito grandes podem levar um instante para processar." },
-    ],
-    relatedTools: [
-      { slug: "/no-photoshop-slicer", title: "Fatiador sem Photoshop", description: "Uma alternativa gratuita à ferramenta de fatias do Photoshop para dividir imagens rapidamente." },
-      { slug: "/split-horizontally", title: "Divisor Horizontal", description: "Corte imagens em faixas e tiras horizontais." },
-      { slug: "/split-vertically", title: "Divisor Vertical", description: "Corte imagens em colunas verticais." },
-      { slug: "/", title: "Divisor de Imagens", description: "Divisão completa com linhas de arrastar e soltar." },
-    ],
-  },
 
-  "grid-maker": {
-    slug: "grid-maker",
-    category: "use-case",
-    seo: {
-      title: "Criador de Grade de Imagens — Grátis Online | ImgSplit",
-      description: "Criador de grade de imagens online gratuito — crie grades 2x2, 3x3, 4x4 ou personalizadas a partir de qualquer imagem. Perfeito para redes sociais, moodboards e colagens. No navegador.",
-      ogTitle: "Criador de Grade de Imagens — Ferramenta Grátis",
-      ogDescription: "Crie grades de imagem para redes sociais, moodboards e mais. Grátis e no navegador.",
-    },
-    hero: {
-      overline: "Ferramenta de Criação de Grades",
-      headlinePart1: "Criador de",
-      headlineAccent: "Grade de Imagens",
-      headlinePart2: "— Qualquer Layout",
-      description: "Crie grades de imagem perfeitas — 2x2, 3x3, 4x4 ou qualquer layout personalizado. Ideal para perfis de redes sociais, moodboards e narrativas visuais.",
-    },
-    scenarios: [
-      {
-        icon: "LayoutGrid",
-        title: "Perfis em Grade nas Redes Sociais",
-        description: "Crie layouts de grade impressionantes que transformam seu perfil em uma galeria visual coesa — cada bloco é parte de uma imagem maior.",
-      },
-      {
-        icon: "Palette",
-        title: "Moodboards e Painéis de Inspiração",
-        description: "Divida imagens de referência em blocos organizados para moodboards de design, exploração de paletas de cores ou sessões de brainstorming visual.",
-      },
-      {
-        icon: "Presentation",
-        title: "Visuais para Apresentações",
-        description: "Crie visuais em grade para apresentações — divida infográficos, quadros comparativos ou visualizações de dados em blocos limpos e organizados.",
-      },
-    ],
-    howToSteps: [
-      { stepNumber: 1, title: "Envie sua Imagem", description: "Envie a imagem que você quer dividir em grade. Aceita PNG, JPG e WebP." },
-      { stepNumber: 2, title: "Defina sua Grade", description: "Adicione linhas horizontais e verticais uniformes para criar o layout desejado — 2x2, 3x3 ou qualquer configuração personalizada." },
-      { stepNumber: 3, title: "Baixe os Blocos da Grade", description: "Visualize todos os blocos e baixe-os em um ZIP. Os blocos são numerados para facilitar a ordenação." },
-    ],
-    faqEntries: [
-      { question: "Quais tamanhos de grade posso criar?", answer: "Qualquer tamanho — de 2x2 a 10x10 e além. Adicione quantas linhas horizontais e verticais precisar (até 20 de cada)." },
-      { question: "Os blocos da grade ficam perfeitamente iguais?", answer: "Use o alinhamento automático para distribuir as linhas por igual. As linhas se encaixam em posições de intervalos iguais, gerando blocos perfeitamente uniformes." },
-      { question: "Posso criar grades não quadradas, como 2x3 ou 3x4?", answer: "Sim. Adicione números diferentes de linhas horizontais e verticais para criar qualquer layout de grade retangular." },
-      { question: "Qual é a melhor grade para o Instagram?", answer: "Uma grade 1x3 (3 blocos verticais) é ótima para carrosséis. Uma grade 3x3 (9 blocos) cria um efeito de mosaico impressionante na página do seu perfil." },
-    ],
-    relatedTools: [
-      { slug: "/grid", title: "Divisor em Grade", description: "Divisões rápidas predefinidas: 3×3, 1×3, 2×2 — otimizadas para redes sociais." },
-      { slug: "/split-for-instagram", title: "Divisor para Instagram", description: "Divida imagens especificamente para carrosséis e grades do Instagram." },
-      { slug: "/split-into-equal-parts", title: "Divisor em Partes Iguais", description: "Divida imagens em segmentos perfeitamente iguais." },
-      { slug: "/split-for-wechat", title: "Grade para Redes Sociais", description: "Divida imagens em blocos de grade para perfis de redes sociais." },
-    ],
-  },
 
-  "compress-image": {
-    slug: "compress-image",
-    category: "use-case",
-    seo: {
-      title: "Comprimir Imagem Online — Grátis e Privado | ImgSplit",
-      description: "Comprima imagens online de graça — reduza o tamanho do arquivo mantendo a qualidade visual. No navegador, sem upload para servidores, aceita JPEG, PNG e WebP.",
-      ogTitle: "Comprimir Imagem Online — Grátis e Privado",
-      ogDescription: "Reduza o tamanho de arquivos de imagem na hora, no navegador. Grátis, privado, sem upload.",
-    },
-    hero: {
-      overline: "Ferramenta de Compressão de Imagem",
-      headlinePart1: "Comprima",
-      headlineAccent: "Imagens",
-      headlinePart2: "— na Hora",
-      description: "Reduza o tamanho de arquivos de imagem sem perda visível de qualidade. Aceita JPEG, PNG e WebP — tudo roda no navegador, nada sai do seu dispositivo.",
-    },
-    scenarios: [
-      {
-        icon: "Globe",
-        title: "Otimização para Web",
-        description: "Comprima imagens antes de enviar para o seu site — páginas mais rápidas, melhores Core Web Vitals e melhor posicionamento no Google sem sacrificar a qualidade visual.",
-      },
-      {
-        icon: "Mail",
-        title: "Anexos de E-mail",
-        description: "Diminua anexos de imagem para caber nos limites de e-mail. Mantenha suas fotos bonitas ficando abaixo do limite de 10 MB ou 25 MB por anexo.",
-      },
-    ],
-    howToSteps: [
-      { stepNumber: 1, title: "Envie sua Imagem", description: "Arraste e solte ou clique para enviar qualquer imagem JPEG, PNG ou WebP que você quer comprimir." },
-      { stepNumber: 2, title: "Ajuste a Qualidade", description: "Use o controle de qualidade para equilibrar tamanho de arquivo e qualidade visual. Visualize o resultado em tempo real antes de baixar." },
-      { stepNumber: 3, title: "Baixe o Arquivo Comprimido", description: "Baixe sua imagem otimizada — arquivo menor, mesma ótima aparência. Compare os tamanhos antes e depois na hora." },
-    ],
-    faqEntries: [
-      { question: "Comprimir uma imagem reduz a qualidade?", answer: "A compressão reduz o tamanho do arquivo removendo dados redundantes. Em configurações de qualidade acima de 70%, a diferença visual costuma ser imperceptível ao olho humano." },
-      { question: "Quais formatos de imagem posso comprimir?", answer: "Você pode comprimir imagens JPEG, PNG e WebP. Para compressão máxima, considere converter para WebP, que oferece a melhor relação entre tamanho e qualidade." },
-      { question: "Existe limite de tamanho de arquivo para envio?", answer: "Você pode enviar imagens de até 20 MB. A ferramenta processa tudo no navegador, então arquivos maiores podem levar um pouco mais de tempo." },
-    ],
-    relatedTools: [
-      { slug: "/compress-jpeg", title: "Comprimir JPEG", description: "Compressão especializada de JPEG com controle de qualidade." },
-      { slug: "/png-to-webp", title: "PNG para WebP", description: "Converta PNG para WebP para compressão máxima." },
-      { slug: "/resize", title: "Redimensionar Imagem", description: "Redimensione imagens para dimensões exatas ou porcentagens." },
-      { slug: "/", title: "Divisor de Imagens", description: "Divida imagens em várias partes com linhas de arrastar e soltar." },
-    ],
-  },
 
   "compress-jpeg": {
     slug: "compress-jpeg",
@@ -659,9 +459,9 @@ const data: Record<string, ToolPageData> = {
       { question: "Qual é a diferença entre JPEG e JPG?", answer: "Nenhuma — JPG e JPEG são o mesmo formato. A extensão '.jpg', mais curta, se popularizou no Windows, que originalmente limitava as extensões a 3 caracteres." },
     ],
     relatedTools: [
-      { slug: "/compress-image", title: "Comprimir Imagem", description: "Compressão de imagem de uso geral para qualquer formato." },
+      { slug: "/compress", title: "Comprimir Imagem", description: "Compressão de imagem de uso geral para qualquer formato." },
       { slug: "/jpg-to-webp", title: "JPG para WebP", description: "Converta JPEG para WebP e obtenha arquivos ainda menores." },
-      { slug: "/reduce-image-size", title: "Reduzir Tamanho de Imagem", description: "Otimize qualquer imagem para o menor tamanho de arquivo." },
+      { slug: "/png-to-webp", title: "PNG para WebP", description: "Converta PNG para WebP e obtenha arquivos ainda menores." },
     ],
   },
 
@@ -706,7 +506,7 @@ const data: Record<string, ToolPageData> = {
     relatedTools: [
       { slug: "/png-to-webp", title: "PNG para WebP", description: "Converta PNG para WebP e obtenha arquivos muito menores com transparência." },
       { slug: "/png-to-jpg", title: "PNG para JPG", description: "Converta PNG para JPEG e obtenha arquivos menores quando não precisar de transparência." },
-      { slug: "/compress-image", title: "Comprimir Imagem", description: "Compressão de imagem de uso geral para qualquer formato." },
+      { slug: "/compress", title: "Comprimir Imagem", description: "Compressão de imagem de uso geral para qualquer formato." },
     ],
   },
 
@@ -980,50 +780,6 @@ const data: Record<string, ToolPageData> = {
     ],
   },
 
-  "reduce-image-size": {
-    slug: "reduce-image-size",
-    category: "use-case",
-    seo: {
-      title: "Reduzir Tamanho de Imagem Online — Grátis | ImgSplit",
-      description: "Reduza o tamanho de arquivos de imagem online de graça. Otimize imagens JPEG, PNG e WebP para web, e-mail e armazenamento. No navegador, privado, sem upload.",
-      ogTitle: "Reduzir Tamanho de Imagem — Otimizador Online Grátis",
-      ogDescription: "Otimize e reduza o tamanho de imagens na hora. Grátis, privado, no navegador.",
-    },
-    hero: {
-      overline: "Redutor de Tamanho de Imagem",
-      headlinePart1: "Reduza o Tamanho",
-      headlineAccent: "da Imagem",
-      headlinePart2: "— Otimização Instantânea",
-      description: "Otimize qualquer imagem para o menor tamanho de arquivo possível. Compressão inteligente para JPEG, PNG e WebP — perfeito para sites mais rápidos, menos armazenamento e uploads mais ágeis.",
-    },
-    scenarios: [
-      {
-        icon: "Zap",
-        title: "Velocidade do Site",
-        description: "Imagens grandes são a principal causa de sites lentos. Reduza o tamanho das imagens para melhorar drasticamente o tempo de carregamento, a taxa de rejeição e o posicionamento nos buscadores.",
-      },
-      {
-        icon: "FileDown",
-        title: "Otimização de Armazenamento",
-        description: "Pouco espaço na nuvem ou no dispositivo? Reduza o tamanho das imagens da sua biblioteca de fotos e libere gigabytes sem apagar nenhuma imagem.",
-      },
-    ],
-    howToSteps: [
-      { stepNumber: 1, title: "Envie sua Imagem", description: "Arraste e solte ou selecione qualquer imagem JPEG, PNG ou WebP que você quer diminuir." },
-      { stepNumber: 2, title: "Otimize as Configurações", description: "Ajuste a qualidade de compressão e, se quiser, mude o formato de saída. O WebP costuma oferecer a melhor redução de tamanho." },
-      { stepNumber: 3, title: "Baixe a Imagem Otimizada", description: "Salve o arquivo menor. A ferramenta mostra exatamente os bytes economizados e a porcentagem de redução." },
-    ],
-    faqEntries: [
-      { question: "Qual é a melhor forma de reduzir o tamanho de uma imagem?", answer: "Três estratégias funcionam melhor: comprimir ajustando a qualidade (mais rápido), converter para o formato WebP (mais eficaz) ou redimensionar para dimensões menores (mais agressivo). Combinar as três gera os menores arquivos." },
-      { question: "Quanto posso reduzir o tamanho de uma imagem?", answer: "Reduções típicas ficam entre 40-80%, dependendo da imagem de origem e das configurações. Converter um JPEG de 5 MB para WebP com qualidade 80 facilmente gera um arquivo de 500 KB." },
-      { question: "Reduzir o tamanho do arquivo afeta a qualidade de impressão?", answer: "Para web e telas, uma imagem bem comprimida fica idêntica à original. Para impressão profissional, mantenha a qualidade acima de 90% e evite compressão excessiva." },
-    ],
-    relatedTools: [
-      { slug: "/compress-image", title: "Comprimir Imagem", description: "Compressão de imagem de uso geral com opções de formato." },
-      { slug: "/compress-jpeg", title: "Comprimir JPEG", description: "Compressão especializada para fotos JPEG." },
-      { slug: "/png-to-webp", title: "PNG para WebP", description: "Converta para WebP e obtenha a melhor taxa de compressão." },
-    ],
-  },
 
   "crop-image": {
     slug: "crop-image",
@@ -1073,7 +829,7 @@ const data: Record<string, ToolPageData> = {
     relatedTools: [
       { slug: "/instagram-story-crop", title: "Corte de Story do Instagram", description: "Corte imagens verticais 9:16 para stories." },
       { slug: "/resize", title: "Redimensionador de Imagem", description: "Redimensione e corte em qualquer dimensão." },
-      { slug: "/compress-image", title: "Comprimir Imagem", description: "Reduza o tamanho final da imagem antes de compartilhar." },
+      { slug: "/compress", title: "Comprimir Imagem", description: "Reduza o tamanho final da imagem antes de compartilhar." },
     ],
   },
 

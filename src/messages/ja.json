@@ -85,10 +85,10 @@
     "headlineAccent": "活用シーン",
     "ecommerceTitle": "ECサイト",
     "ecommerceDesc": "長い商品画像をセクションごとに分割し、表示エリアに最適化 — ページ読み込み速度の向上とUX改善に。",
-    "ecommerceResult": "ページ読み込み速度40%以上向上",
+    "ecommerceResult": "ページ読み込みがより高速に",
     "designerTitle": "UIデザイナー",
     "designerDesc": "Photoshop を開かずにデザインスライスを素早くエクスポート — ブラウザ上でアセット納品が完結。",
-    "designerResult": "アセット書き出し速度3倍",
+    "designerResult": "数秒で書き出し完了",
     "socialTitle": "SNS投稿",
     "socialDesc": "パノラマや長い画像を複数のタイルに分割し、グリッド投稿でプロフェッショナルな仕上がりに。",
     "socialResult": "よりプロフェッショナルな投稿に"
@@ -109,7 +109,7 @@
     "feature5": "あらゆるワークフローに対応",
     "feature5Desc": "ECの商品写真分割、デザインモックアップのスライス、SNSグリッド投稿の作成、プレゼン資料の準備——ImgSplitはあなたのワークフローに適応します。各方向最大20本の分割線で任意のレイアウトを作成。",
     "feature6": "オープンソース＆透明性",
-    "feature6Desc": "ImgSplitはGitHubで公開されているオープンソースソフトウェアです。誰でもコードを検査し、プライバシーの主張を検証し、改善に貢献できます。"
+    "feature6Desc": "ImgSplitはGitHubで公開されているオープンソースソフトウェアです。誰でもコードを検査し、プライバシーの主張を検証し、改善に貢献できます。画像はデバイスから一切送信されません。匿名のプロダクト分析（Vercel Analytics）とエラー監視（Sentry）を使用しています。広告 Cookie なし、個人の特定なし。"
   },
   "stats": {
     "overline": "数字で見る",
@@ -123,7 +123,7 @@
     "stat3Label": "サーバーへのデータ送信",
     "stat4Value": "100%",
     "stat4Label": "永久無料",
-    "stat5Value": "5",
+    "stat5Value": "6",
     "stat5Label": "対応言語数",
     "stat6Value": "3",
     "stat6Label": "画像形式"
@@ -346,17 +346,21 @@
     },
     "tech": {
       "title": "仕組み",
-      "description": "ImgSplit は HTML5 Canvas API を使用して、完全にブラウザ内で動作します。画像を分割する際、処理はデバイス上でローカルに行われます——サーバーとの通信なし、アップロードなし、データ収集なし。このアーキテクチャにより、ゼロレイテンシー、完全なプライバシー、初回ページ読み込み後のオフライン動作を実現しています。",
+      "description": "ImgSplit は HTML5 Canvas API を使用して、完全にブラウザ内で動作します。画像を分割する際、処理はデバイス上でローカルに行われます——サーバーとの通信なし、アップロードなし。画像はデバイスから一切送信されません。ツール改善のため、匿名のプロダクト分析（Vercel Analytics）とエラー監視（Sentry）を使用しています。このアーキテクチャにより、ゼロレイテンシー、完全なプライバシー、初回ページ読み込み後のオフライン動作を実現しています。",
       "items": {
         "browser": "100% ブラウザベース",
         "browserDesc": "すべての画像処理は HTML5 Canvas API を使用。画像がデバイスから外に出ることは一切ありません。",
         "opensource": "オープンソース",
         "opensourceDesc": "ソースコード全体が GitHub で公開されています。閲覧、貢献、フォーク——すべて透明です。",
         "privacy": "プライバシー・バイ・デザイン",
-        "privacyDesc": "追跡 Cookie なし、画像分析なし、サーバーサイド処理なし。それだけです。",
+        "privacyDesc": "画像はデバイスから一切送信されません。匿名のプロダクト分析とエラー監視を使用していますが、画像の内容を分析することはありません。広告 Cookie なし、個人の特定なし、サーバーサイドの画像処理なし。",
         "free": "永久無料",
         "freeDesc": "有料プランなし、プレミアム機能なし、登録不要。ImgSplit は常に無料です。"
       }
+    },
+    "brand": {
+      "title": "ブランドに関する注意",
+      "description": "ImgSplit（imgsplit.com）は、npm パッケージ @imgsplit/core、github.com/imgsplit/imgsplit、imgsplit.com.tr とは一切関係ありません。公式ソースリポジトリは github.com/ZooHero500/imgsplit です。"
     },
     "contact": {
       "title": "お問い合わせ",
@@ -648,7 +652,55 @@
     "refineBatchHint": "次にキューで実行する一括処理に適用されます。",
     "downloadReady": "背景を削除しました。",
     "previewFailed": "結果プレビューを表示できませんでした。",
-    "exportFailed": "結果を書き出せませんでした。"
+    "exportFailed": "結果を書き出せませんでした。",
+    "landing": {
+      "hero": {
+        "overline": "AI背景削除",
+        "headlinePart1": "背景を抜くのは",
+        "headlineAccent": "ローカル Worker",
+        "description": "初回だけ端末にモデルを入れれば、ブラウザの Web Worker が被写体を切り抜きます。写真はアップロードせず、このパソコン内で処理します。"
+      },
+      "features": {
+        "overline": "できること",
+        "headlinePart1": "切り抜きは",
+        "headlineAccent": "端末の中",
+        "item1Title": "Web Worker 上のローカル AI",
+        "item1Desc": "モデルキャッシュ後、推論は Worker 内。画像ビットマップは ImgSplit のサーバーへ行きません。",
+        "item2Title": "モデルは一度だけ取得",
+        "item2Desc": "初回実行でローカル RMBG モデルを取得し、このブラウザにキャッシュ。次回以降はたいてい再取得しません。",
+        "item3Title": "エッジの後処理",
+        "item3Desc": "実行前にアルファ閾値、収縮/拡張、ぼかしを設定。スライダーを変えたら再実行できます。",
+        "item4Title": "透明書き出し、アップロードなし",
+        "item4Desc": "透明 PNG / WebP、または白背景 JPEG。複数枚はキューで処理し、完了分を ZIP にできます。"
+      },
+      "steps": {
+        "overline": "使い方",
+        "headlinePart1": "4つの",
+        "headlineAccent": "手順",
+        "step1Title": "写真を入れる",
+        "step1Desc": "PNG / JPEG / WebP、最大 20MB。まとめて処理するなら続けて追加します。",
+        "step2Title": "初回だけモデルを入れる",
+        "step2Desc": "キャッシュがなければ初回にローカルモデルを取得します。写真は端末に残ります。",
+        "step3Title": "輪郭を整える",
+        "step3Desc": "残りの霞、被写体の内側寄せ、柔らかさを調整し、Worker で削除または再実行します。",
+        "step4Title": "書き出す",
+        "step4Desc": "透明 PNG/WebP か白背景 JPEG。バッチの完了分は ZIP で保存できます。"
+      },
+      "faq": {
+        "overline": "FAQ",
+        "headlinePart1": "よくある",
+        "headlineAccent": "質問",
+        "subtitle": "「ブラウザ内のローカル AI」が写真に対して何をするか。",
+        "q1": "写真はアップロードされますか？",
+        "a1": "されません。画像のデコードと推論はこのタブの Web Worker 内です。ダウンロードされるのは公開モデルだけで、写真ではありません。",
+        "q2": "なぜ初回にモデルを落としますか？",
+        "a2": "背景削除にはローカル ONNX モデル（RMBG）が必要です。一度取得してブラウザにキャッシュし、再利用します。あなたの画像はそのダウンロードに含まれません。",
+        "q3": "何形式で書き出せますか？",
+        "a3": "透明 PNG、透明 WebP、白背景の JPEG です。WebP と JPEG は品質を指定できます。",
+        "q4": "一括処理はできますか？",
+        "a4": "できます。キューに追加し、エッジ設定を一度決めて一括実行したあと、完成した切り抜きの ZIP をダウンロードします。"
+      }
+    }
   },
   "aiSegmentation": {
     "title": "AI自動分割",
@@ -742,7 +794,55 @@
     "ratio1_1": "1:1",
     "ratio4_3": "4:3",
     "ratio16_9": "16:9",
-    "ratio3_2": "3:2"
+    "ratio3_2": "3:2",
+    "landing": {
+      "hero": {
+        "overline": "リサイズ",
+        "headlinePart1": "SNSサイズへ",
+        "headlineAccent": "ブラウザで合わせる",
+        "description": "任意キャンバス、または Instagram / YouTube / Facebook のプリセットを選び、ドラッグ・トリミング・回転して書き出します。すべて端末内。アップロードはありません。"
+      },
+      "features": {
+        "overline": "できること",
+        "headlinePart1": "ピクセル指定、",
+        "headlineAccent": "送信なし",
+        "item1Title": "SNSプリセット",
+        "item1Desc": "Instagram 正方形 1080×1080、ストーリー 1080×1920、YouTube サムネ 1280×720、Facebook カバー 1640×924。1:1 / 4:3 / 16:9 / 9:16 もあります。",
+        "item2Title": "任意キャンバスとドラッグ配置",
+        "item2Desc": "幅と高さ（最大 4096px）を入力し、アートボード上でドラッグ。フィットまたは塗りつぶしで拡大縮小します。",
+        "item3Title": "トリミング・回転・反転",
+        "item3Desc": "自由、または 1:1 / 4:3 / 16:9 / 3:2 固定。書き出し前に 90° 回転と左右/上下反転が可能です。",
+        "item4Title": "ローカルな PNG / JPEG / WebP",
+        "item4Desc": "書き出しはブラウザ内。/resize?preset=instagram-story でそのキャンバスを開けます。"
+      },
+      "steps": {
+        "overline": "使い方",
+        "headlinePart1": "4つの",
+        "headlineAccent": "手順",
+        "step1Title": "画像を入れる",
+        "step1Desc": "PNG / JPEG / WebP をアートボードへ。読み込みはローカルです。",
+        "step2Title": "サイズを決める",
+        "step2Desc": "SNSプリセットか任意ピクセル。?preset=youtube-thumbnail は読み込み時に適用されます。",
+        "step3Title": "配置とトリミング",
+        "step3Desc": "ドラッグでフレーミング、フィット/フィル、比率トリミング、回転と反転。",
+        "step4Title": "ダウンロード",
+        "step4Desc": "設定したキャンバスサイズで PNG / JPEG / WebP を書き出します。"
+      },
+      "faq": {
+        "overline": "FAQ",
+        "headlinePart1": "よくある",
+        "headlineAccent": "質問",
+        "subtitle": "プリセット、トリミング、プライバシーについて。",
+        "q1": "どのSNSプリセットがありますか？",
+        "a1": "Instagram 正方形 1080×1080、ストーリー 1080×1920、YouTube サムネ 1280×720、Facebook カバー 1640×924。1:1、4:3、3:4、16:9、9:16 もあります。",
+        "q2": "画像はサーバーに送られますか？",
+        "a2": "送られません。リサイズ、トリミング、書き出しはブラウザの Canvas API です。ファイルはこの端末に留まります。",
+        "q3": "固定比率で切れますか？",
+        "a3": "切れます。トリミングモードで 1:1 / 4:3 / 16:9 / 3:2 を固定するか、自由にします。ハンドルを動かして適用してください。",
+        "q4": "リンクでプリセットを開けますか？",
+        "a4": "開けます。/resize に ?preset=instagram-square（または instagram-story、youtube-thumbnail、facebook-cover など）を付けます。そのキャンバスでエディタが開きます。"
+      }
+    }
   },
   "watermark": {
     "metadata": {
@@ -794,7 +894,55 @@
     "templateBrand": "ブランド",
     "templateBrandDesc": "上部コーナーにロゴ風テキストを配置。",
     "templateSubtle": "控えめ",
-    "templateSubtleDesc": "仕上げ写真向けの低不透明度中央マーク。"
+    "templateSubtleDesc": "仕上げ写真向けの低不透明度中央マーク。",
+    "landing": {
+      "hero": {
+        "overline": "透かしツール",
+        "headlinePart1": "文字もロゴも",
+        "headlineAccent": "アップロード不要",
+        "description": "コピーライト、ロゴ、斜めの繰り返し透かしを重ねられます。レイヤー・不透明度・回転・間隔はブラウザ内で編集。写真はこの端末から出ません。"
+      },
+      "features": {
+        "overline": "できること",
+        "headlinePart1": "写真を守る、",
+        "headlineAccent": "この端末で",
+        "item1Title": "テキストとロゴのレイヤー",
+        "item1Desc": "コピーライト文と PNG / JPEG / WebP のロゴを重ね、サイズ・不透明度・回転を個別に調整できます。",
+        "item2Title": "単体配置またはタイル繰り返し",
+        "item2Desc": "1点だけ置くか、X/Y 間隔で全面に敷けます。校正用の斜め繰り返しにも対応します。",
+        "item3Title": "テンプレート",
+        "item3Desc": "隅・中央・斜め・密集・ブランド・控えめのプリセットから始め、選択中のレイヤーを微調整できます。",
+        "item4Title": "ローカル書き出し、アップロードなし",
+        "item4Desc": "合成は Canvas API。PNG / JPEG / WebP で保存でき、元写真はサーバーに送られません。"
+      },
+      "steps": {
+        "overline": "使い方",
+        "headlinePart1": "4つの",
+        "headlineAccent": "手順",
+        "step1Title": "写真を入れる",
+        "step1Desc": "PNG / JPEG / WebP をドロップ。プレビューはこの端末内にあります。",
+        "step2Title": "文字かロゴを追加",
+        "step2Desc": "テキストレイヤーまたはロゴ画像を挿入。同じ写真に両方置けます。",
+        "step3Title": "位置とタイル",
+        "step3Desc": "ドラッグ、拡大縮小、不透明度、回転。繰り返しモードで間隔も調整できます。",
+        "step4Title": "書き出す",
+        "step4Desc": "PNG / JPEG / WebP を選んで、透かし入りファイルを保存します。"
+      },
+      "faq": {
+        "overline": "FAQ",
+        "headlinePart1": "よくある",
+        "headlineAccent": "質問",
+        "subtitle": "文字・ロゴ・タイル透かしの動き方です。",
+        "q1": "文字とロゴを同時に置けますか？",
+        "a1": "置けます。テキストとロゴを何層でも追加し、選択した層のサイズ・不透明度・回転・繰り返しを編集します。",
+        "q2": "タイル透かしはどう使いますか？",
+        "a2": "レイヤーを「繰り返し」にして X/Y 間隔と回転を設定します。斜め・密集テンプレートは校正や公開プレビュー向きです。",
+        "q3": "写真はアップロードされますか？",
+        "a3": "されません。合成はブラウザ内です。ImgSplit は写真もロゴも受け取りません。",
+        "q4": "書き出し形式は？",
+        "a4": "PNG、JPEG、WebP です。JPEG と WebP は品質を指定でき、PNG はキャンバスの透明を保てます。"
+      }
+    }
   },
   "mosaic": {
     "metadata": {
@@ -998,7 +1146,55 @@
     "changeImage": "変更",
     "processing": "処理中...",
     "compressFailed": "一部の画像を処理できませんでした。",
-    "ready": "完了"
+    "ready": "完了",
+    "landing": {
+      "hero": {
+        "overline": "画像圧縮",
+        "headlinePart1": "圧縮と変換は",
+        "headlineAccent": "ブラウザ内で",
+        "description": "JPEG / PNG / WebP を切り替え、品質を調整して容量を見比べてから保存します。処理は端末内だけ。画像はアップロードされません。"
+      },
+      "features": {
+        "overline": "できること",
+        "headlinePart1": "ファイルは小さく、",
+        "headlineAccent": "端末の外へは出ない",
+        "item1Title": "JPEG / PNG / WebP 変換",
+        "item1Desc": "出力形式をワンクリックで変更。JPEG と WebP は 10–100 の品質スライダー、PNG は可逆のままです。",
+        "item2Title": "圧縮前後の比較",
+        "item2Desc": "左右プレビューで元データと結果を並べ、削減バイト数を確認してから書き出せます。",
+        "item3Title": "一括圧縮して ZIP",
+        "item3Desc": "複数枚をまとめて圧縮し、結果をひとつの ZIP でダウンロードできます。",
+        "item4Title": "ブラウザ内処理、アップロードなし",
+        "item4Desc": "圧縮は Canvas API でこのブラウザが実行します。ファイルは端末に留まります。"
+      },
+      "steps": {
+        "overline": "使い方",
+        "headlinePart1": "4つの",
+        "headlineAccent": "手順",
+        "step1Title": "画像を入れる",
+        "step1Desc": "PNG / JPEG / WebP を追加。?format=webp&quality=80 のような URL 指定はエディタ起動時に適用されます。",
+        "step2Title": "形式と品質を選ぶ",
+        "step2Desc": "PNG / JPEG / WebP を選び、スライダーを動かします。JPEG と WebP はすぐ再圧縮されます。",
+        "step3Title": "結果を見比べる",
+        "step3Desc": "左右プレビューと削減量を確認してから書き出します。",
+        "step4Title": "ダウンロード",
+        "step4Desc": "1枚なら単体保存、複数なら ZIP です。"
+      },
+      "faq": {
+        "overline": "FAQ",
+        "headlinePart1": "よくある",
+        "headlineAccent": "質問",
+        "subtitle": "ブラウザ内圧縮と形式変換の具体的な仕様です。",
+        "q1": "どの形式へ変換できますか？",
+        "a1": "PNG、JPEG、WebP です。同じ形式のまま圧縮することも、JPEG から WebP のように変換することもでき、アップロードは不要です。",
+        "q2": "画像はサーバーに送られますか？",
+        "a2": "送られません。圧縮も変換もブラウザ内だけです。ImgSplit はファイルを受け取りません。",
+        "q3": "品質スライダーはどう効きますか？",
+        "a3": "JPEG と WebP では 10–100 が非可逆圧縮を制御します。高いほど細部が残り、容量も増えます。PNG は可逆なのでスライダーは使いません。",
+        "q4": "まとめて圧縮できますか？",
+        "a4": "できます。複数枚を追加し、すべて結果が出てから圧縮済み画像の ZIP をダウンロードしてください。"
+      }
+    }
   },
   "carousel": {
     "metadata": {

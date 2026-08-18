@@ -417,169 +417,9 @@ const data: Record<string, ToolPageData> = {
     ],
   },
 
-  "photo-splitter": {
-    slug: "photo-splitter",
-    category: "use-case",
-    seo: {
-      title: "온라인 사진 분할기 — 무료 이미지 분할 도구 | ImgSplit",
-      description: "무료 온라인 사진 분할 도구 — 드래그 앤 드롭으로 사진을 정밀하게 여러 조각으로 분할. 서버 업로드 불필요, 100% 브라우저 처리.",
-      ogTitle: "사진 분할기 — 무료 온라인 도구",
-      ogDescription: "사진을 여러 조각으로 즉시 분할. 무료, 안전, 브라우저 기반.",
-    },
-    hero: {
-      overline: "사진 분할 도구",
-      headlinePart1: "사진",
-      headlineAccent: "분할기",
-      headlinePart2: "— 무료 & 즉시",
-      description: "모든 사진을 픽셀 단위 정밀도로 여러 조각으로 분할. 드래그 앤 드롭 분할선, 스냅 정렬, 즉시 다운로드 — 모두 브라우저에서 처리.",
-    },
-    scenarios: [
-      { icon: "Camera", title: "사진 후처리", description: "단체 사진, 파노라마, 합성 이미지를 개별 섹션으로 분할하여 편집, 공유, 인쇄에 활용." },
-      { icon: "Smartphone", title: "모바일 사진 관리", description: "휴대폰 사진을 분할하여 얼굴 추출, 세부 사항 크롭, 전경과 배경 분리." },
-      { icon: "ShoppingBag", title: "상품 사진 제작", description: "상품 사진을 세부 샷으로 분할하여 이커머스 상세 페이지에서 다양한 각도와 클로즈업 표시." },
-    ],
-    howToSteps: [
-      { stepNumber: 1, title: "사진 업로드", description: "드래그 앤 드롭 또는 클릭으로 업로드 — PNG, JPG, WebP 지원, 최대 20MB." },
-      { stepNumber: 2, title: "분할선 배치", description: "수평 또는 수직 분할선을 추가하고 원하는 위치로 드래그." },
-      { stepNumber: 3, title: "미리보기 & 조정", description: "각 분할 영역을 실시간으로 확인. 스냅 정렬로 분할선 미세 조정." },
-      { stepNumber: 4, title: "다운로드", description: "모든 조각을 ZIP으로 다운로드하거나 개별 저장." },
-    ],
-    faqEntries: [
-      { question: "지원되는 사진 형식은?", answer: "PNG, JPG/JPEG, WebP 형식 지원. 파일당 최대 20MB." },
-      { question: "분할하면 화질이 떨어지나요?", answer: "아닙니다. 각 조각은 원본 해상도와 픽셀 데이터를 유지합니다. 압축이나 리샘플링 없이 화질 손실 제로." },
-      { question: "모바일에서도 사용할 수 있나요?", answer: "네. 모바일 브라우저에서도 원활하게 작동하며, 스마트폰에서 직접 사진을 분할할 수 있습니다." },
-    ],
-    relatedTools: [
-      { slug: "/split-in-half", title: "반으로 분할", description: "가장 간단한 분할 — 이미지를 2등분." },
-      { slug: "/split-into-equal-parts", title: "균등 분할", description: "이미지를 완전히 동일한 크기로 분할." },
-      { slug: "/split-for-instagram", title: "인스타그램 분할", description: "인스타그램 캐러셀과 그리드 포스트용 사진 분할." },
-      { slug: "/", title: "이미지 분할기", description: "드래그 앤 드롭 분할선으로 자유롭게 분할." },
-    ],
-  },
 
-  "image-cutter": {
-    slug: "image-cutter",
-    category: "use-case",
-    seo: {
-      title: "온라인 이미지 커터 — 무료 정밀 절단 도구 | ImgSplit",
-      description: "무료 온라인 이미지 커터 — 드래그 앤 드롭으로 이미지를 정밀하게 절단. 업로드 불필요, 100% 브라우저 처리.",
-      ogTitle: "온라인 이미지 커터 — 무료 도구",
-      ogDescription: "이미지를 드래그 앤 드롭으로 정밀하게 절단. 무료, 브라우저 기반.",
-    },
-    hero: {
-      overline: "이미지 절단 도구",
-      headlinePart1: "이미지",
-      headlineAccent: "커터",
-      headlinePart2: "— 정밀하게 절단",
-      description: "드래그 앤 드롭 절단선으로 모든 이미지를 정밀하게 분할. 픽셀 단위 정밀도, 스냅 정렬, 즉시 다운로드.",
-    },
-    scenarios: [
-      { icon: "Scissors", title: "웹 디자인 에셋 절단", description: "디자인 목업을 헤더, 버튼, 아이콘 등 개별 에셋으로 절단하여 HTML/CSS 구현에 활용." },
-      { icon: "Mail", title: "이메일 템플릿 슬라이싱", description: "이메일 디자인을 최적화된 이미지 섹션으로 분할하여 모든 이메일 클라이언트에서 완벽하게 렌더링." },
-      { icon: "FileImage", title: "문서 영역 추출", description: "스캔 문서나 스크린샷에서 특정 영역을 정확하게 추출." },
-    ],
-    howToSteps: [
-      { stepNumber: 1, title: "이미지 업로드", description: "PNG, JPG, WebP 이미지를 드래그 앤 드롭 또는 클릭으로 업로드." },
-      { stepNumber: 2, title: "절단선 배치", description: "수평 및 수직 절단선을 추가하고 정확한 절단 위치를 정의." },
-      { stepNumber: 3, title: "절단 결과 다운로드", description: "각 조각을 미리 보고 ZIP으로 일괄 다운로드 또는 개별 저장." },
-    ],
-    faqEntries: [
-      { question: "절단과 크롭의 차이는?", answer: "크롭은 이미지 가장자리를 제거하여 하나의 영역만 남기는 것. 절단은 이미지 전체를 여러 조각으로 나누는 것으로 — 모든 픽셀이 보존됩니다." },
-      { question: "절단선의 정밀도는?", answer: "절단선은 픽셀 경계에 스냅되며, 단일 픽셀 정밀도로 배치할 수 있습니다." },
-      { question: "이미지 크기 제한이 있나요?", answer: "20MB까지의 파일을 지원합니다. 픽셀 크기 제한은 없습니다." },
-    ],
-    relatedTools: [
-      { slug: "/no-photoshop-slicer", title: "포토샵 없이 슬라이스", description: "포토샵 슬라이스 도구의 무료 대안." },
-      { slug: "/split-horizontally", title: "수평 분할", description: "이미지를 수평 행과 스트립으로 분할." },
-      { slug: "/split-vertically", title: "수직 분할", description: "이미지를 수직 열로 분할." },
-      { slug: "/", title: "이미지 분할기", description: "드래그 앤 드롭 분할선으로 자유롭게 절단." },
-    ],
-  },
 
-  "grid-maker": {
-    slug: "grid-maker",
-    category: "use-case",
-    seo: {
-      title: "이미지 그리드 메이커 — 무료 온라인 그리드 생성 | ImgSplit",
-      description: "무료 온라인 이미지 그리드 메이커 — 2x2, 3x3, 4x4 또는 커스텀 그리드 생성. SNS, 무드보드에 최적. 브라우저 기반.",
-      ogTitle: "이미지 그리드 메이커 — 무료 온라인 도구",
-      ogDescription: "SNS, 무드보드 등에 최적인 이미지 그리드 생성. 무료, 브라우저 기반.",
-    },
-    hero: {
-      overline: "그리드 생성 도구",
-      headlinePart1: "이미지",
-      headlineAccent: "그리드 메이커",
-      headlinePart2: "— 자유로운 레이아웃",
-      description: "2x2, 3x3, 4x4 또는 커스텀 레이아웃으로 완벽한 이미지 그리드 생성. SNS 프로필, 무드보드, 비주얼 스토리텔링에 최적.",
-    },
-    scenarios: [
-      { icon: "LayoutGrid", title: "SNS 그리드 프로필", description: "SNS 프로필을 통일감 있는 비주얼 갤러리로 변환하는 멋진 그리드 레이아웃을 제작." },
-      { icon: "Palette", title: "무드보드 & 영감 보드", description: "참조 이미지를 체계적인 그리드 타일로 분할하여 디자인 무드보드와 컬러 팔레트 탐색에 활용." },
-      { icon: "Presentation", title: "프레젠테이션 비주얼", description: "인포그래픽이나 데이터 시각화를 깔끔한 그리드 레이아웃으로 분할." },
-    ],
-    howToSteps: [
-      { stepNumber: 1, title: "이미지 업로드", description: "그리드로 분할할 이미지를 업로드. PNG, JPG, WebP 지원." },
-      { stepNumber: 2, title: "그리드 정의", description: "균등한 수평·수직 분할선을 추가하여 2x2, 3x3 등 원하는 레이아웃 생성." },
-      { stepNumber: 3, title: "그리드 타일 다운로드", description: "모든 타일을 미리 보고 ZIP으로 다운로드. 타일은 순서대로 번호 매김." },
-    ],
-    faqEntries: [
-      { question: "어떤 크기의 그리드를 만들 수 있나요?", answer: "2x2부터 10x10 이상까지 자유롭게 생성 가능. 각 방향 최대 20개의 분할선." },
-      { question: "타일 크기가 완전히 동일한가요?", answer: "스냅 정렬 기능으로 분할선을 균등한 간격에 자동 배치하여 완전히 동일한 타일을 생성합니다." },
-      { question: "인스타그램에 가장 좋은 그리드는?", answer: "1x3 그리드는 캐러셀 포스트에 최적. 3x3 그리드는 프로필 페이지에서 놀라운 모자이크 효과를 연출." },
-    ],
-    relatedTools: [
-      { slug: "/grid", title: "그리드 분할", description: "프리셋 그리드: 3×3, 1×3, 2×2 — SNS에 최적화." },
-      { slug: "/split-for-instagram", title: "인스타그램 분할", description: "인스타그램 캐러셀 및 그리드 포스트 전용." },
-      { slug: "/split-into-equal-parts", title: "균등 분할", description: "이미지를 완전히 동일한 크기로 분할." },
-      { slug: "/split-for-wechat", title: "SNS 그리드", description: "SNS 프로필용 그리드 타일 분할." },
-    ],
-  },
 
-  "compress-image": {
-    slug: "compress-image",
-    category: "use-case",
-    seo: {
-      title: "온라인 이미지 압축 — 무료 & 개인정보 보호 | ImgSplit",
-      description: "무료 온라인 이미지 압축 — 시각적 품질을 유지하면서 파일 크기를 줄이세요. 브라우저 기반, 서버 업로드 불필요, JPEG, PNG, WebP 지원.",
-      ogTitle: "온라인 이미지 압축 — 무료 & 개인정보 보호",
-      ogDescription: "브라우저에서 이미지 파일 크기를 즉시 줄이세요. 무료, 안전, 업로드 불필요.",
-    },
-    hero: {
-      overline: "이미지 압축 도구",
-      headlinePart1: "이미지",
-      headlineAccent: "압축",
-      headlinePart2: "— 즉시 완료",
-      description: "눈에 띄는 품질 저하 없이 이미지 파일 크기를 줄이세요. JPEG, PNG, WebP 지원 — 모든 처리가 브라우저에서 이루어지며 데이터는 기기를 떠나지 않습니다.",
-    },
-    scenarios: [
-      {
-        icon: "Globe",
-        title: "웹 최적화",
-        description: "웹사이트에 업로드하기 전에 이미지를 압축하세요 — 시각적 품질을 희생하지 않으면서 페이지 로딩 속도 향상, Core Web Vitals 개선, SEO 순위 향상을 달성할 수 있습니다.",
-      },
-      {
-        icon: "Mail",
-        title: "이메일 첨부파일",
-        description: "이미지 첨부파일을 압축하여 이메일 크기 제한에 맞추세요. 사진의 좋은 화질을 유지하면서 10MB 또는 25MB 첨부 제한 내로 유지합니다.",
-      },
-    ],
-    howToSteps: [
-      { stepNumber: 1, title: "이미지 업로드", description: "압축할 JPEG, PNG 또는 WebP 이미지를 드래그 앤 드롭하거나 클릭하여 업로드하세요." },
-      { stepNumber: 2, title: "품질 조정", description: "품질 슬라이더로 파일 크기와 시각적 품질의 균형을 조정하세요. 다운로드 전에 실시간으로 결과를 미리 볼 수 있습니다." },
-      { stepNumber: 3, title: "압축 파일 다운로드", description: "최적화된 이미지를 다운로드하세요 — 더 작은 파일 크기, 동일한 멋진 화질. 압축 전후 크기를 즉시 비교해 보세요." },
-    ],
-    faqEntries: [
-      { question: "이미지를 압축하면 품질이 떨어지나요?", answer: "압축은 중복 데이터를 제거하여 파일 크기를 줄입니다. 70% 이상의 품질 설정에서는 시각적 차이가 육안으로 거의 인지할 수 없습니다." },
-      { question: "어떤 이미지 형식을 압축할 수 있나요?", answer: "JPEG, PNG, WebP 이미지를 압축할 수 있습니다. 최대한의 압축을 위해서는 크기 대비 품질 비율이 가장 우수한 WebP 형식으로의 변환을 권장합니다." },
-      { question: "업로드 파일 크기 제한이 있나요?", answer: "최대 20MB의 이미지를 업로드할 수 있습니다. 모든 처리가 브라우저에서 이루어지므로 큰 파일은 처리 시간이 약간 더 걸릴 수 있습니다." },
-    ],
-    relatedTools: [
-      { slug: "/compress-jpeg", title: "JPEG 압축", description: "품질 제어가 가능한 전문 JPEG 압축." },
-      { slug: "/png-to-webp", title: "PNG를 WebP로", description: "PNG를 WebP로 변환하여 최대한의 압축 달성." },
-      { slug: "/resize", title: "이미지 크기 조정", description: "이미지를 정확한 크기 또는 백분율로 조정." },
-      { slug: "/", title: "이미지 분할 도구", description: "드래그 앤 드롭 분할선으로 이미지를 여러 조각으로 분할." },
-    ],
-  },
 
   "compress-jpeg": {
     slug: "compress-jpeg",
@@ -620,9 +460,9 @@ const data: Record<string, ToolPageData> = {
       { question: "JPEG와 JPG의 차이점은 무엇인가요?", answer: "차이가 없습니다 — JPG와 JPEG는 동일한 형식을 가리킵니다. 짧은 '.jpg' 확장자는 원래 확장자를 3글자로 제한했던 Windows에서 보편화되었습니다." },
     ],
     relatedTools: [
-      { slug: "/compress-image", title: "이미지 압축", description: "모든 형식에 대응하는 범용 이미지 압축." },
+      { slug: "/compress", title: "이미지 압축", description: "모든 형식에 대응하는 범용 이미지 압축." },
       { slug: "/jpg-to-webp", title: "JPG를 WebP로", description: "JPEG를 WebP로 변환하여 더 작은 파일 크기 달성." },
-      { slug: "/reduce-image-size", title: "이미지 크기 줄이기", description: "모든 이미지를 최소 파일 크기로 최적화." },
+      { slug: "/png-to-webp", title: "PNG를 WebP로", description: "PNG를 WebP로 변환하여 더 작은 파일 크기 달성." },
     ],
   },
 
@@ -667,7 +507,7 @@ const data: Record<string, ToolPageData> = {
     relatedTools: [
       { slug: "/png-to-webp", title: "PNG를 WebP로", description: "PNG를 WebP로 변환하여 투명도를 유지하면서 획기적으로 작은 파일로." },
       { slug: "/png-to-jpg", title: "PNG를 JPG로", description: "투명도가 필요 없을 때 PNG를 JPEG로 변환하여 더 작은 파일로." },
-      { slug: "/compress-image", title: "이미지 압축", description: "모든 형식에 대응하는 범용 이미지 압축." },
+      { slug: "/compress", title: "이미지 압축", description: "모든 형식에 대응하는 범용 이미지 압축." },
     ],
   },
 
@@ -941,50 +781,6 @@ const data: Record<string, ToolPageData> = {
     ],
   },
 
-  "reduce-image-size": {
-    slug: "reduce-image-size",
-    category: "use-case",
-    seo: {
-      title: "이미지 크기 줄이기 — 무료 파일 최적화 도구 | ImgSplit",
-      description: "무료 온라인으로 이미지 파일 크기를 줄이세요. JPEG, PNG, WebP 이미지를 웹, 이메일, 저장용으로 최적화. 브라우저 기반, 개인정보 보호, 서버 업로드 불필요.",
-      ogTitle: "이미지 크기 줄이기 — 무료 온라인 최적화 도구",
-      ogDescription: "이미지 파일 크기를 즉시 최적화하고 줄이세요. 무료, 안전, 브라우저 기반.",
-    },
-    hero: {
-      overline: "이미지 크기 축소",
-      headlinePart1: "이미지",
-      headlineAccent: "크기",
-      headlinePart2: "줄이기 — 즉시 최적화",
-      description: "모든 이미지를 최소 파일 크기로 최적화하세요. JPEG, PNG, WebP의 지능형 압축 — 더 빠른 웹사이트, 적은 저장 공간, 빠른 업로드에 최적입니다.",
-    },
-    scenarios: [
-      {
-        icon: "Zap",
-        title: "웹사이트 속도",
-        description: "큰 이미지는 웹사이트 속도 저하의 1순위 원인입니다. 이미지 크기를 줄여 페이지 로딩 시간, 이탈률, 검색 엔진 순위를 극적으로 개선하세요.",
-      },
-      {
-        icon: "FileDown",
-        title: "저장 공간 최적화",
-        description: "클라우드 저장 공간이나 기기 용량이 부족하신가요? 사진 라이브러리의 이미지 크기를 줄여 이미지를 삭제하지 않고도 기가바이트 단위의 공간을 확보하세요.",
-      },
-    ],
-    howToSteps: [
-      { stepNumber: 1, title: "이미지 업로드", description: "크기를 줄이고 싶은 JPEG, PNG 또는 WebP 이미지를 드래그 앤 드롭하거나 선택하세요." },
-      { stepNumber: 2, title: "설정 최적화", description: "압축 품질을 조정하고 선택적으로 출력 형식을 변경하세요. WebP가 일반적으로 가장 효과적인 크기 감소를 제공합니다." },
-      { stepNumber: 3, title: "최적화된 이미지 다운로드", description: "작아진 이미지 파일을 저장하세요. 도구가 정확한 절약 바이트 수와 감소 비율을 표시합니다." },
-    ],
-    faqEntries: [
-      { question: "이미지 파일 크기를 줄이는 가장 좋은 방법은?", answer: "세 가지 전략이 가장 효과적입니다: 품질 조정을 통한 압축(가장 빠름), WebP 형식으로 변환(가장 효과적), 또는 더 작은 치수로 리사이즈(가장 적극적). 세 가지를 모두 조합하면 가장 작은 파일을 얻을 수 있습니다." },
-      { question: "이미지 파일 크기를 얼마나 줄일 수 있나요?", answer: "소스 이미지와 설정에 따라 일반적으로 40-80%의 감소가 가능합니다. 5MB JPEG를 품질 80의 WebP로 변환하면 500KB 파일을 쉽게 만들 수 있습니다." },
-      { question: "파일 크기를 줄이면 인쇄 품질에 영향을 미치나요?", answer: "웹 및 화면 용도에서는 잘 압축된 이미지가 원본과 동일하게 보입니다. 전문 인쇄용에는 품질을 90% 이상으로 유지하고 과도한 압축을 피하세요." },
-    ],
-    relatedTools: [
-      { slug: "/compress-image", title: "이미지 압축", description: "형식 옵션을 갖춘 범용 이미지 압축." },
-      { slug: "/compress-jpeg", title: "JPEG 압축", description: "JPEG 사진 전용 압축." },
-      { slug: "/png-to-webp", title: "PNG를 WebP로", description: "최적의 압축률을 위해 WebP로 변환." },
-    ],
-  },
 
   "crop-image": {
     slug: "crop-image",
@@ -1034,7 +830,7 @@ const data: Record<string, ToolPageData> = {
     relatedTools: [
       { slug: "/instagram-story-crop", title: "Instagram Story 자르기", description: "9:16 세로 Story 이미지 만들기." },
       { slug: "/resize", title: "이미지 크기 조정", description: "임의 크기로 리사이즈 및 자르기." },
-      { slug: "/compress-image", title: "이미지 압축", description: "공유 전 최종 이미지 크기 줄이기." },
+      { slug: "/compress", title: "이미지 압축", description: "공유 전 최종 이미지 크기 줄이기." },
     ],
   },
 

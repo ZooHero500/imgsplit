@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { getTranslations, setRequestLocale } from "next-intl/server"
 import { routing } from "@/i18n/routing"
+import { buildOgImages, openGraphLocale } from "@/lib/seo/metadata"
 import { JsonLd } from "@/components/JsonLd"
 import { SiteFooter } from "@/components/SiteFooter"
 import { SiteFrame } from "@/components/SiteFrame"
@@ -43,11 +44,14 @@ export async function generateMetadata({
       url: canonicalUrl,
       siteName: "ImgSplit",
       type: "website",
+      locale: openGraphLocale(locale),
+      images: buildOgImages(t("title")),
     },
     twitter: {
       card: "summary_large_image",
       title: t("title"),
       description: t("description"),
+      images: [`${BASE_URL}/og-image.png`],
     },
   }
 }
@@ -153,6 +157,31 @@ export default async function PrivacyPage({
               <p className="text-sm text-ink-soft leading-relaxed">
                 {t("sections.collection.content")}
               </p>
+              <ul className="mt-4 space-y-2">
+                {(["analytics", "errors", "locale"] as const).map((key) => (
+                  <li
+                    key={key}
+                    className="text-sm text-ink-soft leading-relaxed pl-4 border-l border-ink/30"
+                  >
+                    {t(`sections.collection.items.${key}`)}
+                  </li>
+                ))}
+              </ul>
+              <p className="text-sm text-ink-soft leading-relaxed mt-6">
+                {t("sections.collection.noCollect")}
+              </p>
+              <ul className="mt-4 space-y-2">
+                {(["images", "personal", "accounts", "tracking"] as const).map(
+                  (key) => (
+                    <li
+                      key={key}
+                      className="text-sm text-ink-soft leading-relaxed pl-4 border-l border-ink/30"
+                    >
+                      {t(`sections.collection.noItems.${key}`)}
+                    </li>
+                  )
+                )}
+              </ul>
             </div>
           </div>
         </section>
@@ -185,6 +214,16 @@ export default async function PrivacyPage({
               <p className="text-sm text-ink-soft leading-relaxed">
                 {t("sections.thirdParty.content")}
               </p>
+              <ul className="mt-4 space-y-2">
+                {(["vercel", "sentry"] as const).map((key) => (
+                  <li
+                    key={key}
+                    className="text-sm text-ink-soft leading-relaxed pl-4 border-l border-ink/30"
+                  >
+                    {t(`sections.thirdParty.items.${key}`)}
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </section>

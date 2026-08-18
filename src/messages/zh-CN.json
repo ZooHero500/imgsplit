@@ -85,10 +85,10 @@
     "headlineAccent": "可能",
     "ecommerceTitle": "电商运营",
     "ecommerceDesc": "将长图商品详情页按模块分割，上传到不同的商品展示区域，提升页面加载速度。",
-    "ecommerceResult": "页面加载速度提升 40%+",
+    "ecommerceResult": "页面加载更快",
     "designerTitle": "UI 设计师",
     "designerDesc": "快速将设计稿切片导出，无需打开 Photoshop，直接在浏览器中完成切图交付。",
-    "designerResult": "切图效率提升 3 倍",
+    "designerResult": "几秒完成导出",
     "socialTitle": "社交媒体",
     "socialDesc": "将全景图或长图分割成多张小图，制作九宫格拼图效果，提升社交平台发布质量。",
     "socialResult": "发布体验更专业"
@@ -109,7 +109,7 @@
     "feature5": "适配每种工作流",
     "feature5Desc": "无论你是电商卖家分割商品图、设计师切割设计稿、社交媒体运营创建九宫格，还是学生准备演示材料——ImgSplit 都能适配你的工作流。支持每个方向最多 20 条分割线，创建任意布局。",
     "feature6": "开源透明",
-    "feature6Desc": "ImgSplit 是发布在 GitHub 上的开源软件。任何人都可以审查代码、验证我们的隐私承诺并贡献改进。没有隐藏追踪、没有数据收集、没有意外。"
+    "feature6Desc": "ImgSplit 是发布在 GitHub 上的开源软件。任何人都可以审查代码、验证我们的隐私承诺并贡献改进。图片从不离开你的设备；我们使用匿名产品分析（Vercel Analytics）和错误监控（Sentry）；没有广告 cookie、不追踪个人身份。"
   },
   "stats": {
     "overline": "数据说话",
@@ -123,7 +123,7 @@
     "stat3Label": "上传到服务器的数据",
     "stat4Value": "100%",
     "stat4Label": "永久免费",
-    "stat5Value": "5",
+    "stat5Value": "6",
     "stat5Label": "支持语言数",
     "stat6Value": "3",
     "stat6Label": "图片格式"
@@ -346,17 +346,21 @@
     },
     "tech": {
       "title": "工作原理",
-      "description": "ImgSplit 完全在您的浏览器中运行，使用 HTML5 Canvas API。当您分割图片时，处理过程在您的设备上本地完成——没有服务器往返、没有上传、没有数据收集。这种架构确保了零延迟、完全的隐私保护，并在首次加载页面后支持离线使用。",
+      "description": "ImgSplit 完全在您的浏览器中运行，使用 HTML5 Canvas API。当您分割图片时，处理过程在您的设备上本地完成——没有服务器往返、没有上传。图片从不离开你的设备。我们使用匿名产品分析（Vercel Analytics）和错误监控（Sentry）来改进工具。这种架构确保了零延迟、完全的隐私保护，并在首次加载页面后支持离线使用。",
       "items": {
         "browser": "100% 基于浏览器",
         "browserDesc": "所有图片处理都使用 HTML5 Canvas API。您的图片永远不会离开您的设备。",
         "opensource": "开源",
         "opensourceDesc": "完整源代码在 GitHub 上公开。查看、贡献或 Fork——一切透明公开。",
         "privacy": "隐私优先设计",
-        "privacyDesc": "没有 Cookie 追踪您，没有对您图片的分析，没有服务器端处理。就是这样。",
+        "privacyDesc": "图片从不离开你的设备。我们使用匿名产品分析和错误监控——但从不分析你的图片内容。没有广告 cookie、不追踪个人身份、没有服务器端图片处理。",
         "free": "永久免费",
         "freeDesc": "没有付费墙，没有高级版，无需注册。ImgSplit 将永远免费。"
       }
+    },
+    "brand": {
+      "title": "品牌说明",
+      "description": "ImgSplit（imgsplit.com）与 npm 包 @imgsplit/core、github.com/imgsplit/imgsplit、imgsplit.com.tr 均无关联。官方源码仓库为 github.com/ZooHero500/imgsplit。"
     },
     "contact": {
       "title": "联系我们",
@@ -648,7 +652,55 @@
     "refineBatchHint": "会应用到下一次排队的批量运行。",
     "downloadReady": "背景已移除。",
     "previewFailed": "无法渲染结果预览。",
-    "exportFailed": "无法导出结果。"
+    "exportFailed": "无法导出结果。",
+    "landing": {
+      "hero": {
+        "overline": "AI 抠图",
+        "headlinePart1": "去掉背景",
+        "headlineAccent": "在本地 Worker 里",
+        "description": "首次下载一次本地模型后，浏览器 Web Worker 即可抠出主体。照片不会上传，推理留在这台电脑上。"
+      },
+      "features": {
+        "overline": "功能亮点",
+        "headlinePart1": "私人抠图，",
+        "headlineAccent": "不出设备",
+        "item1Title": "浏览器 Worker 里跑本地 AI",
+        "item1Desc": "模型缓存后，推理在 Web Worker 中进行。图像位图不会发到 ImgSplit 服务器。",
+        "item2Title": "模型只下载一次",
+        "item2Desc": "第一次运行会拉取本地 RMBG 模型并写入浏览器缓存，之后通常不必再下。",
+        "item3Title": "边缘清理",
+        "item3Desc": "运行前可调透明阈值、内缩/外扩和羽化；改过滑杆后可重新抠一次。",
+        "item4Title": "透明导出，不上传",
+        "item4Desc": "可下透明 PNG / WebP，或白底 JPEG。批量队列处理多张，就绪项打成 ZIP。"
+      },
+      "steps": {
+        "overline": "使用步骤",
+        "headlinePart1": "四步",
+        "headlineAccent": "做完",
+        "step1Title": "放入照片",
+        "step1Desc": "支持 PNG、JPEG、WebP，最大 20MB。要批量就继续添加。",
+        "step2Title": "必要时下载一次模型",
+        "step2Desc": "若本浏览器还没有缓存，首次运行会下载本地模型。照片仍留在设备上。",
+        "step3Title": "修边缘",
+        "step3Desc": "调整残影、主体内缩和柔化，再在 Worker 里运行或重跑抠图。",
+        "step4Title": "导出",
+        "step4Desc": "保存透明 PNG/WebP 或白底 JPEG。批量就绪项可打包 ZIP。"
+      },
+      "faq": {
+        "overline": "常见问题",
+        "headlinePart1": "先看这些",
+        "headlineAccent": "再动手",
+        "subtitle": "「浏览器本地 AI」对你的照片意味着什么。",
+        "q1": "照片会上传吗？",
+        "a1": "不会。图片在当前标签页的 Web Worker 里解码和推理。下载的只是公开模型文件，不是你的照片。",
+        "q2": "为什么第一次要下载模型？",
+        "a2": "抠图需要本地 ONNX 模型（RMBG）。它只拉取一次、缓存在浏览器里复用。你的图片不在这次下载里。",
+        "q3": "可以导出什么格式？",
+        "a3": "透明 PNG、透明 WebP，或白底 JPEG。WebP 与 JPEG 可调质量。",
+        "q4": "支持批量吗？",
+        "a4": "支持。把更多图加入队列，统一设好边缘清理，开始批量抠图后下载成品 ZIP。"
+      }
+    }
   },
   "aiSegmentation": {
     "title": "AI 智能分割",
@@ -742,7 +794,55 @@
     "ratio1_1": "1:1",
     "ratio4_3": "4:3",
     "ratio16_9": "16:9",
-    "ratio3_2": "3:2"
+    "ratio3_2": "3:2",
+    "landing": {
+      "hero": {
+        "overline": "调整尺寸",
+        "headlinePart1": "改到社媒尺寸",
+        "headlineAccent": "就在浏览器里",
+        "description": "自定义画布，或一键套 Instagram、YouTube、Facebook 预设，再拖拽、裁剪、旋转后导出。全程留在本机，不会上传。"
+      },
+      "features": {
+        "overline": "功能亮点",
+        "headlinePart1": "精确到像素，",
+        "headlineAccent": "文件不上传",
+        "item1Title": "社媒预设尺寸",
+        "item1Desc": "Instagram 方图 1080×1080、Story 1080×1920、YouTube 封面 1280×720、Facebook 封面 1640×924，以及 1:1、4:3、16:9、9:16。",
+        "item2Title": "自定义画布并拖拽定位",
+        "item2Desc": "输入宽高（最大 4096px），在画板上拖动图片，按适应或填充缩放。",
+        "item3Title": "裁剪、旋转、翻转",
+        "item3Desc": "自由裁或锁定 1:1、4:3、16:9、3:2；导出前可旋转 90°、水平/垂直翻转。",
+        "item4Title": "本地导出 PNG / JPEG / WebP",
+        "item4Desc": "导出在浏览器完成。访问 /resize?preset=instagram-story 会直接打开对应画布。"
+      },
+      "steps": {
+        "overline": "使用步骤",
+        "headlinePart1": "四步",
+        "headlineAccent": "做完",
+        "step1Title": "上传图片",
+        "step1Desc": "把 PNG、JPEG 或 WebP 拖到画板，文件只在本地读取。",
+        "step2Title": "选定尺寸",
+        "step2Desc": "选社媒预设或输入自定义像素。?preset=youtube-thumbnail 这类查询会在加载时生效。",
+        "step3Title": "定位与裁剪",
+        "step3Desc": "拖拽重新构图，切换适应/填充，按比例裁剪，或旋转翻转。",
+        "step4Title": "下载",
+        "step4Desc": "按当前画布尺寸导出 PNG、JPEG 或 WebP。"
+      },
+      "faq": {
+        "overline": "常见问题",
+        "headlinePart1": "先看这些",
+        "headlineAccent": "再动手",
+        "subtitle": "关于预设、裁剪和隐私。",
+        "q1": "有哪些社媒预设？",
+        "a1": "Instagram 方图 1080×1080、Story 1080×1920、YouTube 封面 1280×720、Facebook 封面 1640×924，以及 1:1、4:3、3:4、16:9、9:16。",
+        "q2": "图片会上传到服务器吗？",
+        "a2": "不会。缩放、裁剪和导出都用浏览器 Canvas API，文件不离开这台设备。",
+        "q3": "可以按固定比例裁剪吗？",
+        "a3": "可以。进入裁剪模式后锁定 1:1、4:3、16:9 或 3:2，也可以自由裁。拖动手柄后应用即可。",
+        "q4": "能用链接打开某个预设吗？",
+        "a4": "能。在 /resize 后加上 ?preset=instagram-square（或 instagram-story、youtube-thumbnail、facebook-cover 等目录 id），编辑器会按该画布打开。"
+      }
+    }
   },
   "watermark": {
     "metadata": {
@@ -794,7 +894,55 @@
     "templateBrand": "品牌",
     "templateBrandDesc": "放在顶部角落的品牌文字。",
     "templateSubtle": "轻量",
-    "templateSubtleDesc": "适合成片的低透明度居中水印。"
+    "templateSubtleDesc": "适合成片的低透明度居中水印。",
+    "landing": {
+      "hero": {
+        "overline": "图片水印",
+        "headlinePart1": "文字与 Logo 水印",
+        "headlineAccent": "无需上传",
+        "description": "加上版权文字、Logo，或斜向平铺水印。图层、透明度、旋转和间距都在浏览器里改 —— 原图不会离开这台设备。"
+      },
+      "features": {
+        "overline": "功能亮点",
+        "headlinePart1": "保护照片，",
+        "headlineAccent": "本地完成",
+        "item1Title": "文字层与 Logo 层",
+        "item1Desc": "可叠版权文字和 PNG / JPEG / WebP Logo，分别调整大小、透明度和旋转。",
+        "item2Title": "单点水印或平铺重复",
+        "item2Desc": "放一处标记，或按 X/Y 间距铺满整图，也支持斜向平铺，适合样张防盗。",
+        "item3Title": "现成模板",
+        "item3Desc": "角落、居中、斜向、密集、品牌、轻量等预设可一键套用，再微调当前图层。",
+        "item4Title": "本地导出，不上传",
+        "item4Desc": "合成走本机 Canvas。导出 PNG、JPEG 或 WebP，原图不会发到服务器。"
+      },
+      "steps": {
+        "overline": "使用步骤",
+        "headlinePart1": "四步",
+        "headlineAccent": "做完",
+        "step1Title": "放入照片",
+        "step1Desc": "拖入 PNG、JPEG 或 WebP。预览画布只存在于本机。",
+        "step2Title": "加文字或 Logo",
+        "step2Desc": "插入文字层或 Logo 图，同一张照片上可以同时保留两者。",
+        "step3Title": "定位与平铺",
+        "step3Desc": "拖动、缩放、调透明度、旋转，或切换为重复模式并设置间距。",
+        "step4Title": "导出",
+        "step4Desc": "选择 PNG、JPEG 或 WebP，下载带水印的文件。"
+      },
+      "faq": {
+        "overline": "常见问题",
+        "headlinePart1": "先看这些",
+        "headlineAccent": "再动手",
+        "subtitle": "文字水印、图片水印和平铺如何在浏览器里工作。",
+        "q1": "可以同时加文字和 Logo 吗？",
+        "a1": "可以。按需添加多个文字层和 Logo 层，选中一层后即可改大小、透明度、旋转和平铺。",
+        "q2": "平铺水印怎么用？",
+        "a2": "把图层切到「重复」，再设 X/Y 间距和旋转。斜向、密集模板适合样张或公开预览。",
+        "q3": "照片会上传吗？",
+        "a3": "不会。水印合成在浏览器完成，ImgSplit 收不到原图或 Logo。",
+        "q4": "支持哪些导出格式？",
+        "a4": "PNG、JPEG、WebP。JPEG 与 WebP 可调质量；PNG 可保留画布透明。"
+      }
+    }
   },
   "mosaic": {
     "metadata": {
@@ -998,7 +1146,55 @@
     "changeImage": "换一张",
     "processing": "处理中...",
     "compressFailed": "部分图片处理失败。",
-    "ready": "就绪"
+    "ready": "就绪",
+    "landing": {
+      "hero": {
+        "overline": "图片压缩",
+        "headlinePart1": "压缩与转码",
+        "headlineAccent": "都在浏览器里",
+        "description": "在 JPEG、PNG、WebP 之间转换，拖动质量滑杆并对照压缩前后体积，再下载。全部在本地完成，图片不会上传。"
+      },
+      "features": {
+        "overline": "功能亮点",
+        "headlinePart1": "体积变小，",
+        "headlineAccent": "文件不离机",
+        "item1Title": "JPEG / PNG / WebP 互转",
+        "item1Desc": "一键切换输出格式。JPEG 与 WebP 提供 10–100 质量滑杆；PNG 保持无损。",
+        "item2Title": "压缩前后对照",
+        "item2Desc": "左右预览原图与结果，并显示节省的字节，方便停在可接受的画质。",
+        "item3Title": "批量压缩并打包 ZIP",
+        "item3Desc": "一次拖入多张图，统一压缩后下载一个 ZIP。",
+        "item4Title": "浏览器本地处理，不上传",
+        "item4Desc": "压缩走本机 Canvas API，文件不会离开这台设备。"
+      },
+      "steps": {
+        "overline": "使用步骤",
+        "headlinePart1": "四步",
+        "headlineAccent": "做完",
+        "step1Title": "放入图片",
+        "step1Desc": "添加 PNG、JPEG 或 WebP。地址栏预设如 ?format=webp&quality=80 会在打开编辑器时生效。",
+        "step2Title": "选格式与质量",
+        "step2Desc": "选择 PNG、JPEG 或 WebP，并拖动质量滑杆。JPEG / WebP 会立即重压。",
+        "step3Title": "对照结果",
+        "step3Desc": "看并排预览和节省体积，再决定是否导出。",
+        "step4Title": "下载",
+        "step4Desc": "单张直接下载；多张则打包成 ZIP。"
+      },
+      "faq": {
+        "overline": "常见问题",
+        "headlinePart1": "先看这些",
+        "headlineAccent": "再动手",
+        "subtitle": "关于浏览器端压缩和格式转换的具体说明。",
+        "q1": "可以在哪些格式之间转换？",
+        "a1": "PNG、JPEG、WebP。既可以同格式压缩，也可以互转（例如 JPEG 转 WebP），全程不上传文件。",
+        "q2": "图片会上传到服务器吗？",
+        "a2": "不会。压缩和转码都在浏览器里完成，ImgSplit 收不到你的文件。",
+        "q3": "质量滑杆怎么用？",
+        "a3": "JPEG 和 WebP 的 10–100 控制有损压缩：数值越高细节越多、文件越大。PNG 是无损的，不受该滑杆影响。",
+        "q4": "可以一次压很多张吗？",
+        "a4": "可以。加入多张图，等每张都出结果后，下载包含全部压缩图的 ZIP。"
+      }
+    }
   },
   "carousel": {
     "metadata": {

@@ -6,32 +6,32 @@ const relatedTools: Record<PseoLocale, RelatedTool[]> = {
   en: [
     { slug: "/mosaic", title: "Privacy Mask", description: "Hide sensitive image regions with mosaic, blur, or solid cover." },
     { slug: "/watermark", title: "Watermark Tool", description: "Add ownership marks after preparing private previews." },
-    { slug: "/compress-image", title: "Compress Image", description: "Reduce the file size of the masked result." },
+    { slug: "/compress", title: "Compress Image", description: "Reduce the file size of the masked result." },
   ],
   "zh-CN": [
     { slug: "/mosaic", title: "隐私打码", description: "用马赛克、模糊或纯色遮挡隐藏敏感区域。" },
     { slug: "/watermark", title: "水印工具", description: "处理隐私后再添加版权或品牌标记。" },
-    { slug: "/compress-image", title: "压缩图片", description: "压缩打码后的成品图片。" },
+    { slug: "/compress", title: "压缩图片", description: "压缩打码后的成品图片。" },
   ],
   ja: [
     { slug: "/mosaic", title: "プライバシーマスク", description: "モザイク、ぼかし、塗りつぶしで機密部分を隠します。" },
     { slug: "/watermark", title: "ウォーターマーク", description: "非公開プレビューに所有者表示を追加。" },
-    { slug: "/compress-image", title: "画像圧縮", description: "マスク済み画像を軽量化。" },
+    { slug: "/compress", title: "画像圧縮", description: "マスク済み画像を軽量化。" },
   ],
   ko: [
     { slug: "/mosaic", title: "개인정보 마스크", description: "모자이크, 흐림, 단색 덮기로 민감한 영역을 숨기세요." },
     { slug: "/watermark", title: "워터마크 도구", description: "비공개 미리보기 후 소유자 표시를 추가하세요." },
-    { slug: "/compress-image", title: "이미지 압축", description: "마스크된 결과 파일 크기를 줄이세요." },
+    { slug: "/compress", title: "이미지 압축", description: "마스크된 결과 파일 크기를 줄이세요." },
   ],
   es: [
     { slug: "/mosaic", title: "Máscara privada", description: "Oculta zonas sensibles con mosaico, desenfoque o cobertura sólida." },
     { slug: "/watermark", title: "Marca de agua", description: "Añade marcas de propiedad después de preparar vistas privadas." },
-    { slug: "/compress-image", title: "Comprimir imagen", description: "Reduce el tamaño del resultado enmascarado." },
+    { slug: "/compress", title: "Comprimir imagen", description: "Reduce el tamaño del resultado enmascarado." },
   ],
   "pt-BR": [
     { slug: "/mosaic", title: "Máscara de Privacidade", description: "Oculte áreas sensíveis da imagem com mosaico, desfoque ou tarja sólida." },
     { slug: "/watermark", title: "Marca d'Água", description: "Adicione marcas de propriedade depois de preparar prévias privadas." },
-    { slug: "/compress-image", title: "Comprimir Imagem", description: "Reduza o tamanho do arquivo da imagem já mascarada." },
+    { slug: "/compress", title: "Comprimir Imagem", description: "Reduza o tamanho do arquivo da imagem já mascarada." },
   ],
 }
 
@@ -91,26 +91,6 @@ const seeds: Partial<Record<PseoLocale, ToolPageSeed[]>> = {
       ],
     },
     {
-      slug: "blur-face-in-photo",
-      title: "Blur Face in Photo Online - Free Private Tool | ImgSplit",
-      description: "Blur faces in photos online without uploading your image. Use browser-based blur, mosaic, or solid cover regions for private sharing and posts.",
-      ogTitle: "Blur Face in Photo Online",
-      ogDescription: "Hide faces in photos privately in your browser.",
-      overline: "Face Blur Tool",
-      headlinePart1: "Blur Faces ",
-      headlineAccent: "in Photos",
-      headlinePart2: "Online",
-      heroDescription: "Mask faces before sharing team photos, event pictures, review screenshots, or public posts. Everything runs locally in your browser.",
-      scenarios: [
-        { icon: "Camera", title: "People in Photos", description: "Hide faces in group shots, event photos, or public previews before posting." },
-        { icon: "Shield", title: "Private Sharing", description: "Prepare images for tickets, reports, and messages without exposing identities." },
-      ],
-      faqEntries: [
-        { question: "Does this tool upload my photo?", answer: "No. The image is rendered and exported in your browser." },
-        { question: "Is blur always enough for privacy?", answer: "For high-risk content, use mosaic or solid cover because they are harder to reverse than soft blur." },
-      ],
-    },
-    {
       slug: "pixelate-image",
       title: "Pixelate Image - Free Online Mosaic Tool | ImgSplit",
       description: "Pixelate an image online with adjustable mosaic blocks, brush masks, and image overlays. Hide sensitive areas locally in your browser before sharing.",
@@ -128,26 +108,6 @@ const seeds: Partial<Record<PseoLocale, ToolPageSeed[]>> = {
       faqEntries: [
         { question: "Can I pixelate only part of an image?", answer: "Yes. Draw rectangles or paint brush masks over the specific areas you want to pixelate." },
         { question: "Does pixelating remove metadata?", answer: "The exported image is re-encoded from canvas, so typical embedded metadata is not carried over." },
-      ],
-    },
-    {
-      slug: "pixelate-image-online",
-      title: "Pixelate Image Online - Free Mosaic Tool | ImgSplit",
-      description: "Pixelate parts of an image online with adjustable mosaic blocks. Hide private details in photos and screenshots in your browser without upload.",
-      ogTitle: "Pixelate Image Online",
-      ogDescription: "Add adjustable mosaic blocks to sensitive image regions.",
-      overline: "Pixelate Image",
-      headlinePart1: "Pixelate ",
-      headlineAccent: "Image Areas",
-      headlinePart2: "Fast",
-      heroDescription: "Use adjustable mosaic blocks to hide text, faces, plates, addresses, and screenshot details while keeping the rest of the image readable.",
-      scenarios: [
-        { icon: "FileSearch", title: "Screenshot Cleanup", description: "Pixelate names, account numbers, emails, or message content before sharing." },
-        { icon: "Shield", title: "Irreversible Masking", description: "Use larger blocks for stronger privacy on sensitive details." },
-      ],
-      faqEntries: [
-        { question: "Can I control the pixel size?", answer: "Yes. The mosaic size slider controls how large each pixel block appears." },
-        { question: "Can I pixelate multiple areas?", answer: "Yes. Draw multiple regions and adjust each one independently." },
       ],
     },
     {
@@ -171,26 +131,6 @@ const seeds: Partial<Record<PseoLocale, ToolPageSeed[]>> = {
       ],
     },
     {
-      slug: "mosaic-tool",
-      title: "Mosaic Tool Online - Hide Private Image Details | ImgSplit",
-      description: "Use a free online mosaic tool to cover sensitive image details. Browser-based masking with mosaic, blur, and solid cover modes, no upload.",
-      ogTitle: "Online Mosaic Tool",
-      ogDescription: "Cover sensitive image details with browser-based mosaic masking.",
-      overline: "Online Mosaic Tool",
-      headlinePart1: "Add ",
-      headlineAccent: "Mosaic Masks",
-      headlinePart2: "Privately",
-      heroDescription: "Create clean mosaic masks for faces, documents, license plates, and screenshots without sending the original file to a server.",
-      scenarios: [
-        { icon: "Image", title: "Photo Privacy", description: "Mask faces, signs, addresses, and identifying details in photos." },
-        { icon: "LayoutDashboard", title: "Work Screenshots", description: "Hide dashboards, names, metrics, and internal data before publishing." },
-      ],
-      faqEntries: [
-        { question: "What formats are supported?", answer: "PNG, JPEG, and WebP images are supported." },
-        { question: "Does export keep EXIF metadata?", answer: "Canvas export creates a new image file, so typical embedded metadata is not carried over." },
-      ],
-    },
-    {
       slug: "redact-image",
       title: "Redact Image - Free Photo and Screenshot Privacy Tool | ImgSplit",
       description: "Redact image details with solid cover, mosaic, blur, brush masks, or custom image overlays. Hide private content in your browser before sharing.",
@@ -210,82 +150,42 @@ const seeds: Partial<Record<PseoLocale, ToolPageSeed[]>> = {
         { question: "Can I redact irregular areas?", answer: "Yes. Use the brush tool for freeform areas and the eraser to refine the mask." },
       ],
     },
-    {
-      slug: "redact-image-online",
-      title: "Redact Image Online - Free Screenshot Privacy Tool | ImgSplit",
-      description: "Redact image areas online with solid cover, mosaic, or blur. Hide names, addresses, faces, license plates, and screenshots in your browser.",
-      ogTitle: "Redact Image Online",
-      ogDescription: "Hide sensitive image areas before sharing screenshots or photos.",
-      overline: "Image Redaction",
-      headlinePart1: "Redact ",
-      headlineAccent: "Image Details",
-      headlinePart2: "Online",
-      heroDescription: "Cover sensitive information before sharing screenshots, receipts, forms, chats, documents, or photos with clients and teammates.",
-      scenarios: [
-        { icon: "MessageSquare", title: "Chat Screenshots", description: "Cover names, avatars, messages, phone numbers, and account details." },
-        { icon: "FileSearch", title: "Documents and Receipts", description: "Hide addresses, IDs, order numbers, and billing details before sharing." },
-      ],
-      faqEntries: [
-        { question: "Which mode is strongest for redaction?", answer: "Solid cover is the strongest option because it replaces the selected pixels with a flat color." },
-        { question: "Can I export as JPEG?", answer: "Yes. You can export PNG, JPEG, or WebP and adjust quality for non-PNG formats." },
-      ],
-    },
   ],
 }
 
 seeds["zh-CN"] = localizeSeeds("zh-CN", [
   ["blur-face", "在线模糊人脸 - 免费照片隐私工具 | ImgSplit", "在线模糊照片或截图里的人脸，支持画笔、马赛克、模糊和纯色遮挡，图片无需上传。", "在线模糊人脸", "在浏览器中私密模糊或遮挡人脸。", "在线模糊人脸", "私密", "模糊人脸", "处理", "用本地浏览器编辑、可调模糊、马赛克块和画笔遮罩隐藏照片、截图和公开预览中的人脸。"],
-  ["blur-face-in-photo", "在线模糊照片人脸 - 免费隐私工具 | ImgSplit", "在浏览器中模糊照片里的人脸，也可使用马赛克或纯色遮挡，图片无需上传。", "在线模糊照片人脸", "在浏览器中私密隐藏照片人脸。", "人脸模糊工具", "在线", "模糊人脸", "照片", "分享团队照、活动照或截图前，先隐藏人脸和身份信息。"],
   ["pixelate-image", "图片像素化 - 免费在线马赛克工具 | ImgSplit", "在线像素化图片，支持可调马赛克块、画笔遮罩和图片遮罩图层，在浏览器中隐藏敏感区域。", "在线图片像素化", "用可调马赛克像素化图片区域。", "图片像素化", "在线", "像素化图片", "处理", "给人脸、车牌、文字、截图和隐私细节添加可调像素块，同时保留其他区域清晰。"],
-  ["pixelate-image-online", "在线图片像素化 - 免费马赛克工具 | ImgSplit", "在线像素化图片局部区域，用可调马赛克隐藏照片和截图中的敏感细节。", "在线图片像素化", "为敏感区域添加可调马赛克。", "图片像素化", "快速", "像素化图片", "区域", "用可调马赛克隐藏文字、人脸、车牌、地址和截图细节。"],
   ["censor-image-online", "在线图片遮挡 - 免费隐私打码工具 | ImgSplit", "在线遮挡图片敏感区域，支持马赛克、模糊、纯色遮挡、画笔和自定义图片遮罩。", "在线图片遮挡", "在浏览器中私密遮挡图片敏感区域。", "在线图片遮挡", "快速", "遮挡图片", "区域", "发布或发送图片前，用灵活遮罩覆盖人脸、用户名、文档、车牌和截图。"],
-  ["mosaic-tool", "在线马赛克工具 - 隐藏图片隐私细节 | ImgSplit", "免费在线马赛克工具，支持马赛克、模糊和纯色遮挡，浏览器端处理。", "在线马赛克工具", "用浏览器端马赛克遮挡敏感图片细节。", "在线马赛克工具", "私密添加", "马赛克", "遮挡", "为人脸、文档、车牌和截图创建干净的马赛克遮挡。"],
   ["redact-image", "图片打码 - 免费照片和截图隐私工具 | ImgSplit", "用纯色遮挡、马赛克、模糊、画笔或自定义图片遮罩给图片打码，分享前隐藏隐私内容。", "图片打码", "在本地给照片和截图敏感细节打码。", "图片打码", "私密", "给图片", "打码", "用浏览器端编辑和干净导出格式遮挡隐私文字、人脸、地址、证件、看板和截图。"],
-  ["redact-image-online", "在线图片打码 - 免费截图隐私工具 | ImgSplit", "在线用纯色遮挡、马赛克或模糊给图片打码，隐藏姓名、地址、人脸、车牌和截图隐私。", "在线图片打码", "分享截图或照片前隐藏敏感区域。", "图片打码", "在线", "隐藏图片", "细节", "分享截图、收据、表单、聊天记录或照片前遮挡敏感信息。"],
 ])
 
 seeds.ja = localizeSeeds("ja", [
   ["blur-face", "顔をオンラインでぼかす - 無料写真プライバシーツール | ImgSplit", "写真やスクリーンショットの顔をアップロードなしでぼかし、ブラシ、モザイク、塗りつぶしでも隠せます。", "顔をオンラインでぼかす", "ブラウザ内で顔をぼかし、隠します。", "顔ぼかしオンライン", "プライベートに", "顔をぼかす", "できます", "ローカル編集、調整可能なぼかし、モザイク、ブラシマスクで顔を隠します。"],
-  ["blur-face-in-photo", "写真の顔をオンラインでぼかす - 無料プライバシーツール | ImgSplit", "写真の顔をアップロードなしでぼかし、モザイクや塗りつぶしでも隠せます。", "写真の顔をオンラインでぼかす", "ブラウザ内で顔を隠します。", "顔ぼかしツール", "写真の", "顔をぼかす", "オンライン", "共有前にチーム写真、イベント写真、スクリーンショット内の顔を隠します。"],
   ["pixelate-image", "画像をピクセル化 - 無料オンラインモザイクツール | ImgSplit", "調整可能なモザイク、ブラシマスク、画像レイヤーで画像の機密部分をブラウザ内で隠します。", "画像をオンラインでピクセル化", "調整可能なモザイクで画像領域をピクセル化。", "画像ピクセル化", "オンラインで", "画像をピクセル化", "できます", "顔、ナンバー、文字、スクリーンショット、個人情報に調整可能なピクセルブロックを追加します。"],
-  ["pixelate-image-online", "画像をオンラインでピクセル化 - 無料モザイクツール | ImgSplit", "調整可能なモザイクで画像の一部をピクセル化し、機密情報を隠します。", "画像をオンラインでピクセル化", "機密部分にモザイクを追加。", "画像ピクセル化", "画像の", "領域をピクセル化", "高速", "テキスト、顔、ナンバー、住所、スクリーンショット詳細をモザイクで隠します。"],
   ["censor-image-online", "画像をオンラインで隠す - 無料プライバシーマスク | ImgSplit", "モザイク、ぼかし、塗りつぶし、ブラシ、カスタム画像マスクで機密部分を隠します。", "画像をオンラインで隠す", "ブラウザ内で画像の機密部分を隠します。", "画像マスクオンライン", "すばやく", "画像領域を隠す", "ツール", "投稿や送信前に顔、ユーザー名、文書、ナンバー、スクリーンショットを隠します。"],
-  ["mosaic-tool", "オンラインモザイクツール - 画像のプライバシーを保護 | ImgSplit", "無料オンラインモザイクツール。モザイク、ぼかし、塗りつぶしで機密部分を隠します。", "オンラインモザイクツール", "ブラウザで機密部分をモザイク処理。", "オンラインモザイク", "プライベートに", "モザイクを追加", "できます", "顔、文書、ナンバー、スクリーンショットにきれいなモザイクを作成します。"],
   ["redact-image", "画像を墨消し - 無料写真・スクリーンショット保護 | ImgSplit", "塗りつぶし、モザイク、ぼかし、ブラシ、カスタム画像マスクで共有前に機密部分を隠します。", "画像を墨消し", "写真やスクリーンショットの詳細をローカルで隠します。", "画像墨消し", "プライベートに", "画像を墨消し", "できます", "文字、顔、住所、ID、ダッシュボード、スクリーンショットをブラウザ内で隠します。"],
-  ["redact-image-online", "画像をオンラインで墨消し - 無料スクリーンショット保護 | ImgSplit", "塗りつぶし、モザイク、ぼかしで名前、住所、顔、ナンバー、スクリーンショットを隠します。", "画像をオンラインで墨消し", "共有前に機密部分を隠します。", "画像墨消し", "画像の", "詳細を隠す", "オンライン", "スクリーンショット、領収書、フォーム、チャット、写真の機密情報を隠します。"],
 ])
 
 seeds.ko = localizeSeeds("ko", [
   ["blur-face", "온라인 얼굴 흐리게 하기 - 무료 사진 개인정보 도구 | ImgSplit", "사진과 스크린샷의 얼굴을 업로드 없이 흐리게 처리하고 브러시, 모자이크, 단색 덮기도 사용하세요.", "온라인 얼굴 흐리게 하기", "브라우저에서 얼굴을 흐리게 하거나 숨기세요.", "얼굴 흐림 온라인", "비공개로", "얼굴 흐림", "처리", "로컬 편집, 조절 가능한 흐림, 모자이크 블록, 브러시 마스크로 얼굴을 숨기세요."],
-  ["blur-face-in-photo", "사진 얼굴 흐리게 하기 - 무료 개인정보 도구 | ImgSplit", "업로드 없이 사진 속 얼굴을 흐리게 처리하고 모자이크나 단색 덮기도 사용할 수 있습니다.", "사진 얼굴 흐리게 하기", "브라우저에서 얼굴을 비공개로 숨기세요.", "얼굴 흐림 도구", "온라인으로", "얼굴 흐림", "처리", "공유 전 팀 사진, 행사 사진, 스크린샷의 얼굴을 숨기세요."],
   ["pixelate-image", "이미지 픽셀화 - 무료 온라인 모자이크 도구 | ImgSplit", "조절 가능한 모자이크 블록, 브러시 마스크, 이미지 오버레이로 민감한 영역을 브라우저에서 숨기세요.", "온라인 이미지 픽셀화", "조절 가능한 모자이크로 이미지 영역을 픽셀화하세요.", "이미지 픽셀화", "온라인으로", "이미지", "픽셀화", "얼굴, 번호판, 텍스트, 스크린샷, 개인 정보에 조절 가능한 픽셀 블록을 추가하세요."],
-  ["pixelate-image-online", "온라인 이미지 픽셀화 - 무료 모자이크 도구 | ImgSplit", "조절 가능한 모자이크 블록으로 이미지 일부를 픽셀화하고 민감한 정보를 숨기세요.", "온라인 이미지 픽셀화", "민감한 영역에 조절 가능한 모자이크를 추가하세요.", "이미지 픽셀화", "빠르게", "이미지 영역", "픽셀화", "텍스트, 얼굴, 번호판, 주소, 스크린샷 세부 정보를 모자이크로 숨기세요."],
   ["censor-image-online", "온라인 이미지 가리기 - 무료 개인정보 마스크 도구 | ImgSplit", "모자이크, 흐림, 단색 덮기, 브러시, 사용자 이미지 마스크로 민감한 이미지 영역을 가리세요.", "온라인 이미지 가리기", "브라우저에서 민감한 이미지 영역을 비공개로 가리세요.", "온라인 이미지 가리기", "빠르게", "이미지 영역", "가리기", "게시하거나 보내기 전 얼굴, 사용자명, 문서, 번호판, 스크린샷을 유연한 마스크로 덮으세요."],
-  ["mosaic-tool", "온라인 모자이크 도구 - 이미지 개인정보 숨기기 | ImgSplit", "무료 온라인 모자이크 도구로 민감한 이미지 세부 정보를 숨기세요.", "온라인 모자이크 도구", "브라우저에서 민감한 이미지 세부 정보를 모자이크 처리하세요.", "온라인 모자이크", "비공개로", "모자이크 마스크", "추가", "얼굴, 문서, 번호판, 스크린샷에 깔끔한 모자이크 마스크를 만드세요."],
   ["redact-image", "이미지 가리기 - 무료 사진 및 스크린샷 개인정보 도구 | ImgSplit", "단색 덮기, 모자이크, 흐림, 브러시, 사용자 이미지 마스크로 공유 전 민감한 내용을 숨기세요.", "이미지 가리기", "사진과 스크린샷 세부 정보를 로컬에서 가리세요.", "이미지 가리기", "비공개로", "이미지", "가리기", "브라우저 전용 편집과 깔끔한 내보내기로 텍스트, 얼굴, 주소, ID, 대시보드, 스크린샷을 가리세요."],
-  ["redact-image-online", "온라인 이미지 가리기 - 무료 스크린샷 개인정보 도구 | ImgSplit", "단색 덮기, 모자이크, 흐림으로 이름, 주소, 얼굴, 번호판, 개인 스크린샷을 숨기세요.", "온라인 이미지 가리기", "스크린샷이나 사진 공유 전 민감한 영역을 숨기세요.", "이미지 가리기", "온라인으로", "이미지 세부 정보", "숨기기", "스크린샷, 영수증, 양식, 채팅, 사진의 민감한 정보를 덮으세요."],
 ])
 
 seeds.es = localizeSeeds("es", [
   ["blur-face", "Desenfocar Rostros Online - Herramienta Privada Gratis | ImgSplit", "Desenfoca rostros en fotos y capturas sin subir la imagen. Usa pincel, mosaico, desenfoque o cobertura sólida en el navegador.", "Desenfocar rostros online", "Desenfoca u oculta rostros en tu navegador.", "Desenfocar rostros", "Desenfoca ", "rostros", "en privado", "Oculta rostros en fotos, capturas y vistas públicas con edición local, desenfoque ajustable, mosaico y pincel."],
-  ["blur-face-in-photo", "Desenfocar Rostros en Fotos Online - Gratis | ImgSplit", "Desenfoca rostros en fotos sin subir la imagen. Usa desenfoque, mosaico o cobertura sólida en el navegador.", "Desenfocar rostros online", "Oculta rostros en fotos de forma privada.", "Desenfoque de rostros", "Desenfoca ", "rostros", "online", "Oculta rostros antes de compartir fotos de equipo, eventos, capturas o publicaciones."],
   ["pixelate-image", "Pixelar Imagen - Herramienta de Mosaico Online Gratis | ImgSplit", "Pixela una imagen online con mosaico ajustable, pincel y superposiciones de imagen para ocultar zonas sensibles en el navegador.", "Pixelar imagen online", "Pixela zonas de imagen con mosaico ajustable.", "Pixelar imagen", "Pixela ", "imágenes", "online", "Añade bloques de píxel a rostros, matrículas, texto, capturas y detalles privados sin afectar el resto de la imagen."],
-  ["pixelate-image-online", "Pixelar Imagen Online - Herramienta de Mosaico Gratis | ImgSplit", "Pixela partes de una imagen online con bloques de mosaico ajustables para ocultar detalles privados.", "Pixelar imagen online", "Añade mosaico ajustable a regiones sensibles.", "Pixelar imagen", "Pixela ", "zonas de imagen", "rápido", "Usa mosaico para ocultar texto, rostros, matrículas, direcciones y detalles de capturas."],
   ["censor-image-online", "Censurar Imagen Online - Herramienta Privada Gratis | ImgSplit", "Censura zonas de imagen con mosaico, desenfoque, cobertura sólida, pincel o máscaras de imagen personalizadas.", "Censurar imagen online", "Censura zonas sensibles en tu navegador.", "Censurar imagen", "Censura ", "zonas de imagen", "rápido", "Cubre rostros, usuarios, documentos, matrículas y capturas antes de publicar o enviar una imagen."],
-  ["mosaic-tool", "Herramienta de Mosaico Online - Oculta Detalles Privados | ImgSplit", "Herramienta gratuita de mosaico para cubrir detalles sensibles con mosaico, desenfoque o cobertura sólida.", "Herramienta de mosaico online", "Cubre detalles sensibles con mosaico en el navegador.", "Mosaico online", "Añade ", "máscaras de mosaico", "privadas", "Crea máscaras limpias para rostros, documentos, matrículas y capturas sin subir el archivo."],
   ["redact-image", "Redactar Imagen - Herramienta Privada Gratis | ImgSplit", "Redacta detalles de imagen con cobertura sólida, mosaico, desenfoque, pincel o máscaras de imagen antes de compartir.", "Redactar imagen", "Redacta detalles de fotos y capturas localmente.", "Redactar imagen", "Redacta ", "imágenes", "en privado", "Oculta texto privado, rostros, direcciones, documentos, paneles y capturas con edición solo en el navegador."],
-  ["redact-image-online", "Redactar Imagen Online - Herramienta Privada Gratis | ImgSplit", "Redacta áreas de imagen con cobertura sólida, mosaico o desenfoque. Oculta nombres, direcciones, rostros y capturas.", "Redactar imagen online", "Oculta áreas sensibles antes de compartir.", "Redacción de imagen", "Redacta ", "detalles de imagen", "online", "Cubre información sensible antes de compartir capturas, recibos, formularios, chats o fotos."],
 ])
 
 seeds["pt-BR"] = localizeSeeds("pt-BR", [
   ["blur-face", "Desfocar Rosto Online Grátis - Borre Rostos em Fotos | ImgSplit", "Desfoque rostos em fotos e capturas de tela sem enviar a imagem para nenhum servidor. Use pincel, mosaico, desfoque ou tarja sólida no navegador.", "Desfocar Rosto Online", "Desfoque ou cubra rostos com privacidade, direto no navegador.", "Desfocar Rosto Online", "Desfoque ", "Rostos", "com Privacidade", "Oculte rostos em fotos, capturas de tela e prévias públicas com edição local no navegador, desfoque ajustável, blocos de mosaico e máscara de pincel."],
-  ["blur-face-in-photo", "Borrar Rosto em Foto Online - Ferramenta Grátis | ImgSplit", "Borre rostos em fotos online sem enviar a imagem. Use desfoque, mosaico ou tarja sólida no navegador antes de compartilhar ou publicar.", "Borrar Rosto em Foto Online", "Oculte rostos em fotos com privacidade, no seu navegador.", "Desfoque de Rostos", "Borre Rostos ", "em Fotos", "Online", "Oculte rostos antes de compartilhar fotos de equipe, eventos, prints de avaliações ou publicações. Tudo acontece localmente no seu navegador."],
   ["pixelate-image", "Pixelar Imagem - Ferramenta de Mosaico Online Grátis | ImgSplit", "Pixele uma imagem online com blocos de mosaico ajustáveis, máscara de pincel e sobreposições. Oculte áreas sensíveis no navegador, sem upload.", "Pixelar Imagem Online", "Pixele áreas da imagem com blocos de mosaico ajustáveis.", "Pixelar Imagem", "Pixele ", "Imagens", "Online", "Adicione blocos de pixel ajustáveis a rostos, placas de carro, textos, capturas de tela e detalhes privados, mantendo o restante da imagem nítido."],
-  ["pixelate-image-online", "Pixelar Imagem Online Grátis - Mosaico Ajustável | ImgSplit", "Pixele partes de uma imagem online com mosaico ajustável. Oculte detalhes privados em fotos e capturas de tela no navegador, sem enviar nada.", "Pixelar Imagem Online", "Adicione mosaico ajustável às áreas sensíveis da imagem.", "Pixelar Imagem", "Pixele ", "Áreas da Imagem", "Rapidamente", "Use blocos de mosaico ajustáveis para ocultar textos, rostos, placas, endereços e detalhes de prints sem comprometer o resto da imagem."],
   ["censor-image-online", "Censurar Imagem Online - Tarja e Mosaico Grátis | ImgSplit", "Censure áreas de uma imagem online com mosaico, desfoque, tarja sólida, pincel ou máscara personalizada. Edição privada no navegador, sem upload.", "Censurar Imagem Online", "Censure áreas sensíveis da imagem com privacidade, no navegador.", "Censurar Imagem Online", "Censure ", "Áreas da Imagem", "Rapidamente", "Cubra rostos, nomes de usuário, documentos, placas de carro e capturas de tela com máscaras flexíveis antes de postar ou enviar uma imagem."],
-  ["mosaic-tool", "Ferramenta de Mosaico Online - Oculte Detalhes Privados | ImgSplit", "Ferramenta de mosaico online gratuita para cobrir detalhes sensíveis com mosaico, desfoque ou tarja sólida. Tudo no navegador, sem upload.", "Ferramenta de Mosaico Online", "Cubra detalhes sensíveis com mosaico direto no navegador.", "Mosaico Online", "Aplique ", "Mosaico", "com Privacidade", "Crie máscaras de mosaico limpas para rostos, documentos, placas e capturas de tela sem enviar o arquivo original para nenhum servidor."],
   ["redact-image", "Tarjar Imagem - Oculte Dados em Fotos e Prints Grátis | ImgSplit", "Tarje detalhes de imagens com tarja sólida, mosaico, desfoque, pincel ou máscara personalizada. Oculte conteúdo privado no navegador antes de compartilhar.", "Tarjar Imagem", "Tarje detalhes sensíveis de fotos e prints localmente.", "Tarjar Imagem", "Tarje ", "Imagens", "com Privacidade", "Oculte textos privados, rostos, endereços, documentos, painéis e capturas de tela com edição feita só no navegador e exportação em formatos limpos."],
-  ["redact-image-online", "Tarjar Imagem Online - Privacidade em Prints Grátis | ImgSplit", "Tarje áreas de imagem online com tarja sólida, mosaico ou desfoque. Oculte nomes, endereços, rostos, placas e prints no seu navegador, sem upload.", "Tarjar Imagem Online", "Oculte áreas sensíveis antes de compartilhar prints ou fotos.", "Tarjar Imagem", "Tarje ", "Detalhes da Imagem", "Online", "Cubra informações sensíveis antes de compartilhar prints, recibos, formulários, conversas, documentos ou fotos com clientes e colegas."],
 ])
 
 function localizeSeeds(

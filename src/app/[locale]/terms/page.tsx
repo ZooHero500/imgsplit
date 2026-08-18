@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { getTranslations, setRequestLocale } from "next-intl/server"
 import { routing } from "@/i18n/routing"
+import { buildOgImages, openGraphLocale } from "@/lib/seo/metadata"
 import { JsonLd } from "@/components/JsonLd"
 import { SiteFooter } from "@/components/SiteFooter"
 import { SiteFrame } from "@/components/SiteFrame"
@@ -44,11 +45,14 @@ export async function generateMetadata({
       url: canonicalUrl,
       siteName: "ImgSplit",
       type: "website",
+      locale: openGraphLocale(locale),
+      images: buildOgImages(t("title")),
     },
     twitter: {
       card: "summary_large_image",
       title: t("title"),
       description: t("description"),
+      images: [`${BASE_URL}/og-image.png`],
     },
   }
 }

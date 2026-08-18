@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import { NextIntlClientProvider, hasLocale } from "next-intl"
-import { getMessages, getTranslations, setRequestLocale } from "next-intl/server"
+import { getMessages, setRequestLocale } from "next-intl/server"
 import { notFound } from "next/navigation"
 import { routing } from "@/i18n/routing"
 import { Toaster } from "@/components/ui/sonner"
@@ -21,18 +21,14 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }))
 }
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://imgsplit.com"
-
-export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
-  const { locale } = await params
-  const t = await getTranslations({ locale, namespace: "metadata" })
-
-  const canonicalUrl =
-    locale === routing.defaultLocale ? BASE_URL : `${BASE_URL}/${locale}`
-
+export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: t("title"),
-    description: t("description"),
+    title: {
+      // Page titles already include the "| ImgSplit" suffix in messages,
+      // so no template here — it would double the suffix.
+      template: "%s",
+      default: "ImgSplit",
+    },
     icons: {
       icon: [
         { url: "/favicon.svg", type: "image/svg+xml" },
@@ -41,39 +37,9 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       apple: "/apple-touch-icon.png",
     },
     manifest: "/site.webmanifest",
-    alternates: {
-      canonical: canonicalUrl,
-      languages: {
-        ...Object.fromEntries(
-          routing.locales.map((l) => [
-            l,
-            l === routing.defaultLocale ? BASE_URL : `${BASE_URL}/${l}`,
-          ])
-        ),
-        "x-default": BASE_URL,
-      },
-    },
-    openGraph: {
-      title: t("title"),
-      description: t("description"),
-      url: canonicalUrl,
-      siteName: "ImgSplit",
-      type: "website",
-      locale: ({ en: "en_US", "zh-CN": "zh_CN", ja: "ja_JP", ko: "ko_KR", es: "es_ES" }[locale] ?? "en_US"),
-      images: [
-        {
-          url: `${BASE_URL}/og-image.png`,
-          width: 1200,
-          height: 630,
-          alt: t("title"),
-        },
-      ],
-    },
     twitter: {
       card: "summary_large_image",
-      title: t("title"),
-      description: t("description"),
-      images: [`${BASE_URL}/og-image.png`],
+      site: "@zooheroes",
     },
   }
 }

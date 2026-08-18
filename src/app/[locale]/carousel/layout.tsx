@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
 import { routing } from "@/i18n/routing"
+import { buildOgImages, openGraphLocale } from "@/lib/seo/metadata"
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://imgsplit.com"
 
@@ -41,7 +42,8 @@ export async function generateMetadata({
       url: canonicalUrl,
       siteName: "ImgSplit",
       type: "website",
-      locale: ({ en: "en_US", "zh-CN": "zh_CN", ja: "ja_JP", ko: "ko_KR", es: "es_ES" }[locale] ?? "en_US"),
+      locale: openGraphLocale(locale),
+      images: buildOgImages(t("title")),
     },
   }
 }

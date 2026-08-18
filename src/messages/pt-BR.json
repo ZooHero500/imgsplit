@@ -109,7 +109,7 @@
     "feature5": "Feito para Todo Fluxo de Trabalho",
     "feature5Desc": "Seja você um vendedor de e-commerce dividindo fotos de produtos, um designer fatiando mockups, um gestor de redes sociais criando posts em grade, ou um estudante preparando materiais de apresentação — o ImgSplit se adapta ao seu fluxo. Adicione até 20 linhas horizontais e 20 verticais para criar qualquer layout.",
     "feature6": "Código Aberto e Transparente",
-    "feature6Desc": "O ImgSplit é software de código aberto publicado no GitHub. Qualquer pessoa pode inspecionar o código, verificar nossas afirmações de privacidade e contribuir com melhorias. Sem rastreamento oculto, sem coleta de dados, sem surpresas."
+    "feature6Desc": "O ImgSplit é software de código aberto publicado no GitHub. Qualquer pessoa pode inspecionar o código, verificar nossas afirmações de privacidade e contribuir com melhorias. Suas imagens nunca saem do seu dispositivo; usamos análises anônimas de produto (Vercel Analytics) e monitoramento de erros (Sentry); sem cookies de publicidade, sem rastreamento de identidade pessoal."
   },
   "stats": {
     "overline": "Em Números",
@@ -123,7 +123,7 @@
     "stat3Label": "Dados enviados aos servidores",
     "stat4Value": "100%",
     "stat4Label": "Grátis para sempre",
-    "stat5Value": "5",
+    "stat5Value": "6",
     "stat5Label": "Idiomas suportados",
     "stat6Value": "3",
     "stat6Label": "Formatos de imagem"
@@ -346,17 +346,21 @@
     },
     "tech": {
       "title": "Como Funciona",
-      "description": "O ImgSplit roda completamente no seu navegador usando a HTML5 Canvas API. Quando você divide uma imagem, o processamento acontece localmente no seu dispositivo — sem idas ao servidor, sem uploads, sem coleta de dados. Essa arquitetura garante latência zero, privacidade total e funciona offline após o carregamento inicial.",
+      "description": "O ImgSplit roda completamente no seu navegador usando a HTML5 Canvas API. Quando você divide uma imagem, o processamento acontece localmente no seu dispositivo — sem idas ao servidor, sem uploads. Suas imagens nunca saem do seu dispositivo. Usamos análises anônimas de produto (Vercel Analytics) e monitoramento de erros (Sentry) para melhorar a ferramenta. Essa arquitetura garante latência zero, privacidade total e funciona offline após o carregamento inicial.",
       "items": {
         "browser": "100% Baseado no Navegador",
         "browserDesc": "Todo o processamento de imagem usa a HTML5 Canvas API. Suas imagens nunca saem do seu dispositivo.",
         "opensource": "Código Aberto",
         "opensourceDesc": "Código fonte completo disponível no GitHub. Inspecione, contribua ou faça fork — tudo é transparente.",
         "privacy": "Privacidade por Design",
-        "privacyDesc": "Sem cookies de rastreamento, sem análise das suas imagens, sem processamento no servidor. Ponto.",
+        "privacyDesc": "Suas imagens nunca saem do seu dispositivo. Usamos análises anônimas de produto e monitoramento de erros — mas nunca analisamos o conteúdo das suas imagens. Sem cookies de publicidade, sem rastreamento de identidade pessoal, sem processamento de imagens no servidor.",
         "free": "Grátis Para Sempre",
         "freeDesc": "Sem barreiras de pagamento, sem planos premium, sem cadastro necessário. O ImgSplit sempre será gratuito."
       }
+    },
+    "brand": {
+      "title": "Aviso de marca",
+      "description": "O ImgSplit (imgsplit.com) não tem afiliação com o pacote npm @imgsplit/core, github.com/imgsplit/imgsplit ou imgsplit.com.tr. O repositório oficial é github.com/ZooHero500/imgsplit."
     },
     "contact": {
       "title": "Contato",
@@ -648,7 +652,55 @@
     "refineBatchHint": "Aplicado à próxima execução em lote na fila.",
     "downloadReady": "Fundo removido.",
     "previewFailed": "Não foi possível renderizar a prévia do resultado.",
-    "exportFailed": "Não foi possível exportar o resultado."
+    "exportFailed": "Não foi possível exportar o resultado.",
+    "landing": {
+      "hero": {
+        "overline": "Remover fundo com IA",
+        "headlinePart1": "Remova o fundo",
+        "headlineAccent": "num Worker local",
+        "description": "Depois de baixar o modelo uma vez no dispositivo, um Web Worker do navegador recorta o assunto. A foto não é enviada — o processamento fica neste computador."
+      },
+      "features": {
+        "overline": "Recursos",
+        "headlinePart1": "Recortes privados",
+        "headlineAccent": "no dispositivo",
+        "item1Title": "IA local num Web Worker",
+        "item1Desc": "Com o modelo em cache, a inferência roda no Worker. O bitmap não vai para os servidores do ImgSplit.",
+        "item2Title": "Download único do modelo",
+        "item2Desc": "A primeira execução busca o modelo RMBG local e guarda neste navegador. As próximas costumam pular o download.",
+        "item3Title": "Limpeza de bordas",
+        "item3Desc": "Ajuste corte alfa, encolher/expandir e suavização antes de rodar; se mudar os controles, execute de novo.",
+        "item4Title": "Exportação transparente, sem upload",
+        "item4Desc": "Baixe PNG ou WebP transparente, ou JPEG com fundo branco. O modo lote enfileira várias e zipa as prontas."
+      },
+      "steps": {
+        "overline": "Como funciona",
+        "headlinePart1": "Quatro",
+        "headlineAccent": "passos",
+        "step1Title": "Solte uma foto",
+        "step1Desc": "PNG, JPEG ou WebP, até 20 MB. Adicione mais arquivos se quiser uma fila em lote.",
+        "step2Title": "Baixe o modelo uma vez",
+        "step2Desc": "Se este navegador ainda não tiver cache, a primeira execução baixa o modelo local. A foto continua no dispositivo.",
+        "step3Title": "Ajuste a borda",
+        "step3Desc": "Corrija residual, o recuo do assunto e a suavidade; depois rode ou rode de novo no Worker.",
+        "step4Title": "Exporte",
+        "step4Desc": "Salve PNG/WebP transparente ou JPEG com fundo branco. Itens prontos do lote saem num ZIP."
+      },
+      "faq": {
+        "overline": "FAQ",
+        "headlinePart1": "Perguntas",
+        "headlineAccent": "frequentes",
+        "subtitle": "O que “IA local no navegador” significa para as suas fotos.",
+        "q1": "A foto é enviada?",
+        "a1": "Não. A imagem é decodificada e processada no Web Worker desta aba. Só os arquivos públicos do modelo são baixados, não a sua foto.",
+        "q2": "Por que a primeira vez baixa um modelo?",
+        "a2": "Remover o fundo precisa de um modelo ONNX local (RMBG). Ele é obtido uma vez, cacheado no navegador e reutilizado. Suas imagens não entram nesse download.",
+        "q3": "O que posso exportar?",
+        "a3": "PNG transparente, WebP transparente ou JPEG com fundo branco. A qualidade vale para WebP e JPEG.",
+        "q4": "Dá para processar um lote?",
+        "a4": "Sim. Coloque mais imagens na fila, defina a limpeza de borda uma vez, inicie o lote e baixe um ZIP com os recortes prontos."
+      }
+    }
   },
   "aiSegmentation": {
     "title": "Segmentação com IA",
@@ -704,7 +756,55 @@
     "changeImage": "Trocar",
     "processing": "Processando...",
     "compressFailed": "Algumas imagens não puderam ser processadas.",
-    "ready": "Pronto"
+    "ready": "Pronto",
+    "landing": {
+      "hero": {
+        "overline": "Compressor de imagens",
+        "headlinePart1": "Comprima e converta",
+        "headlineAccent": "no navegador",
+        "description": "Alterne entre JPEG, PNG e WebP, ajuste a qualidade e compare o tamanho antes de baixar. Tudo roda no dispositivo — as imagens não são enviadas."
+      },
+      "features": {
+        "overline": "Recursos",
+        "headlinePart1": "Arquivos menores,",
+        "headlineAccent": "no mesmo aparelho",
+        "item1Title": "Conversão JPEG, PNG e WebP",
+        "item1Desc": "Troque o formato de saída num clique. JPEG e WebP usam controle de qualidade 10–100; PNG continua sem perdas.",
+        "item2Title": "Comparação antes / depois",
+        "item2Desc": "A prévia lado a lado mostra o original e o resultado, com os bytes economizados, para você parar no equilíbrio certo.",
+        "item3Title": "Lote e download em ZIP",
+        "item3Desc": "Solte várias imagens, comprima juntas e baixe um ZIP com todos os resultados.",
+        "item4Title": "Processamento local, sem upload",
+        "item4Desc": "A compressão usa a API Canvas deste navegador. Os arquivos não saem do dispositivo."
+      },
+      "steps": {
+        "overline": "Como funciona",
+        "headlinePart1": "Quatro",
+        "headlineAccent": "passos",
+        "step1Title": "Solte as imagens",
+        "step1Desc": "Adicione PNG, JPEG ou WebP. Predefinições de URL como ?format=webp&quality=80 valem assim que o editor abre.",
+        "step2Title": "Escolha formato e qualidade",
+        "step2Desc": "Selecione PNG, JPEG ou WebP e arraste o controle. JPEG e WebP recomprimem na hora.",
+        "step3Title": "Compare o resultado",
+        "step3Desc": "Confira a prévia e os bytes economizados antes de exportar.",
+        "step4Title": "Baixe",
+        "step4Desc": "Salve um arquivo único ou um ZIP se processou um lote."
+      },
+      "faq": {
+        "overline": "FAQ",
+        "headlinePart1": "Perguntas",
+        "headlineAccent": "frequentes",
+        "subtitle": "Detalhes práticos da compressão e conversão no navegador.",
+        "q1": "Entre quais formatos posso converter?",
+        "a1": "PNG, JPEG e WebP. Dá para comprimir no mesmo formato ou converter — por exemplo JPEG para WebP — sem enviar o arquivo.",
+        "q2": "Minhas imagens são enviadas?",
+        "a2": "Não. Compressão e conversão rodam no navegador. O ImgSplit não recebe os arquivos.",
+        "q3": "Como funciona o controle de qualidade?",
+        "a3": "Em JPEG e WebP, 10–100 regula a compressão com perda. Mais alto mantém mais detalhe e um arquivo maior. PNG é sem perdas, então o controle não se aplica.",
+        "q4": "Posso comprimir várias de uma vez?",
+        "a4": "Sim. Adicione vários arquivos, espere cada um ter resultado e baixe um ZIP com as imagens comprimidas."
+      }
+    }
   },
   "watermark": {
     "metadata": {
@@ -756,7 +856,55 @@
     "templateBrand": "Marca",
     "templateBrandDesc": "Texto de marca colocado perto do canto superior.",
     "templateSubtle": "Sutil",
-    "templateSubtleDesc": "Marca central de baixa opacidade para fotos finalizadas."
+    "templateSubtleDesc": "Marca central de baixa opacidade para fotos finalizadas.",
+    "landing": {
+      "hero": {
+        "overline": "Marca d'água",
+        "headlinePart1": "Texto e logo",
+        "headlineAccent": "sem upload",
+        "description": "Coloque uma linha de copyright, um logo ou uma marca diagonal repetida. Camadas, opacidade, rotação e espaçamento são editados no navegador — a foto não sai deste aparelho."
+      },
+      "features": {
+        "overline": "Recursos",
+        "headlinePart1": "Proteja as fotos",
+        "headlineAccent": "no aparelho",
+        "item1Title": "Camadas de texto e logo",
+        "item1Desc": "Empilhe um copyright e um logo PNG, JPEG ou WebP. Ajuste tamanho, opacidade e rotação de cada camada.",
+        "item2Title": "Uma marca ou repetição em grade",
+        "item2Desc": "Coloque um selo ou espalhe com espaçamento X/Y — inclusive diagonais para cópias de prova.",
+        "item3Title": "Modelos prontos",
+        "item3Desc": "Comece por canto, centro, diagonal, denso, marca ou sutil e depois ajuste a camada selecionada.",
+        "item4Title": "Exportação local, sem upload",
+        "item4Desc": "A composição usa Canvas neste navegador. Baixe PNG, JPEG ou WebP; a foto original não vai para um servidor."
+      },
+      "steps": {
+        "overline": "Como funciona",
+        "headlinePart1": "Quatro",
+        "headlineAccent": "passos",
+        "step1Title": "Envie uma foto",
+        "step1Desc": "Solte um PNG, JPEG ou WebP. A prévia fica neste dispositivo.",
+        "step2Title": "Texto ou logo",
+        "step2Desc": "Insira uma camada de texto ou uma imagem de logo. Dá para manter as duas na mesma foto.",
+        "step3Title": "Posição e repetição",
+        "step3Desc": "Arraste, redimensione, opacidade, rotação, ou mude para repetir e ajuste o espaçamento.",
+        "step4Title": "Exporte",
+        "step4Desc": "Escolha PNG, JPEG ou WebP e baixe o arquivo com marca d'água."
+      },
+      "faq": {
+        "overline": "FAQ",
+        "headlinePart1": "Perguntas",
+        "headlineAccent": "frequentes",
+        "subtitle": "Como texto, logo e marca repetida funcionam no navegador.",
+        "q1": "Posso usar texto e logo juntos?",
+        "a1": "Sim. Adicione quantas camadas de texto e logo precisar e selecione uma para editar tamanho, opacidade, rotação e repetição.",
+        "q2": "Como funciona a marca em grade?",
+        "a2": "Mude a camada para Repetir e defina espaçamento X/Y e rotação. Os modelos diagonal e denso servem para provas ou prévias públicas.",
+        "q3": "A foto é enviada?",
+        "a3": "Não. A composição roda no navegador. O ImgSplit não recebe a imagem nem o logo.",
+        "q4": "Quais formatos de exportação existem?",
+        "a4": "PNG, JPEG e WebP. JPEG e WebP têm controle de qualidade; PNG mantém a transparência do canvas."
+      }
+    }
   },
   "mosaic": {
     "metadata": {
@@ -1092,7 +1240,55 @@
     "ratio1_1": "1:1",
     "ratio4_3": "4:3",
     "ratio16_9": "16:9",
-    "ratio3_2": "3:2"
+    "ratio3_2": "3:2",
+    "landing": {
+      "hero": {
+        "overline": "Redimensionar",
+        "headlinePart1": "Tamanhos para redes",
+        "headlineAccent": "no navegador",
+        "description": "Defina um canvas próprio ou escolha presets do Instagram, YouTube e Facebook; depois arraste, recorte, gire e exporte. Tudo fica no dispositivo — nada é enviado."
+      },
+      "features": {
+        "overline": "Recursos",
+        "headlinePart1": "Pixels exatos,",
+        "headlineAccent": "sem upload",
+        "item1Title": "Presets de redes",
+        "item1Desc": "Um clique para quadrado do Instagram (1080×1080) ou story (1080×1920), miniatura do YouTube (1280×720), capa do Facebook (1640×924), além de 1:1, 4:3, 16:9 e 9:16.",
+        "item2Title": "Canvas personalizado e arrastar",
+        "item2Desc": "Digite largura e altura (até 4096 px), arraste a imagem na prancheta e escale em caber ou preencher.",
+        "item3Title": "Recorte, rotação e espelhamento",
+        "item3Desc": "Recorte livre ou com razão fixa (1:1, 4:3, 16:9, 3:2). Gire 90° e espelhe na horizontal ou vertical antes de exportar.",
+        "item4Title": "PNG / JPEG / WebP no navegador",
+        "item4Desc": "A exportação roda no navegador. Abra /resize?preset=instagram-story para cair nesse canvas."
+      },
+      "steps": {
+        "overline": "Como funciona",
+        "headlinePart1": "Quatro",
+        "headlineAccent": "passos",
+        "step1Title": "Envie uma imagem",
+        "step1Desc": "Solte um PNG, JPEG ou WebP na prancheta. O arquivo é lido localmente.",
+        "step2Title": "Escolha um tamanho",
+        "step2Desc": "Use um preset social ou pixels próprios. Consultas como ?preset=youtube-thumbnail valem no carregamento.",
+        "step3Title": "Posicione e recorte",
+        "step3Desc": "Arraste o enquadramento, alterne caber/preencher, recorte numa razão ou gire e espelhe.",
+        "step4Title": "Baixe",
+        "step4Desc": "Exporte PNG, JPEG ou WebP no tamanho de canvas que você definiu."
+      },
+      "faq": {
+        "overline": "FAQ",
+        "headlinePart1": "Perguntas",
+        "headlineAccent": "frequentes",
+        "subtitle": "Presets, recorte e privacidade do redimensionador.",
+        "q1": "Quais presets sociais estão inclusos?",
+        "a1": "Quadrado do Instagram (1080×1080) e story (1080×1920), miniatura do YouTube (1280×720), capa do Facebook (1640×924), além de 1:1, 4:3, 3:4, 16:9 e 9:16.",
+        "q2": "As imagens são enviadas a um servidor?",
+        "a2": "Não. Redimensionar, recortar e exportar usam a API Canvas no navegador. O arquivo não sai deste dispositivo.",
+        "q3": "Posso recortar numa razão fixa?",
+        "a3": "Sim. Entre no modo de recorte e trave 1:1, 4:3, 16:9 ou 3:2, ou deixe livre. Arraste as alças e aplique.",
+        "q4": "Dá para abrir um preset por link?",
+        "a4": "Sim. Acrescente ?preset=instagram-square (ou instagram-story, youtube-thumbnail, facebook-cover e outros ids do catálogo) a /resize. O editor abre nesse canvas."
+      }
+    }
   },
   "index": {
     "aTitle": "Split",

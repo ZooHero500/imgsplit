@@ -85,10 +85,10 @@
     "headlineAccent": "가능성",
     "ecommerceTitle": "이커머스",
     "ecommerceDesc": "긴 상품 이미지를 섹션별로 분할하여 다양한 표시 영역에 활용하세요 — 페이지 로딩 속도가 빨라지고 사용자 경험이 향상돼요.",
-    "ecommerceResult": "페이지 로딩 속도 40%+ 향상",
+    "ecommerceResult": "페이지 로딩이 더 빨라짐",
     "designerTitle": "UI 디자이너",
     "designerDesc": "Photoshop을 열지 않고도 디자인 시안을 빠르게 슬라이스하여 내보내세요 — 브라우저에서 바로 에셋을 전달할 수 있어요.",
-    "designerResult": "에셋 내보내기 속도 3배 향상",
+    "designerResult": "몇 초 만에 내보내기",
     "socialTitle": "소셜 미디어",
     "socialDesc": "파노라마 사진이나 긴 이미지를 여러 타일로 분할하여 그리드 스타일의 전문적인 게시물을 만들어 보세요.",
     "socialResult": "더 세련된 게시물 완성"
@@ -109,7 +109,7 @@
     "feature5": "모든 워크플로에 적합",
     "feature5Desc": "이커머스 셀러, 디자이너, 소셜 미디어 매니저, 학생 — ImgSplit은 당신의 워크플로에 적응합니다. 각 방향 최대 20개의 분할선으로 어떤 레이아웃이든 만들 수 있습니다.",
     "feature6": "오픈소스 & 투명성",
-    "feature6Desc": "ImgSplit은 GitHub에 공개된 오픈소스 소프트웨어입니다. 누구나 코드를 검사하고, 프라이버시 주장을 검증하고, 개선에 기여할 수 있습니다."
+    "feature6Desc": "ImgSplit은 GitHub에 공개된 오픈소스 소프트웨어입니다. 누구나 코드를 검사하고, 프라이버시 주장을 검증하고, 개선에 기여할 수 있습니다. 이미지는 기기를 떠나지 않습니다. 익명 제품 분석(Vercel Analytics)과 오류 모니터링(Sentry)을 사용합니다. 광고 쿠키 없음, 개인 신원 추적 없음."
   },
   "stats": {
     "overline": "숫자로 보기",
@@ -123,7 +123,7 @@
     "stat3Label": "서버에 업로드되는 데이터",
     "stat4Value": "100%",
     "stat4Label": "영원히 무료",
-    "stat5Value": "5",
+    "stat5Value": "6",
     "stat5Label": "지원 언어 수",
     "stat6Value": "3",
     "stat6Label": "이미지 형식"
@@ -346,17 +346,21 @@
     },
     "tech": {
       "title": "작동 방식",
-      "description": "ImgSplit은 HTML5 Canvas API를 사용하여 완전히 브라우저에서 실행됩니다. 이미지를 분할할 때 처리는 사용자의 기기에서 로컬로 수행됩니다 — 서버 왕복 없음, 업로드 없음, 데이터 수집 없음. 이 아키텍처는 지연 시간 제로, 완전한 프라이버시를 보장하며, 첫 페이지 로드 후 오프라인에서도 작동합니다.",
+      "description": "ImgSplit은 HTML5 Canvas API를 사용하여 완전히 브라우저에서 실행됩니다. 이미지를 분할할 때 처리는 사용자의 기기에서 로컬로 수행됩니다 — 서버 왕복 없음, 업로드 없음. 이미지는 기기를 떠나지 않습니다. 도구 개선을 위해 익명 제품 분석(Vercel Analytics)과 오류 모니터링(Sentry)을 사용합니다. 이 아키텍처는 지연 시간 제로, 완전한 프라이버시를 보장하며, 첫 페이지 로드 후 오프라인에서도 작동합니다.",
       "items": {
         "browser": "100% 브라우저 기반",
         "browserDesc": "모든 이미지 처리는 HTML5 Canvas API를 사용합니다. 이미지가 기기 밖으로 나가는 일은 없습니다.",
         "opensource": "오픈소스",
         "opensourceDesc": "전체 소스코드가 GitHub에 공개되어 있습니다. 검토, 기여, 포크 — 모든 것이 투명합니다.",
         "privacy": "프라이버시 바이 디자인",
-        "privacyDesc": "추적 쿠키 없음, 이미지 분석 없음, 서버 측 처리 없음. 그것이 전부입니다.",
+        "privacyDesc": "이미지는 기기를 떠나지 않습니다. 익명 제품 분석과 오류 모니터링을 사용하지만, 이미지 내용을 분석하지는 않습니다. 광고 쿠키 없음, 개인 신원 추적 없음, 서버 측 이미지 처리 없음.",
         "free": "영원히 무료",
         "freeDesc": "유료 장벽 없음, 프리미엄 등급 없음, 가입 불필요. ImgSplit은 항상 무료입니다."
       }
+    },
+    "brand": {
+      "title": "브랜드 안내",
+      "description": "ImgSplit(imgsplit.com)은 npm 패키지 @imgsplit/core, github.com/imgsplit/imgsplit, imgsplit.com.tr와 무관합니다. 공식 소스 저장소는 github.com/ZooHero500/imgsplit입니다."
     },
     "contact": {
       "title": "문의하기",
@@ -648,7 +652,55 @@
     "refineBatchHint": "다음 대기 중인 일괄 실행에 적용됩니다.",
     "downloadReady": "배경을 제거했습니다.",
     "previewFailed": "결과 미리보기를 렌더링할 수 없습니다.",
-    "exportFailed": "결과를 내보낼 수 없습니다."
+    "exportFailed": "결과를 내보낼 수 없습니다.",
+    "landing": {
+      "hero": {
+        "overline": "AI 배경 제거",
+        "headlinePart1": "배경 제거는",
+        "headlineAccent": "로컬 Worker에서",
+        "description": "모델을 한 번만 기기에 받으면 브라우저 Web Worker가 피사체를 잘라냅니다. 사진은 업로드되지 않으며 이 컴퓨터에서 처리됩니다."
+      },
+      "features": {
+        "overline": "주요 기능",
+        "headlinePart1": "잘라내기는",
+        "headlineAccent": "기기 안",
+        "item1Title": "Web Worker의 로컬 AI",
+        "item1Desc": "모델이 캐시되면 추론은 Worker에서 돌아갑니다. 이미지 비트맵은 ImgSplit 서버로 가지 않습니다.",
+        "item2Title": "모델은 한 번만 받음",
+        "item2Desc": "첫 실행에서 로컬 RMBG 모델을 받아 이 브라우저에 캐시합니다. 이후에는 대개 다시 받지 않습니다.",
+        "item3Title": "가장자리 정리",
+        "item3Desc": "실행 전에 알파 컷오프, 축소/확장, 페더를 맞추고, 슬라이더를 바꾸면 다시 제거할 수 있습니다.",
+        "item4Title": "투명 내보내기, 업로드 없음",
+        "item4Desc": "투명 PNG/WebP 또는 흰 배경 JPEG. 여러 장은 대기열에서 처리하고 완료분 ZIP으로 받습니다."
+      },
+      "steps": {
+        "overline": "사용 방법",
+        "headlinePart1": "네 가지",
+        "headlineAccent": "단계",
+        "step1Title": "사진 넣기",
+        "step1Desc": "PNG, JPEG, WebP, 최대 20MB. 일괄 처리하려면 파일을 더 추가하세요.",
+        "step2Title": "필요 시 모델 한 번 받기",
+        "step2Desc": "이 브라우저에 캐시가 없으면 첫 실행에서 로컬 모델을 받습니다. 사진은 기기에 남습니다.",
+        "step3Title": "가장자리 다듬기",
+        "step3Desc": "남은 잔상, 피사체 안쪽 당김, 부드러움을 조절한 뒤 Worker에서 제거하거나 다시 실행합니다.",
+        "step4Title": "내보내기",
+        "step4Desc": "투명 PNG/WebP 또는 흰 배경 JPEG. 배치에서 준비된 항목은 ZIP으로 받습니다."
+      },
+      "faq": {
+        "overline": "FAQ",
+        "headlinePart1": "자주 묻는",
+        "headlineAccent": "질문",
+        "subtitle": "브라우저 로컬 AI가 사진에 하는 일입니다.",
+        "q1": "사진이 업로드되나요?",
+        "a1": "아닙니다. 이미지는 이 탭의 Web Worker에서 디코딩되고 처리됩니다. 내려받는 것은 공개 모델 파일이며 사진이 아닙니다.",
+        "q2": "첫 실행에 모델을 받는 이유는요?",
+        "a2": "배경 제거에는 로컬 ONNX 모델(RMBG)이 필요합니다. 한 번 받아 브라우저에 캐시하고 재사용합니다. 사용자 이미지는 그 다운로드에 포함되지 않습니다.",
+        "q3": "어떤 형식으로 내보내나요?",
+        "a3": "투명 PNG, 투명 WebP, 흰 배경 JPEG입니다. WebP와 JPEG는 품질을 조절할 수 있습니다.",
+        "q4": "여러 장을 처리할 수 있나요?",
+        "a4": "가능합니다. 대기열에 추가하고 가장자리 정리를 한 번 맞춘 뒤 일괄 제거를 시작하고, 완성된 컷아웃 ZIP을 받으세요."
+      }
+    }
   },
   "aiSegmentation": {
     "title": "AI 분할",
@@ -742,7 +794,55 @@
     "ratio1_1": "1:1",
     "ratio4_3": "4:3",
     "ratio16_9": "16:9",
-    "ratio3_2": "3:2"
+    "ratio3_2": "3:2",
+    "landing": {
+      "hero": {
+        "overline": "크기 조정",
+        "headlinePart1": "소셜 크기로",
+        "headlineAccent": "브라우저에서",
+        "description": "직접 캔버스를 정하거나 Instagram, YouTube, Facebook 프리셋을 고른 뒤 드래그, 자르기, 회전하고 내보냅니다. 모두 이 기기에서 이뤄지며 업로드는 없습니다."
+      },
+      "features": {
+        "overline": "주요 기능",
+        "headlinePart1": "픽셀 단위,",
+        "headlineAccent": "업로드 없음",
+        "item1Title": "소셜 프리셋",
+        "item1Desc": "Instagram 정사각 1080×1080, 스토리 1080×1920, YouTube 썸네일 1280×720, Facebook 커버 1640×924, 그리고 1:1, 4:3, 16:9, 9:16.",
+        "item2Title": "사용자 캔버스와 드래그 배치",
+        "item2Desc": "너비와 높이(최대 4096px)를 입력하고 아트보드에서 드래그해 맞춤 또는 채우기로 스케일합니다.",
+        "item3Title": "자르기, 회전, 뒤집기",
+        "item3Desc": "자유 또는 1:1, 4:3, 16:9, 3:2 고정 자르기. 내보내기 전에 90° 회전과 좌우/상하 뒤집기가 가능합니다.",
+        "item4Title": "로컬 PNG / JPEG / WebP",
+        "item4Desc": "내보내기는 브라우저에서 실행됩니다. /resize?preset=instagram-story 로 해당 캔버스를 엽니다."
+      },
+      "steps": {
+        "overline": "사용 방법",
+        "headlinePart1": "네 가지",
+        "headlineAccent": "단계",
+        "step1Title": "이미지 업로드",
+        "step1Desc": "PNG, JPEG, WebP를 아트보드에 놓습니다. 파일은 로컬에서 읽습니다.",
+        "step2Title": "크기 선택",
+        "step2Desc": "소셜 프리셋 또는 직접 픽셀. ?preset=youtube-thumbnail 은 로드 시 적용됩니다.",
+        "step3Title": "위치와 자르기",
+        "step3Desc": "드래그로 프레이밍, 맞춤/채우기, 비율 자르기, 회전과 뒤집기.",
+        "step4Title": "다운로드",
+        "step4Desc": "설정한 캔버스 크기로 PNG, JPEG, WebP를 내보냅니다."
+      },
+      "faq": {
+        "overline": "FAQ",
+        "headlinePart1": "자주 묻는",
+        "headlineAccent": "질문",
+        "subtitle": "프리셋, 자르기, 프라이버시에 대한 안내입니다.",
+        "q1": "어떤 소셜 프리셋이 있나요?",
+        "a1": "Instagram 정사각 1080×1080, 스토리 1080×1920, YouTube 썸네일 1280×720, Facebook 커버 1640×924, 그리고 1:1, 4:3, 3:4, 16:9, 9:16입니다.",
+        "q2": "이미지가 서버로 올라가나요?",
+        "a2": "아닙니다. 크기 조정, 자르기, 내보내기는 브라우저 Canvas API입니다. 파일은 이 기기를 떠나지 않습니다.",
+        "q3": "고정 비율로 자를 수 있나요?",
+        "a3": "가능합니다. 자르기 모드에서 1:1, 4:3, 16:9, 3:2를 잠그거나 자유롭게 두고 핸들을 드래그한 뒤 적용하세요.",
+        "q4": "링크로 프리셋을 열 수 있나요?",
+        "a4": "가능합니다. /resize 뒤에 ?preset=instagram-square (또는 instagram-story, youtube-thumbnail, facebook-cover 등)를 붙이면 해당 캔버스로 에디터가 열립니다."
+      }
+    }
   },
   "watermark": {
     "metadata": {
@@ -794,7 +894,55 @@
     "templateBrand": "브랜드",
     "templateBrandDesc": "상단 모서리 근처의 로고형 텍스트.",
     "templateSubtle": "은은함",
-    "templateSubtleDesc": "완성 사진용 낮은 투명도 중앙 표시."
+    "templateSubtleDesc": "완성 사진용 낮은 투명도 중앙 표시.",
+    "landing": {
+      "hero": {
+        "overline": "워터마크",
+        "headlinePart1": "텍스트와 로고 마크",
+        "headlineAccent": "업로드 없이",
+        "description": "저작권 문구, 로고, 대각선 타일 워터마크를 올립니다. 레이어, 불투명도, 회전, 간격은 브라우저에서 조정하며 사진은 이 기기를 떠나지 않습니다."
+      },
+      "features": {
+        "overline": "주요 기능",
+        "headlinePart1": "사진은 여기서",
+        "headlineAccent": "보호",
+        "item1Title": "텍스트·로고 레이어",
+        "item1Desc": "저작권 문구와 PNG/JPEG/WebP 로고를 겹치고, 각 레이어의 크기·불투명도·회전을 따로 조정합니다.",
+        "item2Title": "한 점 또는 타일 반복",
+        "item2Desc": "한곳에 두거나 X/Y 간격으로 깔 수 있습니다. 샘플용 대각선 반복도 지원합니다.",
+        "item3Title": "바로 쓰는 템플릿",
+        "item3Desc": "모서리, 중앙, 대각선, 밀집, 브랜드, 은은함 프리셋으로 시작한 뒤 선택한 레이어를 다듬습니다.",
+        "item4Title": "로컬 내보내기, 업로드 없음",
+        "item4Desc": "합성은 Canvas API로 이 브라우저에서 이뤄집니다. PNG/JPEG/WebP로 받고 원본은 서버로 가지 않습니다."
+      },
+      "steps": {
+        "overline": "사용 방법",
+        "headlinePart1": "네 가지",
+        "headlineAccent": "단계",
+        "step1Title": "사진 넣기",
+        "step1Desc": "PNG, JPEG, WebP를 드롭하세요. 미리보기는 이 기기에만 있습니다.",
+        "step2Title": "텍스트 또는 로고 추가",
+        "step2Desc": "텍스트 레이어나 로고 이미지를 넣습니다. 한 사진에 둘 다 둘 수 있습니다.",
+        "step3Title": "위치와 타일",
+        "step3Desc": "드래그, 크기, 불투명도, 회전, 또는 반복 모드에서 간격을 맞춥니다.",
+        "step4Title": "내보내기",
+        "step4Desc": "PNG, JPEG, WebP를 골라 워터마크가 들어간 파일을 받습니다."
+      },
+      "faq": {
+        "overline": "FAQ",
+        "headlinePart1": "자주 묻는",
+        "headlineAccent": "질문",
+        "subtitle": "텍스트, 로고, 타일 워터마크가 브라우저에서 어떻게 동작하는지.",
+        "q1": "텍스트와 로고를 같이 넣을 수 있나요?",
+        "a1": "가능합니다. 텍스트와 로고 레이어를 필요한 만큼 추가하고, 선택한 층의 크기·불투명도·회전·반복을 수정하세요.",
+        "q2": "타일 워터마크는 어떻게 쓰나요?",
+        "a2": "레이어를 반복으로 바꾼 뒤 X/Y 간격과 회전을 설정합니다. 대각선·밀집 템플릿은 샘플이나 공개 미리보기에 적합합니다.",
+        "q3": "사진이 업로드되나요?",
+        "a3": "아닙니다. 합성은 브라우저에서 끝납니다. ImgSplit은 이미지나 로고를 받지 않습니다.",
+        "q4": "어떤 형식으로 내보낼 수 있나요?",
+        "a4": "PNG, JPEG, WebP입니다. JPEG와 WebP는 품질을 조절할 수 있고, PNG는 캔버스 투명도를 유지합니다."
+      }
+    }
   },
   "mosaic": {
     "metadata": {
@@ -998,7 +1146,55 @@
     "changeImage": "변경",
     "processing": "처리 중...",
     "compressFailed": "일부 이미지를 처리하지 못했습니다.",
-    "ready": "완료"
+    "ready": "완료",
+    "landing": {
+      "hero": {
+        "overline": "이미지 압축",
+        "headlinePart1": "압축과 변환은",
+        "headlineAccent": "브라우저 안에서",
+        "description": "JPEG, PNG, WebP를 바꾸고 품질을 조절한 뒤, 용량을 비교하고 저장하세요. 처리는 이 기기에서만 이뤄지며 이미지는 업로드되지 않습니다."
+      },
+      "features": {
+        "overline": "주요 기능",
+        "headlinePart1": "용량은 줄이고,",
+        "headlineAccent": "파일은 기기에",
+        "item1Title": "JPEG / PNG / WebP 변환",
+        "item1Desc": "출력 형식을 한 번에 바꿉니다. JPEG와 WebP는 10–100 품질 슬라이더, PNG는 무손실입니다.",
+        "item2Title": "압축 전후 비교",
+        "item2Desc": "원본과 결과를 나란히 보고 절약된 용량을 확인한 뒤 내보냅니다.",
+        "item3Title": "일괄 압축 후 ZIP",
+        "item3Desc": "여러 장을 함께 압축하고 결과를 하나의 ZIP으로 받습니다.",
+        "item4Title": "브라우저 처리, 업로드 없음",
+        "item4Desc": "압축은 이 브라우저의 Canvas API로 실행됩니다. 파일은 기기를 떠나지 않습니다."
+      },
+      "steps": {
+        "overline": "사용 방법",
+        "headlinePart1": "네 가지",
+        "headlineAccent": "단계",
+        "step1Title": "이미지 넣기",
+        "step1Desc": "PNG, JPEG, WebP를 추가하세요. ?format=webp&quality=80 같은 URL 프리셋은 에디터가 열릴 때 적용됩니다.",
+        "step2Title": "형식과 품질 선택",
+        "step2Desc": "PNG, JPEG, WebP를 고르고 슬라이더를 움직입니다. JPEG/WebP는 바로 다시 압축됩니다.",
+        "step3Title": "결과 비교",
+        "step3Desc": "나란히 보기와 절약된 용량을 확인한 뒤 내보냅니다.",
+        "step4Title": "다운로드",
+        "step4Desc": "한 장이면 파일 저장, 여러 장이면 ZIP입니다."
+      },
+      "faq": {
+        "overline": "FAQ",
+        "headlinePart1": "자주 묻는",
+        "headlineAccent": "질문",
+        "subtitle": "브라우저 압축과 포맷 변환에 대한 구체적인 설명입니다.",
+        "q1": "어떤 형식으로 변환할 수 있나요?",
+        "a1": "PNG, JPEG, WebP입니다. 같은 형식으로 압축하거나 JPEG→WebP처럼 변환할 수 있으며, 파일은 업로드되지 않습니다.",
+        "q2": "이미지가 서버로 올라가나요?",
+        "a2": "아닙니다. 압축과 변환은 브라우저에서만 실행됩니다. ImgSplit은 파일을 받지 않습니다.",
+        "q3": "품질 슬라이더는 어떻게 동작하나요?",
+        "a3": "JPEG와 WebP에서 10–100은 손실 압축입니다. 높을수록 디테일과 용량이 커집니다. PNG는 무손실이라 슬라이더가 적용되지 않습니다.",
+        "q4": "여러 장을 한 번에 압축할 수 있나요?",
+        "a4": "가능합니다. 여러 파일을 넣고 각 결과가 나오면 압축본 ZIP을 받으세요."
+      }
+    }
   },
   "carousel": {
     "metadata": {

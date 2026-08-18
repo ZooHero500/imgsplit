@@ -7,8 +7,8 @@ describe("pseo carousel pages", () => {
     expect(getToolPageData("cortar-carrossel", "pt-BR")).toBeTruthy()
     expect(getToolPageData("cortar-carrossel", "en")).toBeFalsy()
   })
-  it("serves carousel-splitter in en", () => {
-    expect(getToolPageData("carousel-splitter", "en")).toBeTruthy()
+  it("serves canva-image-splitter in en", () => {
+    expect(getToolPageData("canva-image-splitter", "en")).toBeTruthy()
   })
   it("every generated param resolves to data", () => {
     const params = getAllToolPageParams().filter((p) => p.toolSlug.includes("carrossel") || p.toolSlug.includes("carousel") || p.toolSlug === "canva-image-splitter")
@@ -22,13 +22,6 @@ describe("pseo carousel pages", () => {
     expect(data?.faqEntries.length).toBeGreaterThanOrEqual(3)
   })
 
-  it("carousel-splitter is available in every locale", () => {
-    const locales = getToolPageLocales("carousel-splitter")
-    for (const locale of ["en", "zh-CN", "ja", "ko", "es", "pt-BR"]) {
-      expect(locales).toContain(locale)
-    }
-  })
-
   it("canva-image-splitter is available in every locale", () => {
     const locales = getToolPageLocales("canva-image-splitter")
     for (const locale of ["en", "zh-CN", "ja", "ko", "es", "pt-BR"]) {
@@ -36,13 +29,10 @@ describe("pseo carousel pages", () => {
     }
   })
 
-  it("all pt-BR slugs are available only in pt-BR", () => {
-    const ptBRSlugs = ["cortar-carrossel", "cortar-imagens-carrossel", "cortar-carrossel-infinito"]
-    for (const slug of ptBRSlugs) {
-      expect(getToolPageData(slug, "pt-BR")).toBeTruthy()
-      expect(getToolPageData(slug, "en")).toBeFalsy()
-      expect(getToolPageData(slug, "zh-CN")).toBeFalsy()
-    }
+  it("pt-BR exclusive carousel slug is available only in pt-BR", () => {
+    expect(getToolPageData("cortar-carrossel", "pt-BR")).toBeTruthy()
+    expect(getToolPageData("cortar-carrossel", "en")).toBeFalsy()
+    expect(getToolPageData("cortar-carrossel", "zh-CN")).toBeFalsy()
   })
 
   it("cortar-carrossel has People Also Ask FAQ questions", () => {
@@ -52,21 +42,18 @@ describe("pseo carousel pages", () => {
     expect(questions.some((q) => q.toLowerCase().includes("cortar"))).toBe(true)
   })
 
-  it("routes every carousel slug to the carousel tool", () => {
-    for (const slug of ["carousel-splitter", "canva-image-splitter", "cortar-carrossel", "cortar-imagens-carrossel", "cortar-carrossel-infinito"]) {
+  it("routes remaining carousel slugs to the carousel tool", () => {
+    for (const slug of ["canva-image-splitter", "cortar-carrossel"]) {
       expect(TOOL_EDITOR_HREFS[slug]).toBeDefined()
       expect(TOOL_EDITOR_HREFS[slug].startsWith("/carousel")).toBe(true)
     }
   })
 
   it("carousel pages have all required fields", () => {
-    const slugs = ["carousel-splitter", "canva-image-splitter", "cortar-carrossel", "cortar-imagens-carrossel", "cortar-carrossel-infinito"]
+    const slugs = ["canva-image-splitter", "cortar-carrossel"]
     const localeMap: Record<string, string> = {
-      "carousel-splitter": "en",
       "canva-image-splitter": "en",
       "cortar-carrossel": "pt-BR",
-      "cortar-imagens-carrossel": "pt-BR",
-      "cortar-carrossel-infinito": "pt-BR",
     }
     for (const slug of slugs) {
       const data = getToolPageData(slug, localeMap[slug])

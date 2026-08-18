@@ -413,170 +413,9 @@ const data: Record<string, ToolPageData> = {
     ],
   },
 
-  "photo-splitter": {
-    slug: "photo-splitter",
-    category: "use-case",
-    seo: {
-      title: "オンライン写真分割ツール — 無料画像カッター | ImgSplit",
-      description: "無料のオンライン写真分割ツール — 写真をドラッグ＆ドロップで正確に分割。サーバーへのアップロード不要、100%ブラウザ処理。",
-      ogTitle: "写真分割ツール — 無料オンラインツール",
-      ogDescription: "写真を複数のパーツに即座に分割。無料・プライバシー安全・ブラウザベース。",
-    },
-    hero: {
-      overline: "写真分割ツール",
-      headlinePart1: "写真",
-      headlineAccent: "分割ツール",
-      headlinePart2: "— 無料＆即座に",
-      description: "あらゆる写真をピクセルレベルの精度で複数のパーツに分割。ドラッグ＆ドロップの分割線、スナップ整列、即時ダウンロード — すべてブラウザ内で完結。",
-    },
-    scenarios: [
-      { icon: "Camera", title: "写真の後処理", description: "集合写真、パノラマ、合成画像を個別セクションに分割し、編集・共有・印刷に活用。" },
-      { icon: "Smartphone", title: "スマホ写真の管理", description: "スマホで撮影した写真を分割 — 顔の切り出し、細部のトリミング、前景と背景の分離。" },
-      { icon: "ShoppingBag", title: "商品写真の作成", description: "商品写真を詳細ショットに分割し、ECサイトの商品ページで異なる角度やクローズアップを表示。" },
-    ],
-    howToSteps: [
-      { stepNumber: 1, title: "写真をアップロード", description: "ドラッグ＆ドロップまたはクリックでアップロード — PNG、JPG、WebP対応、最大20MB。" },
-      { stepNumber: 2, title: "分割線を配置", description: "水平または垂直の分割線を追加し、ドラッグで正確な位置に配置。" },
-      { stepNumber: 3, title: "プレビュー＆調整", description: "各パーツをリアルタイムで確認。スナップ整列で分割線を微調整。" },
-      { stepNumber: 4, title: "ダウンロード", description: "全パーツをZIPでダウンロード、または個別に保存。" },
-    ],
-    faqEntries: [
-      { question: "対応する写真形式は？", answer: "PNG、JPG/JPEG、WebP形式に対応。1ファイルあたり最大20MB。" },
-      { question: "分割で画質は劣化しますか？", answer: "いいえ。各パーツは元の解像度とピクセルデータを保持します。圧縮やリサンプリングなし — 画質劣化ゼロ。" },
-      { question: "不均等に分割できますか？", answer: "はい。分割線を任意の位置にドラッグして、カスタムサイズのパーツを作成できます。" },
-      { question: "スマホでも使えますか？", answer: "はい。モバイルブラウザでも快適に動作し、スマホから直接写真を分割できます。" },
-    ],
-    relatedTools: [
-      { slug: "/split-in-half", title: "半分に分割", description: "最もシンプルな分割 — 画像を2等分。" },
-      { slug: "/split-into-equal-parts", title: "等分分割", description: "画像を均等なセグメントに分割。" },
-      { slug: "/split-for-instagram", title: "Instagram分割", description: "Instagramカルーセルやグリッド投稿用に写真を分割。" },
-      { slug: "/", title: "画像分割ツール", description: "ドラッグ＆ドロップの分割線で自由に分割。" },
-    ],
-  },
 
-  "image-cutter": {
-    slug: "image-cutter",
-    category: "use-case",
-    seo: {
-      title: "オンライン画像カッター — 無料カッティングツール | ImgSplit",
-      description: "無料のオンライン画像カッター — ドラッグ＆ドロップでカット線を配置し、即座にダウンロード。アップロード不要、100%ブラウザ処理。",
-      ogTitle: "オンライン画像カッター — 無料ツール",
-      ogDescription: "画像を正確にカット。ドラッグ＆ドロップ操作、無料・ブラウザベース。",
-    },
-    hero: {
-      overline: "画像カッティングツール",
-      headlinePart1: "画像",
-      headlineAccent: "カッター",
-      headlinePart2: "— 正確にカット",
-      description: "ドラッグ＆ドロップのカット線で任意の画像を精確に分割。ピクセルレベルの精度、スナップ整列、即時ダウンロード。",
-    },
-    scenarios: [
-      { icon: "Scissors", title: "Webデザインのアセット切り出し", description: "デザインモックアップをヘッダー、ボタン、アイコンなどの個別アセットに切り出し。" },
-      { icon: "Mail", title: "メールテンプレートのスライス", description: "メールデザインを最適化された画像セクションに分割し、HTMLメールを完璧に表示。" },
-      { icon: "FileImage", title: "ドキュメント領域の抽出", description: "スキャン文書やスクリーンショットから特定の領域を正確に抽出。" },
-    ],
-    howToSteps: [
-      { stepNumber: 1, title: "画像をアップロード", description: "PNG、JPG、WebP画像をドラッグ＆ドロップまたはクリックでアップロード。" },
-      { stepNumber: 2, title: "カット線を配置", description: "水平・垂直のカット線を追加し、カット位置を正確に定義。" },
-      { stepNumber: 3, title: "カット結果をダウンロード", description: "各パーツをプレビューし、ZIPで一括ダウンロードまたは個別保存。" },
-    ],
-    faqEntries: [
-      { question: "カットとクロップの違いは？", answer: "クロップは画像の一部だけ残す操作。カットは画像全体を複数パーツに分割 — すべてのピクセルがいずれかのパーツに保存されます。" },
-      { question: "カット線の精度は？", answer: "カット線はピクセル境界にスナップし、単一ピクセル精度での配置が可能です。" },
-      { question: "画像サイズの上限は？", answer: "20MBまでのファイルに対応。ピクセル数の制限はありません。" },
-    ],
-    relatedTools: [
-      { slug: "/no-photoshop-slicer", title: "Photoshop不要スライサー", description: "Photoshopのスライスツールの無料代替。" },
-      { slug: "/split-horizontally", title: "水平分割", description: "画像を水平方向の行やストリップに分割。" },
-      { slug: "/split-vertically", title: "垂直分割", description: "画像を垂直方向の列に分割。" },
-      { slug: "/", title: "画像分割ツール", description: "ドラッグ＆ドロップの分割線で自由にカット。" },
-    ],
-  },
 
-  "grid-maker": {
-    slug: "grid-maker",
-    category: "use-case",
-    seo: {
-      title: "画像グリッドメーカー — 無料オンライングリッド生成 | ImgSplit",
-      description: "無料のオンライン画像グリッドメーカー — 2x2、3x3、4x4またはカスタムグリッドを作成。SNS、ムードボードに最適。ブラウザベース。",
-      ogTitle: "画像グリッドメーカー — 無料オンラインツール",
-      ogDescription: "SNS、ムードボードなどに最適な画像グリッドを作成。無料・ブラウザベース。",
-    },
-    hero: {
-      overline: "グリッド作成ツール",
-      headlinePart1: "画像",
-      headlineAccent: "グリッドメーカー",
-      headlinePart2: "— 自由なレイアウト",
-      description: "2x2、3x3、4x4 または任意のカスタムレイアウトで完璧なグリッドを作成。SNSプロフィール、ムードボード、ビジュアルストーリーテリングに最適。",
-    },
-    scenarios: [
-      { icon: "LayoutGrid", title: "SNSグリッドプロフィール", description: "SNSプロフィールを統一感のあるビジュアルギャラリーに変える、美しいグリッドレイアウトを作成。" },
-      { icon: "Palette", title: "ムードボード＆インスピレーション", description: "リファレンス画像をグリッドに分割し、デザインムードボードやカラーパレットの探索に活用。" },
-      { icon: "Presentation", title: "プレゼンテーション素材", description: "インフォグラフィックやデータ可視化をグリッドベースのビジュアルに分割。" },
-    ],
-    howToSteps: [
-      { stepNumber: 1, title: "画像をアップロード", description: "グリッドに分割したい画像をアップロード。PNG、JPG、WebP対応。" },
-      { stepNumber: 2, title: "グリッドを定義", description: "等間隔の水平・垂直線を追加し、2x2、3x3などの希望するレイアウトを作成。" },
-      { stepNumber: 3, title: "グリッドタイルをダウンロード", description: "すべてのタイルをプレビューし、ZIPでダウンロード。タイルは順番に番号付け。" },
-    ],
-    faqEntries: [
-      { question: "どんなサイズのグリッドが作れますか？", answer: "2x2から10x10以上まで、自由なサイズで作成可能。各方向最大20本の分割線。" },
-      { question: "タイルは完全に均等ですか？", answer: "スナップ整列機能で分割線を等間隔に自動配置し、完全に均等なタイルを作成できます。" },
-      { question: "Instagramに最適なグリッドは？", answer: "1x3グリッドはカルーセル投稿に最適。3x3グリッドはプロフィールページで圧巻のモザイク効果を演出。" },
-    ],
-    relatedTools: [
-      { slug: "/grid", title: "グリッド分割", description: "プリセットグリッド：3×3、1×3、2×2 — SNS向けに最適化。" },
-      { slug: "/split-for-instagram", title: "Instagram分割", description: "Instagramカルーセルやグリッド投稿専用。" },
-      { slug: "/split-into-equal-parts", title: "等分分割", description: "画像を完全に均等なセグメントに分割。" },
-      { slug: "/split-for-wechat", title: "SNSグリッド", description: "SNSプロフィール用のグリッドタイルに分割。" },
-    ],
-  },
 
-  "compress-image": {
-    slug: "compress-image",
-    category: "use-case",
-    seo: {
-      title: "オンライン画像圧縮 — 無料＆プライバシー安全 | ImgSplit",
-      description: "無料で画像をオンライン圧縮 — 視覚品質を維持しながらファイルサイズを縮小。ブラウザ処理、サーバーへのアップロード不要、JPEG・PNG・WebP対応。",
-      ogTitle: "オンライン画像圧縮 — 無料＆プライバシー安全",
-      ogDescription: "ブラウザで画像ファイルサイズを即座に縮小。無料・プライバシー安全・アップロード不要。",
-    },
-    hero: {
-      overline: "画像圧縮ツール",
-      headlinePart1: "画像を",
-      headlineAccent: "圧縮",
-      headlinePart2: "— 即座に",
-      description: "目に見える品質低下なしに画像ファイルサイズを縮小。JPEG・PNG・WebP対応 — すべてブラウザ内で処理、データはデバイスから外に出ません。",
-    },
-    scenarios: [
-      {
-        icon: "Globe",
-        title: "Web最適化",
-        description: "Webサイトにアップロードする前に画像を圧縮 — ページ読み込み高速化、Core Web Vitals向上、SEOランキング改善を視覚品質を犠牲にせずに実現。",
-      },
-      {
-        icon: "Mail",
-        title: "メール添付ファイル",
-        description: "画像添付ファイルを圧縮してメールのサイズ制限に対応。写真の見た目を保ちながら10MBや25MBの添付上限に収めます。",
-      },
-    ],
-    howToSteps: [
-      { stepNumber: 1, title: "画像をアップロード", description: "圧縮したいJPEG、PNG、またはWebP画像をドラッグ＆ドロップまたはクリックでアップロード。" },
-      { stepNumber: 2, title: "品質を調整", description: "品質スライダーでファイルサイズと視覚品質のバランスを調整。ダウンロード前にリアルタイムでプレビュー。" },
-      { stepNumber: 3, title: "圧縮ファイルをダウンロード", description: "最適化された画像をダウンロード — ファイルサイズが小さくなり、同じ素晴らしい見た目を維持。圧縮前後のサイズを即座に比較。" },
-    ],
-    faqEntries: [
-      { question: "画像を圧縮すると品質は低下しますか？", answer: "圧縮は冗長なデータを除去してファイルサイズを縮小します。品質設定70%以上では、視覚的な差異は通常肉眼では認識できません。" },
-      { question: "どの画像フォーマットを圧縮できますか？", answer: "JPEG、PNG、WebP画像を圧縮できます。最大限の圧縮には、サイズ対品質比で最優秀なWebPフォーマットへの変換がおすすめです。" },
-      { question: "アップロードのファイルサイズ制限はありますか？", answer: "最大20MBの画像をアップロードできます。すべてブラウザ内で処理するため、大きなファイルは少し時間がかかる場合があります。" },
-    ],
-    relatedTools: [
-      { slug: "/compress-jpeg", title: "JPEG圧縮", description: "品質コントロール付きの専用JPEG圧縮。" },
-      { slug: "/png-to-webp", title: "PNGからWebP", description: "PNGをWebPに変換して最大限の圧縮を実現。" },
-      { slug: "/resize", title: "画像リサイズ", description: "画像を正確なサイズやパーセンテージでリサイズ。" },
-      { slug: "/", title: "画像分割ツール", description: "ドラッグ＆ドロップの分割線で画像を分割。" },
-    ],
-  },
 
   "compress-jpeg": {
     slug: "compress-jpeg",
@@ -617,9 +456,9 @@ const data: Record<string, ToolPageData> = {
       { question: "JPEGとJPGの違いは何ですか？", answer: "違いはありません — JPGとJPEGは同じフォーマットを指します。短い「.jpg」拡張子は、拡張子を3文字に制限していたWindowsで一般的になりました。" },
     ],
     relatedTools: [
-      { slug: "/compress-image", title: "画像圧縮", description: "あらゆるフォーマットに対応する汎用画像圧縮。" },
+      { slug: "/compress", title: "画像圧縮", description: "あらゆるフォーマットに対応する汎用画像圧縮。" },
       { slug: "/jpg-to-webp", title: "JPGからWebP", description: "JPEGをWebPに変換してさらに小さなファイルサイズに。" },
-      { slug: "/reduce-image-size", title: "画像サイズ縮小", description: "あらゆる画像を最小ファイルサイズに最適化。" },
+      { slug: "/png-to-webp", title: "PNGからWebP", description: "PNGをWebPに変換してさらに小さなファイルサイズに。" },
     ],
   },
 
@@ -664,7 +503,7 @@ const data: Record<string, ToolPageData> = {
     relatedTools: [
       { slug: "/png-to-webp", title: "PNGからWebP", description: "PNGをWebPに変換して透明度付きで劇的に小さなファイルに。" },
       { slug: "/png-to-jpg", title: "PNGからJPG", description: "透明度が不要な場合にPNGをJPEGに変換して小さなファイルに。" },
-      { slug: "/compress-image", title: "画像圧縮", description: "あらゆるフォーマットに対応する汎用画像圧縮。" },
+      { slug: "/compress", title: "画像圧縮", description: "あらゆるフォーマットに対応する汎用画像圧縮。" },
     ],
   },
 
@@ -938,50 +777,6 @@ const data: Record<string, ToolPageData> = {
     ],
   },
 
-  "reduce-image-size": {
-    slug: "reduce-image-size",
-    category: "use-case",
-    seo: {
-      title: "画像サイズ縮小 — 無料ファイルオプティマイザー | ImgSplit",
-      description: "無料で画像ファイルサイズをオンライン縮小。JPEG、PNG、WebP画像をWeb、メール、ストレージ用に最適化。ブラウザ処理、プライバシー安全、サーバーアップロード不要。",
-      ogTitle: "画像サイズ縮小 — 無料オンラインオプティマイザー",
-      ogDescription: "画像ファイルサイズを即座に最適化・縮小。無料・プライバシー安全・ブラウザベース。",
-    },
-    hero: {
-      overline: "画像サイズ縮小",
-      headlinePart1: "画像",
-      headlineAccent: "サイズ",
-      headlinePart2: "を縮小 — 即座に最適化",
-      description: "あらゆる画像を最小限のファイルサイズに最適化。JPEG、PNG、WebPのインテリジェント圧縮 — より高速なWebサイト、より少ないストレージ、より素早いアップロードに最適。",
-    },
-    scenarios: [
-      {
-        icon: "Zap",
-        title: "Webサイト高速化",
-        description: "大きな画像はWebサイトが遅い原因の第1位。画像サイズを縮小してページ読み込み時間、直帰率、検索エンジンランキングを劇的に改善。",
-      },
-      {
-        icon: "FileDown",
-        title: "ストレージ最適化",
-        description: "クラウドストレージやデバイスの容量が不足？写真ライブラリ全体の画像サイズを縮小して、画像を削除せずにギガバイト単位のスペースを解放。",
-      },
-    ],
-    howToSteps: [
-      { stepNumber: 1, title: "画像をアップロード", description: "小さくしたいJPEG、PNG、またはWebP画像をドラッグ＆ドロップまたは選択。" },
-      { stepNumber: 2, title: "設定を最適化", description: "圧縮品質を調整し、必要に応じて出力フォーマットを変更。WebPが通常最も効果的なサイズ削減を提供します。" },
-      { stepNumber: 3, title: "最適化画像をダウンロード", description: "小さくなった画像ファイルを保存。ツールは正確な節約バイト数と削減率を表示します。" },
-    ],
-    faqEntries: [
-      { question: "画像ファイルサイズを縮小する最良の方法は？", answer: "3つの戦略が最も効果的：品質調整による圧縮（最速）、WebPフォーマットへの変換（最も効果的）、またはより小さな寸法へのリサイズ（最も積極的）。3つすべてを組み合わせると最小のファイルが得られます。" },
-      { question: "画像ファイルサイズはどのくらい縮小できますか？", answer: "ソース画像と設定に応じて通常40-80%の削減が可能。5MBのJPEGを品質80のWebPに変換すると500KBのファイルを簡単に生成できます。" },
-      { question: "ファイルサイズの縮小は印刷品質に影響しますか？", answer: "Webおよびスクリーン用途では、適切に圧縮された画像はオリジナルと見分けがつきません。プロフェッショナル印刷用には品質を90%以上に保ち、過度な圧縮を避けてください。" },
-    ],
-    relatedTools: [
-      { slug: "/compress-image", title: "画像圧縮", description: "フォーマット選択付きの汎用画像圧縮。" },
-      { slug: "/compress-jpeg", title: "JPEG圧縮", description: "JPEG写真専用の圧縮。" },
-      { slug: "/png-to-webp", title: "PNGからWebP", description: "最良の圧縮率のためにWebPに変換。" },
-    ],
-  },
 
   "crop-image": {
     slug: "crop-image",
@@ -1031,7 +826,7 @@ const data: Record<string, ToolPageData> = {
     relatedTools: [
       { slug: "/instagram-story-crop", title: "Instagram Story", description: "9:16縦長画像を作成。" },
       { slug: "/resize", title: "画像リサイズ", description: "任意の寸法でリサイズとトリミング。" },
-      { slug: "/compress-image", title: "画像圧縮", description: "共有前にファイルサイズを削減。" },
+      { slug: "/compress", title: "画像圧縮", description: "共有前にファイルサイズを削減。" },
     ],
   },
 

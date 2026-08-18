@@ -1,5 +1,7 @@
+import type { Metadata } from "next"
 import { getTranslations, setRequestLocale } from "next-intl/server"
 import { Link } from "@/i18n/navigation"
+import { routing } from "@/i18n/routing"
 import { LandingContent } from "./LandingContent"
 import { SmartCTA } from "./SmartCTA"
 import { FaqItem } from "./FaqSection"
@@ -17,6 +19,57 @@ import {
   Zap,
 } from "lucide-react"
 import type React from "react"
+import { CORE_PAGE_LAST_MODIFIED } from "@/lib/seo/last-modified"
+import {
+  buildOgImages,
+  openGraphLocale,
+  SITE_BASE_URL,
+} from "@/lib/seo/metadata"
+
+const BASE_URL = SITE_BASE_URL
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: "metadata" })
+  const canonicalUrl =
+    locale === routing.defaultLocale ? BASE_URL : `${BASE_URL}/${locale}`
+
+  return {
+    title: t("title"),
+    description: t("description"),
+    alternates: {
+      canonical: canonicalUrl,
+      languages: {
+        ...Object.fromEntries(
+          routing.locales.map((l) => [
+            l,
+            l === routing.defaultLocale ? BASE_URL : `${BASE_URL}/${l}`,
+          ])
+        ),
+        "x-default": BASE_URL,
+      },
+    },
+    openGraph: {
+      title: t("title"),
+      description: t("description"),
+      url: canonicalUrl,
+      siteName: "ImgSplit",
+      type: "website",
+      locale: openGraphLocale(locale),
+      images: buildOgImages(t("title")),
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: t("title"),
+      description: t("description"),
+      images: [`${BASE_URL}/og-image.png`],
+    },
+  }
+}
 
 export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
@@ -54,7 +107,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
           name: "ImgSplit",
           url: "https://imgsplit.com",
           description: t("hero.description"),
-          dateModified: "2026-03-24",
+          dateModified: CORE_PAGE_LAST_MODIFIED.home,
           applicationCategory: "DesignApplication",
           operatingSystem: "Any",
           browserRequirements: "Requires JavaScript. Works in Chrome, Firefox, Safari, Edge.",
@@ -103,13 +156,13 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
           url: "https://imgsplit.com",
           logo: {
             "@type": "ImageObject",
-            url: "https://imgsplit.com/og-image.png",
-            width: 1200,
-            height: 630,
+            url: `${BASE_URL}/logo-256.png`,
+            width: 256,
+            height: 256,
           },
           description: t("metadata.description"),
           sameAs: [
-            "https://github.com/ZooHero500/online-image-segmentation",
+            "https://github.com/ZooHero500/imgsplit",
             "https://x.com/zooheroes",
           ],
           founder: {
@@ -134,7 +187,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
           "@type": "HowTo",
           name: t("steps.overline"),
           description: t("metadata.description"),
-          dateModified: "2026-03-24",
+          dateModified: CORE_PAGE_LAST_MODIFIED.home,
           step: [
             { "@type": "HowToStep", position: 1, name: t("steps.step1Title"), text: t("steps.step1Desc") },
             { "@type": "HowToStep", position: 2, name: t("steps.step2Title"), text: t("steps.step2Desc") },
@@ -254,7 +307,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
                 {t("benefits.overline")}
               </span>
               <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05] text-primary-foreground">
-                {t("benefits.headlinePart1")}
+                {t("benefits.headlinePart1")}{" "}
                 <em className="text-signal italic">{t("benefits.headlineAccent")}</em>
               </h2>
             </div>
@@ -299,7 +352,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             <div className="col-span-12 md:col-span-8 md:col-start-2">
               <div className="kicker mb-4">{t("features.overline")}</div>
               <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05]">
-                {t("features.headlinePart1")}
+                {t("features.headlinePart1")}{" "}
                 <em className="text-accent-deep italic">{t("features.headlineAccent")}</em>
               </h2>
             </div>
@@ -351,7 +404,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             <div className="col-span-12 md:col-span-8">
               <div className="kicker mb-4">{t("steps.overline")}</div>
               <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05]">
-                {t("steps.headlinePart1")}
+                {t("steps.headlinePart1")}{" "}
                 <em className="text-accent-deep italic">{t("steps.headlineAccent")}</em>
               </h2>
             </div>
@@ -389,7 +442,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
                 {t("useCases.overline")}
               </span>
               <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05] text-primary-foreground">
-                {t("useCases.headlinePart1")}
+                {t("useCases.headlinePart1")}{" "}
                 <em className="text-signal italic">{t("useCases.headlineAccent")}</em>
               </h2>
             </div>
@@ -484,7 +537,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         {/* CTA */}
         <section className="cta-band">
           <h2>
-            {t("cta.headlinePart1")}
+            {t("cta.headlinePart1")}{" "}
             <em className="text-accent-deep italic">{t("cta.headlineAccent")}</em>
           </h2>
           <p>{t("cta.description")}</p>
@@ -500,7 +553,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
               <header className="p-[30px_26px] border-b border-ink">
                 <div className="kicker mb-4">{t("faq.overline")}</div>
                 <h2 className="font-serif text-3xl sm:text-4xl leading-[1.1] mb-4">
-                  {t("faq.headlinePart1")}
+                  {t("faq.headlinePart1")}{" "}
                   <em className="text-accent-deep italic">{t("faq.headlineAccent")}</em>
                 </h2>
                 <p className="text-sm text-ink-soft leading-relaxed">
@@ -521,7 +574,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
               <div>
                 <div className="eyebrow mb-2.5">FAQ</div>
                 <p className="font-condensed text-2xl font-bold uppercase leading-[1.15] tracking-[-0.01em] mb-2">
-                  {t("faq.headlinePart1")}
+                  {t("faq.headlinePart1")}{" "}
                   <em className="text-accent-deep italic normal-case">{t("faq.headlineAccent")}</em>
                 </p>
               </div>

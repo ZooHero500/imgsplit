@@ -12,6 +12,9 @@ import {
   Columns3,
   SlidersHorizontal,
 } from "lucide-react"
+import { CORE_PAGE_LAST_MODIFIED } from "@/lib/seo/last-modified"
+
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://imgsplit.com"
 
 export default async function CarouselPage({
   params,
@@ -41,7 +44,7 @@ export default async function CarouselPage({
           "@type": "WebApplication",
           "@id": "https://imgsplit.com/carousel#app",
           name: "ImgSplit Carousel",
-          dateModified: "2026-06-25",
+          dateModified: CORE_PAGE_LAST_MODIFIED.carousel,
           url: locale === "en" ? "https://imgsplit.com/carousel" : `https://imgsplit.com/${locale}/carousel`,
           description: t("metadata.description"),
           applicationCategory: "DesignApplication",
@@ -57,7 +60,7 @@ export default async function CarouselPage({
           "@type": "HowTo",
           name: t("metadata.title"),
           description: t("metadata.description"),
-          dateModified: "2026-06-25",
+          dateModified: CORE_PAGE_LAST_MODIFIED.carousel,
           step: [
             { "@type": "HowToStep", position: 1, name: tLanding("howItWorks.step1Title"), text: tLanding("howItWorks.step1Desc") },
             { "@type": "HowToStep", position: 2, name: tLanding("howItWorks.step2Title"), text: tLanding("howItWorks.step2Desc") },
@@ -86,12 +89,12 @@ export default async function CarouselPage({
           url: "https://imgsplit.com",
           logo: {
             "@type": "ImageObject",
-            url: "https://imgsplit.com/og-image.png",
-            width: 1200,
-            height: 630,
+            url: `${BASE_URL}/logo-256.png`,
+            width: 256,
+            height: 256,
           },
           sameAs: [
-            "https://github.com/ZooHero500/online-image-segmentation",
+            "https://github.com/ZooHero500/imgsplit",
             "https://x.com/zooheroes",
           ],
         }}
@@ -119,7 +122,7 @@ export default async function CarouselPage({
 
             <div className="drift-medium">
               <h1 className="font-serif text-4xl sm:text-5xl md:text-7xl lg:text-9xl leading-[0.9] tracking-tight mb-6 sm:mb-8 hero-enter hero-delay-2">
-                {tLanding("hero.headlinePart1")}
+                {tLanding("hero.headlinePart1")}{" "}
                 <em className="text-signal-deep italic">
                   {tLanding("hero.headlineAccent")}
                 </em>
@@ -167,7 +170,7 @@ export default async function CarouselPage({
                 {tLanding("types.overline")}
               </span>
               <h2 className="font-serif text-3xl sm:text-4xl md:text-6xl lg:text-7xl leading-[0.9]">
-                {tLanding("types.headlinePart1")}
+                {tLanding("types.headlinePart1")}{" "}
                 <em className="text-signal italic">{tLanding("types.headlineAccent")}</em>
               </h2>
             </div>
@@ -229,7 +232,7 @@ export default async function CarouselPage({
               {tLanding("howItWorks.overline")}
             </span>
             <h2 className="font-serif text-3xl sm:text-4xl md:text-6xl lg:text-7xl leading-[0.9]">
-              {tLanding("howItWorks.headlinePart1")}
+              {tLanding("howItWorks.headlinePart1")}{" "}
               <em className="text-signal italic">
                 {tLanding("howItWorks.headlineAccent")}
               </em>
@@ -279,7 +282,7 @@ export default async function CarouselPage({
         <div className="max-w-[1600px] mx-auto grid grid-cols-12 gap-4">
           <div className="col-span-12 md:col-span-7 md:col-start-2 reveal">
             <h2 className="font-serif text-3xl sm:text-4xl md:text-6xl lg:text-7xl leading-[0.9] text-primary-foreground mb-6">
-              {tLanding("cta.headlinePart1")}
+              {tLanding("cta.headlinePart1")}{" "}
               <em className="text-signal italic">
                 {tLanding("cta.headlineAccent")}
               </em>
@@ -303,7 +306,7 @@ export default async function CarouselPage({
                 {tLanding("faq.overline")}
               </span>
               <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl leading-[0.9] mb-4">
-                {tLanding("faq.headlinePart1")}
+                {tLanding("faq.headlinePart1")}{" "}
                 <em className="text-signal italic">
                   {tLanding("faq.headlineAccent")}
                 </em>

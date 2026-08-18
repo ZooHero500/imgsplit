@@ -8,8 +8,6 @@ import { getAllToolPages } from "@/lib/pseo"
  */
 const LOCALE_EXCLUSIVE_SLUGS: Record<string, readonly string[]> = {
   "cortar-carrossel": ["pt-BR"],
-  "cortar-imagens-carrossel": ["pt-BR"],
-  "cortar-carrossel-infinito": ["pt-BR"],
   "xiaohongshu-cover-size": ["zh-CN"],
   "wechat-official-account-cover-size": ["zh-CN"],
 }

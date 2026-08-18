@@ -109,7 +109,7 @@
     "feature5": "Built for Every Workflow",
     "feature5Desc": "Whether you are an e-commerce seller splitting product photos, a designer slicing mockups, a social media manager creating grid posts, or a student preparing presentation materials — ImgSplit adapts to your workflow. Add up to 20 horizontal and 20 vertical lines to create any layout you need.",
     "feature6": "Open Source & Transparent",
-    "feature6Desc": "ImgSplit is open-source software published on GitHub. Anyone can inspect the code, verify our privacy claims, and contribute improvements. No hidden tracking, no data collection, no surprises."
+    "feature6Desc": "ImgSplit is open-source software published on GitHub. Anyone can inspect the code, verify our privacy claims, and contribute improvements. Your images never leave your device; we use anonymous product analytics (Vercel Analytics) and error monitoring (Sentry); no advertising cookies, no personal identity tracking."
   },
   "stats": {
     "overline": "By the Numbers",
@@ -123,7 +123,7 @@
     "stat3Label": "Data uploaded to servers",
     "stat4Value": "100%",
     "stat4Label": "Free, forever",
-    "stat5Value": "5",
+    "stat5Value": "6",
     "stat5Label": "Languages supported",
     "stat6Value": "3",
     "stat6Label": "Image formats"
@@ -346,17 +346,21 @@
     },
     "tech": {
       "title": "How It Works",
-      "description": "ImgSplit runs entirely in your browser using the HTML5 Canvas API. When you split an image, the processing happens locally on your device — no server round-trips, no uploads, no data collection. This architecture ensures zero latency, complete privacy, and works offline after the initial page load.",
+      "description": "ImgSplit runs entirely in your browser using the HTML5 Canvas API. When you split an image, the processing happens locally on your device — no server round-trips, no uploads. Your images never leave your device. We use anonymous product analytics (Vercel Analytics) and error monitoring (Sentry) to improve the tool. This architecture ensures zero latency, complete privacy, and works offline after the initial page load.",
       "items": {
         "browser": "100% Browser-Based",
         "browserDesc": "All image processing uses the HTML5 Canvas API. Your images never leave your device.",
         "opensource": "Open Source",
         "opensourceDesc": "Full source code available on GitHub. Inspect, contribute, or fork — it's all transparent.",
         "privacy": "Privacy by Design",
-        "privacyDesc": "No cookies tracking you, no analytics on your images, no server-side processing. Period.",
+        "privacyDesc": "Your images never leave your device. We use anonymous product analytics and error monitoring — but we never analyze your image content. No advertising cookies, no personal identity tracking, no server-side image processing.",
         "free": "Free Forever",
         "freeDesc": "No paywalls, no premium tiers, no signup required. ImgSplit will always be free."
       }
+    },
+    "brand": {
+      "title": "Brand Notice",
+      "description": "ImgSplit (imgsplit.com) is not affiliated with the npm package @imgsplit/core, github.com/imgsplit/imgsplit, or imgsplit.com.tr. The official source repository is github.com/ZooHero500/imgsplit."
     },
     "contact": {
       "title": "Contact",
@@ -648,7 +652,55 @@
     "refineBatchHint": "Applied to the next queued batch run.",
     "downloadReady": "Background removed.",
     "previewFailed": "Could not render the result preview.",
-    "exportFailed": "Could not export the result."
+    "exportFailed": "Could not export the result.",
+    "landing": {
+      "hero": {
+        "overline": "AI Background Remover",
+        "headlinePart1": "Remove backgrounds",
+        "headlineAccent": "in a local Worker",
+        "description": "A one-time on-device model download lets a browser Web Worker cut the subject out. Your photo is not uploaded — processing stays on this computer."
+      },
+      "features": {
+        "overline": "Features",
+        "headlinePart1": "Private cutouts",
+        "headlineAccent": "on-device",
+        "item1Title": "Local AI in a Web Worker",
+        "item1Desc": "After the model is cached, inference runs in a browser Worker. The image bitmap never goes to ImgSplit’s servers.",
+        "item2Title": "One-time model download",
+        "item2Desc": "The first run fetches the local RMBG model and stores it in this browser’s cache. Later edits usually skip the download.",
+        "item3Title": "Edge cleanup controls",
+        "item3Desc": "Set alpha cutoff, shrink/expand, and feather before you run — then re-remove if you change the sliders.",
+        "item4Title": "Transparent export, no upload",
+        "item4Desc": "Download a transparent PNG or WebP, or a JPEG on white. Batch mode queues several images and zips the ready ones."
+      },
+      "steps": {
+        "overline": "How it works",
+        "headlinePart1": "Four short",
+        "headlineAccent": "steps",
+        "step1Title": "Drop a photo",
+        "step1Desc": "PNG, JPEG, or WebP, up to 20MB. Add more files if you want a batch queue.",
+        "step2Title": "Download the model once",
+        "step2Desc": "If this browser has no cache yet, the first run downloads the local model. The photo still stays on the device.",
+        "step3Title": "Refine the edge",
+        "step3Desc": "Adjust leftover haze, subject inset, and softness, then run or re-run removal in the Worker.",
+        "step4Title": "Export",
+        "step4Desc": "Save a transparent PNG/WebP or a white-background JPEG. Ready batch items download as a ZIP."
+      },
+      "faq": {
+        "overline": "FAQ",
+        "headlinePart1": "Questions",
+        "headlineAccent": "answered",
+        "subtitle": "What “local AI in the browser” means for your photos.",
+        "q1": "Does the photo get uploaded?",
+        "a1": "No. The image is decoded and processed in this tab’s Web Worker. Only the public model files are downloaded, not your photo.",
+        "q2": "Why does the first run download a model?",
+        "a2": "Background removal needs a local ONNX model (RMBG). It is fetched once, cached in the browser, and reused. Your images are not part of that download.",
+        "q3": "What can I export?",
+        "a3": "Transparent PNG, transparent WebP, or JPEG with a white background. Quality applies to WebP and JPEG.",
+        "q4": "Can I process a batch?",
+        "a4": "Yes. Add more images to the queue, set edge cleanup once, then start batch removal and download a ZIP of finished cutouts."
+      }
+    }
   },
   "aiSegmentation": {
     "title": "AI Segmentation",
@@ -704,7 +756,55 @@
     "changeImage": "Change",
     "processing": "Processing...",
     "compressFailed": "Some images could not be processed.",
-    "ready": "Ready"
+    "ready": "Ready",
+    "landing": {
+      "hero": {
+        "overline": "Image Compressor",
+        "headlinePart1": "Compress & convert",
+        "headlineAccent": "in your browser",
+        "description": "Convert between JPEG, PNG, and WebP, then set quality and compare file size before you download. Everything runs locally — your images are never uploaded."
+      },
+      "features": {
+        "overline": "Features",
+        "headlinePart1": "Smaller files,",
+        "headlineAccent": "same device",
+        "item1Title": "JPEG, PNG, WebP conversion",
+        "item1Desc": "Switch output format in one click. JPEG and WebP use a 10–100 quality slider; PNG stays lossless.",
+        "item2Title": "Before / after size check",
+        "item2Desc": "A side-by-side preview shows the original and the compressed file so you can stop when the trade-off looks right.",
+        "item3Title": "Batch ZIP download",
+        "item3Desc": "Drop several images, compress them together, and download one ZIP with every result.",
+        "item4Title": "Local processing, no upload",
+        "item4Desc": "Compression runs in this browser with the Canvas API. Files never leave your device."
+      },
+      "steps": {
+        "overline": "How it works",
+        "headlinePart1": "Four short",
+        "headlineAccent": "steps",
+        "step1Title": "Drop images",
+        "step1Desc": "Add PNG, JPEG, or WebP files. URL presets such as ?format=webp&quality=80 apply as soon as the editor opens.",
+        "step2Title": "Choose format and quality",
+        "step2Desc": "Pick PNG, JPEG, or WebP and drag the quality slider. JPEG and WebP recompress immediately.",
+        "step3Title": "Compare the result",
+        "step3Desc": "Check the side-by-side preview and the saved-bytes readout before you export.",
+        "step4Title": "Download",
+        "step4Desc": "Save a single file, or download a ZIP when you processed a batch."
+      },
+      "faq": {
+        "overline": "FAQ",
+        "headlinePart1": "Questions",
+        "headlineAccent": "answered",
+        "subtitle": "Practical details about browser-side compression and format conversion.",
+        "q1": "Which formats can I convert between?",
+        "a1": "PNG, JPEG, and WebP. You can compress in the same format or convert — for example JPEG to WebP — without uploading the file.",
+        "q2": "Are my images uploaded?",
+        "a2": "No. Compression and conversion run entirely in your browser. ImgSplit never receives the files.",
+        "q3": "How does the quality slider work?",
+        "a3": "For JPEG and WebP, 10–100 controls lossy compression. Higher keeps more detail and a larger file. PNG is lossless, so quality does not apply.",
+        "q4": "Can I compress many images at once?",
+        "a4": "Yes. Add multiple files, wait until each shows a result, then download a ZIP of the compressed images."
+      }
+    }
   },
   "watermark": {
     "metadata": {
@@ -756,7 +856,55 @@
     "templateBrand": "Brand",
     "templateBrandDesc": "Brand text placed near the top corner.",
     "templateSubtle": "Subtle",
-    "templateSubtleDesc": "Low-opacity center mark for finished photos."
+    "templateSubtleDesc": "Low-opacity center mark for finished photos.",
+    "landing": {
+      "hero": {
+        "overline": "Watermark Tool",
+        "headlinePart1": "Text and logo marks",
+        "headlineAccent": "without upload",
+        "description": "Add a copyright line, a logo, or a tiled diagonal mark. Layers, opacity, rotation, and spacing are edited in the browser — the photo never leaves this device."
+      },
+      "features": {
+        "overline": "Features",
+        "headlinePart1": "Protect photos",
+        "headlineAccent": "locally",
+        "item1Title": "Text and logo layers",
+        "item1Desc": "Stack a copyright line and a PNG, JPEG, or WebP logo. Edit each layer’s size, opacity, and rotation independently.",
+        "item2Title": "Single mark or tiled repeat",
+        "item2Desc": "Place one mark, or tile it across the photo with adjustable X/Y spacing — including diagonal repeats for proof copies.",
+        "item3Title": "Ready-made templates",
+        "item3Desc": "Start from corner, center, diagonal, dense, brand, or subtle presets, then tweak the selected layer.",
+        "item4Title": "Local export, no upload",
+        "item4Desc": "Rendering uses the Canvas API in this browser. Download PNG, JPEG, or WebP — the source photo is not sent to a server."
+      },
+      "steps": {
+        "overline": "How it works",
+        "headlinePart1": "Four short",
+        "headlineAccent": "steps",
+        "step1Title": "Upload a photo",
+        "step1Desc": "Drop a PNG, JPEG, or WebP. The preview canvas stays on this device.",
+        "step2Title": "Add text or a logo",
+        "step2Desc": "Insert a text layer or a logo image. You can keep both on the same photo.",
+        "step3Title": "Position and tile",
+        "step3Desc": "Drag, resize, set opacity, rotate, or switch to repeat mode and adjust spacing.",
+        "step4Title": "Export",
+        "step4Desc": "Choose PNG, JPEG, or WebP and download the watermarked file."
+      },
+      "faq": {
+        "overline": "FAQ",
+        "headlinePart1": "Questions",
+        "headlineAccent": "answered",
+        "subtitle": "How text, logo, and tiled watermarks work in the browser.",
+        "q1": "Can I add both text and a logo?",
+        "a1": "Yes. Add as many text and logo layers as you need, then select one to edit size, opacity, rotation, and repeat.",
+        "q2": "How does tiled watermarking work?",
+        "a2": "Switch a layer to Repeat, then set spacing X/Y and rotation. Diagonal and dense templates are a quick start for proof or public previews.",
+        "q3": "Is the photo uploaded?",
+        "a3": "No. Watermark compositing runs in your browser. ImgSplit never receives the image or the logo.",
+        "q4": "Which export formats are available?",
+        "a4": "PNG, JPEG, and WebP. JPEG and WebP include a quality control; PNG keeps transparency around the canvas."
+      }
+    }
   },
   "mosaic": {
     "metadata": {
@@ -1092,7 +1240,55 @@
     "ratio1_1": "1:1",
     "ratio4_3": "4:3",
     "ratio16_9": "16:9",
-    "ratio3_2": "3:2"
+    "ratio3_2": "3:2",
+    "landing": {
+      "hero": {
+        "overline": "Image Resizer",
+        "headlinePart1": "Resize to social sizes",
+        "headlineAccent": "in the browser",
+        "description": "Set a custom canvas or pick Instagram, YouTube, and Facebook presets, then drag, crop, rotate, and export. All of it stays on your device — nothing is uploaded."
+      },
+      "features": {
+        "overline": "Features",
+        "headlinePart1": "Exact pixels,",
+        "headlineAccent": "no upload",
+        "item1Title": "Social size presets",
+        "item1Desc": "One click for Instagram square (1080×1080) or story (1080×1920), YouTube thumbnail (1280×720), Facebook cover (1640×924), plus 1:1, 4:3, 16:9, and 9:16 canvases.",
+        "item2Title": "Custom canvas and drag-to-place",
+        "item2Desc": "Type width and height (up to 4096px), then drag the image on the artboard and scale it to fit or fill.",
+        "item3Title": "Crop, rotate, and flip",
+        "item3Desc": "Crop with free or locked ratios (1:1, 4:3, 16:9, 3:2). Rotate 90° and flip horizontal or vertical before export.",
+        "item4Title": "Local PNG / JPEG / WebP",
+        "item4Desc": "Export runs in the browser. Open /resize?preset=instagram-story to land on that canvas size."
+      },
+      "steps": {
+        "overline": "How it works",
+        "headlinePart1": "Four short",
+        "headlineAccent": "steps",
+        "step1Title": "Upload an image",
+        "step1Desc": "Drop a PNG, JPEG, or WebP onto the artboard. The file is read locally.",
+        "step2Title": "Pick a size",
+        "step2Desc": "Choose a social preset or type custom pixels. Query presets such as ?preset=youtube-thumbnail apply on load.",
+        "step3Title": "Position and crop",
+        "step3Desc": "Drag to reframe, switch fit/fill, crop to a ratio, or rotate and flip.",
+        "step4Title": "Download",
+        "step4Desc": "Export PNG, JPEG, or WebP at the canvas size you set."
+      },
+      "faq": {
+        "overline": "FAQ",
+        "headlinePart1": "Questions",
+        "headlineAccent": "answered",
+        "subtitle": "Presets, cropping, and privacy for the resizer.",
+        "q1": "Which social presets are included?",
+        "a1": "Instagram square (1080×1080) and story (1080×1920), YouTube thumbnail (1280×720), Facebook cover (1640×924), plus ratios such as 1:1, 4:3, 3:4, 16:9, and 9:16.",
+        "q2": "Are images uploaded to a server?",
+        "a2": "No. Resizing, cropping, and export use the Canvas API in your browser. The file never leaves this device.",
+        "q3": "Can I crop to a fixed ratio?",
+        "a3": "Yes. Enter crop mode and lock 1:1, 4:3, 16:9, or 3:2, or leave it free. Drag the handles, then apply.",
+        "q4": "Can I open a preset from a link?",
+        "a4": "Yes. Append ?preset=instagram-square (or instagram-story, youtube-thumbnail, facebook-cover, and other catalog ids) to /resize. The editor opens at that canvas size."
+      }
+    }
   },
   "index": {
     "aTitle": "Split",

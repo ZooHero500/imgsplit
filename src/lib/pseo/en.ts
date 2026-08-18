@@ -282,17 +282,17 @@ const data: Record<string, ToolPageData> = {
         slug: "split-for-wechat",
         category: "use-case",
         seo: {
-          title: "Split Images for Social Media Grids — Free Online Tool | ImgSplit",
+          title: "Split Images for WeChat & Social Media Grids — Free Online Tool | ImgSplit",
           description: "Split images into grid tiles for social media profiles. Create 3x3, 2x2, or custom grids for Instagram, Facebook, and more. Free, browser-based.",
-          ogTitle: "Social Media Grid Splitter — Free Online Tool",
+          ogTitle: "WeChat Grid Splitter — Free Online Tool",
           ogDescription: "Split images into grid tiles for social media. Free and browser-based.",
         },
         hero: {
-          overline: "Social Media Grid Splitter",
+          overline: "WeChat & Social Grid Splitter",
           headlinePart1: "Split Images",
-          headlineAccent: "for Social Grids",
+          headlineAccent: "for WeChat Grids",
           headlinePart2: "— Stand Out Online",
-          description: "Create stunning grid layouts for your social media profile. Split any image into perfectly sized tiles for Instagram, Facebook, and other platforms.",
+          description: "Create stunning grid layouts for your social media profile. Split any image into perfectly sized tiles for WeChat, Instagram, Facebook, and other platforms.",
         },
         scenarios: [
           {
@@ -416,209 +416,9 @@ const data: Record<string, ToolPageData> = {
         ],
       },
 
-  "photo-splitter": {
-    slug: "photo-splitter",
-    category: "use-case",
-    seo: {
-      title: "Photo Splitter Online — Free Image Divider | ImgSplit",
-      description: "Free online photo splitter — divide any photo into multiple pieces with drag-and-drop precision. No upload to servers, 100% browser-based, works on any device.",
-      ogTitle: "Photo Splitter — Free Online Tool",
-      ogDescription: "Split any photo into multiple pieces instantly. Free, private, browser-based.",
-    },
-    hero: {
-      overline: "Photo Splitting Tool",
-      headlinePart1: "Photo",
-      headlineAccent: "Splitter",
-      headlinePart2: "— Free & Instant",
-      description: "Divide any photo into multiple pieces with pixel-perfect precision. Drag-and-drop split lines, snap alignment, and instant download — all in your browser.",
-    },
-    scenarios: [
-      {
-        icon: "Camera",
-        title: "Photography Post-Processing",
-        description: "Split group photos, panoramic shots, or composite images into individual sections for separate editing, sharing, or printing.",
-      },
-      {
-        icon: "Smartphone",
-        title: "Mobile Photo Management",
-        description: "Divide photos taken on your phone into sections — extract faces, crop details, or separate foreground from background areas.",
-      },
-      {
-        icon: "ShoppingBag",
-        title: "Product Photo Preparation",
-        description: "Split product photos into detail shots for e-commerce listings — show different angles, features, or close-ups from a single original photo.",
-      },
-    ],
-    howToSteps: [
-      { stepNumber: 1, title: "Upload Your Photo", description: "Drag and drop or click to upload any photo — PNG, JPG, or WebP up to 20 MB." },
-      { stepNumber: 2, title: "Place Split Lines", description: "Add horizontal or vertical split lines and drag them to divide the photo exactly where you want." },
-      { stepNumber: 3, title: "Preview & Adjust", description: "See each split piece in real-time. Fine-tune line positions with snap alignment for precision." },
-      { stepNumber: 4, title: "Download Pieces", description: "Download all pieces as a ZIP archive, or save individual sections one by one." },
-    ],
-    faqEntries: [
-      { question: "What photo formats are supported?", answer: "PNG, JPG/JPEG, and WebP photos are supported, with a maximum file size of 20 MB per photo." },
-      { question: "Will splitting reduce my photo quality?", answer: "No. Each piece retains the original resolution and pixel data. There is no compression or resampling — zero quality loss guaranteed." },
-      { question: "Can I split a photo into unequal pieces?", answer: "Yes. Drag split lines to any position for custom-sized pieces. You're not limited to equal divisions." },
-      { question: "Is there a limit to how many pieces I can create?", answer: "You can add up to 20 horizontal and 20 vertical lines, creating hundreds of pieces from a single photo." },
-      { question: "Does this work with phone photos?", answer: "Yes — works with any photo from any device. The tool runs in your mobile browser too, so you can split photos directly on your phone." },
-    ],
-    relatedTools: [
-      { slug: "/split-in-half", title: "Split in Half", description: "The simplest split — divide any image into two equal halves." },
-      { slug: "/split-into-equal-parts", title: "Equal Parts Splitter", description: "Divide images into perfectly equal segments." },
-      { slug: "/split-for-instagram", title: "Instagram Splitter", description: "Split photos for Instagram carousel and grid posts." },
-      { slug: "/", title: "Image Splitter", description: "Full-featured image splitting with custom drag-and-drop lines." },
-    ],
-  },
 
-  "image-cutter": {
-    slug: "image-cutter",
-    category: "use-case",
-    seo: {
-      title: "Image Cutter Online — Free Cutting Tool | ImgSplit",
-      description: "Free online image cutter — cut any image into pieces with precise control. Drag cut lines, snap to grid, and download instantly. No upload, 100% browser-based.",
-      ogTitle: "Image Cutter Online — Free Tool",
-      ogDescription: "Cut any image into pieces with drag-and-drop precision. Free and browser-based.",
-    },
-    hero: {
-      overline: "Image Cutting Tool",
-      headlinePart1: "Image",
-      headlineAccent: "Cutter",
-      headlinePart2: "— Cut with Precision",
-      description: "Cut any image into multiple pieces with drag-and-drop cut lines. Pixel-perfect precision, snap alignment, and instant download — no software installation needed.",
-    },
-    scenarios: [
-      {
-        icon: "Scissors",
-        title: "Web Design Asset Cutting",
-        description: "Cut design mockups into individual assets — headers, buttons, icons, and content sections — ready for HTML/CSS implementation.",
-      },
-      {
-        icon: "Mail",
-        title: "Email Template Slicing",
-        description: "Cut email designs into optimized image sections for HTML email templates that render perfectly across all email clients.",
-      },
-      {
-        icon: "FileImage",
-        title: "Document Region Extraction",
-        description: "Cut specific regions from scanned documents, certificates, or screenshots — extract exactly the section you need without cropping the rest.",
-      },
-    ],
-    howToSteps: [
-      { stepNumber: 1, title: "Upload Your Image", description: "Upload any image — PNG, JPG, or WebP. Drag and drop or click to select." },
-      { stepNumber: 2, title: "Place Cut Lines", description: "Add horizontal and vertical cut lines. Drag them to define exactly where the image should be divided." },
-      { stepNumber: 3, title: "Download Cut Pieces", description: "Preview every piece, then download all at once as a ZIP or pick individual sections." },
-    ],
-    faqEntries: [
-      { question: "What is the difference between cutting and cropping?", answer: "Cropping removes the outer edges of an image to keep one region. Cutting divides the entire image into multiple pieces — nothing is discarded, every pixel is preserved in one of the output pieces." },
-      { question: "Can I cut an image into irregular shapes?", answer: "The tool uses straight horizontal and vertical cut lines, producing rectangular pieces. For non-rectangular shapes, consider using a dedicated masking tool." },
-      { question: "How precise are the cut lines?", answer: "Cut lines snap to pixel boundaries and support fine-grained dragging. You can position them with single-pixel accuracy." },
-      { question: "Is there a maximum image size?", answer: "Files up to 20 MB are supported. There is no pixel dimension limit, though very large images may take a moment to process." },
-    ],
-    relatedTools: [
-      { slug: "/no-photoshop-slicer", title: "No-Photoshop Slicer", description: "A free alternative to Photoshop's slice tool for quick image dividing." },
-      { slug: "/split-horizontally", title: "Horizontal Splitter", description: "Cut images into horizontal rows and strips." },
-      { slug: "/split-vertically", title: "Vertical Splitter", description: "Cut images into vertical columns." },
-      { slug: "/", title: "Image Splitter", description: "Full-featured image splitting with drag-and-drop lines." },
-    ],
-  },
 
-  "grid-maker": {
-    slug: "grid-maker",
-    category: "use-case",
-    seo: {
-      title: "Image Grid Maker — Free Online Grid Generator | ImgSplit",
-      description: "Free online image grid maker — create 2x2, 3x3, 4x4, or custom grids from any image. Perfect for social media, moodboards, and collage layouts. Browser-based.",
-      ogTitle: "Image Grid Maker — Free Online Tool",
-      ogDescription: "Create image grids for social media, moodboards, and more. Free and browser-based.",
-    },
-    hero: {
-      overline: "Grid Creation Tool",
-      headlinePart1: "Image",
-      headlineAccent: "Grid Maker",
-      headlinePart2: "— Any Layout",
-      description: "Create perfect image grids — 2x2, 3x3, 4x4, or any custom layout. Ideal for social media profiles, moodboards, and visual storytelling.",
-    },
-    scenarios: [
-      {
-        icon: "LayoutGrid",
-        title: "Social Media Grid Profiles",
-        description: "Create stunning grid layouts that transform your social media profile into a cohesive visual gallery — each tile is part of a bigger picture.",
-      },
-      {
-        icon: "Palette",
-        title: "Moodboards & Inspiration Boards",
-        description: "Split reference images into organized grid tiles for design moodboards, color palette exploration, or visual brainstorming sessions.",
-      },
-      {
-        icon: "Presentation",
-        title: "Presentation Visuals",
-        description: "Create grid-based visuals for presentations — split infographics, comparison charts, or data visualizations into clean, organized tiles.",
-      },
-    ],
-    howToSteps: [
-      { stepNumber: 1, title: "Upload Your Image", description: "Upload the image you want to split into a grid. Supports PNG, JPG, and WebP." },
-      { stepNumber: 2, title: "Define Your Grid", description: "Add evenly spaced horizontal and vertical lines to create your desired grid layout — 2x2, 3x3, or any custom configuration." },
-      { stepNumber: 3, title: "Download Grid Tiles", description: "Preview all grid tiles, then download them as a ZIP. Tiles are numbered for easy ordering." },
-    ],
-    faqEntries: [
-      { question: "What grid sizes can I create?", answer: "Any grid size you want — from 2x2 to 10x10 and beyond. Add as many horizontal and vertical lines as needed (up to 20 each)." },
-      { question: "Are the grid tiles perfectly equal?", answer: "Use the snap alignment feature to distribute lines evenly. Lines automatically snap to equal-interval positions for perfectly uniform tiles." },
-      { question: "Can I create non-square grids like 2x3 or 3x4?", answer: "Yes. Add different numbers of horizontal and vertical lines to create any rectangular grid layout." },
-      { question: "What is the best grid for Instagram?", answer: "A 1x3 grid (3 vertical tiles) works great for carousel posts. A 3x3 grid (9 tiles) creates a stunning mosaic effect on your profile page." },
-    ],
-    relatedTools: [
-      { slug: "/grid", title: "Grid Splitter", description: "Quick preset grid splits: 3×3, 1×3, 2×2 — optimized for social media." },
-      { slug: "/split-for-instagram", title: "Instagram Splitter", description: "Split images specifically for Instagram carousel and grid posts." },
-      { slug: "/split-into-equal-parts", title: "Equal Parts Splitter", description: "Divide images into perfectly equal segments." },
-      { slug: "/split-for-wechat", title: "Social Media Grid", description: "Split images into grid tiles for social media profiles." },
-    ],
-  },
 
-  "compress-image": {
-    slug: "compress-image",
-    category: "use-case",
-    seo: {
-      title: "Compress Images Online — Free & Private | ImgSplit",
-      description: "Compress images online for free — reduce file size while maintaining visual quality. Browser-based, no upload to servers, supports JPEG, PNG, and WebP.",
-      ogTitle: "Compress Images Online — Free & Private",
-      ogDescription: "Reduce image file size instantly in your browser. Free, private, no upload needed.",
-    },
-    hero: {
-      overline: "Image Compression Tool",
-      headlinePart1: "Compress",
-      headlineAccent: "Images",
-      headlinePart2: "— Instantly",
-      description: "Reduce image file size without visible quality loss. Supports JPEG, PNG, and WebP — everything runs in your browser, nothing leaves your device.",
-    },
-    scenarios: [
-      {
-        icon: "Globe",
-        title: "Web Optimization",
-        description: "Compress images before uploading to your website — faster page loads, better Core Web Vitals, and improved SEO rankings without sacrificing visual quality.",
-      },
-      {
-        icon: "Mail",
-        title: "Email Attachments",
-        description: "Shrink image attachments to fit email size limits. Keep your photos looking great while staying under the 10 MB or 25 MB attachment cap.",
-      },
-    ],
-    howToSteps: [
-      { stepNumber: 1, title: "Upload Your Image", description: "Drag and drop or click to upload any JPEG, PNG, or WebP image you want to compress." },
-      { stepNumber: 2, title: "Adjust Quality", description: "Use the quality slider to balance file size and visual quality. Preview the result in real-time before downloading." },
-      { stepNumber: 3, title: "Download Compressed File", description: "Download your optimized image — smaller file size, same great appearance. Compare before and after sizes instantly." },
-    ],
-    faqEntries: [
-      { question: "Does compressing an image reduce its quality?", answer: "Compression reduces file size by removing redundant data. At quality settings above 70%, the visual difference is typically imperceptible to the human eye." },
-      { question: "What image formats can I compress?", answer: "You can compress JPEG, PNG, and WebP images. For maximum compression, consider converting to WebP format which offers the best size-to-quality ratio." },
-      { question: "Is there a file size limit for uploads?", answer: "You can upload images up to 20 MB. The tool processes everything in your browser, so larger files may take a moment longer." },
-    ],
-    relatedTools: [
-      { slug: "/compress-jpeg", title: "Compress JPEG", description: "Specialized JPEG compression with quality control." },
-      { slug: "/png-to-webp", title: "PNG to WebP", description: "Convert PNG to WebP for maximum compression." },
-      { slug: "/resize", title: "Resize Image", description: "Resize images to exact dimensions or percentages." },
-      { slug: "/", title: "Image Splitter", description: "Split images into multiple pieces with drag-and-drop lines." },
-    ],
-  },
 
   "compress-jpeg": {
     slug: "compress-jpeg",
@@ -659,9 +459,9 @@ const data: Record<string, ToolPageData> = {
       { question: "What is the difference between JPEG and JPG?", answer: "There is no difference — JPG and JPEG refer to the same format. The shorter '.jpg' extension became common on Windows, which originally limited extensions to 3 characters." },
     ],
     relatedTools: [
-      { slug: "/compress-image", title: "Compress Image", description: "General-purpose image compression for any format." },
+      { slug: "/compress", title: "Compress Image", description: "General-purpose image compression for any format." },
       { slug: "/jpg-to-webp", title: "JPG to WebP", description: "Convert JPEG to WebP for even smaller file sizes." },
-      { slug: "/reduce-image-size", title: "Reduce Image Size", description: "Optimize any image for minimal file size." },
+      { slug: "/png-to-webp", title: "PNG to WebP", description: "Convert PNG to WebP for even smaller file sizes." },
     ],
   },
 
@@ -706,7 +506,7 @@ const data: Record<string, ToolPageData> = {
     relatedTools: [
       { slug: "/png-to-webp", title: "PNG to WebP", description: "Convert PNG to WebP for dramatically smaller files with transparency." },
       { slug: "/png-to-jpg", title: "PNG to JPG", description: "Convert PNG to JPEG for smaller files when transparency is not needed." },
-      { slug: "/compress-image", title: "Compress Image", description: "General-purpose image compression for any format." },
+      { slug: "/compress", title: "Compress Image", description: "General-purpose image compression for any format." },
     ],
   },
 
@@ -980,50 +780,6 @@ const data: Record<string, ToolPageData> = {
     ],
   },
 
-  "reduce-image-size": {
-    slug: "reduce-image-size",
-    category: "use-case",
-    seo: {
-      title: "Reduce Image Size Online — Free File Optimizer | ImgSplit",
-      description: "Reduce image file size online for free. Optimize JPEG, PNG, and WebP images for web, email, and storage. Browser-based, private, no upload to servers.",
-      ogTitle: "Reduce Image Size — Free Online Optimizer",
-      ogDescription: "Optimize and reduce image file size instantly. Free, private, browser-based.",
-    },
-    hero: {
-      overline: "Image Size Reducer",
-      headlinePart1: "Reduce Image",
-      headlineAccent: "Size",
-      headlinePart2: "— Instant Optimization",
-      description: "Optimize any image for the smallest possible file size. Intelligent compression for JPEG, PNG, and WebP — perfect for faster websites, smaller storage, and quicker uploads.",
-    },
-    scenarios: [
-      {
-        icon: "Zap",
-        title: "Website Speed",
-        description: "Large images are the #1 cause of slow websites. Reduce image sizes to dramatically improve page load times, bounce rates, and search engine rankings.",
-      },
-      {
-        icon: "FileDown",
-        title: "Storage Optimization",
-        description: "Running low on cloud storage or device space? Reduce image sizes across your photo library to free up gigabytes without deleting any images.",
-      },
-    ],
-    howToSteps: [
-      { stepNumber: 1, title: "Upload Your Image", description: "Drag and drop or select any JPEG, PNG, or WebP image you want to make smaller." },
-      { stepNumber: 2, title: "Optimize Settings", description: "Adjust compression quality and optionally change the output format. WebP typically offers the best size reduction." },
-      { stepNumber: 3, title: "Download Optimized Image", description: "Save your smaller image file. The tool shows the exact bytes saved and percentage reduction." },
-    ],
-    faqEntries: [
-      { question: "What is the best way to reduce image file size?", answer: "Three strategies work best: compress with quality adjustment (fastest), convert to WebP format (most effective), or resize to smaller dimensions (most aggressive). Combining all three yields the smallest files." },
-      { question: "How much can I reduce an image's file size?", answer: "Typical reductions range from 40-80% depending on the source image and settings. Converting a 5 MB JPEG to a quality-80 WebP can easily produce a 500 KB file." },
-      { question: "Will reducing file size affect print quality?", answer: "For web and screen use, a well-compressed image looks identical to the original. For professional printing, keep quality above 90% and avoid excessive compression." },
-    ],
-    relatedTools: [
-      { slug: "/compress-image", title: "Compress Image", description: "General-purpose image compression with format options." },
-      { slug: "/compress-jpeg", title: "Compress JPEG", description: "Specialized compression for JPEG photos." },
-      { slug: "/png-to-webp", title: "PNG to WebP", description: "Convert to WebP for the best compression ratio." },
-    ],
-  },
 
   "crop-image": {
     slug: "crop-image",
@@ -1073,7 +829,7 @@ const data: Record<string, ToolPageData> = {
     relatedTools: [
       { slug: "/instagram-story-crop", title: "Instagram Story Crop", description: "Crop vertical 9:16 story images." },
       { slug: "/resize", title: "Image Resizer", description: "Resize and crop to any dimensions." },
-      { slug: "/compress-image", title: "Compress Image", description: "Reduce the final image size before sharing." },
+      { slug: "/compress", title: "Compress Image", description: "Reduce the final image size before sharing." },
     ],
   },
 

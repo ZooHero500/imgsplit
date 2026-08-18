@@ -1,45 +1,56 @@
 # ImgSplit
 
-> Free online image splitter — split, crop, and grid-divide images with pixel-perfect precision. 100% browser-based, no upload needed, privacy-first.
+> Free online image tools — split, grid, resize, compress, watermark, and more. 100% browser-based image processing; your images never leave your device.
 
 ## What is ImgSplit?
 
-ImgSplit is a free online image splitting tool that runs entirely in the browser. Users can drag split lines to divide images into custom segments, create grids for social media, and download results as ZIP — all without uploading to any server.
+ImgSplit (imgsplit.com) is a free, privacy-first online image toolkit. All image processing runs locally in your browser using the HTML5 Canvas API — no uploads, no server-side image handling. Drag split lines to cut images with pixel-perfect precision, create social media grids, resize, compress, add watermarks, and more.
 
 ## Core Features
 
-- Drag-and-drop split lines with snap alignment
+- Manual drag-and-drop split lines with snap alignment (up to 20 horizontal + 20 vertical lines)
 - Grid splitting (3×3, 1×3, 2×2) for social media posts
-- AI-powered image segmentation
-- Pixel-perfect precision with zero quality loss
+- Carousel splitting for wide images
+- Image resize, crop, rotate, and export
+- Compress and convert between PNG, JPEG, and WebP
+- Text and logo watermarks
+- Privacy mask (mosaic, blur, solid cover)
+- Photo collage layouts
+- Social media size export (multi-platform ZIP)
+- Local AI background removal (runs in browser Web Worker; model downloaded once, images never uploaded)
+- Pixel-perfect precision with zero quality loss on crops
 - Supports PNG, JPG/JPEG, WebP up to 20MB
 - One-click ZIP download
 - Works on desktop and mobile
 
 ## Tools
 
-- [Image Splitter](https://imgsplit.com): Full-featured image splitter with custom split lines
+- [Image Splitter](https://imgsplit.com/): Full-featured splitter with custom drag-and-drop split lines
 - [Grid Splitter](https://imgsplit.com/grid): Split images into grid tiles for Instagram and social media
-- [Split in Half](https://imgsplit.com/split-in-half): Divide images into two equal parts
-- [Split Horizontally](https://imgsplit.com/split-horizontally): Cut images into horizontal rows
-- [Split Vertically](https://imgsplit.com/split-vertically): Cut images into vertical columns
-- [Equal Parts Splitter](https://imgsplit.com/split-into-equal-parts): Divide images into equal segments
-- [Long Screenshot Splitter](https://imgsplit.com/split-long-screenshot): Break tall screenshots into pages
-- [Instagram Splitter](https://imgsplit.com/split-for-instagram): Split for carousel and profile grid
-- [Social Media Grid Splitter](https://imgsplit.com/split-for-wechat): Create grid posts for social platforms
-- [Print Splitter](https://imgsplit.com/split-for-print): Tile large images for printing
-- [No-Photoshop Slicer](https://imgsplit.com/no-photoshop-slicer): Free alternative to Photoshop slice tool
-- [All Tools](https://imgsplit.com/tools): Browse all image splitting tools
+- [Carousel Splitter](https://imgsplit.com/carousel): Split wide images into carousel slides
+- [Image Resizer](https://imgsplit.com/resize): Resize, crop, rotate, and export to any dimension
+- [Image Compressor](https://imgsplit.com/compress): Compress and convert between PNG, JPEG, and WebP
+- [Watermark Tool](https://imgsplit.com/watermark): Add text or logo watermarks with opacity control
+- [Privacy Mask](https://imgsplit.com/mosaic): Hide faces, license plates, and sensitive areas
+- [Photo Collage](https://imgsplit.com/collage): Combine multiple photos into grid and story layouts
+- [Social Export](https://imgsplit.com/social-export): Export one image to multiple platform-ready sizes
+- [AI Background Remover](https://imgsplit.com/remove-background): Remove backgrounds locally in the browser
+- [All Tools](https://imgsplit.com/tools): Browse all image tools
+- [About](https://imgsplit.com/about): About ImgSplit and the team
 
 ## Languages
 
-Available in English, 中文 (Chinese), 日本語 (Japanese), 한국어 (Korean), and Español (Spanish).
+Available in English, 中文 (Chinese), 日本語 (Japanese), 한국어 (Korean), Español (Spanish), and Português (Brazilian Portuguese) — 6 languages total.
+
+## Brand Notice
+
+ImgSplit (imgsplit.com) is **not affiliated** with the npm package `@imgsplit/core`, github.com/imgsplit/imgsplit, or imgsplit.com.tr. The official source repository is https://github.com/ZooHero500/imgsplit.
 
 ## About
 
 Built by ZooHero. Open source under MIT License.
 
-- GitHub: https://github.com/ZooHero500/online-image-segmentation
+- GitHub: https://github.com/ZooHero500/imgsplit
 - Twitter: https://x.com/zooheroes
 - Contact: zoohero.dev@gmail.com
 - Full reference: https://imgsplit.com/llms-full.txt
@@ -47,7 +58,7 @@ Built by ZooHero. Open source under MIT License.
 ## Key Facts
 
 - Price: Free (no signup required)
-- Privacy: All processing happens in the browser — no images are uploaded
+- Privacy: All image processing happens in your browser — images are never uploaded. We use anonymous product analytics (Vercel Analytics) and error monitoring (Sentry); no advertising cookies, no personal identity tracking.
 - Limits: Up to 20 horizontal + 20 vertical split lines per image
 - File size: Up to 20MB per image
 - Formats: PNG, JPG/JPEG, WebP

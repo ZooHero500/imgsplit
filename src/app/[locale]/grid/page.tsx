@@ -12,6 +12,9 @@ import {
   Columns3,
   LayoutGrid,
 } from "lucide-react"
+import { CORE_PAGE_LAST_MODIFIED } from "@/lib/seo/last-modified"
+
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://imgsplit.com"
 
 export default async function GridPage({
   params,
@@ -41,7 +44,7 @@ export default async function GridPage({
           "@type": "WebApplication",
           "@id": "https://imgsplit.com/grid#app",
           name: "ImgSplit Grid",
-          dateModified: "2026-03-24",
+          dateModified: CORE_PAGE_LAST_MODIFIED.grid,
           url: locale === "en" ? "https://imgsplit.com/grid" : `https://imgsplit.com/${locale}/grid`,
           description: t("metadata.description"),
           applicationCategory: "DesignApplication",
@@ -57,7 +60,7 @@ export default async function GridPage({
           "@type": "HowTo",
           name: t("metadata.title"),
           description: t("metadata.description"),
-          dateModified: "2026-03-24",
+          dateModified: CORE_PAGE_LAST_MODIFIED.grid,
           step: [
             { "@type": "HowToStep", position: 1, name: tLanding("howItWorks.step1Title"), text: tLanding("howItWorks.step1Desc") },
             { "@type": "HowToStep", position: 2, name: tLanding("howItWorks.step2Title"), text: tLanding("howItWorks.step2Desc") },
@@ -86,12 +89,12 @@ export default async function GridPage({
           url: "https://imgsplit.com",
           logo: {
             "@type": "ImageObject",
-            url: "https://imgsplit.com/og-image.png",
-            width: 1200,
-            height: 630,
+            url: `${BASE_URL}/logo-256.png`,
+            width: 256,
+            height: 256,
           },
           sameAs: [
-            "https://github.com/ZooHero500/online-image-segmentation",
+            "https://github.com/ZooHero500/imgsplit",
             "https://x.com/zooheroes",
           ],
         }}
@@ -118,7 +121,7 @@ export default async function GridPage({
               </div>
 
               <h1 className="font-serif text-4xl sm:text-5xl md:text-7xl lg:text-9xl leading-[1.05] tracking-tight mb-6 sm:mb-8 hero-enter hero-delay-2">
-                {tLanding("hero.headlinePart1")}
+                {tLanding("hero.headlinePart1")}{" "}
                 <em className="text-accent-deep italic">{tLanding("hero.headlineAccent")}</em>
                 <br />
                 {tLanding("hero.headlinePart2")}
@@ -156,7 +159,7 @@ export default async function GridPage({
             <div className="col-span-12 md:col-span-8 md:col-start-2">
               <div className="kicker mb-4">{tLanding("types.overline")}</div>
               <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05]">
-                {tLanding("types.headlinePart1")}
+                {tLanding("types.headlinePart1")}{" "}
                 <em className="text-accent-deep italic">{tLanding("types.headlineAccent")}</em>
               </h2>
             </div>
@@ -214,7 +217,7 @@ export default async function GridPage({
           <div className="mb-12">
             <div className="kicker mb-4">{tLanding("howItWorks.overline")}</div>
             <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05]">
-              {tLanding("howItWorks.headlinePart1")}
+              {tLanding("howItWorks.headlinePart1")}{" "}
               <em className="text-accent-deep italic">
                 {tLanding("howItWorks.headlineAccent")}
               </em>
@@ -245,7 +248,7 @@ export default async function GridPage({
           <div className="grid grid-cols-12 gap-4">
             <div className="col-span-12 md:col-span-7 md:col-start-2">
               <h2 className="font-serif text-3xl sm:text-4xl md:text-6xl lg:text-7xl leading-[1.05] text-primary-foreground mb-6">
-                {tLanding("cta.headlinePart1")}
+                {tLanding("cta.headlinePart1")}{" "}
                 <em className="text-signal italic">
                   {tLanding("cta.headlineAccent")}
                 </em>
@@ -266,7 +269,7 @@ export default async function GridPage({
             <div className="col-span-12 md:col-span-4">
               <div className="kicker mb-4">{tLanding("faq.overline")}</div>
               <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl leading-[1.05] mb-4">
-                {tLanding("faq.headlinePart1")}
+                {tLanding("faq.headlinePart1")}{" "}
                 <em className="text-accent-deep italic">
                   {tLanding("faq.headlineAccent")}
                 </em>

@@ -19,7 +19,7 @@ export default function robots(): MetadataRoute.Robots {
       { userAgent: "ClaudeBot", allow: "/" },
       { userAgent: "anthropic-ai", allow: "/" },
       // Block training-only crawlers (not search)
-      { userAgent: "CCBot", disallow: "/" },
+      { userAgent: "CCBot", allow: "/" },
     ],
     sitemap: `${BASE_URL}/sitemap.xml`,
   }

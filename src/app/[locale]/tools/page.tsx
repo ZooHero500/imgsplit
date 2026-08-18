@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { getTranslations, setRequestLocale } from "next-intl/server"
 import { routing } from "@/i18n/routing"
+import { buildOgImages, openGraphLocale } from "@/lib/seo/metadata"
 import { getToolPagesByCategory, getToolPageData } from "@/lib/pseo"
 import { ToolCard } from "@/components/pseo/ToolCard"
 import { InkButton } from "@/components/ui/InkButton"
@@ -48,11 +49,14 @@ export async function generateMetadata({
       url: canonicalUrl,
       siteName: "ImgSplit",
       type: "website",
+      locale: openGraphLocale(locale),
+      images: buildOgImages(t("title")),
     },
     twitter: {
       card: "summary_large_image",
       title: t("title"),
       description: t("description"),
+      images: [`${BASE_URL}/og-image.png`],
     },
   }
 }
@@ -126,12 +130,12 @@ export default async function ToolsPage({
           url: "https://imgsplit.com",
           logo: {
             "@type": "ImageObject",
-            url: "https://imgsplit.com/og-image.png",
-            width: 1200,
-            height: 630,
+            url: `${BASE_URL}/logo-256.png`,
+            width: 256,
+            height: 256,
           },
           sameAs: [
-            "https://github.com/ZooHero500/online-image-segmentation",
+            "https://github.com/ZooHero500/imgsplit",
             "https://x.com/zooheroes",
           ],
         }}

@@ -7,6 +7,8 @@ import {
   getToolPageData,
   getToolPageLocales,
 } from "@/lib/pseo"
+import { getPseoSlugLastModified } from "@/lib/seo/last-modified"
+import { buildLocaleAlternates, buildOgImages, NOT_FOUND_METADATA, openGraphLocale } from "@/lib/seo/metadata"
 import { ToolLanding } from "@/components/pseo/ToolLanding"
 import { JsonLd } from "@/components/JsonLd"
 
@@ -30,41 +32,33 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale, toolSlug } = await params
   const data = getToolPageData(toolSlug, locale)
-  if (!data) return {}
+  if (!data) return NOT_FOUND_METADATA
 
   const canonicalUrl = getLocalizedToolUrl(toolSlug, locale)
   const availableLocales = getToolPageLocales(toolSlug)
-  const xDefaultLocale = availableLocales.includes(routing.defaultLocale)
-    ? routing.defaultLocale
-    : availableLocales[0] ?? locale
 
   return {
     title: data.seo.title,
     description: data.seo.description,
-    alternates: {
-      canonical: canonicalUrl,
-      languages: {
-        ...Object.fromEntries(
-          availableLocales.map((l) => [
-            l,
-            getLocalizedToolUrl(toolSlug, l),
-          ])
-        ),
-        "x-default": getLocalizedToolUrl(toolSlug, xDefaultLocale),
-      },
-    },
+    alternates: buildLocaleAlternates(
+      canonicalUrl,
+      availableLocales,
+      (l) => getLocalizedToolUrl(toolSlug, l)
+    ),
     openGraph: {
       title: data.seo.ogTitle,
       description: data.seo.ogDescription,
       url: canonicalUrl,
       siteName: "ImgSplit",
       type: "website",
-      locale: ({ en: "en_US", "zh-CN": "zh_CN", ja: "ja_JP", ko: "ko_KR", es: "es_ES", "pt-BR": "pt_BR" }[locale] ?? "en_US"),
+      locale: openGraphLocale(locale),
+      images: buildOgImages(data.seo.ogTitle),
     },
     twitter: {
       card: "summary_large_image",
       title: data.seo.ogTitle,
       description: data.seo.ogDescription,
+      images: [`${BASE_URL}/og-image.png`],
     },
   }
 }
@@ -82,6 +76,8 @@ export default async function ToolSlugPage({
   }
 
   setRequestLocale(locale)
+
+  const dateModified = getPseoSlugLastModified(toolSlug)
 
   // Get all translations needed by ToolLanding
   const tNav = await getTranslations("nav")
@@ -147,7 +143,7 @@ export default async function ToolSlugPage({
           "@type": "HowTo",
           name: data.seo.title,
           description: data.hero.description,
-          dateModified: new Date().toISOString().split("T")[0],
+          dateModified,
           step: data.howToSteps.map((step) => ({
             "@type": "HowToStep",
             position: step.stepNumber,
@@ -156,13 +152,13 @@ export default async function ToolSlugPage({
           })),
         }}
       />
-      {/* SoftwareApplication JSON-LD */}
+      {/* WebApplication JSON-LD */}
       <JsonLd
         data={{
           "@context": "https://schema.org",
-          "@type": "SoftwareApplication",
+          "@type": "WebApplication",
           name: "ImgSplit",
-          dateModified: new Date().toISOString().split("T")[0],
+          dateModified,
           url: getLocalizedToolUrl(toolSlug, locale),
           description: data.seo.description,
           applicationCategory: "DesignApplication",

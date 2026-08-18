@@ -1,10 +1,18 @@
-import { useTranslations } from "next-intl"
+import type { Metadata } from "next"
+import { getTranslations } from "next-intl/server"
 import { LogoIcon } from "@/components/LogoIcon"
 import { InkButton } from "@/components/ui/InkButton"
 import { ArrowLeft } from "lucide-react"
 
-export default function NotFound() {
-  const t = useTranslations("notFound")
+export const metadata: Metadata = {
+  title: {
+    absolute: "Page Not Found | ImgSplit",
+  },
+  robots: { index: false, follow: false },
+}
+
+export default async function NotFound() {
+  const t = await getTranslations("notFound")
 
   return (
     <main className="min-h-screen bg-background flex items-center justify-center px-8">

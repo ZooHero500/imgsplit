@@ -5,6 +5,7 @@ import type { Metadata } from "next"
 import { JsonLd } from "@/components/JsonLd"
 import { DynamicSocialExportEditor } from "@/components/social-export/DynamicSocialExportEditor"
 import { routing } from "@/i18n/routing"
+import { buildOgImages, openGraphLocale } from "@/lib/seo/metadata"
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://imgsplit.com"
 
@@ -43,12 +44,14 @@ export async function generateMetadata({
       url: canonicalUrl,
       siteName: "ImgSplit",
       type: "website",
-      locale: locale === "zh-CN" ? "zh_CN" : locale,
+      locale: openGraphLocale(locale),
+      images: buildOgImages(t("title")),
     },
     twitter: {
       card: "summary_large_image",
       title: t("title"),
       description: t("description"),
+      images: [`${BASE_URL}/og-image.png`],
     },
   }
 }
