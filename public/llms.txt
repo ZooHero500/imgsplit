@@ -58,7 +58,7 @@ Built by ZooHero. Open source under MIT License.
 ## Key Facts
 
 - Price: Free (no signup required)
-- Privacy: All image processing happens in your browser — images are never uploaded. We use anonymous product analytics (Vercel Analytics) and error monitoring (Sentry); no advertising cookies, no personal identity tracking.
+- Privacy: All image processing happens in your browser — images are never uploaded. We use anonymous product analytics (self-hosted Umami) and error monitoring (Sentry); no advertising cookies, no personal identity tracking.
 - Limits: Up to 20 horizontal + 20 vertical split lines per image
 - File size: Up to 20MB per image
 - Formats: PNG, JPG/JPEG, WebP

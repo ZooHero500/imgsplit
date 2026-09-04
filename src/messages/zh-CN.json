@@ -109,7 +109,7 @@
     "feature5": "适配每种工作流",
     "feature5Desc": "无论你是电商卖家分割商品图、设计师切割设计稿、社交媒体运营创建九宫格，还是学生准备演示材料——ImgSplit 都能适配你的工作流。支持每个方向最多 20 条分割线，创建任意布局。",
     "feature6": "开源透明",
-    "feature6Desc": "ImgSplit 是发布在 GitHub 上的开源软件。任何人都可以审查代码、验证我们的隐私承诺并贡献改进。图片从不离开你的设备；我们使用匿名产品分析（Vercel Analytics）和错误监控（Sentry）；没有广告 cookie、不追踪个人身份。"
+    "feature6Desc": "ImgSplit 是发布在 GitHub 上的开源软件。任何人都可以审查代码、验证我们的隐私承诺并贡献改进。图片从不离开你的设备；我们使用匿名产品分析（Umami）和错误监控（Sentry）；没有广告 cookie、不追踪个人身份。"
   },
   "stats": {
     "overline": "数据说话",
@@ -346,7 +346,7 @@
     },
     "tech": {
       "title": "工作原理",
-      "description": "ImgSplit 完全在您的浏览器中运行，使用 HTML5 Canvas API。当您分割图片时，处理过程在您的设备上本地完成——没有服务器往返、没有上传。图片从不离开你的设备。我们使用匿名产品分析（Vercel Analytics）和错误监控（Sentry）来改进工具。这种架构确保了零延迟、完全的隐私保护，并在首次加载页面后支持离线使用。",
+      "description": "ImgSplit 完全在您的浏览器中运行，使用 HTML5 Canvas API。当您分割图片时，处理过程在您的设备上本地完成——没有服务器往返、没有上传。图片从不离开你的设备。我们使用匿名产品分析（Umami）和错误监控（Sentry）来改进工具。这种架构确保了零延迟、完全的隐私保护，并在首次加载页面后支持离线使用。",
       "items": {
         "browser": "100% 基于浏览器",
         "browserDesc": "所有图片处理都使用 HTML5 Canvas API。您的图片永远不会离开您的设备。",
@@ -378,7 +378,7 @@
       "headlinePart1": "隐私",
       "headlineAccent": "政策"
     },
-    "lastUpdated": "最后更新：2026 年 3 月",
+    "lastUpdated": "最后更新：2026 年 9 月",
     "intro": "ImgSplit 致力于保护您的隐私。本政策说明了我们如何处理您的数据——简而言之：我们不收集您的图片，也永远不会。",
     "sections": {
       "processing": {
@@ -389,7 +389,7 @@
         "title": "我们收集的数据",
         "content": "我们收集少量匿名使用分析数据以改进工具：",
         "items": {
-          "analytics": "通过 Vercel Analytics 收集页面浏览量和一般使用模式（不含个人数据）",
+          "analytics": "通过自托管 Umami 收集页面浏览量和一般使用模式（不含个人数据，无追踪 Cookie）",
           "errors": "通过 Sentry 收集匿名错误报告以修复 Bug（不含图片数据）",
           "locale": "您的语言偏好通过 Cookie 存储在本地"
         },
@@ -409,7 +409,8 @@
         "title": "第三方服务",
         "content": "我们使用以下服务：",
         "items": {
-          "vercel": "Vercel — 托管和匿名页面浏览分析",
+          "vercel": "Vercel — 托管",
+          "umami": "Umami（自托管）— 无 Cookie 的匿名页面浏览分析",
           "sentry": "Sentry — 匿名错误监控（不含图片数据）"
         }
       },

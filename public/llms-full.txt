@@ -128,7 +128,7 @@ ImgSplit supports PNG, JPG/JPEG, and WebP images, with a maximum file size of 20
 No. ImgSplit crops at the original resolution using the Canvas API — no compression, no scaling, no quality loss.
 
 ### Is my image data safe?
-Yes. All image processing happens locally in your browser using the HTML5 Canvas API. No image data is ever uploaded to any server. We use anonymous product analytics (Vercel Analytics) and error monitoring (Sentry); no advertising cookies, no personal identity tracking.
+Yes. All image processing happens locally in your browser using the HTML5 Canvas API. No image data is ever uploaded to any server. We use anonymous product analytics (self-hosted Umami) and error monitoring (Sentry); no advertising cookies, no personal identity tracking.
 
 ### How many split lines can I add?
 Up to 20 horizontal and 20 vertical split lines per image, allowing for very fine grid splits.
@@ -148,7 +148,7 @@ Yes. The full source code is available at https://github.com/ZooHero500/imgsplit
 - **Image Processing**: HTML5 Canvas API (client-side only)
 - **AI Background Removal**: Browser Web Worker with @huggingface/transformers (local model, no upload)
 - **Languages**: English, Chinese (zh-CN), Japanese (ja), Korean (ko), Spanish (es), Portuguese (pt-BR) — 6 languages
-- **Analytics**: Vercel Analytics (anonymous page views)
+- **Analytics**: Self-hosted Umami (anonymous page views, no cookies)
 - **Error Monitoring**: Sentry (anonymous error reports, no image data)
 - **Hosting**: Vercel
 - **License**: MIT (open source)

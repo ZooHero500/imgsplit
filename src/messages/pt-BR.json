@@ -109,7 +109,7 @@
     "feature5": "Feito para Todo Fluxo de Trabalho",
     "feature5Desc": "Seja você um vendedor de e-commerce dividindo fotos de produtos, um designer fatiando mockups, um gestor de redes sociais criando posts em grade, ou um estudante preparando materiais de apresentação — o ImgSplit se adapta ao seu fluxo. Adicione até 20 linhas horizontais e 20 verticais para criar qualquer layout.",
     "feature6": "Código Aberto e Transparente",
-    "feature6Desc": "O ImgSplit é software de código aberto publicado no GitHub. Qualquer pessoa pode inspecionar o código, verificar nossas afirmações de privacidade e contribuir com melhorias. Suas imagens nunca saem do seu dispositivo; usamos análises anônimas de produto (Vercel Analytics) e monitoramento de erros (Sentry); sem cookies de publicidade, sem rastreamento de identidade pessoal."
+    "feature6Desc": "O ImgSplit é software de código aberto publicado no GitHub. Qualquer pessoa pode inspecionar o código, verificar nossas afirmações de privacidade e contribuir com melhorias. Suas imagens nunca saem do seu dispositivo; usamos análises anônimas de produto (Umami) e monitoramento de erros (Sentry); sem cookies de publicidade, sem rastreamento de identidade pessoal."
   },
   "stats": {
     "overline": "Em Números",
@@ -346,7 +346,7 @@
     },
     "tech": {
       "title": "Como Funciona",
-      "description": "O ImgSplit roda completamente no seu navegador usando a HTML5 Canvas API. Quando você divide uma imagem, o processamento acontece localmente no seu dispositivo — sem idas ao servidor, sem uploads. Suas imagens nunca saem do seu dispositivo. Usamos análises anônimas de produto (Vercel Analytics) e monitoramento de erros (Sentry) para melhorar a ferramenta. Essa arquitetura garante latência zero, privacidade total e funciona offline após o carregamento inicial.",
+      "description": "O ImgSplit roda completamente no seu navegador usando a HTML5 Canvas API. Quando você divide uma imagem, o processamento acontece localmente no seu dispositivo — sem idas ao servidor, sem uploads. Suas imagens nunca saem do seu dispositivo. Usamos análises anônimas de produto (Umami) e monitoramento de erros (Sentry) para melhorar a ferramenta. Essa arquitetura garante latência zero, privacidade total e funciona offline após o carregamento inicial.",
       "items": {
         "browser": "100% Baseado no Navegador",
         "browserDesc": "Todo o processamento de imagem usa a HTML5 Canvas API. Suas imagens nunca saem do seu dispositivo.",
@@ -378,7 +378,7 @@
       "headlinePart1": "Política de",
       "headlineAccent": "Privacidade"
     },
-    "lastUpdated": "Última atualização: março de 2026",
+    "lastUpdated": "Última atualização: setembro de 2026",
     "intro": "O ImgSplit está comprometido em proteger sua privacidade. Esta política explica como lidamos com seus dados — em resumo: não coletamos suas imagens e nunca vamos coletar.",
     "sections": {
       "processing": {
@@ -389,7 +389,7 @@
         "title": "Dados que Coletamos",
         "content": "Coletamos análises de uso mínimas e anônimas para melhorar a ferramenta:",
         "items": {
-          "analytics": "Visualizações de página e padrões gerais de uso via Vercel Analytics (sem dados pessoais)",
+          "analytics": "Visualizações de página e padrões gerais de uso via Umami auto-hospedado (sem dados pessoais, sem cookies de rastreamento)",
           "errors": "Relatórios de erros anônimos via Sentry para corrigir bugs (sem dados de imagem)",
           "locale": "Sua preferência de idioma armazenada localmente em um cookie"
         },
@@ -409,7 +409,8 @@
         "title": "Serviços de Terceiros",
         "content": "Usamos os seguintes serviços:",
         "items": {
-          "vercel": "Vercel — hospedagem e análise anônima de visualizações de página",
+          "vercel": "Vercel — hospedagem",
+          "umami": "Umami (auto-hospedado) — análise anônima de visualizações de página sem cookies",
           "sentry": "Sentry — monitoramento anônimo de erros (sem dados de imagem)"
         }
       },

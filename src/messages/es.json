@@ -109,7 +109,7 @@
     "feature5": "Diseñado para Cada Flujo de Trabajo",
     "feature5Desc": "Ya seas vendedor de e-commerce, diseñador, gestor de redes sociales o estudiante — ImgSplit se adapta a tu flujo de trabajo. Hasta 20 líneas por dirección para crear cualquier diseño.",
     "feature6": "Código Abierto y Transparente",
-    "feature6Desc": "ImgSplit es software de código abierto publicado en GitHub. Cualquiera puede inspeccionar el código, verificar nuestras afirmaciones de privacidad y contribuir mejoras. Tus imágenes nunca salen de tu dispositivo; usamos análisis de producto anónimos (Vercel Analytics) y monitorización de errores (Sentry); sin cookies publicitarias, sin rastreo de identidad personal."
+    "feature6Desc": "ImgSplit es software de código abierto publicado en GitHub. Cualquiera puede inspeccionar el código, verificar nuestras afirmaciones de privacidad y contribuir mejoras. Tus imágenes nunca salen de tu dispositivo; usamos análisis de producto anónimos (Umami) y monitorización de errores (Sentry); sin cookies publicitarias, sin rastreo de identidad personal."
   },
   "stats": {
     "overline": "En Números",
@@ -346,7 +346,7 @@
     },
     "tech": {
       "title": "Cómo funciona",
-      "description": "ImgSplit se ejecuta completamente en tu navegador usando la API Canvas de HTML5. Cuando divides una imagen, el procesamiento ocurre localmente en tu dispositivo — sin viajes al servidor, sin subidas. Tus imágenes nunca salen de tu dispositivo. Usamos análisis de producto anónimos (Vercel Analytics) y monitorización de errores (Sentry) para mejorar la herramienta. Esta arquitectura garantiza latencia cero, privacidad total y funciona sin conexión después de la carga inicial de la página.",
+      "description": "ImgSplit se ejecuta completamente en tu navegador usando la API Canvas de HTML5. Cuando divides una imagen, el procesamiento ocurre localmente en tu dispositivo — sin viajes al servidor, sin subidas. Tus imágenes nunca salen de tu dispositivo. Usamos análisis de producto anónimos (Umami) y monitorización de errores (Sentry) para mejorar la herramienta. Esta arquitectura garantiza latencia cero, privacidad total y funciona sin conexión después de la carga inicial de la página.",
       "items": {
         "browser": "100% basado en el navegador",
         "browserDesc": "Todo el procesamiento de imágenes usa la API Canvas de HTML5. Tus imágenes nunca salen de tu dispositivo.",
@@ -378,7 +378,7 @@
       "headlinePart1": "Política de",
       "headlineAccent": "Privacidad"
     },
-    "lastUpdated": "Última actualización: marzo de 2026",
+    "lastUpdated": "Última actualización: septiembre de 2026",
     "intro": "ImgSplit se compromete a proteger tu privacidad. Esta política explica cómo manejamos tus datos — en resumen: no recopilamos tus imágenes y nunca lo haremos.",
     "sections": {
       "processing": {
@@ -389,7 +389,7 @@
         "title": "Datos que recopilamos",
         "content": "Recopilamos análisis de uso mínimos y anónimos para mejorar la herramienta:",
         "items": {
-          "analytics": "Vistas de página y patrones de uso generales a través de Vercel Analytics (sin datos personales)",
+          "analytics": "Vistas de página y patrones de uso generales a través de Umami autoalojado (sin datos personales ni cookies de rastreo)",
           "errors": "Informes de errores anónimos a través de Sentry para corregir fallos (sin datos de imagen)",
           "locale": "Tu preferencia de idioma almacenada localmente en una cookie"
         },
@@ -409,7 +409,8 @@
         "title": "Servicios de terceros",
         "content": "Utilizamos los siguientes servicios:",
         "items": {
-          "vercel": "Vercel — alojamiento y análisis anónimo de vistas de página",
+          "vercel": "Vercel — alojamiento",
+          "umami": "Umami (autoalojado) — análisis anónimo de vistas de página sin cookies",
           "sentry": "Sentry — monitoreo anónimo de errores (sin datos de imagen)"
         }
       },

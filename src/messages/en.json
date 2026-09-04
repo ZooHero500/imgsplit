@@ -109,7 +109,7 @@
     "feature5": "Built for Every Workflow",
     "feature5Desc": "Whether you are an e-commerce seller splitting product photos, a designer slicing mockups, a social media manager creating grid posts, or a student preparing presentation materials — ImgSplit adapts to your workflow. Add up to 20 horizontal and 20 vertical lines to create any layout you need.",
     "feature6": "Open Source & Transparent",
-    "feature6Desc": "ImgSplit is open-source software published on GitHub. Anyone can inspect the code, verify our privacy claims, and contribute improvements. Your images never leave your device; we use anonymous product analytics (Vercel Analytics) and error monitoring (Sentry); no advertising cookies, no personal identity tracking."
+    "feature6Desc": "ImgSplit is open-source software published on GitHub. Anyone can inspect the code, verify our privacy claims, and contribute improvements. Your images never leave your device; we use anonymous product analytics (Umami) and error monitoring (Sentry); no advertising cookies, no personal identity tracking."
   },
   "stats": {
     "overline": "By the Numbers",
@@ -346,7 +346,7 @@
     },
     "tech": {
       "title": "How It Works",
-      "description": "ImgSplit runs entirely in your browser using the HTML5 Canvas API. When you split an image, the processing happens locally on your device — no server round-trips, no uploads. Your images never leave your device. We use anonymous product analytics (Vercel Analytics) and error monitoring (Sentry) to improve the tool. This architecture ensures zero latency, complete privacy, and works offline after the initial page load.",
+      "description": "ImgSplit runs entirely in your browser using the HTML5 Canvas API. When you split an image, the processing happens locally on your device — no server round-trips, no uploads. Your images never leave your device. We use anonymous product analytics (Umami) and error monitoring (Sentry) to improve the tool. This architecture ensures zero latency, complete privacy, and works offline after the initial page load.",
       "items": {
         "browser": "100% Browser-Based",
         "browserDesc": "All image processing uses the HTML5 Canvas API. Your images never leave your device.",
@@ -378,7 +378,7 @@
       "headlinePart1": "Privacy",
       "headlineAccent": "Policy"
     },
-    "lastUpdated": "Last updated: March 2026",
+    "lastUpdated": "Last updated: September 2026",
     "intro": "ImgSplit is committed to protecting your privacy. This policy explains how we handle your data — the short version is: we don't collect your images, and we never will.",
     "sections": {
       "processing": {
@@ -389,7 +389,7 @@
         "title": "Data We Collect",
         "content": "We collect minimal, anonymous usage analytics to improve the tool:",
         "items": {
-          "analytics": "Page views and general usage patterns via Vercel Analytics (no personal data)",
+          "analytics": "Page views and general usage patterns via self-hosted Umami (no personal data, no tracking cookies)",
           "errors": "Anonymous error reports via Sentry to fix bugs (no image data included)",
           "locale": "Your language preference stored locally in a cookie"
         },
@@ -409,7 +409,8 @@
         "title": "Third-Party Services",
         "content": "We use the following services:",
         "items": {
-          "vercel": "Vercel — hosting and anonymous page view analytics",
+          "vercel": "Vercel — hosting",
+          "umami": "Umami (self-hosted) — cookieless anonymous page view analytics",
           "sentry": "Sentry — anonymous error monitoring (no image data)"
         }
       },

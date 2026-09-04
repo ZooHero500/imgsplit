@@ -215,7 +215,7 @@ export default async function PrivacyPage({
                 {t("sections.thirdParty.content")}
               </p>
               <ul className="mt-4 space-y-2">
-                {(["vercel", "sentry"] as const).map((key) => (
+                {(["vercel", "umami", "sentry"] as const).map((key) => (
                   <li
                     key={key}
                     className="text-sm text-ink-soft leading-relaxed pl-4 border-l border-ink/30"

@@ -5,7 +5,7 @@ import { notFound } from "next/navigation"
 import { routing } from "@/i18n/routing"
 import { Toaster } from "@/components/ui/sonner"
 import { TooltipProvider } from "@/components/ui/tooltip"
-import { Analytics } from "@vercel/analytics/react"
+import { UmamiAnalytics } from "@/components/UmamiAnalytics"
 import { SWRegister } from "@/components/sw-register"
 import "@fontsource-variable/bodoni-moda"
 import "@fontsource-variable/manrope"
@@ -60,7 +60,7 @@ export default async function LocaleLayout({ children, params }: Props) {
         <NextIntlClientProvider messages={messages}>
           <TooltipProvider>{children}</TooltipProvider>
           <Toaster />
-          <Analytics />
+          <UmamiAnalytics />
           <SWRegister />
         </NextIntlClientProvider>
       </body>
