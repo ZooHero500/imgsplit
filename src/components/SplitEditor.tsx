@@ -708,6 +708,12 @@ export function SplitEditor({
     )
   }
 
+  const generateLabel = isSplitting
+    ? t("generating")
+    : isMultiImage
+      ? t("batchGenerate", { count: images.length })
+      : t("generate")
+
   return (
     <div className="flex flex-col gap-4 w-full h-full">
       {/* Toolbar */}
@@ -740,7 +746,9 @@ export function SplitEditor({
           </Tooltip>
           <div className="w-px h-5 bg-border mx-0.5" />
           <Button size="xs" onClick={handleGenerate} disabled={isSplitting}>
-            {isSplitting ? t("generating") : isMultiImage ? t("batchGenerate", { count: images.length }) : t("generate")}
+            {/* Replace the label element so a delayed browser translation cannot
+                restore the previous generating state on the current label. */}
+            <span key={generateLabel}>{generateLabel}</span>
           </Button>
           {splitResults.length > 0 && (
             <Button size="xs" variant="secondary" onClick={() => setSheetOpen(true)}>{t("viewResults")}</Button>

@@ -122,7 +122,11 @@ function SelectItem({
           <CheckIcon className="size-4" />
         </SelectPrimitive.ItemIndicator>
       </span>
-      <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
+      <SelectPrimitive.ItemText>
+        {/* Radix portals these children into SelectValue. Keep a stable element
+            so browser translation can replace text without breaking unmount. */}
+        <span>{children}</span>
+      </SelectPrimitive.ItemText>
     </SelectPrimitive.Item>
   )
 }

@@ -359,7 +359,7 @@ export function ResultSheet({
               {t("title")}
             </span>
             <span className="text-xs text-foreground font-medium">
-              {t("imageCount", { count: totalCount })}
+              <span key={totalCount}>{t("imageCount", { count: totalCount })}</span>
               {isMultiImage && (
                 <span className="text-muted-foreground ml-1">
                   {t("sourceCount", { count: batchResults.length })}
@@ -420,7 +420,9 @@ export function ResultSheet({
               }`}
             >
               <Download className="h-3 w-3" strokeWidth={1.5} />
-              {selectedCount > 0 ? t("downloadSelectedCount", { count: selectedCount }) : t("downloadSelected")}
+              <span key={selectedCount}>
+                {selectedCount > 0 ? t("downloadSelectedCount", { count: selectedCount }) : t("downloadSelected")}
+              </span>
             </button>
           </div>
         </div>
