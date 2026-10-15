@@ -53,6 +53,7 @@ import {
 } from "@/lib/background-removal-batch"
 import type { BatchRemovalItem, BatchRemovalZipItem } from "@/lib/background-removal-batch"
 import { downloadBlob } from "@/lib/download"
+import { startOperation, trackEvent } from "@/lib/analytics"
 import { getModelCacheVersion, setModelCacheVersion } from "@/lib/storage-service"
 import { ACCEPTED_TYPES, loadUploadResults } from "@/lib/upload-utils"
 import type { UploadResult } from "@/types"
@@ -253,7 +254,10 @@ export function BackgroundRemovalEditor() {
 
   const runQueueWithPreflight = useCallback(async () => {
     if (isBusy) return
-    if (!(await ensureModelAvailable())) return
+    if (!(await ensureModelAvailable())) {
+      trackEvent("processing_blocked", { tool: "removeBackground", error_code: "model_unavailable" })
+      return
+    }
 
     await batch.runQueue()
     await refreshCacheState()
@@ -276,6 +280,7 @@ export function BackgroundRemovalEditor() {
   const handleDownload = useCallback(async () => {
     if (!selectedItem || !resultCanvas) return
 
+    const finish = startOperation("export", { tool: "removeBackground", action: "single", output_count: 1, format })
     try {
       const blob = await exportBackgroundRemovalCanvas(
         resultCanvas,
@@ -283,7 +288,9 @@ export function BackgroundRemovalEditor() {
         quality / 100
       )
       downloadBlob(blob, getBackgroundRemovalOutputFileName(selectedItem.file.name, format))
+      finish("succeeded")
     } catch {
+      finish("failed", { error_code: "export_failed" })
       toast.error(t("exportFailed"))
     }
   }, [format, quality, resultCanvas, selectedItem, t])
@@ -294,6 +301,7 @@ export function BackgroundRemovalEditor() {
     )
     if (readyItems.length === 0) return
 
+    const finish = startOperation("export", { tool: "removeBackground", action: "all", output_count: readyItems.length, format: "zip" })
     try {
       const zipItems = (
         await Promise.all(
@@ -307,11 +315,16 @@ export function BackgroundRemovalEditor() {
         )
       ).filter((zipItem): zipItem is BatchRemovalZipItem => zipItem !== null)
 
-      if (zipItems.length === 0) return
+      if (zipItems.length === 0) {
+        finish("canceled")
+        return
+      }
 
       const blob = await exportBackgroundRemovalBatchAsZip(zipItems)
       downloadBlob(blob, getBackgroundRemovalZipFileName())
+      finish("succeeded", { output_count: zipItems.length })
     } catch {
+      finish("failed", { error_code: "export_failed" })
       toast.error(t("exportFailed"))
     }
   }, [batch.items, format, quality, showQuality, t])

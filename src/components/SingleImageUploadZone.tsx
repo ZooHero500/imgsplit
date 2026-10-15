@@ -3,6 +3,7 @@
 import { useCallback, useRef, useState } from "react"
 import { useTranslations } from "next-intl"
 import { loadUploadResults, ACCEPTED_TYPES } from "@/lib/upload-utils"
+import { trackEvent } from "@/lib/analytics"
 
 interface SingleImageUploadZoneProps {
   /** i18n namespace providing title / dragHint / clickHint / formatHint. */
@@ -53,7 +54,11 @@ export function SingleImageUploadZone({ namespace, onImageLoaded }: SingleImageU
       }}
       onDragOver={(e) => { e.preventDefault(); setIsDragOver(true) }}
       onDragLeave={(e) => { e.preventDefault(); setIsDragOver(false) }}
-      onClick={() => inputRef.current?.click()}
+      onClick={(event) => {
+        if (event.target === inputRef.current) return
+        trackEvent("upload_picker_opened")
+        inputRef.current?.click()
+      }}
     >
       <input
         ref={inputRef}

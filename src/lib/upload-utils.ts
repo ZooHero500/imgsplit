@@ -1,4 +1,5 @@
 import type { UploadResult } from "@/types"
+import { startOperation } from "@/lib/analytics"
 
 export const ACCEPTED_TYPES = ["image/png", "image/jpeg", "image/webp"]
 export const MAX_SIZE = 20 * 1024 * 1024 // 20MB per file
@@ -119,8 +120,10 @@ export async function loadUploadResults(
   files: File[],
   options: LoadUploadResultsOptions = {}
 ): Promise<LoadUploadResultsOutcome> {
+  const finish = files.length > 0 ? startOperation("upload", { input_count: files.length }) : null
   const validation = validateFiles(files, options.existingSize ?? 0)
   if (!validation.valid) {
+    finish?.("failed", { error_code: validation.error?.key ?? "unsupportedFormat" })
     return {
       status: "invalid",
       error: validation.error ?? { key: "unsupportedFormat" },
@@ -135,6 +138,7 @@ export async function loadUploadResults(
       const image = await loadImage(file)
       results.push({ file, image, mimeType: file.type })
     }
+    finish?.("succeeded", { output_count: results.length })
     return {
       status: "success",
       results,
@@ -142,6 +146,7 @@ export async function loadUploadResults(
       totalSize,
     }
   } catch {
+    finish?.("failed", { error_code: "decode_failed" })
     return { status: "loadFailed" }
   }
 }

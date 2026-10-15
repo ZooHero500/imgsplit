@@ -1,5 +1,7 @@
 "use client"
 
+import { startOperation } from "@/lib/analytics"
+
 import { useState, useCallback, useEffect } from "react"
 import { useTranslations } from "next-intl"
 import { toast } from "sonner"
@@ -150,12 +152,15 @@ export function AiSegmentationPanel({
   const handleExportOne = useCallback(
     async (layer: SegmentLayer) => {
       if (!layer.maskUrl) return
+      const finish = startOperation("export", { tool: "split", action: "single", output_count: 1, format: "png" })
       try {
         const response = await fetch(layer.maskUrl)
         if (!response.ok) throw new Error("Download failed")
         const blob = await response.blob()
         downloadBlob(blob, `${layer.label_en}.png`)
+        finish("succeeded")
       } catch {
+        finish("failed", { error_code: "export_failed" })
         toast.error(t("exportFailed"))
       }
     },
@@ -164,6 +169,7 @@ export function AiSegmentationPanel({
 
   // I5 fix: Export all with error handling and toast
   const handleExportAll = useCallback(async () => {
+    const finish = startOperation("export", { tool: "split", action: "all", format: "zip" })
     try {
       const { default: JSZip } = await import("jszip")
       const zip = new JSZip()
@@ -179,7 +185,9 @@ export function AiSegmentationPanel({
 
       const zipBlob = await zip.generateAsync({ type: "blob" })
       downloadBlob(zipBlob, "ai-segments.zip")
+      finish("succeeded", { output_count: visibleLayers.filter((layer) => layer.maskUrl).length })
     } catch {
+      finish("failed", { error_code: "export_failed" })
       toast.error(t("exportFailed"))
     }
   }, [layers, t])

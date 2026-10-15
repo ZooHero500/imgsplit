@@ -1,3 +1,5 @@
+import { trackEvent } from "@/lib/analytics"
+
 /**
  * Browser download helpers shared by all editors.
  * Keep UI (toasts, i18n) out of this module — callers handle feedback.
@@ -14,14 +16,23 @@ export function downloadUrl(url: string, fileName: string): void {
   const a = document.createElement("a")
   a.href = url
   a.download = fileName
-  a.click()
+  try {
+    a.click()
+    trackEvent("download_triggered")
+  } catch (error) {
+    trackEvent("download_failed", { error_code: "download_failed" })
+    throw error
+  }
 }
 
 /** Download a Blob as a file. Creates an object URL and revokes it immediately after the click. */
 export function downloadBlob(blob: Blob, fileName: string): void {
   const url = URL.createObjectURL(blob)
-  downloadUrl(url, fileName)
-  URL.revokeObjectURL(url)
+  try {
+    downloadUrl(url, fileName)
+  } finally {
+    URL.revokeObjectURL(url)
+  }
 }
 
 /**
@@ -33,7 +44,13 @@ export function downloadBlob(blob: Blob, fileName: string): void {
 export function saveBlobWithIOSFallback(blob: Blob, fileName: string): void {
   const url = URL.createObjectURL(blob)
   if (isIOS()) {
-    window.open(url, "_blank")
+    const preview = window.open(url, "_blank")
+    if (preview) {
+      trackEvent("save_preview_opened")
+    } else {
+      URL.revokeObjectURL(url)
+      trackEvent("download_failed", { error_code: "popup_blocked" })
+    }
   } else {
     downloadUrl(url, fileName)
     setTimeout(() => URL.revokeObjectURL(url), 1000)

@@ -5,6 +5,7 @@ import { useRouter } from "@/i18n/navigation"
 import { db } from "@/lib/storage-service"
 import { ArrowRight } from "lucide-react"
 import { InkButton } from "@/components/ui/InkButton"
+import { trackEvent } from "@/lib/analytics"
 
 interface SmartCTAProps {
   label: string
@@ -24,6 +25,7 @@ export function SmartCTA({ label, className, href, size = "default", icon = true
   }, [])
 
   const handleClick = useCallback(() => {
+    trackEvent("tool_cta_clicked", { action: href ? "open_editor" : hasHistory ? "resume" : "upload" })
     if (href) {
       router.push(href)
     } else if (hasHistory) {

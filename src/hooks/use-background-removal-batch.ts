@@ -1,5 +1,7 @@
 "use client"
 
+import { startOperation } from "@/lib/analytics"
+
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import {
   BACKGROUND_REMOVAL_MODEL_ID,
@@ -329,6 +331,7 @@ export function useBackgroundRemovalBatch(options: UseBackgroundRemovalBatchOpti
         const requestId = `${nextItem.id}-${runId}-${Date.now()}`
         activeRequestRef.current = { runId, requestId, itemId: nextItem.id }
         dispatch({ type: "start", id: nextItem.id })
+        const finish = startOperation("processing", { tool: "removeBackground", input_count: 1 })
 
         try {
           const result = await getClient().remove({
@@ -373,6 +376,7 @@ export function useBackgroundRemovalBatch(options: UseBackgroundRemovalBatchOpti
           }
 
           revokeResultUrl(nextItem.id)
+          finish("succeeded", { output_count: 1 })
           dispatch({
             type: "ready",
             id: nextItem.id,
@@ -393,12 +397,15 @@ export function useBackgroundRemovalBatch(options: UseBackgroundRemovalBatchOpti
           const stillExists = itemsRef.current.some((item) => item.id === nextItem.id)
           if (!stillExists) continue
 
+          finish("failed", { error_code: "processing_failed" })
           dispatch({
             type: "error",
             id: nextItem.id,
             error: getErrorMessage(error),
           })
         } finally {
+          // Also closes operations canceled while awaiting the worker or decoding.
+          finish("canceled")
           if (activeRequestRef.current?.requestId === requestId) {
             activeRequestRef.current = null
           }

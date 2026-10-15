@@ -3,6 +3,7 @@
 import { useState, useCallback, useMemo, useRef, useEffect, type RefObject } from "react"
 import { loadImage } from "@/lib/upload-utils"
 import { downloadUrl, saveBlobWithIOSFallback } from "@/lib/download"
+import { startOperation, trackEvent, trackOperation } from "@/lib/analytics"
 
 export type WorkspaceStep = 1 | 2 | 3
 
@@ -119,6 +120,7 @@ export function useFramedImageWorkspace<TResult extends { blob: Blob }>(
   )
 
   const handleReupload = useCallback(() => {
+    trackEvent("image_replaced")
     setResults(null)
     setStep(1)
   }, [])
@@ -129,6 +131,7 @@ export function useFramedImageWorkspace<TResult extends { blob: Blob }>(
   }, [])
 
   const handleReadjust = useCallback(() => {
+    trackEvent("results_readjusted")
     setResults(null)
     setStep(2)
   }, [])
@@ -148,17 +151,26 @@ export function useFramedImageWorkspace<TResult extends { blob: Blob }>(
 
   const handleSaveSingle = useCallback(
     (result: TResult, index: number) => {
-      saveBlobWithIOSFallback(result.blob, getSingleFileName(result, index, fileExtension))
+      const finish = startOperation("export", { action: "single", output_count: 1, format: fileExtension })
+      try {
+        saveBlobWithIOSFallback(result.blob, getSingleFileName(result, index, fileExtension))
+        finish("succeeded")
+      } catch (error) {
+        finish("failed", { error_code: "export_failed" })
+        throw error
+      }
     },
     [getSingleFileName, fileExtension]
   )
 
   const handleDownloadAll = useCallback(async () => {
     if (!results) return
-    const { blob, fileName } = await exportZip(results, fileExtension)
-    const url = URL.createObjectURL(blob)
-    downloadUrl(url, fileName)
-    setTimeout(() => URL.revokeObjectURL(url), 1000)
+    await trackOperation("export", async () => {
+      const { blob, fileName } = await exportZip(results, fileExtension)
+      const url = URL.createObjectURL(blob)
+      downloadUrl(url, fileName)
+      setTimeout(() => URL.revokeObjectURL(url), 1000)
+    }, { action: "all", output_count: results.length, format: "zip" })
   }, [results, exportZip, fileExtension])
 
   return {

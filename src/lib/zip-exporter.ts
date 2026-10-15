@@ -1,4 +1,5 @@
 import type { SplitResult, ZipExportOptions, BatchZipExportOptions } from "@/types"
+import { downloadBlob } from "@/lib/download"
 
 function getFileName(
   originalFileName: string,
@@ -51,12 +52,7 @@ export async function exportBatchAsZip(options: BatchZipExportOptions): Promise<
 }
 
 export function downloadSingle(result: SplitResult, fileName: string): void {
-  const url = URL.createObjectURL(result.blob)
-  const a = document.createElement("a")
-  a.href = url
-  a.download = fileName
-  a.click()
-  URL.revokeObjectURL(url)
+  downloadBlob(result.blob, fileName)
 }
 
 export function getZipFileName(originalFileName: string): string {

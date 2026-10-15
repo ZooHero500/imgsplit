@@ -45,7 +45,10 @@ function buildPseoRedirects() {
 
 const nextConfig: NextConfig = {
   async redirects() {
-    return buildPseoRedirects();
+    return [
+      { source: "/zh/:path*", destination: "/zh-CN/:path*", permanent: true },
+      ...buildPseoRedirects(),
+    ];
   },
   async rewrites() {
     return [

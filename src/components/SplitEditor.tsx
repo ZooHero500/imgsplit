@@ -17,6 +17,7 @@ import { useCanvasViewport } from "@/hooks/use-canvas-viewport"
 import { useElementSize } from "@/hooks/use-element-size"
 import { consumePendingUpload } from "@/lib/pending-upload"
 import { loadUploadResults } from "@/lib/upload-utils"
+import { trackEvent } from "@/lib/analytics"
 import { createThumbnailDataUrl, imageToBlob, resolveOutputMimeType } from "@/lib/image-canvas"
 import { getFileExtension, getFileNameWithoutExtension } from "@/lib/utils"
 import { calculateWorkspaceBounds } from "@/lib/workspace-bounds"
@@ -571,6 +572,7 @@ export function SplitEditor({
   const handleGenerate = useCallback(async () => {
     if (images.length === 0) return
     if (lines.length === 0) {
+      trackEvent("processing_blocked", { tool: "split", error_code: "no_split_lines" })
       toast.error(t("addLinesFirst"))
       return
     }
@@ -598,6 +600,7 @@ export function SplitEditor({
           images[0].image.naturalHeight
         )
         if (localLines.length === 0) {
+          trackEvent("processing_blocked", { tool: "split", error_code: "lines_not_crossing" })
           toast.error(t("linesNotCrossing"))
           return
         }

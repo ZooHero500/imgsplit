@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl"
 import { toast } from "sonner"
 import type { GridEditorState, GridSplitResult } from "@/lib/grid-splitter"
 import { splitGrid, getGridConfig } from "@/lib/grid-splitter"
+import { startOperation } from "@/lib/analytics"
 
 interface GridPreviewProps {
   image: HTMLImageElement
@@ -30,6 +31,7 @@ export function GridPreview({
   const { rows, cols } = getGridConfig(state.gridType)
 
   const handleGenerate = useCallback(async () => {
+    const finish = startOperation("processing", { tool: "grid", input_count: 1, format: mimeType })
     setIsGenerating(true)
     try {
       const results = await splitGrid(
@@ -39,7 +41,9 @@ export function GridPreview({
         mimeType
       )
       onGenerated(results)
+      finish("succeeded", { output_count: results.length })
     } catch {
+      finish("failed", { error_code: "processing_failed" })
       toast.error(t("failed"))
     } finally {
       setIsGenerating(false)

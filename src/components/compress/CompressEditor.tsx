@@ -1,6 +1,9 @@
 // src/components/compress/CompressEditor.tsx
 "use client"
 
+import { startOperation, trackOperation } from "@/lib/analytics"
+import { downloadBlob } from "@/lib/download"
+
 import { useState, useCallback, useRef, useEffect } from "react"
 import { useTranslations } from "next-intl"
 import { useSearchParams } from "next/navigation"
@@ -76,6 +79,8 @@ export function CompressEditor() {
   // --- Compress all items when format/quality changes ---
   const compressAll = useCallback(
     async (targetItems: BatchItem[], fmt: OutputFormat, q: number) => {
+      if (targetItems.length === 0) return
+      const finish = startOperation("processing", { tool: "compress", input_count: targetItems.length, format: fmt })
       const settled = await Promise.allSettled(
         targetItems.map(async (item) => {
           const result = await compressImage(item.image, item.file, fmt, q / 100)
@@ -84,14 +89,20 @@ export function CompressEditor() {
       )
 
       const currentSettings = settingsRef.current
-      if (currentSettings.format !== fmt || currentSettings.quality !== q) return
+      if (currentSettings.format !== fmt || currentSettings.quality !== q) {
+        finish("canceled")
+        return
+      }
 
       const results = settled
         .filter((result) => result.status === "fulfilled")
         .map((result) => result.value)
 
       if (results.length !== settled.length) {
+        finish("failed", { output_count: results.length, failure_count: settled.length - results.length, error_code: "processing_failed" })
         toast.error(t("compressFailed"))
+      } else {
+        finish("succeeded", { output_count: results.length })
       }
 
       setItems((prev) =>
@@ -142,32 +153,25 @@ export function CompressEditor() {
       if (!e.target.files?.length) return
       const files = Array.from(e.target.files)
 
-      void import("@/lib/upload-utils").then(async ({ validateFiles, loadImage }) => {
-        const validation = validateFiles(
-          files,
-          items.reduce((s, i) => s + i.file.size, 0)
-        )
-        if (!validation.valid) {
-          toast.error(uploadT(validation.error!.key, validation.error!.params))
+      void import("@/lib/upload-utils").then(async ({ loadUploadResults }) => {
+        const outcome = await loadUploadResults(files, { existingSize: items.reduce((s, i) => s + i.file.size, 0) })
+        if (outcome.status === "invalid") {
+          toast.error(uploadT(outcome.error.key, outcome.error.params))
           return
         }
-
-        if (validation.totalSizeWarning) {
-          const totalSize = validation.files.reduce((sum, f) => sum + f.size, 0)
+        if (outcome.status === "loadFailed") {
+          toast.error(uploadT("loadFailed"))
+          return
+        }
+        if (outcome.totalSizeWarning) {
           toast.warning(
             uploadT("totalSizeWarning", {
-              size: (totalSize / 1024 / 1024).toFixed(1),
+              size: (outcome.totalSize / 1024 / 1024).toFixed(1),
             })
           )
         }
 
-        const loaded = await Promise.all(
-          validation.files.map(async (f) => {
-            const img = await loadImage(f)
-            return { file: f, image: img, mimeType: f.type } as UploadResult
-          })
-        )
-        handleImagesLoaded(loaded)
+        handleImagesLoaded(outcome.results)
       }).catch(() => {
         toast.error(uploadT("loadFailed"))
       })
@@ -182,30 +186,24 @@ export function CompressEditor() {
     if (isSingle && items[0]?.result) {
       const { result, file } = items[0]
       const ext = formatToExtension(result.format)
-      const url = URL.createObjectURL(result.blob)
-      const a = document.createElement("a")
-      a.href = url
-      a.download = `${getBaseName(file.name)}.${ext}`
-      a.click()
-      URL.revokeObjectURL(url)
+      await trackOperation("export", async () => {
+        downloadBlob(result.blob, `${getBaseName(file.name)}.${ext}`)
+      }, { tool: "compress", action: "single", output_count: 1, format: ext })
     } else if (isBatch) {
       if (!allReady) return
       const readyItems = items.filter((i) => i.result)
       if (readyItems.length === 0) return
 
-      const { default: JSZip } = await import("jszip")
-      const zip = new JSZip()
-      for (const item of readyItems) {
-        const ext = formatToExtension(item.result!.format)
-        zip.file(`${getBaseName(item.file.name)}.${ext}`, item.result!.blob)
-      }
-      const blob = await zip.generateAsync({ type: "blob" })
-      const url = URL.createObjectURL(blob)
-      const a = document.createElement("a")
-      a.href = url
-      a.download = "compressed_images.zip"
-      a.click()
-      URL.revokeObjectURL(url)
+      await trackOperation("export", async () => {
+        const { default: JSZip } = await import("jszip")
+        const zip = new JSZip()
+        for (const item of readyItems) {
+          const ext = formatToExtension(item.result!.format)
+          zip.file(`${getBaseName(item.file.name)}.${ext}`, item.result!.blob)
+        }
+        const blob = await zip.generateAsync({ type: "blob" })
+        downloadBlob(blob, "compressed_images.zip")
+      }, { tool: "compress", action: "all", output_count: readyItems.length, format: "zip" })
     }
   }, [items, isSingle, isBatch, allReady])
 

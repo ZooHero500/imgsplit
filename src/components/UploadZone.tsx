@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl"
 import { toast } from "sonner"
 import type { UploadResult } from "@/types"
 import { loadUploadResults, ACCEPTED_TYPES } from "@/lib/upload-utils"
+import { trackEvent } from "@/lib/analytics"
 
 interface UploadZoneProps {
   onImageLoaded?: (result: UploadResult) => void
@@ -117,7 +118,10 @@ export function UploadZone({
 
       <button
         type="button"
-        onClick={() => inputRef.current?.click()}
+        onClick={() => {
+          trackEvent("upload_picker_opened")
+          inputRef.current?.click()
+        }}
         aria-describedby={`${hintId}${error ? ` ${errorId}` : ""}`}
         className="flex w-full cursor-pointer flex-col items-center justify-center p-10 text-center sm:p-14"
       >

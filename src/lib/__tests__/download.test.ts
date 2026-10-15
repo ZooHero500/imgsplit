@@ -1,5 +1,10 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest"
 import { downloadBlob, downloadUrl, isIOS, saveBlobWithIOSFallback } from "../download"
+import { trackEvent } from "../analytics"
+
+vi.mock("../analytics", () => ({ trackEvent: vi.fn() }))
+
+beforeEach(() => vi.clearAllMocks())
 
 function setUserAgent(ua: string) {
   Object.defineProperty(window.navigator, "userAgent", {
@@ -41,6 +46,7 @@ describe("downloadUrl", () => {
     expect(clicked).toHaveLength(1)
     expect(clicked[0].getAttribute("href")).toBe("blob:fake-url")
     expect(clicked[0].getAttribute("download")).toBe("result.png")
+    expect(trackEvent).toHaveBeenCalledExactlyOnceWith("download_triggered")
     clickSpy.mockRestore()
   })
 })
@@ -79,6 +85,15 @@ describe("downloadBlob", () => {
     expect(clicked).toEqual(["blob:mock-url|photo.png"])
     expect(revokeSpy).toHaveBeenCalledWith("blob:mock-url")
   })
+
+  it("cleans up and reports failed clicks without exposing the filename or URL", () => {
+    const failure = new Error("private-file.png")
+    vi.spyOn(HTMLAnchorElement.prototype, "click").mockImplementation(() => { throw failure })
+
+    expect(() => downloadBlob(new Blob(["data"]), "private-file.png")).toThrow(failure)
+    expect(revokeSpy).toHaveBeenCalledWith("blob:mock-url")
+    expect(trackEvent).toHaveBeenCalledExactlyOnceWith("download_failed", { error_code: "download_failed" })
+  })
 })
 
 describe("saveBlobWithIOSFallback", () => {
@@ -104,7 +119,7 @@ describe("saveBlobWithIOSFallback", () => {
 
   it("opens the blob in a new tab on iOS without revoking the URL", () => {
     setUserAgent(IOS_UA)
-    const openSpy = vi.spyOn(window, "open").mockImplementation(() => null)
+    const openSpy = vi.spyOn(window, "open").mockImplementation(() => window)
     const clickSpy = vi.spyOn(HTMLAnchorElement.prototype, "click")
 
     saveBlobWithIOSFallback(new Blob(["x"]), "grid-1.png")
@@ -113,6 +128,17 @@ describe("saveBlobWithIOSFallback", () => {
     expect(clickSpy).not.toHaveBeenCalled()
     vi.runAllTimers()
     expect(revokeSpy).not.toHaveBeenCalled()
+    expect(trackEvent).toHaveBeenCalledExactlyOnceWith("save_preview_opened")
+  })
+
+  it("reports a blocked iOS preview without claiming a download", () => {
+    setUserAgent(IOS_UA)
+    vi.spyOn(window, "open").mockReturnValue(null)
+
+    saveBlobWithIOSFallback(new Blob(["x"]), "private-photo.png")
+
+    expect(revokeSpy).toHaveBeenCalledWith("blob:save-url")
+    expect(trackEvent).toHaveBeenCalledExactlyOnceWith("download_failed", { error_code: "popup_blocked" })
   })
 
   it("downloads via anchor and revokes the URL after a delay elsewhere", () => {

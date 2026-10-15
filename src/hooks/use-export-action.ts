@@ -1,6 +1,7 @@
 "use client"
 
 import { useCallback, useState } from "react"
+import { trackOperation } from "@/lib/analytics"
 
 export interface ExportActionCallbacks {
   /** Called after the export function resolves. Show success toasts here. */
@@ -32,7 +33,7 @@ export function useExportAction(
     async (action: () => Promise<void>, callbacks?: ExportActionCallbacks) => {
       setIsExporting(true)
       try {
-        await action()
+        await trackOperation("export", action)
         ;(callbacks?.onSuccess ?? onSuccess)?.()
       } catch (error) {
         ;(callbacks?.onError ?? onError)?.(error)

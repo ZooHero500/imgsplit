@@ -1,5 +1,7 @@
 "use client"
 
+import { startOperation } from "@/lib/analytics"
+
 import { useState, useCallback } from "react"
 import { useTranslations } from "next-intl"
 import { Link } from "@/i18n/navigation"
@@ -61,6 +63,7 @@ export function CarouselWorkspaceClient() {
 
   const handleGenerate = useCallback(async () => {
     if (!image) return
+    const finish = startOperation("processing", { tool: "carousel", input_count: 1, format: mimeType })
     setGenerating(true)
     try {
       const result = await splitCarousel(
@@ -70,6 +73,10 @@ export function CarouselWorkspaceClient() {
         mimeType,
       )
       completeWithResults(result)
+      finish("succeeded", { output_count: result.length })
+    } catch (error) {
+      finish("failed", { error_code: "processing_failed" })
+      throw error
     } finally {
       setGenerating(false)
     }

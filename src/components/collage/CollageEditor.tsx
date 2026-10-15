@@ -33,6 +33,7 @@ import { LogoIcon } from "@/components/LogoIcon"
 import { UploadZone } from "@/components/UploadZone"
 import { useExportAction } from "@/hooks/use-export-action"
 import { downloadBlob } from "@/lib/download"
+import { startOperation } from "@/lib/analytics"
 import {
   assignImagesToFrames,
   calculateFrameRects,
@@ -385,12 +386,14 @@ export function CollageEditor() {
   const processFiles = useCallback(
     async (files: File[], targetFrameId?: string | null) => {
       if (files.length === 0) return
+      const finish = startOperation("upload", { tool: "collage", input_count: files.length })
 
       const validation = validateFiles(
         files,
         images.reduce((sum, image) => sum + image.file.size, 0)
       )
       if (!validation.valid) {
+        finish("failed", { error_code: validation.error?.key ?? "unsupportedFormat" })
         toast.error(uploadT(validation.error!.key, validation.error!.params))
         return
       }
@@ -413,7 +416,9 @@ export function CollageEditor() {
           }))
         )
         addUploadedImages(results, targetFrameId)
+        finish("succeeded", { output_count: results.length })
       } catch {
+        finish("failed", { error_code: "decode_failed" })
         toast.error(uploadT("loadFailed"))
       }
     },

@@ -1,5 +1,7 @@
 "use client"
 
+import { startOperation } from "@/lib/analytics"
+
 import { useCallback, useEffect, useRef, useState } from "react"
 import { useTranslations } from "next-intl"
 import { toast } from "sonner"
@@ -363,9 +365,12 @@ export function ResizeEditor({
 
   const handleImageFile = useCallback(
     async (file: File) => {
+      const finish = startOperation("upload", { tool: "resize", input_count: 1 })
       try {
         await loadImage(file)
+        finish("succeeded", { output_count: 1 })
       } catch {
+        finish("failed", { error_code: "decode_failed" })
         toast.error(t("invalidSize"))
       }
     },
@@ -375,6 +380,7 @@ export function ResizeEditor({
   const handleDownload = useCallback(
     async (format: "image/png" | "image/jpeg" | "image/webp") => {
       if (!image) return
+      const finish = startOperation("export", { tool: "resize", format, output_count: 1 })
       try {
         const quality = format === "image/png" ? undefined : 0.92
         const blob = await exportArtboard(
@@ -384,7 +390,9 @@ export function ResizeEditor({
         const baseName = fileName ? fileName.replace(/\.[^.]+$/, "") : "resized"
         const downloadName = `${baseName}_${canvasSize.width}x${canvasSize.height}${ext}`
         downloadBlob(blob, downloadName)
+        finish("succeeded")
       } catch {
+        finish("failed", { error_code: "export_failed" })
         toast.error("Export failed. Please try again.")
       }
     },

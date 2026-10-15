@@ -1,6 +1,7 @@
 "use client"
 
 import { useCallback, useState } from "react"
+import { startOperation, trackOperation } from "@/lib/analytics"
 import { splitImage } from "@/lib/image-splitter"
 import {
   exportAsZip,
@@ -73,7 +74,8 @@ export function useImageExport(): UseImageExportReturn {
     ): Promise<SplitResult[]> => {
       setIsSplitting(true)
       try {
-        const results = await splitImage(image, lines, mimeType)
+        const results = await trackOperation("processing", () => splitImage(image, lines, mimeType),
+          { tool: "split", input_count: 1, format: mimeType }, (items) => ({ output_count: items.length }))
         setSplitResults(results)
         setBatchResults([])
         setSelectedKeys(new Set())
@@ -91,6 +93,7 @@ export function useImageExport(): UseImageExportReturn {
       linesPerImage: SplitLine[][]
     ): Promise<BatchSplitResult[]> => {
       setIsSplitting(true)
+      const finish = startOperation("processing", { tool: "split", input_count: images.length })
       try {
         const batch: BatchSplitResult[] = []
         for (let i = 0; i < images.length; i++) {
@@ -110,7 +113,11 @@ export function useImageExport(): UseImageExportReturn {
         )
         setSplitResults(allResults)
         setSelectedKeys(new Set())
+        finish("succeeded", { output_count: allResults.length })
         return batch
+      } catch (error) {
+        finish("failed", { error_code: "processing_failed" })
+        throw error
       } finally {
         setIsSplitting(false)
       }
@@ -121,31 +128,42 @@ export function useImageExport(): UseImageExportReturn {
   const downloadAll = useCallback(
     async (originalFileName: string, fileExtension: string) => {
       if (splitResults.length === 0) return
-      const zipBlob = await exportAsZip({
-        originalFileName,
-        results: splitResults,
-        fileExtension,
-      })
-      downloadBlob(zipBlob, getZipFileName(originalFileName))
+      await trackOperation("export", async () => {
+        const zipBlob = await exportAsZip({
+          originalFileName,
+          results: splitResults,
+          fileExtension,
+        })
+        downloadBlob(zipBlob, getZipFileName(originalFileName))
+      }, { tool: "split", action: "all", output_count: splitResults.length, format: "zip" })
     },
     [splitResults]
   )
 
   const downloadBatchAll = useCallback(async () => {
     if (batchResults.length === 0) return
-    const zipBlob = await exportBatchAsZip({
-      items: batchResults.map((b) => ({
-        originalFileName: getFileNameWithoutExtension(b.fileName),
-        results: b.results,
-        fileExtension: getFileExtension(b.mimeType),
-      })),
-    })
-    downloadBlob(zipBlob, getBatchZipFileName())
+    await trackOperation("export", async () => {
+      const zipBlob = await exportBatchAsZip({
+        items: batchResults.map((b) => ({
+          originalFileName: getFileNameWithoutExtension(b.fileName),
+          results: b.results,
+          fileExtension: getFileExtension(b.mimeType),
+        })),
+      })
+      downloadBlob(zipBlob, getBatchZipFileName())
+    }, { tool: "split", action: "all", output_count: batchResults.reduce((count, item) => count + item.results.length, 0), format: "zip" })
   }, [batchResults])
 
   const downloadOne = useCallback(
     (result: SplitResult, fileName: string) => {
-      downloadSingle(result, fileName)
+      const finish = startOperation("export", { tool: "split", action: "single", output_count: 1 })
+      try {
+        downloadSingle(result, fileName)
+        finish("succeeded")
+      } catch (error) {
+        finish("failed", { error_code: "export_failed" })
+        throw error
+      }
     },
     []
   )
@@ -195,12 +213,14 @@ export function useImageExport(): UseImageExportReturn {
         selectedKeys.has(getResultKey(r))
       )
       if (selected.length === 0) return
-      const zipBlob = await exportAsZip({
-        originalFileName,
-        results: selected,
-        fileExtension,
-      })
-      downloadBlob(zipBlob, getSelectedZipFileName(originalFileName))
+      await trackOperation("export", async () => {
+        const zipBlob = await exportAsZip({
+          originalFileName,
+          results: selected,
+          fileExtension,
+        })
+        downloadBlob(zipBlob, getSelectedZipFileName(originalFileName))
+      }, { tool: "split", action: "selected", output_count: selected.length, format: "zip" })
     },
     [splitResults, selectedKeys]
   )
@@ -216,8 +236,10 @@ export function useImageExport(): UseImageExportReturn {
 
     if (items.length === 0) return
 
-    const zipBlob = await exportBatchAsZip({ items })
-    downloadBlob(zipBlob, "selected_split.zip")
+    await trackOperation("export", async () => {
+      const zipBlob = await exportBatchAsZip({ items })
+      downloadBlob(zipBlob, "selected_split.zip")
+    }, { tool: "split", action: "selected", output_count: items.reduce((count, item) => count + item.results.length, 0), format: "zip" })
   }, [batchResults, selectedKeys])
 
   return {
