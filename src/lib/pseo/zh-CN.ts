@@ -76,7 +76,7 @@ const data: Record<string, ToolPageData> = {
           },
         ],
         howToSteps: [
-          { stepNumber: 1, title: "上传图片", description: "拖拽或选择要裁切的图片，支持 PNG、JPG、WebP，最大 20MB。" },
+          { stepNumber: 1, title: "上传图片", description: "选择 PNG、JPG 或 WebP 图片，大图会在加载前检查像素和内存风险。" },
           { stepNumber: 2, title: "添加水平分割线", description: "点击「添加横向分割线」，放置一条或多条水平线，拖拽到精确位置。" },
           { stepNumber: 3, title: "下载各行", description: "预览每一横向条段的效果，然后一键打包下载或选择性下载。" },
         ],
@@ -219,7 +219,7 @@ const data: Record<string, ToolPageData> = {
           { stepNumber: 3, title: "下载分页段落", description: "预览各段效果，打包下载所有页面为 ZIP，方便分享。" },
         ],
         faqEntries: [
-          { question: "长截图的高度有上限吗？", answer: "工具可处理最大 20MB 的图片。超高图片（10000 像素以上）处理速度可能稍慢，但完全支持。" },
+          { question: "长截图的高度有上限吗？", answer: "长截图会根据宽高和预计内存占用检查。过长的图片可能需要先缩小或分段，处理能力取决于当前设备。" },
           { question: "能将长截图等分为相同长度的页面吗？", answer: "可以。添加多条水平线并利用磁吸对齐均匀分布，即可创建统一页面高度的段落。" },
           { question: "截图中的文字分割后还清晰吗？", answer: "当然清晰。工具以原始分辨率裁切，不做任何重采样，文字保持锐利可读。" },
         ],
@@ -366,7 +366,7 @@ const data: Record<string, ToolPageData> = {
         faqEntries: [
           { question: "瓦片应该按什么纸张尺寸切割？", answer: "家用打印机推荐 A4（210×297mm）。根据图片比例和目标最终尺寸计算所需瓦片数量。" },
           { question: "工具会为拼接添加重叠边距吗？", answer: "工具按精确像素边界切割。如需重叠边距，可适当增加瓦片数量，使相邻块共享一小条对齐区域。" },
-          { question: "能处理超高分辨率图片（如 8000×6000）吗？", answer: "可以。工具支持最大 20MB 的图片。超高分辨率文件建议使用 WebP 格式以减小文件大小。" },
+          { question: "能处理超高分辨率图片（如 8000×6000）吗？", answer: "高分辨率图片会在加载前检查是否符合设备的内存预算，超出时需先缩小尺寸。仅压缩文件体积不会减少解码后的像素内存。" },
         ],
         relatedTools: [
           { slug: "/split-into-equal-parts", title: "等分切割", description: "将图片均匀切割为等份瓦片。" },

@@ -62,7 +62,7 @@
     "gridTitle": "그리드 분할",
     "gridDesc": "가로선과 세로선을 동시에 추가하여 규칙적인 그리드를 빠르게 생성하고 효율적으로 일괄 자르기가 가능합니다.",
     "formatTitle": "다양한 형식 지원",
-    "formatDesc": "PNG, JPG/JPEG, WebP를 지원합니다. 파일당 최대 20MB.",
+    "formatDesc": "PNG, JPG/JPEG, WebP를 지원합니다. 큰 이미지는 기기의 처리 능력에 따라 확인합니다.",
     "previewTitle": "실시간 미리보기",
     "previewDesc": "분할선 위치를 조정하면서 분할 결과를 실시간으로 확인할 수 있습니다."
   },
@@ -117,8 +117,8 @@
     "headlineAccent": "신뢰",
     "stat1Value": "20+",
     "stat1Label": "축당 분할선 수",
-    "stat2Value": "20MB",
-    "stat2Label": "최대 파일 크기",
+    "stat2Value": "자동 조절",
+    "stat2Label": "큰 이미지 제한",
     "stat3Value": "0",
     "stat3Label": "서버에 업로드되는 데이터",
     "stat4Value": "100%",
@@ -140,7 +140,7 @@
     "headlineAccent": "해결",
     "subtitle": "이미지 분할 도구에 대해 자주 묻는 질문",
     "q1": "어떤 이미지 형식을 지원하나요?",
-    "a1": "PNG, JPG/JPEG, WebP 이미지를 지원하며, 파일 크기는 최대 20MB입니다.",
+    "a1": "PNG, JPG/JPEG, WebP를 지원합니다. 큰 이미지는 기기의 처리 능력에 따라 확인합니다.",
     "q2": "분할 후 이미지 품질이 저하되나요?",
     "a2": "아닙니다. 원본 해상도 그대로 자르기 때문에 압축이나 축소 없이 원본 품질이 유지됩니다.",
     "q3": "내 이미지 데이터는 안전한가요?",
@@ -170,11 +170,16 @@
     "dragHint": "하나 이상의 이미지를 여기에 드래그 앤 드롭하세요",
     "or": "또는",
     "clickHint": "클릭하여 파일 선택 (다중 선택 가능)",
-    "formatHint": "PNG / JPG / WebP · 파일당 최대 20MB",
+    "formatHint": "PNG / JPG / WebP · 큰 이미지는 불러오기 전 확인",
     "unsupportedFormat": "지원하지 않는 형식입니다. PNG, JPG 또는 WebP 이미지를 업로드해 주세요.",
     "loadFailed": "이미지를 불러오지 못했습니다. 다시 시도해 주세요.",
-    "fileTooLarge": "파일 \"{name}\"이(가) 20MB를 초과합니다. 먼저 압축해 보세요.",
-    "totalSizeWarning": "총 파일 크기 {size}MB가 50MB를 초과하여 브라우저 속도가 느려질 수 있습니다."
+    "largeImageHint": "파일 용량이 커도 사용할 수 있습니다. 픽셀 수와 예상 메모리를 확인하며, 위험이 큰 이미지는 먼저 크기를 줄여야 합니다.",
+    "chooseAnother": "이미지 다시 선택",
+    "memoryWarning": "예상 처리 메모리는 약 {estimated} MB입니다. 처리에 시간이 걸릴 수 있으므로 이미지를 더 추가하지 않는 것이 좋습니다.",
+    "imageMemoryRisk": "이 이미지들의 예상 처리 메모리 {estimated} MB가 기기의 안전 예산 {budget} MB를 넘습니다. 이미지 크기를 줄이거나 불러온 이미지 일부를 제거하고 다시 시도하세요.",
+    "imageDimensionsTooLarge": "이미지가 {width} × {height} 픽셀이며 한 변이 불러오기 한도 {limit} 픽셀을 넘습니다. 크기를 줄이거나 여러 부분으로 나눈 뒤 다시 시도하세요.",
+    "imageCanvasRisk": "이미지가 {width} × {height} 픽셀입니다. 이 도구에 필요한 전체 이미지 캔버스가 지원 범위를 넘습니다. 크기를 줄이거나 이미지 분할 도구로 나누세요.",
+    "imageMetadataUnreadable": "이미지 크기를 안전하게 읽지 못했습니다. PNG, JPEG 또는 WebP로 다시 저장한 뒤 시도하세요."
   },
   "workspace": {
     "addHorizontal": "+ 가로 분할선",
@@ -196,7 +201,14 @@
     "horizontalLimitReached": "가로 분할선 한도에 도달했습니다 (최대 20개)",
     "verticalLimitReached": "세로 분할선 한도에 도달했습니다 (최대 20개)",
     "loadingEditor": "편집기 로딩 중...",
-    "shortcutHints": "단축키: Ctrl+Z 실행 취소 | Ctrl+Shift+Z 다시 실행 | Delete 선택한 분할선 삭제 | 눈금자에서 드래그하여 생성 | 눈금자로 드래그하여 삭제 | 스크롤로 확대/축소 | Space+드래그로 이동 | Cmd+0 화면에 맞추기 | Cmd+1 100%"
+    "shortcutHints": "단축키: Ctrl+Z 실행 취소 | Ctrl+Shift+Z 다시 실행 | Delete 선택한 분할선 삭제 | 눈금자에서 드래그하여 생성 | 눈금자로 드래그하여 삭제 | 스크롤로 확대/축소 | Space+드래그로 이동 | Cmd+0 화면에 맞추기 | Cmd+1 100%",
+    "addHorizontalShort": "+ 가로선",
+    "addVerticalShort": "+ 세로선",
+    "lineGuideTitle": "먼저 분할선을 추가하세요",
+    "lineGuideDescription": "아래 버튼으로 이미지 중앙에 선을 추가하세요. 선을 드래그해 조정한 다음 생성 버튼을 누르세요.",
+    "lineGuideMultiple": "이미지를 선택하고 중앙에 가로선이나 세로선을 추가하세요. 선이 지나는 모든 이미지가 분할됩니다. 위치를 조정한 뒤 생성하세요.",
+    "splitTopBottom": "위아래로 반 나누기",
+    "splitLeftRight": "좌우로 반 나누기"
   },
   "results": {
     "title": "분할 결과",
@@ -206,7 +218,15 @@
     "downloadAll": "전체 다운로드 (ZIP)",
     "selectAll": "전체 선택",
     "downloadSelected": "선택 항목 다운로드",
-    "downloadSelectedCount": "선택 항목 다운로드 ({count})"
+    "downloadSelectedCount": "선택 항목 다운로드 ({count})",
+    "preparingZip": "ZIP 만드는 중…",
+    "preparingZipHint": "이미지를 묶고 있습니다. 페이지를 열어 두세요.",
+    "downloadSingle": "{name} 다운로드",
+    "zip_load_failed": "ZIP 모듈을 불러오지 못했습니다. 연결을 확인하고 다시 시도하세요. 계속 실패하면 이미지를 개별 저장한 후 새로고침하세요.",
+    "zip_read_failed": "ZIP에 넣을 이미지를 읽지 못했습니다. 이미지를 개별 저장하거나 결과를 다시 생성하세요.",
+    "zip_generate_failed": "ZIP 생성에 실패했습니다. 선택한 이미지 수를 줄이거나 개별 다운로드하세요.",
+    "download_failed": "다운로드를 시작하지 못했습니다. 브라우저의 다운로드 권한을 확인하고 다시 시도하세요.",
+    "export_failed": "내보내기에 실패했습니다. 이미지 수를 줄여 다시 시도하거나 개별 다운로드하세요."
   },
   "history": {
     "title": "기록",
@@ -262,7 +282,7 @@
       "title": "이미지 업로드",
       "dragHint": "이미지를 여기에 드래그하세요",
       "clickHint": "또는 클릭하여 선택",
-      "formatHint": "PNG / JPG / WebP · 최대 20MB"
+      "formatHint": "PNG / JPG / WebP · 큰 이미지는 불러오기 전 확인"
     },
     "nav": {
       "grid": "그리드",
@@ -571,7 +591,7 @@
     "uploadTitle": "AI 배경 제거",
     "uploadDragHint": "이미지를 놓아 배경 제거",
     "uploadClickHint": "이미지 선택",
-    "uploadFormatHint": "PNG, JPG, WebP 최대 20MB",
+    "uploadFormatHint": "PNG / JPG / WebP · 큰 이미지는 불러오기 전 확인",
     "original": "원본",
     "result": "결과",
     "resultPending": "결과 미리보기",
@@ -679,7 +699,7 @@
         "headlinePart1": "네 가지",
         "headlineAccent": "단계",
         "step1Title": "사진 넣기",
-        "step1Desc": "PNG, JPEG, WebP, 최대 20MB. 일괄 처리하려면 파일을 더 추가하세요.",
+        "step1Desc": "PNG, JPG/JPEG, WebP를 지원합니다. 큰 이미지는 기기의 처리 능력에 따라 확인합니다. 여러 이미지를 추가해 일괄 처리할 수 있습니다.",
         "step2Title": "필요 시 모델 한 번 받기",
         "step2Desc": "이 브라우저에 캐시가 없으면 첫 실행에서 로컬 모델을 받습니다. 사진은 기기에 남습니다.",
         "step3Title": "가장자리 다듬기",
@@ -1220,7 +1240,7 @@
       "title": "이미지 업로드",
       "dragHint": "여기에 이미지를 드래그하세요",
       "clickHint": "또는 클릭하여 선택",
-      "formatHint": "PNG / JPG / WebP · 최대 20MB"
+      "formatHint": "PNG / JPG / WebP · 큰 이미지는 불러오기 전 확인"
     },
     "editor": {
       "dragHint": "드래그하여 이동 · 슬라이더로 확대/축소",
@@ -1275,7 +1295,7 @@
         "headlineAccent": "질문",
         "subtitle": "캐러셀 분할 도구에 대해 자주 묻는 질문",
         "q1": "어떤 이미지 형식을 지원하나요?",
-        "a1": "최대 20MB의 PNG, JPEG, WebP 이미지를 지원합니다. 넓은 파노라마 이미지가 캐러셀 분할에 가장 적합합니다.",
+        "a1": "PNG, JPG/JPEG, WebP를 지원합니다. 큰 이미지는 기기의 처리 능력에 따라 확인합니다. 캐러셀 분할에는 가로로 긴 파노라마 이미지가 적합합니다.",
         "q2": "몇 개의 슬라이드를 만들 수 있나요?",
         "a2": "캐러셀 슬라이드를 2개에서 10개까지 만들 수 있습니다. 도구가 자동으로 이미지를 모든 슬라이드에 균등하게 분배합니다.",
         "q3": "어떤 화면 비율을 사용할 수 있나요?",

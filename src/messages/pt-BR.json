@@ -62,7 +62,7 @@
     "gridTitle": "Divisão em Grade",
     "gridDesc": "Adicione linhas horizontais e verticais ao mesmo tempo para criar grades regulares para recorte em lote.",
     "formatTitle": "Suporte a Múltiplos Formatos",
-    "formatDesc": "Suporta PNG, JPG/JPEG e WebP. Até 20MB por arquivo.",
+    "formatDesc": "Compatível com PNG, JPG/JPEG e WebP. Imagens grandes são verificadas conforme a capacidade do dispositivo.",
     "previewTitle": "Prévia em Tempo Real",
     "previewDesc": "Veja os resultados da divisão em tempo real conforme ajusta as posições das linhas."
   },
@@ -117,8 +117,8 @@
     "headlineAccent": "Criadores",
     "stat1Value": "20+",
     "stat1Label": "Linhas de corte por eixo",
-    "stat2Value": "20MB",
-    "stat2Label": "Tamanho máximo de arquivo",
+    "stat2Value": "Adaptável",
+    "stat2Label": "Limites para imagens grandes",
     "stat3Value": "0",
     "stat3Label": "Dados enviados aos servidores",
     "stat4Value": "100%",
@@ -140,7 +140,7 @@
     "headlineAccent": "Respondidas",
     "subtitle": "Perguntas comuns sobre a ferramenta de divisão de imagens",
     "q1": "Quais formatos de imagem são suportados?",
-    "a1": "Imagens PNG, JPG/JPEG e WebP são suportadas, com tamanho máximo de arquivo de 20MB.",
+    "a1": "Compatível com PNG, JPG/JPEG e WebP. Imagens grandes são verificadas conforme a capacidade do dispositivo.",
     "q2": "A qualidade da imagem será reduzida após a divisão?",
     "a2": "Não. A ferramenta recorta na resolução original — sem compressão, sem redimensionamento, sem perda de qualidade.",
     "q3": "Meus dados de imagem estão seguros?",
@@ -170,11 +170,16 @@
     "dragHint": "Arraste e solte uma ou mais imagens aqui",
     "or": "ou",
     "clickHint": "Clique para selecionar arquivos (vários permitidos)",
-    "formatHint": "PNG / JPG / WebP · Máx. 20MB por arquivo",
+    "formatHint": "PNG / JPG / WebP · Imagens grandes verificadas antes de carregar",
     "unsupportedFormat": "Formato não suportado. Por favor, envie imagens PNG, JPG ou WebP.",
     "loadFailed": "Falha ao carregar imagem. Por favor, tente novamente.",
-    "fileTooLarge": "O arquivo \"{name}\" excede 20MB. Considere comprimi-lo primeiro.",
-    "totalSizeWarning": "O tamanho total dos arquivos {size}MB excede 50MB e pode causar lentidão no navegador."
+    "largeImageHint": "Arquivos grandes podem ser usados quando seus pixels e memória estimada cabem neste dispositivo. Imagens de alto risco precisam ter as dimensões reduzidas.",
+    "chooseAnother": "Escolher outra imagem",
+    "memoryWarning": "Memória de trabalho estimada: cerca de {estimated} MB. O processamento pode demorar; evite adicionar mais imagens ao mesmo tempo.",
+    "imageMemoryRisk": "Estas imagens precisam de cerca de {estimated} MB, acima do orçamento seguro de {budget} MB deste dispositivo. Reduza as dimensões ou remova algumas imagens carregadas e tente novamente.",
+    "imageDimensionsTooLarge": "A imagem tem {width} × {height} pixels. Um lado ultrapassa o limite de carregamento de {limit} pixels. Reduza as dimensões ou divida em partes.",
+    "imageCanvasRisk": "A imagem tem {width} × {height} pixels. A tela completa exigida por esta ferramenta ultrapassa os limites suportados. Reduza as dimensões ou use o divisor de imagens para trabalhar em partes menores.",
+    "imageMetadataUnreadable": "Não foi possível ler as dimensões com segurança. Salve novamente como PNG, JPEG ou WebP e tente outra vez."
   },
   "workspace": {
     "addHorizontal": "+ Linha Horizontal",
@@ -196,7 +201,14 @@
     "horizontalLimitReached": "Limite de linhas horizontais atingido (máx. 20)",
     "verticalLimitReached": "Limite de linhas verticais atingido (máx. 20)",
     "loadingEditor": "Carregando editor...",
-    "shortcutHints": "Atalhos: Ctrl+Z Desfazer | Ctrl+Shift+Z Refazer | Delete Remover linha selecionada | Arraste da régua para criar | Arraste de volta para a régua para excluir | Role para zoom | Espaço+arraste para mover | Cmd/Ctrl+0 Ajustar | Cmd/Ctrl+1 100%"
+    "shortcutHints": "Atalhos: Ctrl+Z Desfazer | Ctrl+Shift+Z Refazer | Delete Remover linha selecionada | Arraste da régua para criar | Arraste de volta para a régua para excluir | Role para zoom | Espaço+arraste para mover | Cmd/Ctrl+0 Ajustar | Cmd/Ctrl+1 100%",
+    "addHorizontalShort": "+ Horizontal",
+    "addVerticalShort": "+ Vertical",
+    "lineGuideTitle": "Adicione uma linha para começar",
+    "lineGuideDescription": "Escolha uma direção para colocar uma linha no centro. Arraste para ajustar e clique em Gerar.",
+    "lineGuideMultiple": "Selecione uma imagem e adicione uma linha horizontal ou vertical no centro dela. As linhas dividem todas as imagens que atravessam. Ajuste a posição antes de gerar.",
+    "splitTopBottom": "Dividir em metade superior e inferior",
+    "splitLeftRight": "Dividir em metade esquerda e direita"
   },
   "results": {
     "title": "Resultados da Divisão",
@@ -206,7 +218,15 @@
     "downloadAll": "Baixar Tudo (ZIP)",
     "selectAll": "Selecionar Tudo",
     "downloadSelected": "Baixar Selecionadas",
-    "downloadSelectedCount": "Baixar Selecionadas ({count})"
+    "downloadSelectedCount": "Baixar Selecionadas ({count})",
+    "preparingZip": "Preparando ZIP…",
+    "preparingZipHint": "Mantenha esta página aberta enquanto as imagens são empacotadas.",
+    "downloadSingle": "Baixar {name}",
+    "zip_load_failed": "Não foi possível carregar o módulo ZIP. Confira a conexão e tente novamente. Se continuar falhando, baixe as imagens individualmente antes de atualizar a página.",
+    "zip_read_failed": "Não foi possível ler uma imagem para o ZIP. Baixe as imagens individualmente ou gere os resultados novamente.",
+    "zip_generate_failed": "Não foi possível criar o ZIP. Selecione menos imagens ou baixe cada uma separadamente.",
+    "download_failed": "Não foi possível iniciar o download. Confira as permissões de download do navegador e tente novamente.",
+    "export_failed": "A exportação falhou. Tente com menos imagens ou baixe cada uma separadamente."
   },
   "history": {
     "title": "Histórico",
@@ -262,7 +282,7 @@
       "title": "Enviar Imagem",
       "dragHint": "Arraste uma imagem aqui",
       "clickHint": "ou clique para selecionar",
-      "formatHint": "PNG / JPG / WebP · Máx. 20MB"
+      "formatHint": "PNG / JPG / WebP · Imagens grandes verificadas antes de carregar"
     },
     "nav": {
       "grid": "Grade",
@@ -571,7 +591,7 @@
     "uploadTitle": "Remover Fundo com IA",
     "uploadDragHint": "Solte uma imagem para remover o fundo",
     "uploadClickHint": "Escolher imagem",
-    "uploadFormatHint": "PNG, JPG, WebP até 20MB",
+    "uploadFormatHint": "PNG / JPG / WebP · Imagens grandes verificadas antes de carregar",
     "original": "Original",
     "result": "Resultado",
     "resultPending": "Prévia do Resultado",
@@ -679,7 +699,7 @@
         "headlinePart1": "Quatro",
         "headlineAccent": "passos",
         "step1Title": "Solte uma foto",
-        "step1Desc": "PNG, JPEG ou WebP, até 20 MB. Adicione mais arquivos se quiser uma fila em lote.",
+        "step1Desc": "Compatível com PNG, JPG/JPEG e WebP. Imagens grandes são verificadas conforme a capacidade do dispositivo. Você pode adicionar várias imagens para processar em lote.",
         "step2Title": "Baixe o modelo uma vez",
         "step2Desc": "Se este navegador ainda não tiver cache, a primeira execução baixa o modelo local. A foto continua no dispositivo.",
         "step3Title": "Ajuste a borda",
@@ -1109,7 +1129,7 @@
       "title": "Enviar Imagem",
       "dragHint": "Arraste uma imagem aqui",
       "clickHint": "ou clique para selecionar",
-      "formatHint": "PNG / JPG / WebP · Máx. 20MB"
+      "formatHint": "PNG / JPG / WebP · Imagens grandes verificadas antes de carregar"
     },
     "editor": {
       "dragHint": "Arraste para mover · Controle deslizante para zoom",
@@ -1164,7 +1184,7 @@
         "headlineAccent": "Respondidas",
         "subtitle": "Perguntas comuns sobre a ferramenta de divisão de carrossel",
         "q1": "Quais formatos de imagem são suportados?",
-        "a1": "Imagens PNG, JPEG e WebP de até 20MB são suportadas. Imagens panorâmicas largas funcionam melhor para divisão de carrossel.",
+        "a1": "Compatível com PNG, JPG/JPEG e WebP. Imagens grandes são verificadas conforme a capacidade do dispositivo. Imagens panorâmicas largas funcionam melhor para dividir carrosséis.",
         "q2": "Quantos slides posso criar?",
         "a2": "Você pode criar entre 2 e 10 slides de carrossel. A ferramenta divide automaticamente sua imagem de forma uniforme em todos os slides.",
         "q3": "Quais proporções estão disponíveis?",

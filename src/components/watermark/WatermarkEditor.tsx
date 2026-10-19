@@ -315,7 +315,7 @@ export function WatermarkEditor() {
                 {t("uploadDescription")}
               </p>
             </div>
-            <UploadZone onImageLoaded={handleImageLoaded} />
+            <UploadZone onImageLoaded={handleImageLoaded} requiresFullCanvas />
           </div>
         </div>
       ) : (

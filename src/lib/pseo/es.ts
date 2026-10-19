@@ -76,7 +76,7 @@ const data: Record<string, ToolPageData> = {
       },
     ],
     howToSteps: [
-      { stepNumber: 1, title: "Sube tu imagen", description: "Arrastra o selecciona cualquier imagen — PNG, JPG o WebP de hasta 20 MB." },
+      { stepNumber: 1, title: "Sube tu imagen", description: "Elige una imagen PNG, JPG o WebP. Antes de cargar imágenes grandes se comprueban sus píxeles y el riesgo de memoria." },
       { stepNumber: 2, title: "Añade líneas horizontales", description: "Haz clic en 'Añadir línea horizontal' para colocar una o más líneas de corte. Arrastra cada línea a la posición exacta." },
       { stepNumber: 3, title: "Descarga las filas", description: "Previsualiza cada tira horizontal y descarga todas a la vez como ZIP o selecciona filas específicas." },
     ],
@@ -219,7 +219,7 @@ const data: Record<string, ToolPageData> = {
       { stepNumber: 3, title: "Descarga los segmentos", description: "Previsualiza cada segmento y descarga todas las páginas como ZIP para compartir fácilmente." },
     ],
     faqEntries: [
-      { question: "¿Hay una altura máxima para las capturas de pantalla largas?", answer: "La herramienta puede manejar imágenes de hasta 20 MB de tamaño. Las imágenes muy altas (más de 10.000 px) pueden procesarse más lentamente, pero son totalmente compatibles." },
+      { question: "¿Hay una altura máxima para las capturas de pantalla largas?", answer: "Las capturas largas se comprueban por sus dimensiones y memoria estimada. Las muy largas pueden necesitar reducción o división en secciones; la capacidad depende del dispositivo." },
       { question: "¿Puedo dividir una captura en segmentos de igual longitud?", answer: "Sí. Añade múltiples líneas horizontales y usa la alineación automática para espaciarlas uniformemente, creando segmentos de altura uniforme." },
       { question: "¿El texto de mi captura seguirá siendo nítido después de dividirla?", answer: "Por supuesto. La herramienta recorta a la resolución original sin ningún remuestreo, por lo que el texto se mantiene nítido y legible." },
     ],
@@ -357,7 +357,7 @@ const data: Record<string, ToolPageData> = {
     faqEntries: [
       { question: "¿Qué tamaño de papel debo usar para los mosaicos?", answer: "Para impresoras domésticas, A4 (210×297mm) o Carta US (8.5×11 pulgadas) son los estándares. Calcula el número de mosaicos según la proporción de tu imagen y el tamaño final deseado." },
       { question: "¿La herramienta añade márgenes de superposición para el ensamblaje?", answer: "La herramienta divide en los límites exactos de píxeles. Para márgenes de superposición, aumenta ligeramente el número de mosaicos para que las piezas adyacentes compartan una franja delgada para la alineación." },
-      { question: "¿Puedo dividir una imagen de muy alta resolución (por ejemplo, 8000×6000)?", answer: "Sí. La herramienta maneja imágenes grandes de hasta 20 MB. Para archivos de resolución extremadamente alta, considera usar el formato WebP para un tamaño de archivo menor." },
+      { question: "¿Puedo dividir una imagen de muy alta resolución (por ejemplo, 8000×6000)?", answer: "Antes de cargar imágenes de alta resolución, se comprueba el presupuesto de memoria del dispositivo. Si lo superan, reduce sus dimensiones. Comprimir el archivo no reduce la memoria necesaria para todos sus píxeles." },
     ],
     relatedTools: [
       { slug: "/split-into-equal-parts", title: "Divisor en Partes Iguales", description: "Divide imágenes en segmentos perfectamente iguales para mosaicos uniformes." },

@@ -33,7 +33,7 @@ The official website is **imgsplit.com**. The official repository is **ZooHero50
 ### Platform
 
 - **Privacy-first** — All image processing in-browser via Canvas API; images never uploaded to any server
-- **Multi-format** — PNG, JPG/JPEG, WebP up to 20MB
+- **Multi-format** — PNG, JPG/JPEG, WebP; large images checked by pixel dimensions and estimated device memory
 - **One-click download** — ZIP archive or individual files
 - **Multilingual** — English, 中文, 日本語, 한국어, Español, Português (BR) — 6 languages
 - **Responsive** — Works on desktop, tablet, and mobile

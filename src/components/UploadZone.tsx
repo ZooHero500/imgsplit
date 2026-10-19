@@ -16,6 +16,7 @@ interface UploadZoneProps {
   dragHint?: string
   clickHint?: string
   formatHint?: string
+  requiresFullCanvas?: boolean
 }
 
 export function UploadZone({
@@ -27,6 +28,7 @@ export function UploadZone({
   dragHint,
   clickHint,
   formatHint,
+  requiresFullCanvas = false,
 }: UploadZoneProps) {
   const t = useTranslations("upload")
   const [error, setError] = useState<string | null>(null)
@@ -40,7 +42,7 @@ export function UploadZone({
       setError(null)
 
       const selectedFiles = multiple ? Array.from(files) : Array.from(files).slice(0, 1)
-      const outcome = await loadUploadResults(selectedFiles)
+      const outcome = await loadUploadResults(selectedFiles, { requiresFullCanvas })
       if (outcome.status === "invalid") {
         setError(t(outcome.error.key, outcome.error.params))
         return
@@ -50,11 +52,7 @@ export function UploadZone({
         return
       }
 
-      if (outcome.totalSizeWarning) {
-        toast.warning(
-          t("totalSizeWarning", { size: (outcome.totalSize / 1024 / 1024).toFixed(1) })
-        )
-      }
+      if (outcome.memoryWarning) toast.warning(t("memoryWarning", { estimated: outcome.estimatedMemoryMB }))
 
       if (onImagesLoaded) {
         onImagesLoaded(outcome.results)
@@ -62,7 +60,7 @@ export function UploadZone({
         onImageLoaded(outcome.results[0])
       }
     },
-    [multiple, onImageLoaded, onImagesLoaded, t]
+    [multiple, onImageLoaded, onImagesLoaded, requiresFullCanvas, t]
   )
 
   const handleDrop = useCallback(
@@ -144,10 +142,19 @@ export function UploadZone({
         <p id={hintId} className="mt-4 font-condensed text-[11px] font-bold uppercase tracking-[0.2em] text-ink-soft">
           {formatHint ?? t("formatHint")}
         </p>
+        <p className="mt-2 max-w-md text-xs leading-relaxed text-muted-foreground">
+          {t("largeImageHint")}
+        </p>
       </button>
 
       {error && (
-        <p id={errorId} className="pb-6 text-sm text-destructive" role="alert">{error}</p>
+        <div className="px-6 pb-6 text-center">
+          <p id={errorId} className="max-w-md break-words text-sm text-destructive" role="alert">{error}</p>
+          <button type="button" className="mt-3 text-sm underline underline-offset-4" onClick={() => {
+            trackEvent("upload_picker_opened")
+            inputRef.current?.click()
+          }}>{t("chooseAnother")}</button>
+        </div>
       )}
     </div>
   )

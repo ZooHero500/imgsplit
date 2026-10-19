@@ -21,6 +21,7 @@ import {
 } from "@/lib/compress"
 import type { OutputFormat } from "@/lib/compress"
 import type { UploadResult } from "@/types"
+import { estimateLoadedImages } from "@/lib/upload-memory"
 import { Link } from "@/i18n/navigation"
 import { LogoIcon } from "@/components/LogoIcon"
 import { LocaleSwitcher } from "@/components/LocaleSwitcher"
@@ -154,7 +155,7 @@ export function CompressEditor() {
       const files = Array.from(e.target.files)
 
       void import("@/lib/upload-utils").then(async ({ loadUploadResults }) => {
-        const outcome = await loadUploadResults(files, { existingSize: items.reduce((s, i) => s + i.file.size, 0) })
+        const outcome = await loadUploadResults(files, { existingMemoryBytes: estimateLoadedImages(items), requiresFullCanvas: true })
         if (outcome.status === "invalid") {
           toast.error(uploadT(outcome.error.key, outcome.error.params))
           return
@@ -163,13 +164,7 @@ export function CompressEditor() {
           toast.error(uploadT("loadFailed"))
           return
         }
-        if (outcome.totalSizeWarning) {
-          toast.warning(
-            uploadT("totalSizeWarning", {
-              size: (outcome.totalSize / 1024 / 1024).toFixed(1),
-            })
-          )
-        }
+        if (outcome.memoryWarning) toast.warning(uploadT("memoryWarning", { estimated: outcome.estimatedMemoryMB }))
 
         handleImagesLoaded(outcome.results)
       }).catch(() => {
@@ -289,7 +284,7 @@ export function CompressEditor() {
       {!hasImages ? (
         <div className="flex-1 flex items-center justify-center">
           <div className="w-full max-w-2xl">
-            <UploadZone onImagesLoaded={handleImagesLoaded} />
+            <UploadZone onImagesLoaded={handleImagesLoaded} requiresFullCanvas />
           </div>
         </div>
       ) : (

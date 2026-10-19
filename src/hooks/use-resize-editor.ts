@@ -1,9 +1,11 @@
 "use client"
 
-import { useState, useCallback, useRef, useEffect } from "react"
+import { useState, useCallback } from "react"
 import type { ResizeImageTransform, CropRect, ResizeEditorMode } from "@/types"
 import { calculateFillTransform, calculateFitTransform } from "@/lib/resize-utils"
 import { useUndoRedo } from "@/hooks/use-undo-redo"
+import { loadImage as loadValidatedImage } from "@/lib/upload-utils"
+import { estimateLoadedImages } from "@/lib/upload-memory"
 
 interface CanvasSize {
   width: number
@@ -73,16 +75,6 @@ export function useResizeEditor(
   const [fileName, setFileName] = useState("")
   const [mimeType, setMimeType] = useState("image/png")
   const [fitMode, setFitModeState] = useState<FitMode>("fill")
-  const imageUrlRef = useRef<string | null>(null)
-
-  // Cleanup object URL on unmount
-  useEffect(() => {
-    return () => {
-      if (imageUrlRef.current) {
-        URL.revokeObjectURL(imageUrlRef.current)
-      }
-    }
-  }, [])
 
   const getEffectiveDimensions = useCallback(
     (img: HTMLImageElement, currentCrop: CropRect | null, rotation: number) => {
@@ -109,19 +101,9 @@ export function useResizeEditor(
 
   const loadImage = useCallback(
     async (file: File) => {
-      if (imageUrlRef.current) {
-        URL.revokeObjectURL(imageUrlRef.current)
-      }
-
-      const url = URL.createObjectURL(file)
-      imageUrlRef.current = url
-
-      const img = new window.Image()
-      img.src = url
-
-      await new Promise<void>((resolve, reject) => {
-        img.onload = () => resolve()
-        img.onerror = () => reject(new Error("Failed to load image"))
+      // Validate and decode before replacing the currently edited image.
+      const img = await loadValidatedImage(file, {
+        existingMemoryBytes: image ? estimateLoadedImages([{ image }]) : 0,
       })
 
       setImage(img)
@@ -131,7 +113,7 @@ export function useResizeEditor(
       setCropRect(null)
       fitImageToArtboard(img, canvasSize, null, fitMode, 0, false, false)
     },
-    [canvasSize, fitImageToArtboard, fitMode]
+    [canvasSize, fitImageToArtboard, fitMode, image]
   )
 
   const applyCrop = useCallback(() => {
@@ -179,10 +161,6 @@ export function useResizeEditor(
   }, [image, canvasSize, fitImageToArtboard, fitMode])
 
   const clearImage = useCallback(() => {
-    if (imageUrlRef.current) {
-      URL.revokeObjectURL(imageUrlRef.current)
-      imageUrlRef.current = null
-    }
     setImage(null)
     setTransform(DEFAULT_TRANSFORM)
     setMode("idle")

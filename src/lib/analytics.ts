@@ -1,4 +1,5 @@
 import { CORE_TOOLS, TOOL_EDITOR_HREFS, type CoreToolId } from "@/lib/tools/catalog"
+import { getExportErrorCode, type ExportErrorCode } from "@/lib/export-errors"
 
 export const ANALYTICS_DOMAINS =
   process.env.NEXT_PUBLIC_UMAMI_DOMAINS ?? "imgsplit.com,www.imgsplit.com"
@@ -25,7 +26,7 @@ export interface AnalyticsProperties {
   failure_count?: number
   format?: string
   action?: "all" | "selected" | "single" | "open_editor" | "resume" | "upload"
-  error_code?: "unsupportedFormat" | "fileTooLarge" | "decode_failed" | "processing_failed" | "export_failed" | "download_failed" | "popup_blocked" | "no_split_lines" | "lines_not_crossing" | "model_unavailable"
+  error_code?: ExportErrorCode | "unsupportedFormat" | "fileTooLarge" | "imageMetadataUnreadable" | "imageMemoryRisk" | "imageDimensionsTooLarge" | "imageCanvasRisk" | "decode_failed" | "processing_failed" | "export_failed" | "popup_blocked" | "no_split_lines" | "lines_not_crossing" | "model_unavailable"
 }
 
 interface EventData extends AnalyticsProperties {
@@ -33,6 +34,11 @@ interface EventData extends AnalyticsProperties {
   page_path: string
   locale: string
   duration_ms?: number
+  operation_id?: string
+  operation_started_at_ms?: number
+  occurred_at_ms: number
+  event_sequence: number
+  page_instance_id: string
 }
 
 interface PendingEvent {
@@ -49,6 +55,13 @@ declare global {
 }
 
 const pending: PendingEvent[] = []
+let draining: Promise<void> | null = null
+let sequence = 0
+let pageInstanceId: string | undefined
+
+function createId(): string {
+  return globalThis.crypto?.randomUUID?.() ?? `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`
+}
 
 function enabled(): boolean {
   return typeof window !== "undefined" &&
@@ -66,10 +79,11 @@ function context(): Pick<EventData, "schema_version" | "page_path" | "locale" | 
   const tool = CORE_TOOLS.find((candidate) => candidate.href !== "/" &&
     (editor === candidate.href || editor.startsWith(`${candidate.href}/`)))?.id
     ?? (["tools", "about", "privacy", "terms"].includes(parts[0]) ? "site" : "split")
-  return { schema_version: 1, page_path, locale, tool }
+  return { schema_version: 2, page_path, locale, tool }
 }
 
-function send(event: PendingEvent): void {
+async function send(event: PendingEvent): Promise<void> {
+  let timeout: ReturnType<typeof setTimeout> | undefined
   try {
     // Preserve the action's route even if the tracker loads after SPA navigation.
     const result = window.umami?.track((properties) => ({
@@ -78,26 +92,40 @@ function send(event: PendingEvent): void {
       name: event.name,
       data: event.data,
     }))
-    void Promise.resolve(result).catch(() => {})
+    // A blocked request must not hold the bounded queue forever. Original times
+    // and sequence numbers remain authoritative even if a request arrives late.
+    await Promise.race([
+      Promise.resolve(result),
+      new Promise<void>((resolve) => { timeout = setTimeout(resolve, 5000) }),
+    ])
   } catch {
     // Analytics must never interrupt local image processing or downloads.
+  } finally {
+    clearTimeout(timeout)
   }
 }
 
-export function flushAnalyticsEvents(): void {
-  if (!enabled() || !window.umami) return
-  pending.splice(0).forEach(send)
+export function flushAnalyticsEvents(): Promise<void> {
+  if (!enabled() || !window.umami) return Promise.resolve()
+  if (draining) return draining
+  draining = (async () => {
+    while (pending.length && enabled() && window.umami) {
+      await send(pending.shift()!)
+    }
+  })().finally(() => {
+    draining = null
+    if (pending.length && enabled() && window.umami) void flushAnalyticsEvents()
+  })
+  return draining
 }
 
-function record(name: AnalyticsEvent, data: EventData): void {
+function record(name: AnalyticsEvent, data: Omit<EventData, "occurred_at_ms" | "event_sequence" | "page_instance_id">): void {
   if (!enabled()) return
-  if (!window.umami) {
-    // Bounded, memory-only queue; blocked analytics must not accumulate forever.
-    if (pending.length < 50) pending.push({ name, data })
-    return
-  }
-  flushAnalyticsEvents()
-  send({ name, data })
+  pageInstanceId ??= createId()
+  // Capture these before queueing, not when the tracker finally becomes ready.
+  const event = { name, data: { ...data, occurred_at_ms: Date.now(), event_sequence: ++sequence, page_instance_id: pageInstanceId } }
+  if (pending.length < 50) pending.push(event)
+  void flushAnalyticsEvents()
 }
 
 export function trackEvent(name: AnalyticsEvent, properties: AnalyticsProperties = {}): void {
@@ -106,8 +134,8 @@ export function trackEvent(name: AnalyticsEvent, properties: AnalyticsProperties
 
 /** Capture the start route and emit exactly one terminal event per operation. */
 export function startOperation(stage: Stage, properties: AnalyticsProperties = {}) {
-  const data = { ...context(), ...properties }
   const startedAt = Date.now()
+  const data = { ...context(), ...properties, operation_id: createId(), operation_started_at_ms: startedAt }
   let finished = false
   record(`${stage}_started`, data)
   return (outcome: Outcome, result: AnalyticsProperties = {}): void => {
@@ -134,7 +162,7 @@ export async function trackOperation<T>(
     finish("succeeded", summarize?.(result))
     return result
   } catch (error) {
-    finish("failed", { error_code: stage === "export" ? "export_failed" : "processing_failed" })
+    finish("failed", { error_code: stage === "export" ? getExportErrorCode(error) : "processing_failed" })
     throw error
   }
 }

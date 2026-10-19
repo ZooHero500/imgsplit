@@ -62,7 +62,7 @@
     "gridTitle": "Grid Splitting",
     "gridDesc": "Add horizontal and vertical lines at once to create even grids for batch cropping.",
     "formatTitle": "Multi-Format Support",
-    "formatDesc": "Supports PNG, JPG/JPEG, and WebP. Up to 20MB per file.",
+    "formatDesc": "Supports PNG, JPG/JPEG and WebP. Large images are checked against this device’s processing capacity.",
     "previewTitle": "Live Preview",
     "previewDesc": "See split results in real-time as you adjust line positions."
   },
@@ -117,8 +117,8 @@
     "headlineAccent": "Creators",
     "stat1Value": "20+",
     "stat1Label": "Split lines per axis",
-    "stat2Value": "20MB",
-    "stat2Label": "Max file size",
+    "stat2Value": "Adaptive",
+    "stat2Label": "Large-image limits",
     "stat3Value": "0",
     "stat3Label": "Data uploaded to servers",
     "stat4Value": "100%",
@@ -140,7 +140,7 @@
     "headlineAccent": "Answered",
     "subtitle": "Common questions about the image splitting tool",
     "q1": "What image formats are supported?",
-    "a1": "PNG, JPG/JPEG, and WebP images are supported, with a maximum file size of 20MB.",
+    "a1": "Supports PNG, JPG/JPEG and WebP. Large images are checked against this device’s processing capacity.",
     "q2": "Will image quality be reduced after splitting?",
     "a2": "No. The tool crops at the original resolution — no compression, no scaling, no quality loss.",
     "q3": "Is my image data safe?",
@@ -170,11 +170,16 @@
     "dragHint": "Drag and drop one or more images here",
     "or": "or",
     "clickHint": "Click to select files (multiple allowed)",
-    "formatHint": "PNG / JPG / WebP · Max 20MB per file",
+    "formatHint": "PNG / JPG / WebP · Large images checked before loading",
     "unsupportedFormat": "Unsupported format. Please upload PNG, JPG, or WebP images.",
     "loadFailed": "Failed to load image. Please try again.",
-    "fileTooLarge": "File \"{name}\" exceeds 20MB. Consider compressing it first.",
-    "totalSizeWarning": "Total file size {size}MB exceeds 50MB and may cause browser slowdown."
+    "largeImageHint": "Large files can be opened when their pixel count and estimated memory fit this device. High-risk images need smaller dimensions.",
+    "chooseAnother": "Choose another image",
+    "memoryWarning": "Estimated working memory: about {estimated} MB. Processing may be slower; avoid adding more images at the same time.",
+    "imageMemoryRisk": "These images need an estimated {estimated} MB of working memory, above this device’s {budget} MB safety budget. Reduce image dimensions or remove some loaded images, then retry.",
+    "imageDimensionsTooLarge": "This image is {width} × {height} pixels. An edge exceeds the {limit}-pixel loading limit. Reduce its dimensions or split it into sections first.",
+    "imageCanvasRisk": "This image is {width} × {height} pixels. This tool needs a full-image canvas that exceeds our supported canvas limits. Reduce its dimensions first, or use the splitter to work in smaller sections.",
+    "imageMetadataUnreadable": "We could not safely read this image’s dimensions. Save it again as PNG, JPEG or WebP and retry."
   },
   "workspace": {
     "addHorizontal": "+ Horizontal Line",
@@ -196,7 +201,14 @@
     "horizontalLimitReached": "Horizontal split line limit reached (max 20)",
     "verticalLimitReached": "Vertical split line limit reached (max 20)",
     "loadingEditor": "Loading editor...",
-    "shortcutHints": "Shortcuts: Ctrl+Z Undo | Ctrl+Shift+Z Redo | Delete Remove selected line | Drag from ruler to create | Drag back to ruler to delete | Scroll to zoom | Space+drag to pan | Cmd/Ctrl+0 Fit | Cmd/Ctrl+1 100%"
+    "shortcutHints": "Shortcuts: Ctrl+Z Undo | Ctrl+Shift+Z Redo | Delete Remove selected line | Drag from ruler to create | Drag back to ruler to delete | Scroll to zoom | Space+drag to pan | Cmd/Ctrl+0 Fit | Cmd/Ctrl+1 100%",
+    "addHorizontalShort": "+ Horizontal",
+    "addVerticalShort": "+ Vertical",
+    "lineGuideTitle": "Add a split line to get started",
+    "lineGuideDescription": "Choose a direction below to place a line in the middle. Drag it to adjust, then select Generate.",
+    "lineGuideMultiple": "Select an image, then add a horizontal or vertical line through its middle. Lines cut every image they cross. Adjust them before generating.",
+    "splitTopBottom": "Split into top and bottom",
+    "splitLeftRight": "Split into left and right"
   },
   "results": {
     "title": "Split Results",
@@ -206,7 +218,15 @@
     "downloadAll": "Download All (ZIP)",
     "selectAll": "Select All",
     "downloadSelected": "Download Selected",
-    "downloadSelectedCount": "Download Selected ({count})"
+    "downloadSelectedCount": "Download Selected ({count})",
+    "preparingZip": "Preparing ZIP…",
+    "preparingZipHint": "Keep this page open while the files are packed.",
+    "downloadSingle": "Download {name}",
+    "zip_load_failed": "The ZIP module could not load. Check your connection and retry. If it still fails, download the images individually before refreshing.",
+    "zip_read_failed": "An image could not be read for the ZIP. Try downloading individual images, or generate the results again.",
+    "zip_generate_failed": "ZIP packing failed. Select fewer images and retry, or download them individually.",
+    "download_failed": "The download could not start. Check your browser’s download permissions and retry.",
+    "export_failed": "Export failed. Retry with fewer images, or download them individually."
   },
   "history": {
     "title": "History",
@@ -262,7 +282,7 @@
       "title": "Upload Image",
       "dragHint": "Drag an image here",
       "clickHint": "or click to select",
-      "formatHint": "PNG / JPG / WebP · Max 20MB"
+      "formatHint": "PNG / JPG / WebP · Large images checked before loading"
     },
     "nav": {
       "grid": "Grid",
@@ -571,7 +591,7 @@
     "uploadTitle": "AI Background Remover",
     "uploadDragHint": "Drop an image to remove its background",
     "uploadClickHint": "Choose image",
-    "uploadFormatHint": "PNG, JPG, WebP up to 20MB",
+    "uploadFormatHint": "PNG / JPG / WebP · Large images checked before loading",
     "original": "Original",
     "result": "Result",
     "resultPending": "Result Preview",
@@ -679,7 +699,7 @@
         "headlinePart1": "Four short",
         "headlineAccent": "steps",
         "step1Title": "Drop a photo",
-        "step1Desc": "PNG, JPEG, or WebP, up to 20MB. Add more files if you want a batch queue.",
+        "step1Desc": "Supports PNG, JPG/JPEG and WebP. Large images are checked against this device’s processing capacity. You can add several images for batch processing.",
         "step2Title": "Download the model once",
         "step2Desc": "If this browser has no cache yet, the first run downloads the local model. The photo still stays on the device.",
         "step3Title": "Refine the edge",
@@ -1109,7 +1129,7 @@
       "title": "Upload Image",
       "dragHint": "Drag an image here",
       "clickHint": "or click to select",
-      "formatHint": "PNG / JPG / WebP · Max 20MB"
+      "formatHint": "PNG / JPG / WebP · Large images checked before loading"
     },
     "editor": {
       "dragHint": "Drag to move · Slider to zoom",
@@ -1164,7 +1184,7 @@
         "headlineAccent": "Answered",
         "subtitle": "Common questions about the carousel splitting tool",
         "q1": "What image formats are supported?",
-        "a1": "PNG, JPEG, and WebP images up to 20MB are supported. Wide panoramic images work best for carousel splitting.",
+        "a1": "Supports PNG, JPG/JPEG and WebP. Large images are checked against this device’s processing capacity. Wide panoramic images work best for carousel splitting.",
         "q2": "How many slides can I create?",
         "a2": "You can create between 2 and 10 carousel slides. The tool automatically divides your image evenly across all slides.",
         "q3": "What aspect ratios are available?",

@@ -23,7 +23,7 @@ export function UmamiAnalytics() {
       data-domains={ANALYTICS_DOMAINS}
       data-exclude-hash="true"
       data-performance="true"
-      onReady={flushAnalyticsEvents}
+      onReady={() => { void flushAnalyticsEvents() }}
       strategy="afterInteractive"
     />
   )

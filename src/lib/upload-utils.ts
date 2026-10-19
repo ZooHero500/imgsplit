@@ -1,54 +1,99 @@
 import type { UploadResult } from "@/types"
 import { startOperation } from "@/lib/analytics"
+import { readImageMetadata, type ImageMetadata } from "@/lib/image-metadata"
+import { browserUploadMemoryBudget, estimateImageMemory, rememberImageMemory, MAX_IMAGE_DIMENSION, MEBIBYTE } from "@/lib/upload-memory"
+import { MAX_CANVAS_AREA, MAX_CANVAS_DIMENSION } from "@/lib/image-canvas"
 
 export const ACCEPTED_TYPES = ["image/png", "image/jpeg", "image/webp"]
-export const MAX_SIZE = 20 * 1024 * 1024 // 20MB per file
-export const MAX_TOTAL_SIZE = 50 * 1024 * 1024 // 50MB total
 
 export interface ValidationError {
-  key: "unsupportedFormat" | "fileTooLarge"
+  key: "unsupportedFormat" | "imageMetadataUnreadable" | "imageMemoryRisk" | "imageDimensionsTooLarge" | "imageCanvasRisk"
   params?: Record<string, string>
 }
 
-export interface ValidationResult {
-  valid: boolean
-  files: File[]
-  error?: ValidationError
-  totalSizeWarning?: boolean
+export class UploadValidationError extends Error {
+  constructor(public readonly validation: ValidationError) {
+    super(validation.key)
+    this.name = "UploadValidationError"
+  }
 }
 
-export function validateFiles(files: File[], existingSize: number = 0): ValidationResult {
-  const validFiles: File[] = []
+export interface LoadUploadResultsOptions {
+  /** Working-memory estimate for images already retained by this editor. */
+  existingMemoryBytes?: number
+  /** Tools that require one full-resolution canvas use the shared canvas limits. */
+  requiresFullCanvas?: boolean
+  /** History restoration reuses admission checks without recording a new upload. */
+  trackUpload?: boolean
+}
 
+type ValidationResult =
+  | { valid: false; error: ValidationError }
+  | { valid: true; metadata: ImageMetadata[]; estimates: number[]; estimatedMemory: number; budget: number }
+
+function memoryError(estimated: number, budget: number): ValidationError {
+  return { key: "imageMemoryRisk", params: {
+    estimated: String(Math.ceil(estimated / MEBIBYTE)),
+    budget: String(Math.round(budget / MEBIBYTE)),
+  } }
+}
+
+/** Inspect the whole selection before any pixel decoding or canvas allocation. */
+export async function validateFiles(files: File[], options: LoadUploadResultsOptions = {}): Promise<ValidationResult> {
+  const budget = browserUploadMemoryBudget()
+  let estimatedMemory = Math.max(0, options.existingMemoryBytes ?? 0)
+  const metadata: ImageMetadata[] = []
+  const estimates: number[] = []
   for (const file of files) {
-    if (!ACCEPTED_TYPES.includes(file.type)) {
-      return {
-        valid: false,
-        files: [],
-        error: { key: "unsupportedFormat" },
-      }
+    if (!ACCEPTED_TYPES.includes(file.type)) return { valid: false, error: { key: "unsupportedFormat" } }
+    let size: ImageMetadata
+    try { size = await readImageMetadata(file) } catch {
+      return { valid: false, error: { key: "imageMetadataUnreadable" } }
     }
-    if (file.size > MAX_SIZE) {
-      return {
-        valid: false,
-        files: [],
-        error: { key: "fileTooLarge", params: { name: file.name } },
-      }
+    if (Math.max(size.width, size.height) > MAX_IMAGE_DIMENSION) {
+      return { valid: false, error: { key: "imageDimensionsTooLarge", params: { width: String(size.width), height: String(size.height), limit: String(MAX_IMAGE_DIMENSION) } } }
     }
-    validFiles.push(file)
+    if (options.requiresFullCanvas && (size.width * size.height > MAX_CANVAS_AREA || Math.max(size.width, size.height) > MAX_CANVAS_DIMENSION)) {
+      return { valid: false, error: { key: "imageCanvasRisk", params: { width: String(size.width), height: String(size.height) } } }
+    }
+    const estimate = estimateImageMemory(size, file.size)
+    estimatedMemory += estimate
+    if (estimatedMemory > budget) return { valid: false, error: memoryError(estimatedMemory, budget) }
+    metadata.push(size)
+    estimates.push(estimate)
   }
+  return { valid: true, metadata, estimates, estimatedMemory, budget }
+}
 
-  const totalSize = validFiles.reduce((sum, f) => sum + f.size, 0)
-
-  return {
-    valid: true,
-    files: validFiles,
-    totalSizeWarning: totalSize + existingSize > MAX_TOTAL_SIZE,
+/** Used by standalone file consumers, including resize and pending-upload handoffs. */
+export async function loadImage(file: File, options: LoadUploadResultsOptions = {}): Promise<HTMLImageElement> {
+  const validation = await validateFiles([file], options)
+  if (!validation.valid) throw new UploadValidationError(validation.error)
+  const peakMemory = validation.estimatedMemory + inFlightMemory
+  if (peakMemory > validation.budget) throw new UploadValidationError(memoryError(peakMemory, validation.budget))
+  const reserved = validation.estimates[0]
+  inFlightMemory += reserved
+  try {
+    return await decodeValidatedImage(file, validation.metadata[0], reserved)
+  } finally {
+    inFlightMemory -= reserved
   }
 }
 
-/** Load an HTMLImageElement from a File via a temporary object URL (revoked after load). */
-export function loadImage(file: File): Promise<HTMLImageElement> {
+async function decodeValidatedImage(file: File, metadata: ImageMetadata, estimate: number): Promise<HTMLImageElement> {
+  const image = await decodeImage(file)
+  // Orientation swaps and browser downsampling are valid; larger decoded sizes are not.
+  const decodedEstimate = estimateImageMemory({ width: image.naturalWidth, height: image.naturalHeight, frames: metadata.frames }, file.size)
+  if (image.naturalWidth < 1 || image.naturalHeight < 1 || decodedEstimate > estimate) {
+    image.src = ""
+    throw new Error("Decoded image dimensions differ from header")
+  }
+  rememberImageMemory(image, estimate)
+  return image
+}
+
+/** Decode only after preflight; the temporary URL is released on both outcomes. */
+function decodeImage(file: File): Promise<HTMLImageElement> {
   const url = URL.createObjectURL(file)
   return loadImageFromSrc(url, { errorMessage: "Failed to load image" }).then(
     (img) => {
@@ -94,16 +139,11 @@ export function readFileAsDataUrl(file: File): Promise<string> {
   })
 }
 
-export interface LoadUploadResultsOptions {
-  /** Estimated byte size of already-loaded images, counted toward the total-size warning. */
-  existingSize?: number
-}
-
 /**
  * Outcome of `loadUploadResults`. UI feedback (toasts) is the caller's job:
  * - "invalid": validation failed, `error` carries the i18n key + params
  * - "loadFailed": a file passed validation but could not be decoded
- * - "success": all files loaded; `totalSizeWarning`/`totalSize` inform an optional warning toast
+ * - "success": all files loaded; memory estimates inform an optional warning toast
  */
 export type LoadUploadResultsOutcome =
   | { status: "invalid"; error: ValidationError }
@@ -111,42 +151,53 @@ export type LoadUploadResultsOutcome =
   | {
       status: "success"
       results: UploadResult[]
-      totalSizeWarning: boolean
-      totalSize: number
+      memoryWarning: boolean
+      estimatedMemoryMB: number
     }
+
+// Reserve memory for overlapping selections while their images are being decoded.
+let inFlightMemory = 0
 
 /** Validate files, then load each one into an HTMLImageElement. No UI side effects. */
 export async function loadUploadResults(
   files: File[],
   options: LoadUploadResultsOptions = {}
 ): Promise<LoadUploadResultsOutcome> {
-  const finish = files.length > 0 ? startOperation("upload", { input_count: files.length }) : null
-  const validation = validateFiles(files, options.existingSize ?? 0)
+  const finish = files.length > 0 && options.trackUpload !== false ? startOperation("upload", { input_count: files.length }) : null
+  const validation = await validateFiles(files, options)
   if (!validation.valid) {
-    finish?.("failed", { error_code: validation.error?.key ?? "unsupportedFormat" })
+    finish?.("failed", { error_code: validation.error.key })
     return {
       status: "invalid",
-      error: validation.error ?? { key: "unsupportedFormat" },
+      error: validation.error,
     }
   }
 
-  const totalSize = validation.files.reduce((sum, f) => sum + f.size, 0)
-
+  const peakMemory = validation.estimatedMemory + inFlightMemory
+  if (peakMemory > validation.budget) {
+    finish?.("failed", { error_code: "imageMemoryRisk" })
+    return { status: "invalid", error: memoryError(peakMemory, validation.budget) }
+  }
+  const reserved = validation.estimates.reduce((sum, bytes) => sum + bytes, 0)
+  inFlightMemory += reserved
+  const results: UploadResult[] = []
   try {
-    const results: UploadResult[] = []
-    for (const file of validation.files) {
-      const image = await loadImage(file)
+    for (const [index, file] of files.entries()) {
+      const image = await decodeValidatedImage(file, validation.metadata[index], validation.estimates[index])
       results.push({ file, image, mimeType: file.type })
     }
     finish?.("succeeded", { output_count: results.length })
     return {
       status: "success",
       results,
-      totalSizeWarning: validation.totalSizeWarning === true,
-      totalSize,
+      memoryWarning: peakMemory >= validation.budget * 0.6,
+      estimatedMemoryMB: Math.ceil(peakMemory / MEBIBYTE),
     }
   } catch {
+    for (const result of results) result.image.src = ""
     finish?.("failed", { error_code: "decode_failed" })
     return { status: "loadFailed" }
+  } finally {
+    inFlightMemory -= reserved
   }
 }

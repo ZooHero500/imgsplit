@@ -76,7 +76,7 @@ const data: Record<string, ToolPageData> = {
       },
     ],
     howToSteps: [
-      { stepNumber: 1, title: "Envie sua Imagem", description: "Solte ou selecione qualquer imagem — PNG, JPG ou WebP de até 20 MB." },
+      { stepNumber: 1, title: "Envie sua Imagem", description: "Escolha uma imagem PNG, JPG ou WebP. Imagens grandes têm os pixels e o risco de memória verificados antes de carregar." },
       { stepNumber: 2, title: "Adicione Linhas Horizontais", description: "Clique em 'Adicionar Linha Horizontal' para inserir uma ou mais linhas de corte. Arraste cada linha até a posição exata." },
       { stepNumber: 3, title: "Baixe as Faixas", description: "Visualize cada faixa horizontal e baixe tudo de uma vez em ZIP ou escolha faixas específicas." },
     ],
@@ -219,7 +219,7 @@ const data: Record<string, ToolPageData> = {
       { stepNumber: 3, title: "Baixe os Segmentos", description: "Visualize cada segmento e baixe todas as páginas em um ZIP para compartilhar com facilidade." },
     ],
     faqEntries: [
-      { question: "Existe uma altura máxima para prints longos?", answer: "A ferramenta aceita arquivos de até 20 MB. Imagens muito altas (acima de 10.000 px) podem demorar um pouco mais para processar, mas são totalmente suportadas." },
+      { question: "Existe uma altura máxima para prints longos?", answer: "Capturas longas são verificadas pelas dimensões e memória estimada. As muito longas podem precisar de redução ou divisão em partes; a capacidade depende do dispositivo." },
       { question: "Posso dividir um print em segmentos de altura igual?", answer: "Sim. Adicione várias linhas horizontais e use o alinhamento automático para espaçá-las por igual, criando segmentos com a mesma altura de página." },
       { question: "O texto do meu print continua nítido depois da divisão?", answer: "Com certeza. A ferramenta recorta na resolução original, sem redimensionar, então o texto permanece nítido e legível." },
     ],
@@ -360,7 +360,7 @@ const data: Record<string, ToolPageData> = {
     faqEntries: [
       { question: "Qual tamanho de papel devo usar para os blocos?", answer: "Para impressoras domésticas, A4 (210×297 mm) ou Carta (8,5×11 pol) são os padrões. Calcule o número de blocos com base na proporção da imagem e no tamanho final desejado." },
       { question: "A ferramenta adiciona margens de sobreposição para a montagem?", answer: "A ferramenta divide em limites exatos de pixel. Para margens de sobreposição, aumente ligeiramente o número de blocos para que as peças adjacentes compartilhem uma faixa fina de alinhamento." },
-      { question: "Posso dividir uma imagem de altíssima resolução (ex.: 8000×6000)?", answer: "Sim. A ferramenta aceita imagens de até 20 MB. Para arquivos de resolução extrema, considere usar o formato WebP para reduzir o tamanho do arquivo." },
+      { question: "Posso dividir uma imagem de altíssima resolução (ex.: 8000×6000)?", answer: "Imagens de alta resolução são verificadas conforme o orçamento de memória do dispositivo antes de carregar. Se ultrapassarem o limite, reduza as dimensões. Comprimir apenas o arquivo não reduz a memória dos pixels decodificados." },
     ],
     relatedTools: [
       { slug: "/split-into-equal-parts", title: "Divisor em Partes Iguais", description: "Divida imagens em segmentos perfeitamente iguais para blocos uniformes." },

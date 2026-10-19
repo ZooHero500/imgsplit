@@ -2,6 +2,7 @@ import { describe, it, expect, vi, beforeEach, afterEach } from "vitest"
 import { renderHook, act } from "@testing-library/react"
 import { useImageExport } from "../use-image-export"
 import type { SplitResult } from "@/types"
+import { ExportError } from "@/lib/export-errors"
 
 function createMockResult(row: number, col: number): SplitResult {
   return {
@@ -79,6 +80,35 @@ async function setupHookWithResults() {
   })
   return result
 }
+
+describe("ZIP export recovery", () => {
+  it("blocks overlapping exports, preserves results on failure, and allows retry", async () => {
+    const result = await setupHookWithResults()
+    act(() => result.current.toggleSelect("1-1"))
+    let rejectZip!: (error: Error) => void
+    mockExportAsZip.mockImplementationOnce(() => new Promise((_, reject) => { rejectZip = reject }))
+    let exportPromise!: Promise<void>
+    act(() => {
+      exportPromise = result.current.downloadSelected("photo", "png")
+      void result.current.downloadAll("photo", "png")
+    })
+    expect(mockExportAsZip).toHaveBeenCalledTimes(1)
+    expect(result.current.isExporting).toBe(true)
+    await act(async () => {
+      const failure = expect(exportPromise).rejects.toMatchObject({ code: "zip_load_failed" })
+      rejectZip(new ExportError("zip_load_failed", new Error("network")))
+      await failure
+    })
+    expect(result.current.isExporting).toBe(false)
+    expect(result.current.exportError).toBe("zip_load_failed")
+    expect(result.current.splitResults).toHaveLength(4)
+    expect(result.current.selectedKeys.has("1-1")).toBe(true)
+    await act(async () => { await result.current.downloadSelected("photo", "png") })
+    expect(result.current.exportError).toBeNull()
+    expect(mockExportAsZip).toHaveBeenCalledTimes(2)
+    expect(mockClick).toHaveBeenCalledTimes(1)
+  })
+})
 
 describe("useImageExport - core", () => {
   it("should initialize with empty state", () => {

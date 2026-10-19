@@ -2,6 +2,7 @@
 
 import { useCallback, useRef, useState } from "react"
 import { useTranslations } from "next-intl"
+import { toast } from "sonner"
 import { loadUploadResults, ACCEPTED_TYPES } from "@/lib/upload-utils"
 import { trackEvent } from "@/lib/analytics"
 
@@ -35,6 +36,7 @@ export function SingleImageUploadZone({ namespace, onImageLoaded }: SingleImageU
         return
       }
       const { image, file: loadedFile } = outcome.results[0]
+      if (outcome.memoryWarning) toast.warning(tUpload("memoryWarning", { estimated: outcome.estimatedMemoryMB }))
       onImageLoaded(image, loadedFile)
     },
     [onImageLoaded, tUpload]
@@ -83,8 +85,16 @@ export function SingleImageUploadZone({ namespace, onImageLoaded }: SingleImageU
         <p className="mt-4 text-[10px] uppercase tracking-[0.25em] text-muted-foreground/70">
           {t("formatHint")}
         </p>
+        <p className="mt-2 max-w-md text-xs leading-relaxed text-muted-foreground">{tUpload("largeImageHint")}</p>
       </div>
-      {error && <p className="mt-6 text-sm text-destructive">{error}</p>}
+      {error && <div className="mt-6 text-center">
+        <p className="max-w-md break-words text-sm text-destructive" role="alert">{error}</p>
+        <button type="button" className="mt-3 text-sm underline underline-offset-4" onClick={(event) => {
+          event.stopPropagation()
+          trackEvent("upload_picker_opened")
+          inputRef.current?.click()
+        }}>{tUpload("chooseAnother")}</button>
+      </div>}
     </div>
   )
 }

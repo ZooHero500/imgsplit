@@ -1,97 +1,11 @@
 import { describe, it, expect, vi, afterEach } from "vitest"
-import {
-  validateFiles,
-  MAX_SIZE,
-  loadImageFromSrc,
-  readFileAsDataUrl,
-  loadUploadResults,
-} from "../upload-utils"
+import { validateFiles, loadImage, loadImageFromSrc, readFileAsDataUrl, loadUploadResults } from "../upload-utils"
+import { MEBIBYTE } from "../upload-memory"
+import { pngHeader, jpegHeader, webpHeader } from "./image-header-fixtures"
 
-describe("validateFiles", () => {
-  function makeFile(name: string, size: number, type: string): File {
-    const buffer = new ArrayBuffer(size)
-    return new File([buffer], name, { type })
-  }
-
-  it("should accept valid PNG file", () => {
-    const file = makeFile("test.png", 1024, "image/png")
-    const result = validateFiles([file])
-    expect(result.valid).toBe(true)
-    expect(result.files).toHaveLength(1)
-  })
-
-  it("should accept valid JPG file", () => {
-    const file = makeFile("test.jpg", 1024, "image/jpeg")
-    const result = validateFiles([file])
-    expect(result.valid).toBe(true)
-  })
-
-  it("should accept valid WebP file", () => {
-    const file = makeFile("test.webp", 1024, "image/webp")
-    const result = validateFiles([file])
-    expect(result.valid).toBe(true)
-  })
-
-  it("should reject unsupported file type", () => {
-    const file = makeFile("test.gif", 1024, "image/gif")
-    const result = validateFiles([file])
-    expect(result.valid).toBe(false)
-    expect(result.error).toEqual({ key: "unsupportedFormat" })
-  })
-
-  it("should reject file exceeding 20MB", () => {
-    const file = makeFile("big.png", MAX_SIZE + 1, "image/png")
-    const result = validateFiles([file])
-    expect(result.valid).toBe(false)
-    expect(result.error).toEqual({ key: "fileTooLarge", params: { name: "big.png" } })
-  })
-
-  it("should accept multiple valid files", () => {
-    const files = [
-      makeFile("a.png", 1024, "image/png"),
-      makeFile("b.jpg", 2048, "image/jpeg"),
-    ]
-    const result = validateFiles(files)
-    expect(result.valid).toBe(true)
-    expect(result.files).toHaveLength(2)
-  })
-
-  it("should warn but still accept when total exceeds 50MB", () => {
-    const files = [
-      makeFile("a.png", 18 * 1024 * 1024, "image/png"),
-      makeFile("b.png", 18 * 1024 * 1024, "image/png"),
-      makeFile("c.png", 18 * 1024 * 1024, "image/png"),
-    ]
-    const result = validateFiles(files)
-    expect(result.valid).toBe(true)
-    expect(result.totalSizeWarning).toBe(true)
-  })
-
-  it("should warn when new files + existing size exceeds 50MB", () => {
-    const file = makeFile("new.png", 10 * 1024 * 1024, "image/png")
-    const existingSize = 45 * 1024 * 1024 // 45MB already loaded
-    const result = validateFiles([file], existingSize)
-    expect(result.valid).toBe(true)
-    expect(result.totalSizeWarning).toBe(true)
-  })
-
-  it("should not warn when new files + existing size is under 50MB", () => {
-    const file = makeFile("new.png", 1024, "image/png")
-    const existingSize = 10 * 1024 * 1024
-    const result = validateFiles([file], existingSize)
-    expect(result.valid).toBe(true)
-    expect(result.totalSizeWarning).toBe(false)
-  })
-})
-
-/** Stub the global Image so assigning `src` fires onload (or onerror) asynchronously. */
 function stubImage(behavior: "load" | "error") {
-  // jsdom does not implement URL.createObjectURL — stub it for loadImage(file)
-  vi.stubGlobal("URL", {
-    ...URL,
-    createObjectURL: vi.fn(() => "blob:mock-url"),
-    revokeObjectURL: vi.fn(),
-  })
+  vi.spyOn(URL, "createObjectURL").mockReturnValue("blob:mock-url")
+  vi.spyOn(URL, "revokeObjectURL").mockImplementation(() => {})
   class FakeImage {
     onload: (() => void) | null = null
     onerror: (() => void) | null = null
@@ -101,99 +15,125 @@ function stubImage(behavior: "load" | "error") {
     #src = ""
     set src(value: string) {
       this.#src = value
-      queueMicrotask(() => {
-        if (behavior === "load") this.onload?.()
-        else this.onerror?.()
-      })
+      if (value) queueMicrotask(() => behavior === "load" ? this.onload?.() : this.onerror?.())
     }
-    get src() {
-      return this.#src
-    }
+    get src() { return this.#src }
   }
   vi.stubGlobal("Image", FakeImage)
 }
 
 afterEach(() => {
   vi.unstubAllGlobals()
+  vi.restoreAllMocks()
 })
 
-describe("loadImageFromSrc", () => {
-  it("resolves with the image on load and applies crossOrigin", async () => {
-    stubImage("load")
-    const img = await loadImageFromSrc("data:image/png;base64,x", {
-      crossOrigin: "anonymous",
-    })
-    expect(img.src).toBe("data:image/png;base64,x")
-    expect(img.crossOrigin).toBe("anonymous")
+describe("validateFiles", () => {
+  it.each([pngHeader(), jpegHeader(100, 50), webpHeader("VP8X", 100, 50)])("accepts supported image headers", async (file) => {
+    expect((await validateFiles([file])).valid).toBe(true)
   })
-
-  it("rejects with the default message on error", async () => {
-    stubImage("error")
-    await expect(loadImageFromSrc("bad-src")).rejects.toThrow("Failed to load image")
+  it("accepts a 40 MiB file when its pixels fit the memory budget", async () => {
+    const validation = await validateFiles([pngHeader(3000, 2000, 40 * MEBIBYTE)])
+    expect(validation.valid).toBe(true)
   })
-
-  it("rejects with a custom error message", async () => {
-    stubImage("error")
-    await expect(
-      loadImageFromSrc("bad-src", { errorMessage: "Failed to load mask image" })
-    ).rejects.toThrow("Failed to load mask image")
+  it("rejects a tiny compressed file with excessive decoded pixels", async () => {
+    expect(await validateFiles([pngHeader(10000, 10000)])).toMatchObject({ valid: false, error: { key: "imageMemoryRisk" } })
   })
-})
-
-describe("readFileAsDataUrl", () => {
-  it("reads a file as a base64 data URL", async () => {
-    const file = new File(["hello"], "note.txt", { type: "text/plain" })
-    const dataUrl = await readFileAsDataUrl(file)
-    expect(dataUrl.startsWith("data:text/plain")).toBe(true)
-    expect(dataUrl).toContain("base64")
+  it("applies a lower budget on low-memory devices", async () => {
+    vi.stubGlobal("navigator", { deviceMemory: 2 })
+    expect(await validateFiles([pngHeader(3000, 2000, 40 * MEBIBYTE)])).toMatchObject({ valid: false, error: { key: "imageMemoryRisk" } })
+  })
+  it("accounts for animated frames as well as canvas pixels", async () => {
+    expect(await validateFiles([pngHeader(2000, 2000, undefined, 100)])).toMatchObject({ valid: false, error: { key: "imageMemoryRisk" } })
+  })
+  it("checks batch and existing images together", async () => {
+    expect(await validateFiles([pngHeader(6000, 4000), pngHeader(6000, 4000)])).toMatchObject({ valid: false, error: { key: "imageMemoryRisk" } })
+    expect(await validateFiles([pngHeader(4000, 4000)], { existingMemoryBytes: 400 * MEBIBYTE })).toMatchObject({ valid: false, error: { key: "imageMemoryRisk" } })
+  })
+  it("checks extreme edge lengths even when total pixels are small", async () => {
+    expect(await validateFiles([pngHeader(1, 65536)])).toMatchObject({ valid: false, error: { key: "imageDimensionsTooLarge" } })
+  })
+  it("applies canvas limits only to tools needing a full-image canvas", async () => {
+    const file = pngHeader(2000, 10000)
+    expect((await validateFiles([file])).valid).toBe(true)
+    expect(await validateFiles([file], { requiresFullCanvas: true })).toMatchObject({ valid: false, error: { key: "imageCanvasRisk" } })
+  })
+  it("does not bypass preflight when metadata is unreadable or the type is unsupported", async () => {
+    expect(await validateFiles([new File(["x"], "a.gif", { type: "image/gif" })])).toMatchObject({ valid: false, error: { key: "unsupportedFormat" } })
+    expect(await validateFiles([new File(["x"], "a.png", { type: "image/png" })])).toMatchObject({ valid: false, error: { key: "imageMetadataUnreadable" } })
   })
 })
 
 describe("loadUploadResults", () => {
-  function makeFile(name: string, size: number, type: string): File {
-    const buffer = new ArrayBuffer(size)
-    return new File([buffer], name, { type })
-  }
-
-  it("returns invalid with the validation error for unsupported files", async () => {
+  it("blocks the whole risky selection before creating image URLs", async () => {
     stubImage("load")
-    const outcome = await loadUploadResults([makeFile("a.gif", 10, "image/gif")])
-    expect(outcome).toEqual({ status: "invalid", error: { key: "unsupportedFormat" } })
+    const outcome = await loadUploadResults([pngHeader(), pngHeader(10000, 10000)])
+    expect(outcome).toMatchObject({ status: "invalid", error: { key: "imageMemoryRisk" } })
+    expect(URL.createObjectURL).not.toHaveBeenCalled()
   })
-
-  it("loads every valid file into an UploadResult", async () => {
+  it("loads a file larger than the old 20 MiB cutoff", async () => {
     stubImage("load")
-    const files = [
-      makeFile("a.png", 10, "image/png"),
-      makeFile("b.jpg", 10, "image/jpeg"),
-    ]
-    const outcome = await loadUploadResults(files)
+    const file = pngHeader(100, 50, 40 * MEBIBYTE)
+    const outcome = await loadUploadResults([file])
     expect(outcome.status).toBe("success")
     if (outcome.status === "success") {
-      expect(outcome.results).toHaveLength(2)
-      expect(outcome.results[0].file).toBe(files[0])
-      expect(outcome.results[0].mimeType).toBe("image/png")
-      expect(outcome.results[1].mimeType).toBe("image/jpeg")
-      expect(outcome.totalSizeWarning).toBe(false)
-      expect(outcome.totalSize).toBe(20)
+      expect(outcome.results[0].file).toBe(file)
+      expect(outcome.memoryWarning).toBe(false)
     }
+    expect(URL.revokeObjectURL).toHaveBeenCalledWith("blob:mock-url")
   })
-
-  it("flags a total-size warning including existingSize", async () => {
+  it("warns near the memory budget but still loads the image", async () => {
     stubImage("load")
-    const outcome = await loadUploadResults(
-      [makeFile("a.png", 10 * 1024 * 1024, "image/png")],
-      { existingSize: 45 * 1024 * 1024 }
-    )
-    expect(outcome.status).toBe("success")
-    if (outcome.status === "success") {
-      expect(outcome.totalSizeWarning).toBe(true)
-    }
+    const outcome = await loadUploadResults([pngHeader()], { existingMemoryBytes: 400 * MEBIBYTE })
+    expect(outcome).toMatchObject({ status: "success", memoryWarning: true })
   })
-
-  it("returns loadFailed when an image cannot be decoded", async () => {
+  it("releases the in-flight reservation after decoding fails", async () => {
     stubImage("error")
-    const outcome = await loadUploadResults([makeFile("a.png", 10, "image/png")])
-    expect(outcome).toEqual({ status: "loadFailed" })
+    expect(await loadUploadResults([pngHeader(6000, 4000)])).toEqual({ status: "loadFailed" })
+    stubImage("load")
+    expect((await loadUploadResults([pngHeader(6000, 4000)])).status).toBe("success")
+  })
+  it("reserves memory across overlapping uploads and standalone consumers", async () => {
+    stubImage("load")
+    let pendingImage: HTMLImageElement | undefined
+    vi.stubGlobal("Image", class {
+      naturalWidth = 6000
+      naturalHeight = 4000
+      onload: (() => void) | null = null
+      set src(value: string) { if (value) pendingImage = this as unknown as HTMLImageElement }
+    })
+    const first = loadUploadResults([pngHeader(6000, 4000)])
+    await vi.waitFor(() => expect(pendingImage).toBeDefined())
+    const second = await loadUploadResults([pngHeader(6000, 4000)])
+    expect(second).toMatchObject({ status: "invalid", error: { key: "imageMemoryRisk" } })
+    await expect(loadImage(pngHeader(6000, 4000))).rejects.toThrow("imageMemoryRisk")
+    pendingImage!.onload?.(new Event("load"))
+    expect((await first).status).toBe("success")
+    stubImage("load")
+    expect((await loadUploadResults([pngHeader(6000, 4000)])).status).toBe("success")
+  })
+  it("rejects decoder dimensions larger than declared in the header", async () => {
+    stubImage("load")
+    expect(await loadUploadResults([pngHeader(10, 10)])).toEqual({ status: "loadFailed" })
+    await expect(loadImage(pngHeader(10, 10))).rejects.toThrow("Decoded image dimensions differ")
+  })
+  it("returns no upload results for an empty selection", async () => {
+    expect(await loadUploadResults([])).toMatchObject({ status: "success", results: [] })
+  })
+})
+
+describe("existing image readers", () => {
+  it("loads an image and preserves its cross-origin option", async () => {
+    stubImage("load")
+    const image = await loadImageFromSrc("blob:test", { crossOrigin: "anonymous" })
+    expect(image.src).toBe("blob:test")
+    expect(image.crossOrigin).toBe("anonymous")
+  })
+  it("rejects decoding with the configured error", async () => {
+    stubImage("error")
+    await expect(loadImageFromSrc("bad", { errorMessage: "Failed to load mask" })).rejects.toThrow("Failed to load mask")
+  })
+  it("reads a file as a base64 data URL", async () => {
+    const dataUrl = await readFileAsDataUrl(new File(["hello"], "note.txt", { type: "text/plain" }))
+    expect(dataUrl).toMatch(/^data:text\/plain;base64,/)
   })
 })

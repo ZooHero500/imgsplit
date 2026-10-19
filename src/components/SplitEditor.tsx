@@ -18,11 +18,13 @@ import { useElementSize } from "@/hooks/use-element-size"
 import { consumePendingUpload } from "@/lib/pending-upload"
 import { loadUploadResults } from "@/lib/upload-utils"
 import { trackEvent } from "@/lib/analytics"
-import { createThumbnailDataUrl, imageToBlob, resolveOutputMimeType } from "@/lib/image-canvas"
+import { createThumbnailDataUrl } from "@/lib/image-canvas"
+import { estimateLoadedImages } from "@/lib/upload-memory"
 import { getFileExtension, getFileNameWithoutExtension } from "@/lib/utils"
 import { calculateWorkspaceBounds } from "@/lib/workspace-bounds"
+import { getImageMidpoint, getImageSplitLines } from "@/lib/split-line-placement"
 import { toast } from "sonner"
-import type { SplitLine, UploadResult } from "@/types"
+import type { SplitLine, SplitResult, UploadResult } from "@/types"
 import { ImagePlus, Keyboard, Undo2, Redo2, RefreshCw } from "lucide-react"
 
 const RULER_THICKNESS = 20
@@ -132,6 +134,7 @@ interface ImageItem {
   image: HTMLImageElement
   fileName: string
   mimeType: string
+  sourceBlob: Blob
 }
 
 interface LayoutResult {
@@ -278,7 +281,6 @@ export function SplitEditor({
 
   const {
     lines,
-    addLine,
     addLineAtPosition,
     updateLinePosition,
     removeLine,
@@ -300,6 +302,8 @@ export function SplitEditor({
     splitResults,
     batchResults,
     isSplitting,
+    isExporting,
+    exportError,
     generateSplit,
     generateBatchSplit,
     downloadAll,
@@ -381,6 +385,7 @@ export function SplitEditor({
           image: p.image,
           fileName: p.file.name,
           mimeType: p.mimeType,
+          sourceBlob: p.file,
         }))
       )
     }
@@ -390,45 +395,28 @@ export function SplitEditor({
   useEffect(() => {
     if (!initialState) return
 
-    // 多图恢复
-    if (initialState.images && initialState.images.length > 0) {
-      const imageItems: ImageItem[] = []
-      let loadedCount = 0
-      const total = initialState.images.length
-
-      initialState.images.forEach((imgData, index) => {
-        const url = URL.createObjectURL(imgData.blob)
-        const img = new Image()
-        img.onload = () => {
-          URL.revokeObjectURL(url)
-          imageItems[index] = {
-            image: img,
-            fileName: imgData.fileName,
-            mimeType: imgData.mimeType,
-          }
-          loadedCount++
-          if (loadedCount === total) {
-            initializeImages(imageItems)
-            setLines(initialState.lines)
-          }
-        }
-        img.src = url
-      })
-    } else {
-      // 单图兼容（旧历史记录）
-      const url = URL.createObjectURL(initialState.imageBlob)
-      const img = new Image()
-      img.onload = () => {
-        URL.revokeObjectURL(url)
-        initializeImages([{
-          image: img,
-          fileName: initialState.originalFileName,
-          mimeType: initialState.originalMimeType,
-        }])
-        setLines(initialState.lines)
+    let canceled = false
+    const stored = initialState.images?.length ? initialState.images : [{
+      blob: initialState.imageBlob,
+      fileName: initialState.originalFileName,
+      mimeType: initialState.originalMimeType,
+    }]
+    const files = stored.map((item) => new File([item.blob], item.fileName, { type: item.mimeType }))
+    void loadUploadResults(files, { trackUpload: false }).then((outcome) => {
+      if (canceled) return
+      if (outcome.status !== "success") {
+        toast.error(outcome.status === "invalid" ? tUpload(outcome.error.key, outcome.error.params) : tUpload("loadFailed"))
+        return
       }
-      img.src = url
-    }
+      initializeImages(outcome.results.map((item) => ({
+        image: item.image,
+        fileName: item.file.name,
+        mimeType: item.mimeType,
+        sourceBlob: item.file,
+      })))
+      setLines(initialState.lines)
+    })
+    return () => { canceled = true }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialState])
 
@@ -439,6 +427,7 @@ export function SplitEditor({
           image: r.image,
           fileName: r.file.name,
           mimeType: r.mimeType,
+          sourceBlob: r.file,
         }))
       )
       clearResults()
@@ -450,11 +439,9 @@ export function SplitEditor({
 
   const handleAppendImages = useCallback(
     async (fileList: FileList) => {
-      // Estimate existing images total size (use naturalWidth * naturalHeight * 4 as rough byte estimate)
-      const existingSize = images.reduce((sum, img) => {
-        return sum + img.image.naturalWidth * img.image.naturalHeight * 4
-      }, 0)
-      const outcome = await loadUploadResults(Array.from(fileList), { existingSize })
+      const outcome = await loadUploadResults(Array.from(fileList), {
+        existingMemoryBytes: estimateLoadedImages(images.map((item) => ({ image: item.image, file: item.sourceBlob }))),
+      })
       if (outcome.status === "invalid") {
         toast.error(tUpload(outcome.error.key, outcome.error.params))
         return
@@ -463,15 +450,12 @@ export function SplitEditor({
         toast.error(t("appendFailed"))
         return
       }
-      if (outcome.totalSizeWarning) {
-        toast.warning(
-          tUpload("totalSizeWarning", { size: (outcome.totalSize / 1024 / 1024).toFixed(1) })
-        )
-      }
+      if (outcome.memoryWarning) toast.warning(tUpload("memoryWarning", { estimated: outcome.estimatedMemoryMB }))
       const newItems: ImageItem[] = outcome.results.map((r) => ({
         image: r.image,
         fileName: r.file.name,
         mimeType: r.mimeType,
+        sourceBlob: r.file,
       }))
       setImages((prev) => {
         const merged = [...prev, ...newItems]
@@ -548,26 +532,24 @@ export function SplitEditor({
 
   // ─── Generate / Download ───
 
-  // Convert workspace lines to local coordinates for a specific image
-  const getLocalLines = useCallback(
-    (
-      wsLines: SplitLine[],
-      imgPos: { x: number; y: number },
-      imgW: number,
-      imgH: number
-    ): SplitLine[] => {
-      return wsLines
-        .map((line) => {
-          const isH = line.orientation === "horizontal"
-          const localPos = isH ? line.position - imgPos.y : line.position - imgPos.x
-          const max = isH ? imgH : imgW
-          if (localPos <= 0 || localPos >= max) return null
-          return { ...line, position: Math.round(localPos) }
-        })
-        .filter((l): l is SplitLine => l !== null)
-    },
-    []
-  )
+  const linesPerImage = useMemo(() => images.map((item, index) => getImageSplitLines(
+    lines,
+    imagePositions[index] ?? { x: 0, y: 0 },
+    item.image.naturalWidth,
+    item.image.naturalHeight,
+  )), [images, imagePositions, lines])
+  const hasCrossingLines = linesPerImage.some((imageLines) => imageLines.length > 0)
+
+  // Put toolbar lines through an image, rather than in a gap between images.
+  const activeImageIndex = selectedImageIdx ?? 0
+  const activeImage = images[activeImageIndex]
+  const handleAddLine = useCallback((orientation: SplitLine["orientation"]) => {
+    if (!activeImage) return
+    const position = getImageMidpoint(orientation,
+      imagePositions[activeImageIndex] ?? { x: 0, y: 0 },
+      activeImage.image.naturalWidth, activeImage.image.naturalHeight)
+    if (position !== null) addLineAtPosition(orientation, position)
+  }, [activeImage, activeImageIndex, imagePositions, addLineAtPosition])
 
   const handleGenerate = useCallback(async () => {
     if (images.length === 0) return
@@ -576,35 +558,17 @@ export function SplitEditor({
       toast.error(t("addLinesFirst"))
       return
     }
+    if (!hasCrossingLines) {
+      trackEvent("processing_blocked", { tool: "split", error_code: "lines_not_crossing" })
+      toast.error(t("linesNotCrossing"))
+      return
+    }
 
     try {
       if (isMultiImage) {
-        // Convert workspace lines to per-image local lines
-        const linesPerImage = images.map((item, index) => {
-          const pos = imagePositions[index] ?? { x: 0, y: 0 }
-          return getLocalLines(
-            lines,
-            pos,
-            item.image.naturalWidth,
-            item.image.naturalHeight
-          )
-        })
         await generateBatchSplit(images, linesPerImage)
       } else {
-        // Single image: convert workspace lines to local coords
-        const pos = imagePositions[0] ?? { x: 0, y: 0 }
-        const localLines = getLocalLines(
-          lines,
-          pos,
-          images[0].image.naturalWidth,
-          images[0].image.naturalHeight
-        )
-        if (localLines.length === 0) {
-          trackEvent("processing_blocked", { tool: "split", error_code: "lines_not_crossing" })
-          toast.error(t("linesNotCrossing"))
-          return
-        }
-        await generateSplit(images[0].image, localLines, images[0].mimeType)
+        await generateSplit(images[0].image, linesPerImage[0], images[0].mimeType)
       }
     } catch (err) {
       console.error("Split failed:", err)
@@ -622,14 +586,12 @@ export function SplitEditor({
         // 缩略图：始终使用第一张图片
         const thumbnailDataUrl = createThumbnailDataUrl(images[0].image, 128)
 
-        // 将所有图片转换为 Blob
-        const imageDataList = await Promise.all(
-          images.map(async (item) => ({
-            blob: await imageToBlob(item.image, resolveOutputMimeType(item.mimeType)),
-            fileName: item.fileName,
-            mimeType: item.mimeType,
-          }))
-        )
+        // Keep original bytes: avoid a second full-size canvas/encode for history.
+        const imageDataList = images.map((item) => ({
+          blob: item.sourceBlob,
+          fileName: item.fileName,
+          mimeType: item.mimeType,
+        }))
 
         onSaveHistory({
           originalFileName: images[0].fileName,
@@ -643,27 +605,35 @@ export function SplitEditor({
         console.error("Save history failed:", err)
       }
     }
-  }, [images, lines, imagePositions, isMultiImage, getLocalLines, generateSplit, generateBatchSplit, splitCount, onSplitComplete, onSaveHistory, t])
+  }, [images, lines, linesPerImage, hasCrossingLines, isMultiImage, generateSplit, generateBatchSplit, splitCount, onSplitComplete, onSaveHistory, t])
 
-  const handleDownloadAll = useCallback(() => {
-    if (isMultiImage) {
-      downloadBatchAll()
-    } else {
-      const baseName = getFileNameWithoutExtension(originalFileName)
-      const ext = getFileExtension(originalMimeType)
-      downloadAll(baseName, ext)
+  const handleDownloadAll = useCallback(async () => {
+    try {
+      if (isMultiImage) {
+        await downloadBatchAll()
+      } else {
+        await downloadAll(getFileNameWithoutExtension(originalFileName), getFileExtension(originalMimeType))
+      }
+    } catch {
+      // The hook exposes a persistent, localized error in the result sheet.
     }
   }, [isMultiImage, originalFileName, originalMimeType, downloadAll, downloadBatchAll])
 
-  const handleDownloadSelected = useCallback(() => {
-    if (isMultiImage) {
-      downloadBatchSelected()
-    } else {
-      const baseName = getFileNameWithoutExtension(originalFileName)
-      const ext = getFileExtension(originalMimeType)
-      downloadSelected(baseName, ext)
+  const handleDownloadSelected = useCallback(async () => {
+    try {
+      if (isMultiImage) {
+        await downloadBatchSelected()
+      } else {
+        await downloadSelected(getFileNameWithoutExtension(originalFileName), getFileExtension(originalMimeType))
+      }
+    } catch {
+      // Keep results and selection available for retry or individual downloads.
     }
   }, [isMultiImage, originalFileName, originalMimeType, downloadSelected, downloadBatchSelected])
+
+  const handleDownloadOne = useCallback((result: SplitResult, fileName: string) => {
+    try { downloadOne(result, fileName) } catch { /* Displayed in the result sheet. */ }
+  }, [downloadOne])
 
   const handleSelectAll = useCallback(() => {
     if (selectedKeys.size === splitResults.length && splitResults.length > 0) {
@@ -722,18 +692,18 @@ export function SplitEditor({
       {/* Toolbar */}
       <TooltipProvider>
         <div className="flex flex-wrap items-center gap-1.5 flex-shrink-0">
-          <Button size="xs" variant="outline" onClick={() => addLine("horizontal")} disabled={!canAddHorizontal}>
+          <Button size="xs" variant="outline" onClick={() => handleAddLine("horizontal")} disabled={!canAddHorizontal || activeImage?.image.naturalHeight < 2}>
             <span className="hidden sm:inline">{t("addHorizontal")}</span>
-            <span className="sm:hidden">H</span>
+            <span className="sm:hidden">{t("addHorizontalShort")}</span>
           </Button>
-          <Button size="xs" variant="outline" onClick={() => addLine("vertical")} disabled={!canAddVertical}>
+          <Button size="xs" variant="outline" onClick={() => handleAddLine("vertical")} disabled={!canAddVertical || activeImage?.image.naturalWidth < 2}>
             <span className="hidden sm:inline">{t("addVertical")}</span>
-            <span className="sm:hidden">V</span>
+            <span className="sm:hidden">{t("addVerticalShort")}</span>
           </Button>
           <div className="w-px h-5 bg-border mx-0.5" />
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button size="icon-xs" variant="outline" onClick={undo} disabled={!canUndo}>
+              <Button size="icon-xs" variant="outline" onClick={undo} disabled={!canUndo} aria-label={t("undo")}>
                 <Undo2 className="h-3.5 w-3.5" />
               </Button>
             </TooltipTrigger>
@@ -741,14 +711,14 @@ export function SplitEditor({
           </Tooltip>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button size="icon-xs" variant="outline" onClick={redo} disabled={!canRedo}>
+              <Button size="icon-xs" variant="outline" onClick={redo} disabled={!canRedo} aria-label={t("redo")}>
                 <Redo2 className="h-3.5 w-3.5" />
               </Button>
             </TooltipTrigger>
             <TooltipContent>{t("redo")}</TooltipContent>
           </Tooltip>
           <div className="w-px h-5 bg-border mx-0.5" />
-          <Button size="xs" onClick={handleGenerate} disabled={isSplitting}>
+          <Button size="xs" onClick={handleGenerate} disabled={isSplitting || !hasCrossingLines} aria-describedby={!hasCrossingLines ? "split-line-guide" : undefined}>
             {/* Replace the label element so a delayed browser translation cannot
                 restore the previous generating state on the current label. */}
             <span key={generateLabel}>{generateLabel}</span>
@@ -815,6 +785,23 @@ export function SplitEditor({
           )}
         </div>
       </TooltipProvider>
+
+      {!hasCrossingLines && (
+        <div id="split-line-guide" className="shrink-0 border border-accent/35 bg-accent/5 p-4" role="status">
+          <p className="text-sm font-medium">{t(lines.length === 0 ? "lineGuideTitle" : "linesNotCrossing")}</p>
+          <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
+            {t(isMultiImage ? "lineGuideMultiple" : "lineGuideDescription")}
+          </p>
+          <div className="mt-3 flex flex-wrap gap-2">
+            <Button size="sm" variant="outline" onClick={() => handleAddLine("horizontal")} disabled={!canAddHorizontal || activeImage?.image.naturalHeight < 2}>
+              {t(isMultiImage ? "addHorizontal" : "splitTopBottom")}
+            </Button>
+            <Button size="sm" variant="outline" onClick={() => handleAddLine("vertical")} disabled={!canAddVertical || activeImage?.image.naturalWidth < 2}>
+              {t(isMultiImage ? "addVertical" : "splitLeftRight")}
+            </Button>
+          </div>
+        </div>
+      )}
 
       {/* Editor area with rulers */}
       <div
@@ -1063,7 +1050,9 @@ export function SplitEditor({
         batchResults={batchResults}
         originalFileName={getFileNameWithoutExtension(originalFileName)}
         fileExtension={getFileExtension(originalMimeType)}
-        onDownloadSingle={downloadOne}
+        onDownloadSingle={handleDownloadOne}
+        isExporting={isExporting}
+        exportError={exportError}
         onDownloadAll={handleDownloadAll}
         selectedKeys={selectedKeys}
         onToggleSelect={toggleSelect}

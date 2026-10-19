@@ -1,6 +1,12 @@
-import { describe, it, expect, vi } from "vitest"
+import { afterEach, describe, it, expect, vi } from "vitest"
 import { exportAsZip, exportBatchAsZip, downloadSingle, getSelectedZipFileName, getZipFileName, getBatchZipFileName, exportGridAsZip, getGridZipFileName, exportCarouselAsZip, getCarouselZipFileName } from "../zip-exporter"
 import type { SplitResult } from "@/types"
+
+afterEach(() => {
+  vi.useRealTimers()
+  vi.restoreAllMocks()
+  vi.unstubAllGlobals()
+})
 
 function createMockResult(row: number, col: number): SplitResult {
   return {
@@ -187,27 +193,39 @@ describe("getBatchZipFileName", () => {
 
 describe("downloadSingle", () => {
   it("should trigger download with correct filename", () => {
+    vi.useFakeTimers()
     const createObjectURL = vi.fn(() => "blob:test-url")
     const revokeObjectURL = vi.fn()
     const clickMock = vi.fn()
 
     vi.stubGlobal("URL", { createObjectURL, revokeObjectURL })
 
-    const mockAnchor = {
-      href: "",
-      download: "",
-      click: clickMock,
-    }
-    vi.spyOn(document, "createElement").mockReturnValue(
-      mockAnchor as unknown as HTMLAnchorElement
-    )
+    const mockAnchor = document.createElement("a")
+    mockAnchor.click = clickMock
+    vi.spyOn(document, "createElement").mockReturnValue(mockAnchor)
 
     const result = createMockResult(1, 1)
     downloadSingle(result, "photo_r1_c1.png")
 
     expect(mockAnchor.download).toBe("photo_r1_c1.png")
     expect(clickMock).toHaveBeenCalled()
+    expect(revokeObjectURL).not.toHaveBeenCalled()
+    vi.advanceTimersByTime(1000)
     expect(revokeObjectURL).toHaveBeenCalledWith("blob:test-url")
+  })
+})
+
+describe("ZIP error classification", () => {
+  it("identifies unreadable blobs without leaking their error into the code", async () => {
+    const result = createMockResult(1, 1)
+    Object.defineProperty(result.blob, "arrayBuffer", { value: () => Promise.reject(new Error("private-file.png")) })
+    await expect(exportAsZip({ results: [result], originalFileName: "photo", fileExtension: "png" })).rejects.toMatchObject({ code: "zip_read_failed" })
+  })
+
+  it("identifies ZIP generation failures", async () => {
+    const JSZip = (await import("jszip")).default
+    vi.spyOn(JSZip.prototype, "generateAsync").mockRejectedValueOnce(new Error("packing failed"))
+    await expect(exportAsZip({ results: [createMockResult(1, 1)], originalFileName: "photo", fileExtension: "png" })).rejects.toMatchObject({ code: "zip_generate_failed" })
   })
 })
 

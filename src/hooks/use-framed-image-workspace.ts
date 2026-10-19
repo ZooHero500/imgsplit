@@ -1,7 +1,9 @@
 "use client"
 
 import { useState, useCallback, useMemo, useRef, useEffect, type RefObject } from "react"
-import { loadImage } from "@/lib/upload-utils"
+import { useTranslations } from "next-intl"
+import { toast } from "sonner"
+import { loadImage, UploadValidationError } from "@/lib/upload-utils"
 import { downloadUrl, saveBlobWithIOSFallback } from "@/lib/download"
 import { startOperation, trackEvent, trackOperation } from "@/lib/analytics"
 
@@ -58,6 +60,7 @@ export function useFramedImageWorkspace<TResult extends { blob: Blob }>(
   options: FramedImageWorkspaceOptions<TResult>
 ): FramedImageWorkspace<TResult> {
   const { consumePendingUpload, getSingleFileName, exportZip } = options
+  const uploadT = useTranslations("upload")
 
   const [step, setStep] = useState<WorkspaceStep>(1)
   const [image, setImage] = useState<HTMLImageElement | null>(null)
@@ -102,12 +105,13 @@ export function useFramedImageWorkspace<TResult extends { blob: Blob }>(
       setMimeType(file.type)
       setStep(2)
       measureContainer()
+    }).catch((error: unknown) => {
+      toast.error(error instanceof UploadValidationError ? uploadT(error.validation.key, error.validation.params) : uploadT("loadFailed"))
     })
-  }, [consumePendingUpload, measureContainer])
+  }, [consumePendingUpload, measureContainer, uploadT])
 
   const handleImageLoaded = useCallback(
     (img: HTMLImageElement, file: File) => {
-      if (imageUrl) URL.revokeObjectURL(imageUrl)
       const url = URL.createObjectURL(file)
       setImage(img)
       setImageUrl(url)
@@ -116,12 +120,14 @@ export function useFramedImageWorkspace<TResult extends { blob: Blob }>(
       setStep(2)
       measureContainer()
     },
-    [imageUrl, measureContainer]
+    [measureContainer]
   )
 
   const handleReupload = useCallback(() => {
     trackEvent("image_replaced")
     setResults(null)
+    setImage(null)
+    setImageUrl("")
     setStep(1)
   }, [])
 
@@ -140,6 +146,10 @@ export function useFramedImageWorkspace<TResult extends { blob: Blob }>(
     if (!results) return []
     return results.map((r) => URL.createObjectURL(r.blob))
   }, [results])
+
+  useEffect(() => {
+    return () => { if (imageUrl) URL.revokeObjectURL(imageUrl) }
+  }, [imageUrl])
 
   useEffect(() => {
     return () => {

@@ -33,7 +33,6 @@ import { LogoIcon } from "@/components/LogoIcon"
 import { UploadZone } from "@/components/UploadZone"
 import { useExportAction } from "@/hooks/use-export-action"
 import { downloadBlob } from "@/lib/download"
-import { startOperation } from "@/lib/analytics"
 import {
   assignImagesToFrames,
   calculateFrameRects,
@@ -58,7 +57,8 @@ import {
   type CollageTemplate,
   type CollageTemplateId,
 } from "@/lib/collage-presets"
-import { ACCEPTED_TYPES, loadImage, validateFiles } from "@/lib/upload-utils"
+import { ACCEPTED_TYPES, loadUploadResults } from "@/lib/upload-utils"
+import { estimateLoadedImages } from "@/lib/upload-memory"
 import type { UploadResult } from "@/types"
 
 const OUTPUT_FORMATS: Array<{ label: string; value: CollageOutputFormat }> = [
@@ -386,41 +386,17 @@ export function CollageEditor() {
   const processFiles = useCallback(
     async (files: File[], targetFrameId?: string | null) => {
       if (files.length === 0) return
-      const finish = startOperation("upload", { tool: "collage", input_count: files.length })
-
-      const validation = validateFiles(
-        files,
-        images.reduce((sum, image) => sum + image.file.size, 0)
-      )
-      if (!validation.valid) {
-        finish("failed", { error_code: validation.error?.key ?? "unsupportedFormat" })
-        toast.error(uploadT(validation.error!.key, validation.error!.params))
+      const outcome = await loadUploadResults(files, { existingMemoryBytes: estimateLoadedImages(images) })
+      if (outcome.status === "invalid") {
+        toast.error(uploadT(outcome.error.key, outcome.error.params))
         return
       }
-
-      if (validation.totalSizeWarning) {
-        const totalSize = validation.files.reduce((sum, file) => sum + file.size, 0)
-        toast.warning(
-          uploadT("totalSizeWarning", {
-            size: (totalSize / 1024 / 1024).toFixed(1),
-          })
-        )
-      }
-
-      try {
-        const results = await Promise.all(
-          validation.files.map(async (file) => ({
-            file,
-            image: await loadImage(file),
-            mimeType: file.type,
-          }))
-        )
-        addUploadedImages(results, targetFrameId)
-        finish("succeeded", { output_count: results.length })
-      } catch {
-        finish("failed", { error_code: "decode_failed" })
+      if (outcome.status === "loadFailed") {
         toast.error(uploadT("loadFailed"))
+        return
       }
+      if (outcome.memoryWarning) toast.warning(uploadT("memoryWarning", { estimated: outcome.estimatedMemoryMB }))
+      addUploadedImages(outcome.results, targetFrameId)
     },
     [addUploadedImages, images, uploadT]
   )

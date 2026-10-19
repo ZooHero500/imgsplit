@@ -62,7 +62,7 @@
     "gridTitle": "网格分割",
     "gridDesc": "同时添加横向和纵向分割线，快速创建规则网格，批量裁切更高效。",
     "formatTitle": "多格式支持",
-    "formatDesc": "支持 PNG、JPG/JPEG 和 WebP 格式，文件大小最高支持 20MB。",
+    "formatDesc": "支持 PNG、JPG/JPEG 和 WebP，大图会根据当前设备的处理能力进行检查。",
     "previewTitle": "即时预览",
     "previewDesc": "实时预览分割效果，调整分割线位置后立即查看裁切区域变化。"
   },
@@ -117,8 +117,8 @@
     "headlineAccent": "信赖",
     "stat1Value": "20+",
     "stat1Label": "每轴分割线数",
-    "stat2Value": "20MB",
-    "stat2Label": "最大文件大小",
+    "stat2Value": "自适应",
+    "stat2Label": "大图限制",
     "stat3Value": "0",
     "stat3Label": "上传到服务器的数据",
     "stat4Value": "100%",
@@ -140,7 +140,7 @@
     "headlineAccent": "解答",
     "subtitle": "关于图片分割工具的常见疑问",
     "q1": "支持哪些图片格式？",
-    "a1": "支持 PNG、JPG/JPEG 和 WebP 格式的图片，文件大小限制为 20MB。",
+    "a1": "支持 PNG、JPG/JPEG 和 WebP，大图会根据当前设备的处理能力进行检查。",
     "q2": "分割后的图片质量会降低吗？",
     "a2": "不会。工具以原始图片分辨率进行裁切，不压缩不缩放，保持原始画质。",
     "q3": "我的图片数据安全吗？",
@@ -170,11 +170,16 @@
     "dragHint": "拖拽一张或多张图片到此处",
     "or": "或",
     "clickHint": "点击选择文件（支持多选）",
-    "formatHint": "PNG / JPG / WebP · 单张最大 20MB",
+    "formatHint": "PNG / JPG / WebP · 大图加载前检查",
     "unsupportedFormat": "不支持的文件格式，请上传 PNG、JPG 或 WebP 格式的图片",
     "loadFailed": "图片加载失败，请重试",
-    "fileTooLarge": "文件 \"{name}\" 过大（超过 20MB），建议压缩后重试",
-    "totalSizeWarning": "总文件大小 {size}MB 超过 50MB，可能导致浏览器卡顿"
+    "largeImageHint": "文件较大也可以使用。系统会结合像素数量和预计内存占用判断，高风险图片需先缩小尺寸。",
+    "chooseAnother": "重新选择图片",
+    "memoryWarning": "预计处理占用约 {estimated} MB 内存，处理可能较慢，建议暂不继续添加图片。",
+    "imageMemoryRisk": "这些图片预计需要约 {estimated} MB 处理内存，超过当前设备的 {budget} MB 安全预算。请缩小图片尺寸，或移除部分已加载图片后重试。",
+    "imageDimensionsTooLarge": "图片尺寸为 {width} × {height} 像素，单边超过 {limit} 像素的加载上限。请先缩小尺寸或分段后重试。",
+    "imageCanvasRisk": "图片尺寸为 {width} × {height} 像素，此工具需要完整画布，已超过我们支持的画布范围。请先缩小尺寸，或使用图片分割工具分段处理。",
+    "imageMetadataUnreadable": "无法安全读取这张图片的尺寸。请重新保存为 PNG、JPEG 或 WebP 后重试。"
   },
   "workspace": {
     "addHorizontal": "+ 横向分割线",
@@ -196,7 +201,14 @@
     "horizontalLimitReached": "横向分割线已达上限（20条）",
     "verticalLimitReached": "纵向分割线已达上限（20条）",
     "loadingEditor": "加载编辑器...",
-    "shortcutHints": "快捷键: Ctrl+Z 撤销 | Ctrl+Shift+Z 重做 | Delete 删除选中分割线 | 从标尺拖拽创建分割线 | 拖回标尺删除 | 滚轮缩放 | 空格+拖拽平移 | Cmd+0 适应 | Cmd+1 100%"
+    "shortcutHints": "快捷键: Ctrl+Z 撤销 | Ctrl+Shift+Z 重做 | Delete 删除选中分割线 | 从标尺拖拽创建分割线 | 拖回标尺删除 | 滚轮缩放 | 空格+拖拽平移 | Cmd+0 适应 | Cmd+1 100%",
+    "addHorizontalShort": "+ 横线",
+    "addVerticalShort": "+ 竖线",
+    "lineGuideTitle": "先添加一条分割线",
+    "lineGuideDescription": "点击下方按钮，在图片中间放置分割线。拖动调整位置后，再点击“生成”。",
+    "lineGuideMultiple": "先选中一张图片，再添加穿过它中间的横线或竖线。分割线会切割所有经过的图片，请调整好位置后再生成。",
+    "splitTopBottom": "上下等分",
+    "splitLeftRight": "左右等分"
   },
   "results": {
     "title": "分割结果",
@@ -206,7 +218,15 @@
     "downloadAll": "下载全部 (ZIP)",
     "selectAll": "全选",
     "downloadSelected": "下载选中",
-    "downloadSelectedCount": "下载选中 ({count})"
+    "downloadSelectedCount": "下载选中 ({count})",
+    "preparingZip": "正在打包 ZIP…",
+    "preparingZipHint": "正在打包图片，请保持页面打开。",
+    "downloadSingle": "下载 {name}",
+    "zip_load_failed": "ZIP 模块加载失败。请检查网络后重试；若仍失败，请先逐张下载图片，再刷新页面。",
+    "zip_read_failed": "打包时无法读取某张图片。请尝试逐张下载，或重新生成结果。",
+    "zip_generate_failed": "ZIP 打包失败。请减少选中的图片后重试，或逐张下载。",
+    "download_failed": "无法启动下载。请检查浏览器的下载权限后重试。",
+    "export_failed": "导出失败。请减少选中的图片后重试，或逐张下载。"
   },
   "history": {
     "title": "历史记录",
@@ -262,7 +282,7 @@
       "title": "上传图片",
       "dragHint": "拖拽图片到此处",
       "clickHint": "或点击选择文件",
-      "formatHint": "PNG / JPG / WebP · 单张最大 20MB"
+      "formatHint": "PNG / JPG / WebP · 大图加载前检查"
     },
     "nav": {
       "grid": "Grid",
@@ -571,7 +591,7 @@
     "uploadTitle": "AI 去背景",
     "uploadDragHint": "拖入图片移除背景",
     "uploadClickHint": "选择图片",
-    "uploadFormatHint": "支持 PNG、JPG、WebP，最大 20MB",
+    "uploadFormatHint": "PNG / JPG / WebP · 大图加载前检查",
     "original": "原图",
     "result": "结果",
     "resultPending": "结果预览",
@@ -679,7 +699,7 @@
         "headlinePart1": "四步",
         "headlineAccent": "做完",
         "step1Title": "放入照片",
-        "step1Desc": "支持 PNG、JPEG、WebP，最大 20MB。要批量就继续添加。",
+        "step1Desc": "支持 PNG、JPG/JPEG 和 WebP，大图会根据当前设备的处理能力进行检查。 可以添加多张图片进行批量处理。",
         "step2Title": "必要时下载一次模型",
         "step2Desc": "若本浏览器还没有缓存，首次运行会下载本地模型。照片仍留在设备上。",
         "step3Title": "修边缘",
@@ -1220,7 +1240,7 @@
       "title": "上传图片",
       "dragHint": "拖拽图片到此处",
       "clickHint": "或点击选择文件",
-      "formatHint": "PNG / JPG / WebP · 单张最大 20MB"
+      "formatHint": "PNG / JPG / WebP · 大图加载前检查"
     },
     "editor": {
       "dragHint": "拖拽移动 · 滑条缩放",
@@ -1275,7 +1295,7 @@
         "headlineAccent": "解答",
         "subtitle": "关于轮播分割工具的常见疑问",
         "q1": "支持哪些图片格式？",
-        "a1": "支持最大 20MB 的 PNG、JPEG 和 WebP 格式图片。宽幅全景图最适合轮播分割。",
+        "a1": "支持 PNG、JPG/JPEG 和 WebP，大图会根据当前设备的处理能力进行检查。 宽幅全景图更适合制作轮播切图。",
         "q2": "可以创建多少张幻灯片？",
         "a2": "您可以创建 2 到 10 张轮播幻灯片。工具会自动将图片均匀分配到所有幻灯片中。",
         "q3": "可以使用哪些宽高比？",

@@ -62,7 +62,7 @@
     "gridTitle": "グリッド分割",
     "gridDesc": "横・縦の分割線を同時に追加し、規則的なグリッドを素早く作成。効率的な一括トリミングが可能。",
     "formatTitle": "マルチフォーマット対応",
-    "formatDesc": "PNG、JPG/JPEG、WebPに対応。1ファイル最大20MBまで。",
+    "formatDesc": "PNG、JPG/JPEG、WebP に対応。大きな画像は端末の処理能力に応じて確認されます。",
     "previewTitle": "リアルタイムプレビュー",
     "previewDesc": "分割線の位置を調整しながら、分割結果をリアルタイムで確認できます。"
   },
@@ -117,8 +117,8 @@
     "headlineAccent": "信頼される",
     "stat1Value": "20+",
     "stat1Label": "軸あたりの分割線数",
-    "stat2Value": "20MB",
-    "stat2Label": "最大ファイルサイズ",
+    "stat2Value": "自動調整",
+    "stat2Label": "大きな画像の制限",
     "stat3Value": "0",
     "stat3Label": "サーバーへのデータ送信",
     "stat4Value": "100%",
@@ -140,7 +140,7 @@
     "headlineAccent": "お答えします",
     "subtitle": "画像分割ツールに関するよくある質問",
     "q1": "対応している画像形式は？",
-    "a1": "PNG、JPG/JPEG、WebP形式に対応しています。ファイルサイズの上限は20MBです。",
+    "a1": "PNG、JPG/JPEG、WebP に対応。大きな画像は端末の処理能力に応じて確認されます。",
     "q2": "分割後の画質は劣化しますか？",
     "a2": "いいえ。元の解像度でトリミングするため、圧縮・縮小は行わず、画質の劣化は一切ありません。",
     "q3": "画像データは安全ですか？",
@@ -170,11 +170,16 @@
     "dragHint": "1枚以上の画像をここにドラッグ＆ドロップ",
     "or": "または",
     "clickHint": "クリックしてファイルを選択（複数選択可）",
-    "formatHint": "PNG / JPG / WebP · 1ファイル最大20MB",
+    "formatHint": "PNG / JPG / WebP · 大きな画像は読み込み前に確認",
     "unsupportedFormat": "非対応の形式です。PNG、JPG、またはWebP画像をアップロードしてください。",
     "loadFailed": "画像の読み込みに失敗しました。もう一度お試しください。",
-    "fileTooLarge": "ファイル「{name}」が20MBを超えています。圧縮してからお試しください。",
-    "totalSizeWarning": "合計ファイルサイズ {size}MB が50MBを超えており、ブラウザの動作が遅くなる場合があります。"
+    "largeImageHint": "ファイル容量が大きくても利用できます。画素数と推定メモリ使用量を確認し、負荷が高い画像は画像サイズの縮小をご案内します。",
+    "chooseAnother": "画像を選び直す",
+    "memoryWarning": "処理に約 {estimated} MB のメモリを使う見込みです。時間がかかる場合があるため、画像の追加は控えてください。",
+    "imageMemoryRisk": "画像の処理には約 {estimated} MB が必要で、この端末の安全予算 {budget} MB を超えます。画像サイズを縮小するか、読み込み済み画像を減らして再試行してください。",
+    "imageDimensionsTooLarge": "画像は {width} × {height} ピクセルで、一辺が読み込み上限の {limit} ピクセルを超えます。縮小または分割してから再試行してください。",
+    "imageCanvasRisk": "画像は {width} × {height} ピクセルです。このツールが必要とする画像全体のキャンバスが対応範囲を超えます。縮小するか、画像分割ツールで小さく分けてください。",
+    "imageMetadataUnreadable": "画像の寸法を安全に読み取れませんでした。PNG、JPEG、WebP として保存し直して再試行してください。"
   },
   "workspace": {
     "addHorizontal": "+ 横分割線",
@@ -196,7 +201,14 @@
     "horizontalLimitReached": "横分割線の上限に達しました（最大20本）",
     "verticalLimitReached": "縦分割線の上限に達しました（最大20本）",
     "loadingEditor": "エディターを読み込み中...",
-    "shortcutHints": "ショートカット: Ctrl+Z 元に戻す | Ctrl+Shift+Z やり直し | Delete 選択した分割線を削除 | ルーラーからドラッグで作成 | ルーラーに戻して削除 | スクロールでズーム | Space+ドラッグで移動 | Cmd+0 全体表示 | Cmd+1 100%"
+    "shortcutHints": "ショートカット: Ctrl+Z 元に戻す | Ctrl+Shift+Z やり直し | Delete 選択した分割線を削除 | ルーラーからドラッグで作成 | ルーラーに戻して削除 | スクロールでズーム | Space+ドラッグで移動 | Cmd+0 全体表示 | Cmd+1 100%",
+    "addHorizontalShort": "+ 横線",
+    "addVerticalShort": "+ 縦線",
+    "lineGuideTitle": "まず分割線を追加しましょう",
+    "lineGuideDescription": "下のボタンで画像の中央に線を追加できます。ドラッグして位置を調整し、「生成」を押してください。",
+    "lineGuideMultiple": "画像を選択し、中央に横線か縦線を追加してください。線が通るすべての画像が分割されます。位置を調整してから生成してください。",
+    "splitTopBottom": "上下に等分",
+    "splitLeftRight": "左右に等分"
   },
   "results": {
     "title": "分割結果",
@@ -206,7 +218,15 @@
     "downloadAll": "すべてダウンロード（ZIP）",
     "selectAll": "すべて選択",
     "downloadSelected": "選択分をダウンロード",
-    "downloadSelectedCount": "選択分をダウンロード（{count}）"
+    "downloadSelectedCount": "選択分をダウンロード（{count}）",
+    "preparingZip": "ZIP を作成中…",
+    "preparingZipHint": "画像をまとめています。このページを開いたままお待ちください。",
+    "downloadSingle": "{name} をダウンロード",
+    "zip_load_failed": "ZIP モジュールを読み込めませんでした。接続を確認して再試行してください。改善しない場合は、画像を個別に保存してからページを再読み込みしてください。",
+    "zip_read_failed": "ZIP 用の画像を読み込めませんでした。画像を個別に保存するか、結果を再生成してください。",
+    "zip_generate_failed": "ZIP の作成に失敗しました。選択する画像を減らすか、個別にダウンロードしてください。",
+    "download_failed": "ダウンロードを開始できませんでした。ブラウザのダウンロード許可を確認して再試行してください。",
+    "export_failed": "書き出しに失敗しました。画像を減らして再試行するか、個別にダウンロードしてください。"
   },
   "history": {
     "title": "履歴",
@@ -262,7 +282,7 @@
       "title": "画像をアップロード",
       "dragHint": "画像をここにドラッグ",
       "clickHint": "またはクリックして選択",
-      "formatHint": "PNG / JPG / WebP · 最大20MB"
+      "formatHint": "PNG / JPG / WebP · 大きな画像は読み込み前に確認"
     },
     "nav": {
       "grid": "グリッド",
@@ -571,7 +591,7 @@
     "uploadTitle": "AI背景削除",
     "uploadDragHint": "画像をドロップして背景を削除",
     "uploadClickHint": "画像を選択",
-    "uploadFormatHint": "PNG、JPG、WebP 最大20MB",
+    "uploadFormatHint": "PNG / JPG / WebP · 大きな画像は読み込み前に確認",
     "original": "元画像",
     "result": "結果",
     "resultPending": "結果プレビュー",
@@ -679,7 +699,7 @@
         "headlinePart1": "4つの",
         "headlineAccent": "手順",
         "step1Title": "写真を入れる",
-        "step1Desc": "PNG / JPEG / WebP、最大 20MB。まとめて処理するなら続けて追加します。",
+        "step1Desc": "PNG、JPG/JPEG、WebP に対応。大きな画像は端末の処理能力に応じて確認されます。 複数の画像を追加して一括処理できます。",
         "step2Title": "初回だけモデルを入れる",
         "step2Desc": "キャッシュがなければ初回にローカルモデルを取得します。写真は端末に残ります。",
         "step3Title": "輪郭を整える",
@@ -1220,7 +1240,7 @@
       "title": "画像をアップロード",
       "dragHint": "ここに画像をドラッグ",
       "clickHint": "またはクリックして選択",
-      "formatHint": "PNG / JPG / WebP · 最大20MB"
+      "formatHint": "PNG / JPG / WebP · 大きな画像は読み込み前に確認"
     },
     "editor": {
       "dragHint": "ドラッグして移動 · スライダーでズーム",
@@ -1275,7 +1295,7 @@
         "headlineAccent": "質問",
         "subtitle": "カルーセル分割ツールについてよくある質問",
         "q1": "対応している画像形式は何ですか？",
-        "a1": "最大20MBのPNG、JPEG、WebP画像に対応しています。横長のパノラマ画像がカルーセル分割に最適です。",
+        "a1": "PNG、JPG/JPEG、WebP に対応。大きな画像は端末の処理能力に応じて確認されます。 カルーセル分割には横長のパノラマ画像が適しています。",
         "q2": "何枚のスライドを作成できますか？",
         "a2": "2枚から10枚のカルーセルスライドを作成できます。ツールが自動的に画像をすべてのスライドに均等に分割します。",
         "q3": "どのアスペクト比が使用できますか？",

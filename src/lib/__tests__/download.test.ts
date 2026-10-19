@@ -38,12 +38,14 @@ describe("downloadUrl", () => {
     const clickSpy = vi
       .spyOn(HTMLAnchorElement.prototype, "click")
       .mockImplementation(function (this: HTMLAnchorElement) {
+        expect(this.isConnected).toBe(true)
         clicked.push(this)
       })
 
     downloadUrl("blob:fake-url", "result.png")
 
     expect(clicked).toHaveLength(1)
+    expect(clicked[0].isConnected).toBe(false)
     expect(clicked[0].getAttribute("href")).toBe("blob:fake-url")
     expect(clicked[0].getAttribute("download")).toBe("result.png")
     expect(trackEvent).toHaveBeenCalledExactlyOnceWith("download_triggered")
@@ -56,6 +58,7 @@ describe("downloadBlob", () => {
   let revokeSpy: ReturnType<typeof vi.fn>
 
   beforeEach(() => {
+    vi.useFakeTimers()
     createSpy = vi.fn(() => "blob:mock-url")
     revokeSpy = vi.fn()
     vi.stubGlobal("URL", {
@@ -66,6 +69,8 @@ describe("downloadBlob", () => {
   })
 
   afterEach(() => {
+    vi.runOnlyPendingTimers()
+    vi.useRealTimers()
     vi.unstubAllGlobals()
     vi.restoreAllMocks()
   })
@@ -83,6 +88,8 @@ describe("downloadBlob", () => {
 
     expect(createSpy).toHaveBeenCalledWith(blob)
     expect(clicked).toEqual(["blob:mock-url|photo.png"])
+    expect(revokeSpy).not.toHaveBeenCalled()
+    vi.advanceTimersByTime(1000)
     expect(revokeSpy).toHaveBeenCalledWith("blob:mock-url")
   })
 
@@ -90,7 +97,7 @@ describe("downloadBlob", () => {
     const failure = new Error("private-file.png")
     vi.spyOn(HTMLAnchorElement.prototype, "click").mockImplementation(() => { throw failure })
 
-    expect(() => downloadBlob(new Blob(["data"]), "private-file.png")).toThrow(failure)
+    expect(() => downloadBlob(new Blob(["data"]), "private-file.png")).toThrow("download_failed")
     expect(revokeSpy).toHaveBeenCalledWith("blob:mock-url")
     expect(trackEvent).toHaveBeenCalledExactlyOnceWith("download_failed", { error_code: "download_failed" })
   })

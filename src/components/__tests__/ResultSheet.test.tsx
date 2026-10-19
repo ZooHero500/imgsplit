@@ -13,6 +13,26 @@ describe("ResultSheet", () => {
     vi.restoreAllMocks()
   })
 
+  it("disables downloads during packing and restores them with a persistent recovery message", () => {
+    vi.spyOn(URL, "createObjectURL").mockReturnValue("blob:preview")
+    vi.spyOn(URL, "revokeObjectURL").mockImplementation(() => {})
+    const props = {
+      open: true, onClose: vi.fn(), results: [{ row: 1, col: 1, blob: new Blob(["x"]), width: 20, height: 20 }],
+      originalFileName: "sample", fileExtension: "png", onDownloadSingle: vi.fn(), onDownloadAll: vi.fn(),
+      selectedKeys: new Set(["1-1"]), onToggleSelect: vi.fn(), onSelectAll: vi.fn(), isAllSelected: true, onDownloadSelected: vi.fn(),
+    }
+    const { rerender, unmount } = render(<ResultSheet {...props} isExporting />)
+    expect((screen.getByRole("button", { name: "preparingZip" }) as HTMLButtonElement).disabled).toBe(true)
+    expect((screen.getByRole("button", { name: "downloadSelectedCount" }) as HTMLButtonElement).disabled).toBe(true)
+    expect((screen.getByRole("button", { name: "downloadSingle" }) as HTMLButtonElement).disabled).toBe(true)
+    expect(screen.getByRole("status").textContent).toBe("preparingZipHint")
+    rerender(<ResultSheet {...props} exportError="zip_generate_failed" />)
+    expect(screen.getByRole("alert").textContent).toBe("zip_generate_failed")
+    expect((screen.getByRole("button", { name: "downloadAll" }) as HTMLButtonElement).disabled).toBe(false)
+    expect((screen.getByRole("button", { name: "downloadSingle" }) as HTMLButtonElement).disabled).toBe(false)
+    unmount()
+  })
+
   it("keeps the rendered thumbnail object URL alive in React Strict Mode", async () => {
     let nextUrl = 0
     const revokedUrls: string[] = []

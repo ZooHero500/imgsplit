@@ -880,7 +880,7 @@ export function MosaicEditor() {
                 {t("uploadDescription")}
               </p>
             </div>
-            <UploadZone onImageLoaded={handleImageLoaded} />
+            <UploadZone onImageLoaded={handleImageLoaded} requiresFullCanvas />
           </div>
         </div>
       ) : (

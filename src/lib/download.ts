@@ -1,4 +1,5 @@
 import { trackEvent } from "@/lib/analytics"
+import { ExportError } from "@/lib/export-errors"
 
 /**
  * Browser download helpers shared by all editors.
@@ -17,22 +18,28 @@ export function downloadUrl(url: string, fileName: string): void {
   a.href = url
   a.download = fileName
   try {
+    document.body.appendChild(a)
     a.click()
     trackEvent("download_triggered")
   } catch (error) {
     trackEvent("download_failed", { error_code: "download_failed" })
     throw error
+  } finally {
+    a.remove()
   }
 }
 
-/** Download a Blob as a file. Creates an object URL and revokes it immediately after the click. */
+/** Leave the object URL alive briefly so the browser can start reading it. */
 export function downloadBlob(blob: Blob, fileName: string): void {
-  const url = URL.createObjectURL(blob)
+  let url: string | undefined
   try {
+    url = URL.createObjectURL(blob)
     downloadUrl(url, fileName)
-  } finally {
-    URL.revokeObjectURL(url)
+  } catch (error) {
+    if (url) URL.revokeObjectURL(url)
+    throw new ExportError("download_failed", error)
   }
+  setTimeout(() => URL.revokeObjectURL(url!), 1000)
 }
 
 /**
@@ -42,17 +49,16 @@ export function downloadBlob(blob: Blob, fileName: string): void {
  * revoked after a short delay.
  */
 export function saveBlobWithIOSFallback(blob: Blob, fileName: string): void {
+  if (!isIOS()) {
+    downloadBlob(blob, fileName)
+    return
+  }
   const url = URL.createObjectURL(blob)
-  if (isIOS()) {
-    const preview = window.open(url, "_blank")
-    if (preview) {
-      trackEvent("save_preview_opened")
-    } else {
-      URL.revokeObjectURL(url)
-      trackEvent("download_failed", { error_code: "popup_blocked" })
-    }
+  const preview = window.open(url, "_blank")
+  if (preview) {
+    trackEvent("save_preview_opened")
   } else {
-    downloadUrl(url, fileName)
-    setTimeout(() => URL.revokeObjectURL(url), 1000)
+    URL.revokeObjectURL(url)
+    trackEvent("download_failed", { error_code: "popup_blocked" })
   }
 }

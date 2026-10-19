@@ -10,6 +10,14 @@ const mockImageBehavior = {
   shouldFail: false,
 }
 
+vi.mock("@/lib/image-metadata", () => ({
+  readImageMetadata: vi.fn(async () => ({
+    width: mockImageBehavior.naturalWidth,
+    height: mockImageBehavior.naturalHeight,
+    frames: 1,
+  })),
+}))
+
 class MockImage {
   onload: (() => void) | null = null
   onerror: (() => void) | null = null
@@ -103,15 +111,27 @@ describe("useResizeEditor - loadImage", () => {
     })
   })
 
-  it("should default mimeType to image/png when the file has no type", async () => {
+  it("rejects unsupported file types before decoding", async () => {
     const { result } = renderHook(() => useResizeEditor())
-
     await act(async () => {
-      await result.current.loadImage(createFile("raw-file", ""))
+      await expect(result.current.loadImage(createFile("raw-file", ""))).rejects.toThrow("unsupportedFormat")
     })
+    expect(URL.createObjectURL).not.toHaveBeenCalled()
+    expect(result.current.image).toBeNull()
+  })
 
-    expect(result.current.mimeType).toBe("image/png")
-    expect(result.current.fileName).toBe("raw-file")
+  it("rejects excessive pixels before decoding and preserves the current image", async () => {
+    const { result } = await renderWithImage()
+    const previous = result.current.image
+    vi.mocked(URL.createObjectURL).mockClear()
+    mockImageBehavior.naturalWidth = 10000
+    mockImageBehavior.naturalHeight = 10000
+    await act(async () => {
+      await expect(result.current.loadImage(createFile("huge.png"))).rejects.toThrow("imageMemoryRisk")
+    })
+    expect(URL.createObjectURL).not.toHaveBeenCalled()
+    expect(result.current.image).toBe(previous)
+    expect(result.current.fileName).toBe("photo.png")
   })
 
   it("should reject when the image fails to load", async () => {
@@ -127,7 +147,7 @@ describe("useResizeEditor - loadImage", () => {
     expect(result.current.image).toBeNull()
   })
 
-  it("should revoke the previous object URL when loading a second image", async () => {
+  it("releases each temporary object URL after decoding", async () => {
     const { result } = await renderWithImage()
 
     await act(async () => {
@@ -135,6 +155,7 @@ describe("useResizeEditor - loadImage", () => {
     })
 
     expect(URL.revokeObjectURL).toHaveBeenCalledWith("blob:mock-url")
+    expect(URL.revokeObjectURL).toHaveBeenCalledTimes(2)
     expect(result.current.fileName).toBe("second.jpg")
     expect(result.current.mimeType).toBe("image/jpeg")
   })

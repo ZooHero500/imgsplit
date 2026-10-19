@@ -19,7 +19,7 @@ import { useElementSize } from "@/hooks/use-element-size"
 import { downloadBlob } from "@/lib/download"
 import { exportArtboard } from "@/lib/resize-export"
 import { calculateInitialCropRect } from "@/lib/resize-utils"
-import { ACCEPTED_TYPES } from "@/lib/upload-utils"
+import { ACCEPTED_TYPES, UploadValidationError } from "@/lib/upload-utils"
 import { CanvasSizeControl } from "./CanvasSizeControl"
 import { ResizeCanvas } from "./ResizeCanvas"
 import { ResizeStatusBar } from "./ResizeStatusBar"
@@ -267,6 +267,7 @@ export function ResizeEditor({
   initialCropAspectRatio = null,
 }: ResizeEditorProps) {
   const t = useTranslations("resize")
+  const uploadT = useTranslations("upload")
   const replaceInputRef = useRef<HTMLInputElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -369,12 +370,17 @@ export function ResizeEditor({
       try {
         await loadImage(file)
         finish("succeeded", { output_count: 1 })
-      } catch {
-        finish("failed", { error_code: "decode_failed" })
-        toast.error(t("invalidSize"))
+      } catch (error) {
+        if (error instanceof UploadValidationError) {
+          finish("failed", { error_code: error.validation.key })
+          toast.error(uploadT(error.validation.key, error.validation.params))
+        } else {
+          finish("failed", { error_code: "decode_failed" })
+          toast.error(uploadT("loadFailed"))
+        }
       }
     },
-    [loadImage, t]
+    [loadImage, uploadT]
   )
 
   const handleDownload = useCallback(

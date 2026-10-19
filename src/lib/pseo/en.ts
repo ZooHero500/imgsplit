@@ -76,7 +76,7 @@ const data: Record<string, ToolPageData> = {
           },
         ],
         howToSteps: [
-          { stepNumber: 1, title: "Upload Your Image", description: "Drop or select any image — PNG, JPG, or WebP up to 20 MB." },
+          { stepNumber: 1, title: "Upload Your Image", description: "Choose a PNG, JPG or WebP image. Large images are checked for pixel count and memory risk before loading." },
           { stepNumber: 2, title: "Add Horizontal Lines", description: "Click 'Add Horizontal Line' to place one or more horizontal split lines. Drag each line to the exact row position." },
           { stepNumber: 3, title: "Download the Rows", description: "Preview every horizontal strip, then download all at once as a ZIP or pick specific rows." },
         ],
@@ -219,7 +219,7 @@ const data: Record<string, ToolPageData> = {
           { stepNumber: 3, title: "Download Page Segments", description: "Preview each segment, then download all pages as a ZIP for convenient sharing." },
         ],
         faqEntries: [
-          { question: "Is there a maximum image height for long screenshots?", answer: "The tool can handle images up to 20 MB in file size. Very tall images (10,000+ px) may process more slowly but are fully supported." },
+          { question: "Is there a maximum image height for long screenshots?", answer: "Long screenshots are checked by their dimensions and estimated memory use. Very long images may need resizing or splitting into sections; capacity depends on your device." },
           { question: "Can I split a screenshot into equal page-length segments?", answer: "Yes. Add multiple horizontal lines and use snap alignment to space them evenly, creating uniform page-height segments." },
           { question: "Will the text in my screenshot remain sharp after splitting?", answer: "Absolutely. The tool crops at the original resolution without any resampling, so text stays crisp and legible." },
         ],
@@ -360,7 +360,7 @@ const data: Record<string, ToolPageData> = {
         faqEntries: [
           { question: "What paper size should I target for tiles?", answer: "For home printers, A4 (210×297mm) or US Letter (8.5×11in) are standard. Calculate the number of tiles based on your image aspect ratio and desired final size." },
           { question: "Does the tool add overlap margins for assembly?", answer: "The tool splits at exact pixel boundaries. For overlap margins, slightly increase the number of tiles so adjacent pieces share a thin strip for alignment." },
-          { question: "Can I split a very high-resolution image (e.g., 8000×6000)?", answer: "Yes. The tool handles large images up to 20 MB. For extremely high-res files, consider using WebP format for a smaller file size." },
+          { question: "Can I split a very high-resolution image (e.g., 8000×6000)?", answer: "High-resolution images are checked against the device’s memory budget before loading. If an image exceeds it, reduce its dimensions. A smaller compressed file still needs memory for all decoded pixels." },
         ],
         relatedTools: [
           { slug: "/split-into-equal-parts", title: "Equal Parts Splitter", description: "Divide images into perfectly equal segments for uniform tiles." },

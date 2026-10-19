@@ -1,5 +1,37 @@
 import type { SplitResult, ZipExportOptions, BatchZipExportOptions } from "@/types"
 import { downloadBlob } from "@/lib/download"
+import { ExportError } from "@/lib/export-errors"
+import type JSZip from "jszip"
+
+async function createZip(entries: { name: string; blob: Blob }[]): Promise<Blob> {
+  let zip: JSZip
+  try {
+    const { default: Zip } = await import("jszip")
+    zip = new Zip()
+  } catch (error) {
+    throw new ExportError("zip_load_failed", error)
+  }
+  try {
+    for (const { name, blob } of entries) {
+      // Read explicitly so a failed image read is distinguishable from packing.
+      const data = typeof blob.arrayBuffer === "function" ? await blob.arrayBuffer() : await new Promise<ArrayBuffer>((resolve, reject) => {
+        const reader = new FileReader()
+        reader.onload = () => resolve(reader.result as ArrayBuffer)
+        reader.onerror = () => reject(reader.error)
+        reader.onabort = () => reject(new Error("Blob read canceled"))
+        reader.readAsArrayBuffer(blob)
+      })
+      zip.file(name, data)
+    }
+  } catch (error) {
+    throw new ExportError("zip_read_failed", error)
+  }
+  try {
+    return await zip.generateAsync({ type: "blob", mimeType: "application/zip" })
+  } catch (error) {
+    throw new ExportError("zip_generate_failed", error)
+  }
+}
 
 function getFileName(
   originalFileName: string,
@@ -10,45 +42,18 @@ function getFileName(
 }
 
 export async function exportAsZip(options: ZipExportOptions): Promise<Blob> {
-  const { default: JSZip } = await import("jszip")
-  const zip = new JSZip()
-
-  for (const result of options.results) {
-    const fileName = getFileName(
-      options.originalFileName,
-      result,
-      options.fileExtension
-    )
-    zip.file(fileName, result.blob)
-  }
-
-  return zip.generateAsync({ type: "blob", mimeType: "application/zip" })
+  return createZip(options.results.map((result) => ({
+    name: getFileName(options.originalFileName, result, options.fileExtension),
+    blob: result.blob,
+  })))
 }
 
 export async function exportBatchAsZip(options: BatchZipExportOptions): Promise<Blob> {
-  const { default: JSZip } = await import("jszip")
-  const zip = new JSZip()
-
   const isSingle = options.items.length === 1
-
-  for (const item of options.items) {
-    for (const result of item.results) {
-      const fileName = getFileName(
-        item.originalFileName,
-        result,
-        item.fileExtension
-      )
-      if (isSingle) {
-        // Single image: flat structure (backward compatible)
-        zip.file(fileName, result.blob)
-      } else {
-        // Multiple images: subfolder per image
-        zip.file(`${item.originalFileName}/${fileName}`, result.blob)
-      }
-    }
-  }
-
-  return zip.generateAsync({ type: "blob", mimeType: "application/zip" })
+  return createZip(options.items.flatMap((item) => item.results.map((result) => {
+    const fileName = getFileName(item.originalFileName, result, item.fileExtension)
+    return { name: isSingle ? fileName : `${item.originalFileName}/${fileName}`, blob: result.blob }
+  })))
 }
 
 export function downloadSingle(result: SplitResult, fileName: string): void {
@@ -71,12 +76,7 @@ export async function exportGridAsZip(
   blobs: Blob[],
   fileExtension: string
 ): Promise<Blob> {
-  const { default: JSZip } = await import("jszip")
-  const zip = new JSZip()
-  for (let i = 0; i < blobs.length; i++) {
-    zip.file(`grid-${i + 1}.${fileExtension}`, blobs[i])
-  }
-  return zip.generateAsync({ type: "blob", mimeType: "application/zip" })
+  return createZip(blobs.map((blob, i) => ({ name: `grid-${i + 1}.${fileExtension}`, blob })))
 }
 
 export function getGridZipFileName(): string {
@@ -87,12 +87,7 @@ export async function exportCarouselAsZip(
   blobs: Blob[],
   fileExtension: string,
 ): Promise<Blob> {
-  const { default: JSZip } = await import("jszip")
-  const zip = new JSZip()
-  for (let i = 0; i < blobs.length; i++) {
-    zip.file(`carousel-${i + 1}.${fileExtension}`, blobs[i])
-  }
-  return zip.generateAsync({ type: "blob", mimeType: "application/zip" })
+  return createZip(blobs.map((blob, i) => ({ name: `carousel-${i + 1}.${fileExtension}`, blob })))
 }
 
 export function getCarouselZipFileName(): string {

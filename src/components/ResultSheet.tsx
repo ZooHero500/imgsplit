@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl"
 import { X, Download, ZoomIn, Check, ChevronLeft, ChevronRight } from "lucide-react"
 import { getFileExtension, getFileNameWithoutExtension } from "@/lib/utils"
 import type { SplitResult, BatchSplitResult } from "@/types"
+import type { ExportErrorCode } from "@/lib/export-errors"
 
 interface ResultSheetProps {
   open: boolean
@@ -20,6 +21,8 @@ interface ResultSheetProps {
   onSelectAll: () => void
   isAllSelected: boolean
   onDownloadSelected: () => void
+  isExporting?: boolean
+  exportError?: ExportErrorCode | "export_failed" | null
 }
 
 function getResultKey(result: SplitResult, imageIndex?: number): string {
@@ -141,6 +144,7 @@ function ResultItem({
   index,
   selected,
   onToggleSelect,
+  isExporting,
 }: {
   result: SplitResult
   originalFileName: string
@@ -150,7 +154,9 @@ function ResultItem({
   index: number
   selected: boolean
   onToggleSelect: () => void
+  isExporting: boolean
 }) {
+  const t = useTranslations("results")
   const previewRef = useRef<HTMLImageElement>(null)
 
   useEffect(() => {
@@ -220,6 +226,8 @@ function ResultItem({
         </div>
         <button
           onClick={() => onDownload(result, fileName)}
+          disabled={isExporting}
+          aria-label={t("downloadSingle", { name: fileName })}
           className="shrink-0 w-8 h-8 flex items-center justify-center border border-primary/15 text-muted-foreground hover:text-accent hover:border-accent transition-colors duration-500"
         >
           <Download className="h-3 w-3" strokeWidth={1.5} />
@@ -244,6 +252,8 @@ export function ResultSheet({
   onSelectAll,
   isAllSelected,
   onDownloadSelected,
+  isExporting = false,
+  exportError = null,
 }: ResultSheetProps) {
   const t = useTranslations("results")
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
@@ -384,11 +394,15 @@ export function ResultSheet({
         <div className="px-6 py-4 border-b border-ink shrink-0 space-y-3">
           <button
             onClick={onDownloadAll}
+            disabled={isExporting}
+            aria-busy={isExporting}
             className="group relative w-full inline-flex items-center justify-center gap-2 border border-ink bg-primary text-primary-foreground px-6 py-3 font-condensed text-xs font-bold uppercase tracking-[0.2em] hover:bg-signal hover:border-signal hover:text-signal-ink transition-colors duration-500 press"
           >
             <Download className="h-3.5 w-3.5" strokeWidth={1.5} />
-            <span>{t("downloadAll")}</span>
+            <span key={String(isExporting)}>{t(isExporting ? "preparingZip" : "downloadAll")}</span>
           </button>
+          {isExporting && <p className="text-xs text-muted-foreground" role="status">{t("preparingZipHint")}</p>}
+          {exportError && <p className="text-sm leading-relaxed text-destructive" role="alert">{t(exportError)}</p>}
 
           {/* Selection action bar */}
           <div className="flex items-center gap-3">
@@ -412,7 +426,7 @@ export function ResultSheet({
             {/* Download selected button */}
             <button
               onClick={onDownloadSelected}
-              disabled={selectedCount === 0}
+              disabled={isExporting || selectedCount === 0}
               className={`inline-flex items-center gap-1.5 px-4 py-2 text-[10px] uppercase tracking-[0.15em] border transition-all duration-500 ${
                 selectedCount > 0
                   ? "border-accent text-accent hover:bg-accent hover:text-accent-foreground"
@@ -464,6 +478,7 @@ export function ResultSheet({
                               originalFileName={batchFileName}
                               fileExtension={batchExt}
                               onDownload={onDownloadSingle}
+                              isExporting={isExporting}
                               onPreview={handlePreview}
                               index={idx}
                               selected={selectedKeys.has(key)}
@@ -494,6 +509,7 @@ export function ResultSheet({
                     originalFileName={originalFileName}
                     fileExtension={fileExtension}
                     onDownload={onDownloadSingle}
+                    isExporting={isExporting}
                     onPreview={handlePreview}
                     index={idx}
                     selected={selectedKeys.has(key)}

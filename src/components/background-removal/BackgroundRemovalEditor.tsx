@@ -56,6 +56,7 @@ import { downloadBlob } from "@/lib/download"
 import { startOperation, trackEvent } from "@/lib/analytics"
 import { getModelCacheVersion, setModelCacheVersion } from "@/lib/storage-service"
 import { ACCEPTED_TYPES, loadUploadResults } from "@/lib/upload-utils"
+import { estimateLoadedImages } from "@/lib/upload-memory"
 import type { UploadResult } from "@/types"
 
 type ProcessingState =
@@ -209,7 +210,7 @@ export function BackgroundRemovalEditor() {
       if (files.length === 0) return
       const uploadGeneration = uploadGenerationRef.current
 
-      const outcome = await loadUploadResults(files)
+      const outcome = await loadUploadResults(files, { existingMemoryBytes: estimateLoadedImages(batch.items), requiresFullCanvas: true })
       if (outcome.status === "invalid") {
         toast.error(uploadT(outcome.error.key, outcome.error.params))
         return
@@ -219,18 +220,12 @@ export function BackgroundRemovalEditor() {
         return
       }
 
-      if (outcome.totalSizeWarning) {
-        toast.warning(
-          uploadT("totalSizeWarning", {
-            size: (outcome.totalSize / 1024 / 1024).toFixed(1),
-          })
-        )
-      }
+      if (outcome.memoryWarning) toast.warning(uploadT("memoryWarning", { estimated: outcome.estimatedMemoryMB }))
 
       if (uploadGenerationRef.current !== uploadGeneration) return
       handleImagesLoaded(outcome.results)
     },
-    [handleImagesLoaded, uploadT]
+    [batch.items, handleImagesLoaded, uploadT]
   )
 
   const handleClearCache = useCallback(async () => {
@@ -408,6 +403,7 @@ export function BackgroundRemovalEditor() {
         <div className="flex flex-1 items-center justify-center">
           <div className="w-full max-w-2xl">
             <UploadZone
+              requiresFullCanvas
               multiple
               onImagesLoaded={handleImagesLoaded}
               title={t("uploadTitle")}
