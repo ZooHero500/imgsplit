@@ -166,6 +166,17 @@
     "backHome": "返回首页"
   },
   "upload": {
+    "loadingImages": "正在打开图片…",
+    "safeSelection": "可继续打开 {count} 张；其余 {skipped} 张请缩小尺寸或更换为支持的格式后重选。",
+    "safeImages": "可继续打开的图片",
+    "openSafeImages": "打开这 {count} 张图片",
+    "retrySelection": "重试本次选择",
+    "memoryRecovery": {
+      "single_image": "本次选择中有图片过大，当前设备暂时无法安全打开。请先缩小图片的像素尺寸，再重新选择。",
+      "batch_total": "这些图片同时打开会占用过多内存，请分成更小的批次继续。",
+      "existing_images": "已打开的图片占用了较多内存。请移除暂时不用的图片，或减少本次选择的数量。",
+      "concurrent_upload": "另一批图片仍在打开中，请等待完成后重试本次选择。"
+    },
     "title": "上传图片",
     "dragHint": "拖拽一张或多张图片到此处",
     "or": "或",

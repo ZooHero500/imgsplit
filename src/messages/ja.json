@@ -166,6 +166,17 @@
     "backHome": "ホームに戻る"
   },
   "upload": {
+    "loadingImages": "画像を開いています…",
+    "safeSelection": "{count} 枚を開けます。残りの {skipped} 枚はサイズを小さくするか、対応形式で選び直してください。",
+    "safeImages": "開くことができる画像",
+    "openSafeImages": "この {count} 枚を開く",
+    "retrySelection": "この選択を再試行",
+    "memoryRecovery": {
+      "single_image": "選択した画像に、この端末で安全に開くには大きすぎるものがあります。ピクセルサイズを小さくして選び直してください。",
+      "batch_total": "同時に開くには画像が多すぎます。少ない枚数に分けて続けてください。",
+      "existing_images": "開いている画像がメモリを使用しています。不要な画像を外すか、選択する枚数を減らしてください。",
+      "concurrent_upload": "別の画像を開いています。完了してから再試行してください。"
+    },
     "title": "画像をアップロード",
     "dragHint": "1枚以上の画像をここにドラッグ＆ドロップ",
     "or": "または",

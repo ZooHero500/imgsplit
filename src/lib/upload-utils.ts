@@ -9,6 +9,7 @@ export const ACCEPTED_TYPES = ["image/png", "image/jpeg", "image/webp"]
 export interface ValidationError {
   key: "unsupportedFormat" | "imageMetadataUnreadable" | "imageMemoryRisk" | "imageDimensionsTooLarge" | "imageCanvasRisk"
   params?: Record<string, string>
+  reason?: "single_image" | "batch_total" | "existing_images" | "concurrent_upload"
 }
 
 export class UploadValidationError extends Error {
@@ -31,8 +32,8 @@ type ValidationResult =
   | { valid: false; error: ValidationError }
   | { valid: true; metadata: ImageMetadata[]; estimates: number[]; estimatedMemory: number; budget: number }
 
-function memoryError(estimated: number, budget: number): ValidationError {
-  return { key: "imageMemoryRisk", params: {
+function memoryError(estimated: number, budget: number, reason: NonNullable<ValidationError["reason"]>): ValidationError {
+  return { key: "imageMemoryRisk", reason, params: {
     estimated: String(Math.ceil(estimated / MEBIBYTE)),
     budget: String(Math.round(budget / MEBIBYTE)),
   } }
@@ -58,7 +59,11 @@ export async function validateFiles(files: File[], options: LoadUploadResultsOpt
     }
     const estimate = estimateImageMemory(size, file.size)
     estimatedMemory += estimate
-    if (estimatedMemory > budget) return { valid: false, error: memoryError(estimatedMemory, budget) }
+    if (estimatedMemory > budget) {
+      const reason = estimate > budget ? "single_image"
+        : estimatedMemory - Math.max(0, options.existingMemoryBytes ?? 0) <= budget ? "existing_images" : "batch_total"
+      return { valid: false, error: memoryError(estimatedMemory, budget, reason) }
+    }
     metadata.push(size)
     estimates.push(estimate)
   }
@@ -70,7 +75,7 @@ export async function loadImage(file: File, options: LoadUploadResultsOptions = 
   const validation = await validateFiles([file], options)
   if (!validation.valid) throw new UploadValidationError(validation.error)
   const peakMemory = validation.estimatedMemory + inFlightMemory
-  if (peakMemory > validation.budget) throw new UploadValidationError(memoryError(peakMemory, validation.budget))
+  if (peakMemory > validation.budget) throw new UploadValidationError(memoryError(peakMemory, validation.budget, "concurrent_upload"))
   const reserved = validation.estimates[0]
   inFlightMemory += reserved
   try {
@@ -155,6 +160,26 @@ export type LoadUploadResultsOutcome =
       estimatedMemoryMB: number
     }
 
+export interface UploadRecoveryPlan {
+  /** File references remain local; planning never decodes pixels or emits events. */
+  files: File[]
+  skippedCount: number
+}
+
+/** Offer a safe subset in selection order. Every retry still runs full admission. */
+export async function planUploadRecovery(files: File[], options: LoadUploadResultsOptions = {}): Promise<UploadRecoveryPlan> {
+  const accepted: File[] = []
+  let existingMemoryBytes = Math.max(0, options.existingMemoryBytes ?? 0)
+  for (const file of files) {
+    const validation = await validateFiles([file], { ...options, existingMemoryBytes })
+    if (validation.valid) {
+      accepted.push(file)
+      existingMemoryBytes = validation.estimatedMemory
+    }
+  }
+  return { files: accepted, skippedCount: files.length - accepted.length }
+}
+
 // Reserve memory for overlapping selections while their images are being decoded.
 let inFlightMemory = 0
 
@@ -166,7 +191,7 @@ export async function loadUploadResults(
   const finish = files.length > 0 && options.trackUpload !== false ? startOperation("upload", { input_count: files.length }) : null
   const validation = await validateFiles(files, options)
   if (!validation.valid) {
-    finish?.("failed", { error_code: validation.error.key })
+    finish?.("failed", { error_code: validation.error.key, admission_reason: validation.error.reason })
     return {
       status: "invalid",
       error: validation.error,
@@ -175,8 +200,8 @@ export async function loadUploadResults(
 
   const peakMemory = validation.estimatedMemory + inFlightMemory
   if (peakMemory > validation.budget) {
-    finish?.("failed", { error_code: "imageMemoryRisk" })
-    return { status: "invalid", error: memoryError(peakMemory, validation.budget) }
+    finish?.("failed", { error_code: "imageMemoryRisk", admission_reason: "concurrent_upload" })
+    return { status: "invalid", error: memoryError(peakMemory, validation.budget, "concurrent_upload") }
   }
   const reserved = validation.estimates.reduce((sum, bytes) => sum + bytes, 0)
   inFlightMemory += reserved
