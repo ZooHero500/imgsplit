@@ -16,6 +16,7 @@ export type AnalyticsEvent =
   | "results_readjusted"
   | "image_replaced"
   | "upload_picker_opened"
+  | "upload_recovery_selected"
   | "processing_blocked"
 
 /** Only operational metadata: never pass files, URLs, image content or error messages. */
@@ -24,6 +25,8 @@ export interface AnalyticsProperties {
   input_count?: number
   output_count?: number
   failure_count?: number
+  admission_reason?: "single_image" | "batch_total" | "existing_images" | "concurrent_upload"
+  recovery_kind?: "safe_subset" | "retry"
   format?: string
   action?: "all" | "selected" | "single" | "open_editor" | "resume" | "upload"
   error_code?: ExportErrorCode | "unsupportedFormat" | "fileTooLarge" | "imageMetadataUnreadable" | "imageMemoryRisk" | "imageDimensionsTooLarge" | "imageCanvasRisk" | "decode_failed" | "processing_failed" | "export_failed" | "popup_blocked" | "no_split_lines" | "lines_not_crossing" | "model_unavailable"
@@ -31,6 +34,7 @@ export interface AnalyticsProperties {
 
 interface EventData extends AnalyticsProperties {
   schema_version: number
+  event_id: string
   page_path: string
   locale: string
   duration_ms?: number
@@ -48,6 +52,7 @@ interface PendingEvent {
 
 declare global {
   interface Window {
+    imgsplitBeforeSend?: typeof filterDuplicateAnalyticsEvents
     umami?: {
       track: (payload: (properties: Record<string, unknown>) => Record<string, unknown>) => unknown
     }
@@ -55,6 +60,7 @@ declare global {
 }
 
 const pending: PendingEvent[] = []
+const sentEventIds = new Set<string>()
 let draining: Promise<void> | null = null
 let sequence = 0
 let pageInstanceId: string | undefined
@@ -79,7 +85,22 @@ function context(): Pick<EventData, "schema_version" | "page_path" | "locale" | 
   const tool = CORE_TOOLS.find((candidate) => candidate.href !== "/" &&
     (editor === candidate.href || editor.startsWith(`${candidate.href}/`)))?.id
     ?? (["tools", "about", "privacy", "terms"].includes(parts[0]) ? "site" : "split")
-  return { schema_version: 2, page_path, locale, tool }
+  return { schema_version: 3, page_path, locale, tool }
+}
+
+/** Umami before-send guard: suppress replays of one event, never pageviews or new operations.
+ * This guards tracker-level replay; receiver/transport retries still need server idempotency.
+ */
+export function filterDuplicateAnalyticsEvents(type: string, payload: Record<string, unknown>): Record<string, unknown> | false {
+  const data = payload.data
+  if (type !== "event" || typeof payload.name !== "string" || !data || typeof data !== "object") return payload
+  const { page_instance_id: pageId, event_sequence: sequence } = data as Record<string, unknown>
+  if (typeof pageId !== "string" || typeof sequence !== "number" || !Number.isSafeInteger(sequence) || sequence < 1) return payload
+  const key = `${pageId}:${sequence}`
+  if (sentEventIds.has(key)) return false
+  sentEventIds.add(key)
+  if (sentEventIds.size > 5000) sentEventIds.delete(sentEventIds.values().next().value!)
+  return payload
 }
 
 async function send(event: PendingEvent): Promise<void> {
@@ -119,11 +140,12 @@ export function flushAnalyticsEvents(): Promise<void> {
   return draining
 }
 
-function record(name: AnalyticsEvent, data: Omit<EventData, "occurred_at_ms" | "event_sequence" | "page_instance_id">): void {
+function record(name: AnalyticsEvent, data: Omit<EventData, "occurred_at_ms" | "event_sequence" | "page_instance_id" | "event_id">): void {
   if (!enabled()) return
   pageInstanceId ??= createId()
   // Capture these before queueing, not when the tracker finally becomes ready.
-  const event = { name, data: { ...data, occurred_at_ms: Date.now(), event_sequence: ++sequence, page_instance_id: pageInstanceId } }
+  const eventSequence = ++sequence
+  const event = { name, data: { ...data, occurred_at_ms: Date.now(), event_sequence: eventSequence, page_instance_id: pageInstanceId, event_id: `${pageInstanceId}:${eventSequence}` } }
   if (pending.length < 50) pending.push(event)
   void flushAnalyticsEvents()
 }

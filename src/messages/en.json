@@ -166,6 +166,17 @@
     "backHome": "Back to Home"
   },
   "upload": {
+    "loadingImages": "Opening images…",
+    "safeSelection": "Ready to open: {count}. Please choose smaller or supported files for the remaining {skipped}.",
+    "safeImages": "Images ready to open",
+    "openSafeImages": "Open these {count} images",
+    "retrySelection": "Retry this selection",
+    "memoryRecovery": {
+      "single_image": "An image in this selection is too large to open safely on this device. Reduce its pixel dimensions, then choose it again.",
+      "batch_total": "These images are too large to open together. Open a smaller batch to continue.",
+      "existing_images": "The images already open leave too little room for this selection. Remove images you no longer need, or choose a smaller batch.",
+      "concurrent_upload": "Another selection is still opening. Wait for it to finish, then retry this selection."
+    },
     "title": "Upload Image",
     "dragHint": "Drag and drop one or more images here",
     "or": "or",

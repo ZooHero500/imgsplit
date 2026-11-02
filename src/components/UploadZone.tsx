@@ -2,10 +2,11 @@
 
 import { useCallback, useId, useRef, useState } from "react"
 import { useTranslations } from "next-intl"
-import { toast } from "sonner"
 import type { UploadResult } from "@/types"
-import { loadUploadResults, ACCEPTED_TYPES } from "@/lib/upload-utils"
+import { ACCEPTED_TYPES } from "@/lib/upload-utils"
 import { trackEvent } from "@/lib/analytics"
+import { useImageUpload } from "@/hooks/use-image-upload"
+import { UploadRecovery } from "./UploadRecovery"
 
 interface UploadZoneProps {
   onImageLoaded?: (result: UploadResult) => void
@@ -31,37 +32,29 @@ export function UploadZone({
   requiresFullCanvas = false,
 }: UploadZoneProps) {
   const t = useTranslations("upload")
-  const [error, setError] = useState<string | null>(null)
   const [isDragOver, setIsDragOver] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
   const hintId = useId()
   const errorId = useId()
 
-  const processFiles = useCallback(
-    async (files: FileList) => {
-      setError(null)
-
-      const selectedFiles = multiple ? Array.from(files) : Array.from(files).slice(0, 1)
-      const outcome = await loadUploadResults(selectedFiles, { requiresFullCanvas })
-      if (outcome.status === "invalid") {
-        setError(t(outcome.error.key, outcome.error.params))
-        return
-      }
-      if (outcome.status === "loadFailed") {
-        setError(t("loadFailed"))
-        return
-      }
-
-      if (outcome.memoryWarning) toast.warning(t("memoryWarning", { estimated: outcome.estimatedMemoryMB }))
-
+  const upload = useImageUpload(
+    (results) => {
       if (onImagesLoaded) {
-        onImagesLoaded(outcome.results)
-      } else if (onImageLoaded && outcome.results.length > 0) {
-        onImageLoaded(outcome.results[0])
+        onImagesLoaded(results)
+      } else if (onImageLoaded && results.length > 0) {
+        onImageLoaded(results[0])
       }
     },
-    [multiple, onImageLoaded, onImagesLoaded, requiresFullCanvas, t]
+    { requiresFullCanvas }
   )
+  const processFiles = useCallback((files: FileList) => {
+    void upload.processFiles(multiple ? Array.from(files) : Array.from(files).slice(0, 1))
+  }, [multiple, upload])
+  const chooseFiles = () => {
+    if (upload.isLoading) return
+    trackEvent("upload_picker_opened")
+    inputRef.current?.click()
+  }
 
   const handleDrop = useCallback(
     (e: React.DragEvent) => {
@@ -104,6 +97,7 @@ export function UploadZone({
       onDrop={handleDrop}
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
+      aria-busy={upload.isLoading}
     >
       <input
         ref={inputRef}
@@ -111,16 +105,15 @@ export function UploadZone({
         accept={ACCEPTED_TYPES.join(",")}
         multiple={multiple}
         className="hidden"
+        disabled={upload.isLoading}
         onChange={handleFileChange}
       />
 
       <button
         type="button"
-        onClick={() => {
-          trackEvent("upload_picker_opened")
-          inputRef.current?.click()
-        }}
-        aria-describedby={`${hintId}${error ? ` ${errorId}` : ""}`}
+        onClick={chooseFiles}
+        disabled={upload.isLoading}
+        aria-describedby={`${hintId}${upload.failure ? ` ${errorId}` : ""}`}
         className="flex w-full cursor-pointer flex-col items-center justify-center p-10 text-center sm:p-14"
       >
         <p className="font-condensed text-[11px] font-bold uppercase tracking-[0.3em] text-ink-soft mb-6">
@@ -147,15 +140,7 @@ export function UploadZone({
         </p>
       </button>
 
-      {error && (
-        <div className="px-6 pb-6 text-center">
-          <p id={errorId} className="max-w-md break-words text-sm text-destructive" role="alert">{error}</p>
-          <button type="button" className="mt-3 text-sm underline underline-offset-4" onClick={() => {
-            trackEvent("upload_picker_opened")
-            inputRef.current?.click()
-          }}>{t("chooseAnother")}</button>
-        </div>
-      )}
+      <UploadRecovery failure={upload.failure} isLoading={upload.isLoading} onRecover={upload.recover} onRetry={upload.retry} onChoose={chooseFiles} errorId={errorId} />
     </div>
   )
 }

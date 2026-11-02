@@ -1,10 +1,11 @@
 "use client"
 
-import { useCallback, useRef, useState } from "react"
+import { useRef, useState } from "react"
 import { useTranslations } from "next-intl"
-import { toast } from "sonner"
-import { loadUploadResults, ACCEPTED_TYPES } from "@/lib/upload-utils"
+import { ACCEPTED_TYPES } from "@/lib/upload-utils"
 import { trackEvent } from "@/lib/analytics"
+import { useImageUpload } from "@/hooks/use-image-upload"
+import { UploadRecovery } from "./UploadRecovery"
 
 interface SingleImageUploadZoneProps {
   /** i18n namespace providing title / dragHint / clickHint / formatHint. */
@@ -15,32 +16,19 @@ interface SingleImageUploadZoneProps {
 /** Single-image drop zone shared by the grid and carousel tools. */
 export function SingleImageUploadZone({ namespace, onImageLoaded }: SingleImageUploadZoneProps) {
   const t = useTranslations(namespace)
-  const [error, setError] = useState<string | null>(null)
   const [isDragOver, setIsDragOver] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
   const tUpload = useTranslations("upload")
 
-  const processFile = useCallback(
-    async (files: FileList) => {
-      setError(null)
-      const file = files[0]
-      if (!file) return
-
-      const outcome = await loadUploadResults([file])
-      if (outcome.status === "invalid") {
-        setError(tUpload(outcome.error.key, outcome.error.params))
-        return
-      }
-      if (outcome.status === "loadFailed") {
-        setError(tUpload("loadFailed"))
-        return
-      }
-      const { image, file: loadedFile } = outcome.results[0]
-      if (outcome.memoryWarning) toast.warning(tUpload("memoryWarning", { estimated: outcome.estimatedMemoryMB }))
-      onImageLoaded(image, loadedFile)
-    },
-    [onImageLoaded, tUpload]
-  )
+  const upload = useImageUpload((results) => {
+    if (results[0]) onImageLoaded(results[0].image, results[0].file)
+  })
+  const processFile = (files: FileList) => { void upload.processFiles(Array.from(files).slice(0, 1)) }
+  const chooseFile = () => {
+    if (upload.isLoading) return
+    trackEvent("upload_picker_opened")
+    inputRef.current?.click()
+  }
 
   return (
     <div
@@ -58,15 +46,16 @@ export function SingleImageUploadZone({ namespace, onImageLoaded }: SingleImageU
       onDragLeave={(e) => { e.preventDefault(); setIsDragOver(false) }}
       onClick={(event) => {
         if (event.target === inputRef.current) return
-        trackEvent("upload_picker_opened")
-        inputRef.current?.click()
+        chooseFile()
       }}
+      aria-busy={upload.isLoading}
     >
       <input
         ref={inputRef}
         type="file"
         accept={ACCEPTED_TYPES.join(",")}
         className="hidden"
+        disabled={upload.isLoading}
         onChange={(e) => {
           if (e.target.files) processFile(e.target.files)
           if (inputRef.current) inputRef.current.value = ""
@@ -79,22 +68,15 @@ export function SingleImageUploadZone({ namespace, onImageLoaded }: SingleImageU
         <p className="font-serif text-2xl md:text-3xl text-foreground mb-4">
           {t("dragHint")}
         </p>
-        <p className="text-sm text-foreground hover:text-accent transition-colors duration-500">
+        <button type="button" disabled={upload.isLoading} className="text-sm text-foreground hover:text-accent transition-colors duration-500">
           {t("clickHint")}
-        </p>
+        </button>
         <p className="mt-4 text-[10px] uppercase tracking-[0.25em] text-muted-foreground/70">
           {t("formatHint")}
         </p>
         <p className="mt-2 max-w-md text-xs leading-relaxed text-muted-foreground">{tUpload("largeImageHint")}</p>
       </div>
-      {error && <div className="mt-6 text-center">
-        <p className="max-w-md break-words text-sm text-destructive" role="alert">{error}</p>
-        <button type="button" className="mt-3 text-sm underline underline-offset-4" onClick={(event) => {
-          event.stopPropagation()
-          trackEvent("upload_picker_opened")
-          inputRef.current?.click()
-        }}>{tUpload("chooseAnother")}</button>
-      </div>}
+      <UploadRecovery failure={upload.failure} isLoading={upload.isLoading} onRecover={upload.recover} onRetry={upload.retry} onChoose={chooseFile} />
     </div>
   )
 }

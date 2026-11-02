@@ -166,6 +166,17 @@
     "backHome": "Voltar ao Início"
   },
   "upload": {
+    "loadingImages": "Abrindo imagens…",
+    "safeSelection": "É possível abrir {count} imagens. Reduza as dimensões ou escolha um formato compatível para as {skipped} restantes.",
+    "safeImages": "Imagens que podem ser abertas",
+    "openSafeImages": "Abrir estas {count} imagens",
+    "retrySelection": "Tentar esta seleção novamente",
+    "memoryRecovery": {
+      "single_image": "Uma imagem desta seleção é grande demais para abrir com segurança neste dispositivo. Reduza suas dimensões em pixels e selecione-a novamente.",
+      "batch_total": "Estas imagens juntas exigem muita memória. Continue com um grupo menor.",
+      "existing_images": "As imagens já abertas deixam pouco espaço para esta seleção. Remova as que não precisa mais ou selecione menos imagens.",
+      "concurrent_upload": "Outra seleção ainda está sendo aberta. Aguarde a conclusão e tente novamente."
+    },
     "title": "Enviar Imagem",
     "dragHint": "Arraste e solte uma ou mais imagens aqui",
     "or": "ou",

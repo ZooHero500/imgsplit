@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, afterEach } from "vitest"
-import { validateFiles, loadImage, loadImageFromSrc, readFileAsDataUrl, loadUploadResults } from "../upload-utils"
+import { validateFiles, loadImage, loadImageFromSrc, readFileAsDataUrl, loadUploadResults, planUploadRecovery } from "../upload-utils"
 import { MEBIBYTE } from "../upload-memory"
 import { pngHeader, jpegHeader, webpHeader } from "./image-header-fixtures"
 
@@ -64,6 +64,27 @@ describe("validateFiles", () => {
 })
 
 describe("loadUploadResults", () => {
+  it("plans a usable subset without decoding, including files after an unsupported or oversized one", async () => {
+    stubImage("load")
+    const safe = pngHeader()
+    const plan = await planUploadRecovery([pngHeader(10000, 10000), new File(["x"], "x.gif", { type: "image/gif" }), safe])
+    expect(plan).toEqual({ files: [safe], skippedCount: 2 })
+    expect(URL.createObjectURL).not.toHaveBeenCalled()
+    expect((await loadUploadResults(plan.files)).status).toBe("success")
+  })
+  it("limits recovery to the total remaining budget, then checks the current budget again on retry", async () => {
+    stubImage("load")
+    const first = pngHeader(4000, 4000)
+    const plan = await planUploadRecovery([first, pngHeader(4000, 4000)], { existingMemoryBytes: 200 * MEBIBYTE })
+    expect(plan).toEqual({ files: [first], skippedCount: 1 })
+    expect(await loadUploadResults(plan.files, { existingMemoryBytes: 400 * MEBIBYTE })).toMatchObject({ status: "invalid", error: { reason: "existing_images" } })
+    expect(URL.createObjectURL).not.toHaveBeenCalled()
+  })
+  it("reports distinct intrinsic, batch, retained-image and in-flight memory causes", async () => {
+    expect(await validateFiles([pngHeader(10000, 10000)])).toMatchObject({ valid: false, error: { reason: "single_image" } })
+    expect(await validateFiles([pngHeader(6000, 4000), pngHeader(6000, 4000)])).toMatchObject({ valid: false, error: { reason: "batch_total" } })
+    expect(await validateFiles([pngHeader(4000, 4000)], { existingMemoryBytes: 400 * MEBIBYTE })).toMatchObject({ valid: false, error: { reason: "existing_images" } })
+  })
   it("blocks the whole risky selection before creating image URLs", async () => {
     stubImage("load")
     const outcome = await loadUploadResults([pngHeader(), pngHeader(10000, 10000)])
@@ -104,7 +125,7 @@ describe("loadUploadResults", () => {
     const first = loadUploadResults([pngHeader(6000, 4000)])
     await vi.waitFor(() => expect(pendingImage).toBeDefined())
     const second = await loadUploadResults([pngHeader(6000, 4000)])
-    expect(second).toMatchObject({ status: "invalid", error: { key: "imageMemoryRisk" } })
+    expect(second).toMatchObject({ status: "invalid", error: { key: "imageMemoryRisk", reason: "concurrent_upload" } })
     await expect(loadImage(pngHeader(6000, 4000))).rejects.toThrow("imageMemoryRisk")
     pendingImage!.onload?.(new Event("load"))
     expect((await first).status).toBe("success")

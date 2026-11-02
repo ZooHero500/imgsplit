@@ -26,8 +26,10 @@ self.addEventListener("fetch", (event) => {
   const { request } = event;
   const url = new URL(request.url);
 
-  // Skip non-GET, chrome-extension, and API requests
+  // Own only this site's assets. External scripts (including analytics) must
+  // obey their origin's freshness policy, not our permanent cache-first policy.
   if (
+    url.origin !== self.location.origin ||
     request.method !== "GET" ||
     url.protocol === "chrome-extension:" ||
     url.pathname.startsWith("/api/")

@@ -7,6 +7,8 @@ import type Konva from "konva"
 import { Button } from "@/components/ui/button"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { UploadZone } from "./UploadZone"
+import { UploadRecovery } from "./UploadRecovery"
+import { useImageUpload } from "@/hooks/use-image-upload"
 import { ResultSheet } from "./ResultSheet"
 import { Ruler, CornerBlock, DragPreviewLine } from "./Ruler"
 import { ZoomIndicator } from "./ZoomIndicator"
@@ -437,21 +439,9 @@ export function SplitEditor({
     [initializeImages, onImageUpload, clearResults]
   )
 
-  const handleAppendImages = useCallback(
-    async (fileList: FileList) => {
-      const outcome = await loadUploadResults(Array.from(fileList), {
-        existingMemoryBytes: estimateLoadedImages(images.map((item) => ({ image: item.image, file: item.sourceBlob }))),
-      })
-      if (outcome.status === "invalid") {
-        toast.error(tUpload(outcome.error.key, outcome.error.params))
-        return
-      }
-      if (outcome.status === "loadFailed") {
-        toast.error(t("appendFailed"))
-        return
-      }
-      if (outcome.memoryWarning) toast.warning(tUpload("memoryWarning", { estimated: outcome.estimatedMemoryMB }))
-      const newItems: ImageItem[] = outcome.results.map((r) => ({
+  const handleAppendLoaded = useCallback(
+    (results: UploadResult[]) => {
+      const newItems: ImageItem[] = results.map((r) => ({
         image: r.image,
         fileName: r.file.name,
         mimeType: r.mimeType,
@@ -466,8 +456,17 @@ export function SplitEditor({
       clearResults()
       toast.success(t("imagesAdded", { count: newItems.length }))
     },
-    [images, clearResults, t, tUpload]
+    [clearResults, t]
   )
+  const appendUpload = useImageUpload(handleAppendLoaded, {
+    existingMemoryBytes: estimateLoadedImages(images.map((item) => ({ image: item.image, file: item.sourceBlob }))),
+  })
+  const handleAppendImages = (files: FileList) => { void appendUpload.processFiles(Array.from(files)) }
+  const chooseAppendImages = () => {
+    if (appendUpload.isLoading) return
+    trackEvent("upload_picker_opened")
+    appendInputRef.current?.click()
+  }
 
   const handleRemoveImage = useCallback((index: number) => {
     setImages((prev) => {
@@ -736,6 +735,7 @@ export function SplitEditor({
           <input
             ref={appendInputRef}
             type="file"
+            disabled={appendUpload.isLoading}
             accept="image/png,image/jpeg,image/webp"
             multiple
             className="hidden"
@@ -748,7 +748,7 @@ export function SplitEditor({
           />
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button size="icon-xs" variant="ghost" onClick={() => appendInputRef.current?.click()}>
+              <Button size="icon-xs" variant="ghost" aria-label={t("appendImages")} disabled={appendUpload.isLoading} onClick={chooseAppendImages}>
                 <ImagePlus className="h-3.5 w-3.5" />
               </Button>
             </TooltipTrigger>
@@ -785,6 +785,8 @@ export function SplitEditor({
           )}
         </div>
       </TooltipProvider>
+
+      <UploadRecovery failure={appendUpload.failure} isLoading={appendUpload.isLoading} onRecover={appendUpload.recover} onRetry={appendUpload.retry} onChoose={chooseAppendImages} />
 
       {!hasCrossingLines && (
         <div id="split-line-guide" className="shrink-0 border border-accent/35 bg-accent/5 p-4" role="status">
