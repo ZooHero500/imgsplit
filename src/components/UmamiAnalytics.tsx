@@ -1,7 +1,7 @@
 "use client"
 
 import Script from "next/script"
-import { ANALYTICS_DOMAINS, flushAnalyticsEvents } from "@/lib/analytics"
+import { ANALYTICS_DOMAINS, filterDuplicateAnalyticsEvents, flushAnalyticsEvents } from "@/lib/analytics"
 
 const SCRIPT_URL =
   process.env.NEXT_PUBLIC_UMAMI_SCRIPT_URL ??
@@ -23,7 +23,11 @@ export function UmamiAnalytics() {
       data-domains={ANALYTICS_DOMAINS}
       data-exclude-hash="true"
       data-performance="true"
-      onReady={() => { void flushAnalyticsEvents() }}
+      data-before-send="imgsplitBeforeSend"
+      onReady={() => {
+        window.imgsplitBeforeSend = filterDuplicateAnalyticsEvents
+        void flushAnalyticsEvents()
+      }}
       strategy="afterInteractive"
     />
   )

@@ -86,7 +86,7 @@ describe("analytics delivery", () => {
       website: "test-site",
       url: "/zh-CN/workspace",
       name: "upload_picker_opened",
-      data: { schema_version: 2, page_path: "/zh-CN/workspace", locale: "zh-CN", tool: "split" },
+      data: { schema_version: 3, page_path: "/zh-CN/workspace", locale: "zh-CN", tool: "split" },
     }])
   })
 
@@ -129,6 +129,24 @@ describe("analytics delivery", () => {
 })
 
 describe("operation outcomes", () => {
+  it("suppresses an exact replay without dropping the next event or automatic pageviews", async () => {
+    connectTracker()
+    const finish = analytics.startOperation("upload")
+    finish("failed", { error_code: "imageMemoryRisk", admission_reason: "single_image" })
+    await analytics.flushAnalyticsEvents()
+    const [start, failure] = events
+    expect(analytics.filterDuplicateAnalyticsEvents("event", start)).toBe(start)
+    expect(analytics.filterDuplicateAnalyticsEvents("event", failure)).toBe(failure)
+    expect(analytics.filterDuplicateAnalyticsEvents("event", structuredClone(failure))).toBe(false)
+    expect((failure.data as Payload).event_id).not.toBe((start.data as Payload).event_id)
+    const pageview = { url: "/workspace" }
+    expect(analytics.filterDuplicateAnalyticsEvents("event", pageview)).toBe(pageview)
+    expect(analytics.filterDuplicateAnalyticsEvents("event", pageview)).toBe(pageview)
+    expect(analytics.filterDuplicateAnalyticsEvents("performance", failure)).toBe(failure)
+    analytics.startOperation("upload")("succeeded")
+    await analytics.flushAnalyticsEvents()
+    expect(analytics.filterDuplicateAnalyticsEvents("event", events[3])).toBe(events[3])
+  })
   it("sends a stable ZIP stage code, never the underlying exception", async () => {
     connectTracker()
     const { ExportError } = await import("../export-errors")
